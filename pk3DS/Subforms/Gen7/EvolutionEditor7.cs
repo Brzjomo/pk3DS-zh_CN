@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
@@ -27,54 +29,54 @@ namespace pk3DS
             string[] evolutionMethods =
             {
                 "",
-                "Level Up with Friendship",
-                "Level Up at Morning with Friendship",
-                "Level Up at Night with Friendship",
-                "Level Up",
-                "Trade",
-                "Trade with Held Item",
-                $"Trade for opposite {specieslist[588]}/{specieslist[616]}", // Shelmet&Karrablast
-                "Used Item",
-                "Level Up (Attack > Defense)",
-                "Level Up (Attack = Defense)",
-                "Level Up (Attack < Defense)",
-                "Level Up (Random < 5)",
-                "Level Up (Random > 5)",
-                $"Level Up ({specieslist[291]})", // Ninjask
-                $"Level Up ({specieslist[292]})", // Shedinja
-                "Level Up (Beauty)",
-                "Used Item (Male)", // Kirlia->Gallade
-                "Used Item (Female)", // Snorunt->Froslass
-                "Level Up with Held Item (Day)",
-                "Level Up with Held Item (Night)",
-                "Level Up with Move",
-                "Level Up with Party",
-                "Level Up Male",
-                "Level Up Female",
-                "Level Up at Electric",
-                "Level Up at Forest",
-                "Level Up at Cold",
-                "Level Up with 3DS Upside Down",
-                "Level Up with 50 Affection + MoveType",
-                $"{typelist[16]} Type in Party",
-                "Overworld Rain",
-                "Level Up (@) at Morning",
-                "Level Up (@) at Night",
-                "Level Up Female (SetForm 1)",
-                "UNUSED",
+                "友好度进化",
+                "白天友好度进化",
+                "夜晚友好度进化",
+                "升级",
+                "通讯进化",
+                "持有物品时通讯进化",
+                $"互换通讯进化 {specieslist[588]}/{specieslist[616]}", // Shelmet&Karrablast
+                "使用物品",
+                "升级 (攻击 > 防御)",
+                "升级 (攻击 = 防御)",
+                "升级 (攻击 < 防御)",
+                "升级 (任意能力值 < 5)",
+                "升级 (任意能力值 > 5)",
+                $"升级 ({specieslist[291]})", // Ninjask
+                $"升级 ({specieslist[292]})", // Shedinja
+                "升级 (美丽度)",
+                "使用物品 (雄性)", // Kirlia->Gallade
+                "使用物品 (雌性)", // Snorunt->Froslass
+                "持有物品时升级 (白天)",
+                "持有物品时升级 (夜晚)",
+                "习得招式时升级",
+                "队伍中存在指定宝可梦时升级",
+                "雄性升级",
+                "雌性升级",
+                "电气场地升级",
+                "森林中升级",
+                "寒冷地带升级",
+                "翻盖3DS时升级",
+                "满50友好度并学会指定属性招式",
+                $"队伍中存在 {typelist[16]} 属性",
+                "下雨天",
+                "白天升级",
+                "夜晚升级",
+                "雌性升级 (SetForm 1)",
+                "未使用",
                 "Level Up Any Time on Version",
                 "Level Up Daytime on Version",
                 "Level Up Nighttime on Version",
-                "Level Up Summit",
+                "高处升级",
             };
 
             var evos = new List<string>(evolutionMethods);
             if (Main.Config.USUM)
             {
                 evos.AddRange(new[] {
-                    "Level Up (@) Dusk", // 40
-                    "Level Up (Wormhole)", // 41
-                    "Used Item (Wormhole)" // 42
+                    "傍晚升级", // 40
+                    "升级 (Wormhole)", // 41
+                    "使用物品 (Wormhole)" // 42
                 });
             }
 
@@ -87,10 +89,32 @@ namespace pk3DS
 
             maxEvoMethod = evos.Count;
             foreach (ComboBox cb in mb) { cb.Items.AddRange(evos.ToArray()); }
-            foreach (ComboBox cb in rb) { cb.Items.AddRange(specieslist.Take(Main.Config.MaxSpeciesID+1).ToArray()); }
+            foreach (ComboBox cb in rb) {
+                for (int i = 0; i < specieslist.Length; i++)
+                {
+                    if (Main.ifFixChineseDisplay && Main.Config.USUM && Main.Language > 7 && i != 0)
+                    {
+                        cb.Items.Add(Main.pokemonNameUSSC[i - 1]);
+                    }
+                    else
+                    {
+                        cb.Items.Add(specieslist[i]);
+                    }
+                }
+            }
 
             CB_Species.Items.Clear();
-            foreach (string s in specieslist) CB_Species.Items.Add(s);
+            for (int i = 0; i < specieslist.Length; i++)
+            {
+                if (Main.ifFixChineseDisplay && Main.Config.USUM && Main.Language > 7 && i != 0)
+                {
+                    CB_Species.Items.Add(Main.pokemonNameUSSC[i - 1]);
+                }
+                else
+                {
+                    CB_Species.Items.Add(specieslist[i]);
+                }
+            }
 
             CB_Species.SelectedIndex = 1;
             RandSettings.GetFormSettings(this, GB_Randomizer.Controls);
@@ -112,7 +136,8 @@ namespace pk3DS
 
         private void GetList()
         {
-            entry = Array.IndexOf(specieslist, CB_Species.Text);
+            int index = CB_Species.SelectedIndex;
+            entry = index;
             byte[] input = files[entry];
             if (input.Length != EvolutionSet7.SIZE) return; // error
             evo = new EvolutionSet7(input);
@@ -156,7 +181,7 @@ namespace pk3DS
 
         private void B_RandAll_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Randomize all resulting species?", "Evolution methods and parameters will stay the same."))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机全部宝可梦？", "进化方式和进化条件将保持不变。"))
                 return;
 
             SetList();
@@ -173,12 +198,12 @@ namespace pk3DS
             evos.Select(z => z.Write()).ToArray().CopyTo(files, 0);
             GetList();
 
-            WinFormsUtil.Alert("All Pokémon's Evolutions have been randomized!");
+            WinFormsUtil.Alert("宝可梦进化已全部随机！");
         }
 
         private void B_Trade_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Remove all trade evolutions?", "Evolution methods will be altered so that evolutions will be possible with only one game."))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否移除全部通讯进化？", "通讯进化方式将会被替代，以便单人游戏也可进化。"))
                 return;
 
             SetList();
@@ -189,12 +214,12 @@ namespace pk3DS
             evos.Select(z => z.Write()).ToArray().CopyTo(files, 0);
             GetList();
 
-            WinFormsUtil.Alert("All trade evolutions have been removed!", "Trade evolutions will now occur after reaching a certain Level, or after leveling up while holding its appropriate trade item.");
+            WinFormsUtil.Alert("已移除全部通讯进化！", "通讯进化将在到达指定等级，或持有相关道具并升级时进行。");
         }
 
         private void B_EveryLevel_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Modify evolutions?", "This will make it to where your Pokémon will evolve into something random every time it levels up."))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否确认修改？", "你的宝可梦每次升级都会进化为随机的宝可梦。"))
                 return;
 
             SetList();
@@ -215,7 +240,7 @@ namespace pk3DS
 
         private void B_Dump_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Dump all Evolutions to Text File?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否导出所有进化到TXT文本？"))
                 return;
 
             dumping = true;
@@ -235,12 +260,12 @@ namespace pk3DS
                         int bf = formVal[entry];
                         string param = pb[j].Visible ? " [" + pb[j].Text + "]" : "";
                         if (lb[j].Value > 0)
-                            param += $"@ level {lb[j].Value}";
+                            param += $"@ 等级 {lb[j].Value}";
                         string method = mb[j].Text;
                         int f = fb[j].Value == -1 ? bf : (int)fb[j].Value;
                         string form = f == 0 ? "" : "-" + f;
 
-                        result += $"{method} {param} into {species}{form}".Replace("  ", " ") + Environment.NewLine;
+                        result += $"{method} {param} 进化 {species}{form}".Replace("  ", " ") + Environment.NewLine;
                     }
                 }
 
@@ -316,12 +341,53 @@ namespace pk3DS
             if (loading || dumping)
                 return;
             int index = sender is ComboBox ? Array.IndexOf(rb, sender) : Array.IndexOf(fb, sender);
-            int species = Array.IndexOf(specieslist, rb[index].Text);
+            int index2 = rb[index].SelectedIndex;
+            int species = index2;
             int form = (int)fb[index].Value;
             if (form == -1)
                 form = baseForms[species];
 
-            pic[index].Image = WinFormsUtil.GetSprite(species, form, 0, 0, Main.Config);
+            //pic[index].Image = WinFormsUtil.GetSprite(species, form, 0, 0, Main.Config);
+
+            Bitmap rawImg = WinFormsUtil.GetSprite(species, form, 0, 0, Main.Config);
+            Bitmap bigImg = new Bitmap(rawImg.Width * 2, rawImg.Height * 2);
+            for (int x = 0; x < rawImg.Width; x++)
+            {
+                for (int y = 0; y < rawImg.Height; y++)
+                {
+                    Color c = rawImg.GetPixel(x, y);
+                    bigImg.SetPixel(2 * x, 2 * y, c);
+                    bigImg.SetPixel((2 * x) + 1, 2 * y, c);
+                    bigImg.SetPixel(2 * x, (2 * y) + 1, c);
+                    bigImg.SetPixel((2 * x) + 1, (2 * y) + 1, c);
+                }
+            }
+            pic[index].Image = bigImg;
+        }
+
+        private void ImgChangeInto(object sender, EventArgs e)
+        {
+            SetList();
+            GetList();
+
+            int index = CB_Species.SelectedIndex;
+            int species = index;
+            int form = baseForms[species];
+
+            Bitmap rawImg = WinFormsUtil.GetSprite(species, form, 0, 0, Main.Config);
+            Bitmap bigImg = new Bitmap(rawImg.Width * 2, rawImg.Height * 2);
+            for (int x = 0; x < rawImg.Width; x++)
+            {
+                for (int y = 0; y < rawImg.Height; y++)
+                {
+                    Color c = rawImg.GetPixel(x, y);
+                    bigImg.SetPixel(2 * x, 2 * y, c);
+                    bigImg.SetPixel((2 * x) + 1, 2 * y, c);
+                    bigImg.SetPixel(2 * x, (2 * y) + 1, c);
+                    bigImg.SetPixel((2 * x) + 1, (2 * y) + 1, c);
+                }
+            }
+            PB_TOP.Image = bigImg;
         }
     }
 }

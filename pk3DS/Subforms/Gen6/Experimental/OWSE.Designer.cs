@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OWSE));
             this.CB_LocationID = new System.Windows.Forms.ComboBox();
             this.L_Location = new System.Windows.Forms.Label();
             this.RTB_ZD = new System.Windows.Forms.RichTextBox();
@@ -226,42 +227,45 @@
             this.tb_RAW.SuspendLayout();
             this.tb_Dev.SuspendLayout();
             this.SuspendLayout();
-            //
+            // 
             // CB_LocationID
-            //
+            // 
             this.CB_LocationID.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_LocationID.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_LocationID.Enabled = false;
             this.CB_LocationID.FormattingEnabled = true;
-            this.CB_LocationID.Location = new System.Drawing.Point(46, 5);
+            this.CB_LocationID.Location = new System.Drawing.Point(77, 9);
+            this.CB_LocationID.Margin = new System.Windows.Forms.Padding(5);
             this.CB_LocationID.Name = "CB_LocationID";
-            this.CB_LocationID.Size = new System.Drawing.Size(164, 21);
+            this.CB_LocationID.Size = new System.Drawing.Size(271, 29);
             this.CB_LocationID.TabIndex = 407;
             this.CB_LocationID.SelectedIndexChanged += new System.EventHandler(this.CB_LocationID_SelectedIndexChanged);
-            //
+            // 
             // L_Location
-            //
+            // 
             this.L_Location.AutoSize = true;
-            this.L_Location.Location = new System.Drawing.Point(12, 8);
+            this.L_Location.Location = new System.Drawing.Point(20, 12);
+            this.L_Location.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Location.Name = "L_Location";
-            this.L_Location.Size = new System.Drawing.Size(28, 13);
+            this.L_Location.Size = new System.Drawing.Size(40, 21);
             this.L_Location.TabIndex = 411;
             this.L_Location.Text = "Loc:";
-            //
+            // 
             // RTB_ZD
-            //
+            // 
             this.RTB_ZD.Font = new System.Drawing.Font("Courier New", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTB_ZD.Location = new System.Drawing.Point(217, 3);
+            this.RTB_ZD.Location = new System.Drawing.Point(362, 5);
+            this.RTB_ZD.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_ZD.Name = "RTB_ZD";
             this.RTB_ZD.ReadOnly = true;
-            this.RTB_ZD.Size = new System.Drawing.Size(266, 36);
+            this.RTB_ZD.Size = new System.Drawing.Size(441, 56);
             this.RTB_ZD.TabIndex = 412;
             this.RTB_ZD.Text = "00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF";
-            //
+            // 
             // tb_Zone
-            //
-            this.tb_Zone.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.tb_Zone.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tb_Zone.Controls.Add(this.tb_ZoneData);
             this.tb_Zone.Controls.Add(this.tb_OWSC);
@@ -270,34 +274,37 @@
             this.tb_Zone.Controls.Add(this.tb_File5);
             this.tb_Zone.Controls.Add(this.tb_RAW);
             this.tb_Zone.Controls.Add(this.tb_Dev);
-            this.tb_Zone.Location = new System.Drawing.Point(12, 32);
+            this.tb_Zone.Location = new System.Drawing.Point(20, 52);
+            this.tb_Zone.Margin = new System.Windows.Forms.Padding(5);
             this.tb_Zone.Name = "tb_Zone";
             this.tb_Zone.SelectedIndex = 0;
-            this.tb_Zone.Size = new System.Drawing.Size(494, 497);
+            this.tb_Zone.Size = new System.Drawing.Size(823, 803);
             this.tb_Zone.TabIndex = 417;
-            //
+            // 
             // tb_ZoneData
-            //
+            // 
             this.tb_ZoneData.Controls.Add(this.L_MapInfoTabData);
-            this.tb_ZoneData.Location = new System.Drawing.Point(4, 22);
+            this.tb_ZoneData.Location = new System.Drawing.Point(4, 30);
+            this.tb_ZoneData.Margin = new System.Windows.Forms.Padding(5);
             this.tb_ZoneData.Name = "tb_ZoneData";
-            this.tb_ZoneData.Padding = new System.Windows.Forms.Padding(3);
-            this.tb_ZoneData.Size = new System.Drawing.Size(486, 471);
+            this.tb_ZoneData.Padding = new System.Windows.Forms.Padding(5);
+            this.tb_ZoneData.Size = new System.Drawing.Size(815, 769);
             this.tb_ZoneData.TabIndex = 0;
             this.tb_ZoneData.Text = "ZoneData";
             this.tb_ZoneData.UseVisualStyleBackColor = true;
-            //
+            // 
             // L_MapInfoTabData
-            //
+            // 
             this.L_MapInfoTabData.AutoSize = true;
-            this.L_MapInfoTabData.Location = new System.Drawing.Point(26, 26);
+            this.L_MapInfoTabData.Location = new System.Drawing.Point(43, 42);
+            this.L_MapInfoTabData.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_MapInfoTabData.Name = "L_MapInfoTabData";
-            this.L_MapInfoTabData.Size = new System.Drawing.Size(227, 13);
+            this.L_MapInfoTabData.Size = new System.Drawing.Size(363, 21);
             this.L_MapInfoTabData.TabIndex = 2;
             this.L_MapInfoTabData.Text = "Functionality unknown. See RAW tab for data.";
-            //
+            // 
             // tb_OWSC
-            //
+            // 
             this.tb_OWSC.Controls.Add(this.B_ResetOverworlds);
             this.tb_OWSC.Controls.Add(this.CHK_EditRAW);
             this.tb_OWSC.Controls.Add(this.NUD_UnkCount);
@@ -312,148 +319,160 @@
             this.tb_OWSC.Controls.Add(this.tc_OWSC);
             this.tb_OWSC.Controls.Add(this.NUD_NPCCount);
             this.tb_OWSC.Controls.Add(this.L_NPCCount);
-            this.tb_OWSC.Location = new System.Drawing.Point(4, 22);
+            this.tb_OWSC.Location = new System.Drawing.Point(4, 30);
+            this.tb_OWSC.Margin = new System.Windows.Forms.Padding(5);
             this.tb_OWSC.Name = "tb_OWSC";
-            this.tb_OWSC.Padding = new System.Windows.Forms.Padding(3);
-            this.tb_OWSC.Size = new System.Drawing.Size(486, 471);
+            this.tb_OWSC.Padding = new System.Windows.Forms.Padding(5);
+            this.tb_OWSC.Size = new System.Drawing.Size(815, 769);
             this.tb_OWSC.TabIndex = 1;
             this.tb_OWSC.Text = "OW & SC";
             this.tb_OWSC.UseVisualStyleBackColor = true;
-            //
+            // 
             // B_ResetOverworlds
-            //
+            // 
             this.B_ResetOverworlds.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.B_ResetOverworlds.Location = new System.Drawing.Point(413, 157);
+            this.B_ResetOverworlds.Location = new System.Drawing.Point(688, 254);
+            this.B_ResetOverworlds.Margin = new System.Windows.Forms.Padding(5);
             this.B_ResetOverworlds.Name = "B_ResetOverworlds";
-            this.B_ResetOverworlds.Size = new System.Drawing.Size(62, 42);
+            this.B_ResetOverworlds.Size = new System.Drawing.Size(103, 68);
             this.B_ResetOverworlds.TabIndex = 467;
             this.B_ResetOverworlds.Text = "Reset\r\nAll";
             this.B_ResetOverworlds.UseVisualStyleBackColor = true;
             this.B_ResetOverworlds.Click += new System.EventHandler(this.B_ResetOverworlds_Click);
-            //
+            // 
             // CHK_EditRAW
-            //
+            // 
             this.CHK_EditRAW.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CHK_EditRAW.AutoSize = true;
             this.CHK_EditRAW.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.CHK_EditRAW.Location = new System.Drawing.Point(380, 134);
+            this.CHK_EditRAW.Location = new System.Drawing.Point(656, 217);
+            this.CHK_EditRAW.Margin = new System.Windows.Forms.Padding(5);
             this.CHK_EditRAW.Name = "CHK_EditRAW";
-            this.CHK_EditRAW.Size = new System.Drawing.Size(95, 17);
+            this.CHK_EditRAW.Size = new System.Drawing.Size(136, 25);
             this.CHK_EditRAW.TabIndex = 430;
             this.CHK_EditRAW.Text = "Edit Raw Data";
             this.CHK_EditRAW.UseVisualStyleBackColor = true;
             this.CHK_EditRAW.CheckedChanged += new System.EventHandler(this.ChangeRAWCheck);
-            //
+            // 
             // NUD_UnkCount
-            //
+            // 
             this.NUD_UnkCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.NUD_UnkCount.Location = new System.Drawing.Point(422, 108);
+            this.NUD_UnkCount.Location = new System.Drawing.Point(703, 175);
+            this.NUD_UnkCount.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_UnkCount.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.NUD_UnkCount.Name = "NUD_UnkCount";
-            this.NUD_UnkCount.Size = new System.Drawing.Size(53, 20);
+            this.NUD_UnkCount.Size = new System.Drawing.Size(88, 29);
             this.NUD_UnkCount.TabIndex = 428;
             this.NUD_UnkCount.ValueChanged += new System.EventHandler(this.ChangeUnkCount);
-            //
+            // 
             // L_Unk
-            //
+            // 
             this.L_Unk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.L_Unk.Location = new System.Drawing.Point(350, 108);
+            this.L_Unk.Location = new System.Drawing.Point(583, 175);
+            this.L_Unk.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Unk.Name = "L_Unk";
-            this.L_Unk.Size = new System.Drawing.Size(66, 15);
+            this.L_Unk.Size = new System.Drawing.Size(110, 24);
             this.L_Unk.TabIndex = 429;
             this.L_Unk.Text = "Unk:";
             this.L_Unk.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // L_OWEntities
-            //
+            // 
             this.L_OWEntities.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.L_OWEntities.AutoSize = true;
-            this.L_OWEntities.Location = new System.Drawing.Point(357, 13);
+            this.L_OWEntities.Location = new System.Drawing.Point(595, 21);
+            this.L_OWEntities.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_OWEntities.Name = "L_OWEntities";
-            this.L_OWEntities.Size = new System.Drawing.Size(118, 13);
+            this.L_OWEntities.Size = new System.Drawing.Size(193, 21);
             this.L_OWEntities.TabIndex = 423;
             this.L_OWEntities.Text = "Overworld Entity Count:";
-            //
+            // 
             // NUD_TrigCount
-            //
+            // 
             this.NUD_TrigCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.NUD_TrigCount.Location = new System.Drawing.Point(422, 88);
+            this.NUD_TrigCount.Location = new System.Drawing.Point(703, 142);
+            this.NUD_TrigCount.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_TrigCount.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.NUD_TrigCount.Name = "NUD_TrigCount";
-            this.NUD_TrigCount.Size = new System.Drawing.Size(53, 20);
+            this.NUD_TrigCount.Size = new System.Drawing.Size(88, 29);
             this.NUD_TrigCount.TabIndex = 421;
             this.NUD_TrigCount.ValueChanged += new System.EventHandler(this.ChangeTriggerCount);
-            //
+            // 
             // L_TriggerCount
-            //
+            // 
             this.L_TriggerCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.L_TriggerCount.Location = new System.Drawing.Point(350, 88);
+            this.L_TriggerCount.Location = new System.Drawing.Point(583, 142);
+            this.L_TriggerCount.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_TriggerCount.Name = "L_TriggerCount";
-            this.L_TriggerCount.Size = new System.Drawing.Size(66, 15);
+            this.L_TriggerCount.Size = new System.Drawing.Size(110, 24);
             this.L_TriggerCount.TabIndex = 422;
             this.L_TriggerCount.Text = "Trigger:";
             this.L_TriggerCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // NUD_WarpCount
-            //
+            // 
             this.NUD_WarpCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.NUD_WarpCount.Location = new System.Drawing.Point(422, 68);
+            this.NUD_WarpCount.Location = new System.Drawing.Point(703, 110);
+            this.NUD_WarpCount.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_WarpCount.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.NUD_WarpCount.Name = "NUD_WarpCount";
-            this.NUD_WarpCount.Size = new System.Drawing.Size(53, 20);
+            this.NUD_WarpCount.Size = new System.Drawing.Size(88, 29);
             this.NUD_WarpCount.TabIndex = 419;
             this.NUD_WarpCount.ValueChanged += new System.EventHandler(this.ChangeWarpCount);
-            //
+            // 
             // L_WarpCount
-            //
+            // 
             this.L_WarpCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.L_WarpCount.Location = new System.Drawing.Point(350, 68);
+            this.L_WarpCount.Location = new System.Drawing.Point(583, 110);
+            this.L_WarpCount.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_WarpCount.Name = "L_WarpCount";
-            this.L_WarpCount.Size = new System.Drawing.Size(66, 15);
+            this.L_WarpCount.Size = new System.Drawing.Size(110, 24);
             this.L_WarpCount.TabIndex = 420;
             this.L_WarpCount.Text = "Warp:";
             this.L_WarpCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // NUD_FurnCount
-            //
+            // 
             this.NUD_FurnCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.NUD_FurnCount.Location = new System.Drawing.Point(422, 28);
+            this.NUD_FurnCount.Location = new System.Drawing.Point(703, 46);
+            this.NUD_FurnCount.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_FurnCount.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.NUD_FurnCount.Name = "NUD_FurnCount";
-            this.NUD_FurnCount.Size = new System.Drawing.Size(53, 20);
+            this.NUD_FurnCount.Size = new System.Drawing.Size(88, 29);
             this.NUD_FurnCount.TabIndex = 417;
             this.NUD_FurnCount.ValueChanged += new System.EventHandler(this.ChangeFurnitureCount);
-            //
+            // 
             // L_FurnitureCount
-            //
+            // 
             this.L_FurnitureCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.L_FurnitureCount.Location = new System.Drawing.Point(350, 28);
+            this.L_FurnitureCount.Location = new System.Drawing.Point(583, 46);
+            this.L_FurnitureCount.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_FurnitureCount.Name = "L_FurnitureCount";
-            this.L_FurnitureCount.Size = new System.Drawing.Size(66, 15);
+            this.L_FurnitureCount.Size = new System.Drawing.Size(110, 24);
             this.L_FurnitureCount.TabIndex = 418;
             this.L_FurnitureCount.Text = "Furniture:";
             this.L_FurnitureCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // tc_OWSC
-            //
-            this.tc_OWSC.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.tc_OWSC.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tc_OWSC.Controls.Add(this.tb_Furniture);
             this.tc_OWSC.Controls.Add(this.tb_NPC);
@@ -461,27 +480,29 @@
             this.tc_OWSC.Controls.Add(this.tb_Trigger1);
             this.tc_OWSC.Controls.Add(this.tb_Trigger2);
             this.tc_OWSC.Controls.Add(this.tb_Script);
-            this.tc_OWSC.Location = new System.Drawing.Point(6, 6);
+            this.tc_OWSC.Location = new System.Drawing.Point(10, 10);
+            this.tc_OWSC.Margin = new System.Windows.Forms.Padding(5);
             this.tc_OWSC.Name = "tc_OWSC";
             this.tc_OWSC.SelectedIndex = 0;
-            this.tc_OWSC.Size = new System.Drawing.Size(345, 462);
+            this.tc_OWSC.Size = new System.Drawing.Size(575, 746);
             this.tc_OWSC.TabIndex = 415;
-            //
+            // 
             // tb_Furniture
-            //
+            // 
             this.tb_Furniture.Controls.Add(this.GB_F);
             this.tb_Furniture.Controls.Add(this.NUD_FE);
             this.tb_Furniture.Controls.Add(this.L_FE);
-            this.tb_Furniture.Location = new System.Drawing.Point(4, 22);
+            this.tb_Furniture.Location = new System.Drawing.Point(4, 30);
+            this.tb_Furniture.Margin = new System.Windows.Forms.Padding(5);
             this.tb_Furniture.Name = "tb_Furniture";
-            this.tb_Furniture.Padding = new System.Windows.Forms.Padding(3);
-            this.tb_Furniture.Size = new System.Drawing.Size(337, 436);
+            this.tb_Furniture.Padding = new System.Windows.Forms.Padding(5);
+            this.tb_Furniture.Size = new System.Drawing.Size(567, 712);
             this.tb_Furniture.TabIndex = 0;
             this.tb_Furniture.Text = "Furniture";
             this.tb_Furniture.UseVisualStyleBackColor = true;
-            //
+            // 
             // GB_F
-            //
+            // 
             this.GB_F.Controls.Add(this.B_ResetFurniture);
             this.GB_F.Controls.Add(this.NUD_FWY);
             this.GB_F.Controls.Add(this.L_FWY);
@@ -492,156 +513,171 @@
             this.GB_F.Controls.Add(this.NUD_FX);
             this.GB_F.Controls.Add(this.L_FX);
             this.GB_F.Controls.Add(this.RTB_F);
-            this.GB_F.Location = new System.Drawing.Point(6, 40);
+            this.GB_F.Location = new System.Drawing.Point(10, 65);
+            this.GB_F.Margin = new System.Windows.Forms.Padding(5);
             this.GB_F.Name = "GB_F";
-            this.GB_F.Size = new System.Drawing.Size(325, 323);
+            this.GB_F.Padding = new System.Windows.Forms.Padding(5);
+            this.GB_F.Size = new System.Drawing.Size(542, 522);
             this.GB_F.TabIndex = 437;
             this.GB_F.TabStop = false;
             this.GB_F.Text = "Info:";
-            //
+            // 
             // B_ResetFurniture
-            //
-            this.B_ResetFurniture.Location = new System.Drawing.Point(257, 275);
+            // 
+            this.B_ResetFurniture.Location = new System.Drawing.Point(428, 444);
+            this.B_ResetFurniture.Margin = new System.Windows.Forms.Padding(5);
             this.B_ResetFurniture.Name = "B_ResetFurniture";
-            this.B_ResetFurniture.Size = new System.Drawing.Size(62, 42);
+            this.B_ResetFurniture.Size = new System.Drawing.Size(103, 68);
             this.B_ResetFurniture.TabIndex = 470;
             this.B_ResetFurniture.Text = "Reset\r\nFurniture";
             this.B_ResetFurniture.UseVisualStyleBackColor = true;
             this.B_ResetFurniture.Click += new System.EventHandler(this.B_ResetFurniture_Click);
-            //
+            // 
             // NUD_FWY
-            //
-            this.NUD_FWY.Location = new System.Drawing.Point(125, 216);
+            // 
+            this.NUD_FWY.Location = new System.Drawing.Point(208, 348);
+            this.NUD_FWY.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_FWY.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_FWY.Name = "NUD_FWY";
-            this.NUD_FWY.Size = new System.Drawing.Size(53, 20);
+            this.NUD_FWY.Size = new System.Drawing.Size(88, 29);
             this.NUD_FWY.TabIndex = 469;
-            //
+            // 
             // L_FWY
-            //
-            this.L_FWY.Location = new System.Drawing.Point(43, 216);
+            // 
+            this.L_FWY.Location = new System.Drawing.Point(72, 348);
+            this.L_FWY.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_FWY.Name = "L_FWY";
-            this.L_FWY.Size = new System.Drawing.Size(76, 16);
+            this.L_FWY.Size = new System.Drawing.Size(127, 26);
             this.L_FWY.TabIndex = 468;
             this.L_FWY.Text = "FwY:";
             this.L_FWY.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // NUD_FWX
-            //
-            this.NUD_FWX.Location = new System.Drawing.Point(125, 190);
+            // 
+            this.NUD_FWX.Location = new System.Drawing.Point(208, 306);
+            this.NUD_FWX.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_FWX.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_FWX.Name = "NUD_FWX";
-            this.NUD_FWX.Size = new System.Drawing.Size(53, 20);
+            this.NUD_FWX.Size = new System.Drawing.Size(88, 29);
             this.NUD_FWX.TabIndex = 467;
-            //
+            // 
             // L_FWX
-            //
-            this.L_FWX.Location = new System.Drawing.Point(43, 190);
+            // 
+            this.L_FWX.Location = new System.Drawing.Point(72, 306);
+            this.L_FWX.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_FWX.Name = "L_FWX";
-            this.L_FWX.Size = new System.Drawing.Size(76, 16);
+            this.L_FWX.Size = new System.Drawing.Size(127, 26);
             this.L_FWX.TabIndex = 466;
             this.L_FWX.Text = "FwX:";
             this.L_FWX.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // NUD_FY
-            //
-            this.NUD_FY.Location = new System.Drawing.Point(125, 164);
+            // 
+            this.NUD_FY.Location = new System.Drawing.Point(208, 264);
+            this.NUD_FY.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_FY.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_FY.Name = "NUD_FY";
-            this.NUD_FY.Size = new System.Drawing.Size(53, 20);
+            this.NUD_FY.Size = new System.Drawing.Size(88, 29);
             this.NUD_FY.TabIndex = 463;
-            //
+            // 
             // L_FY
-            //
-            this.L_FY.Location = new System.Drawing.Point(43, 164);
+            // 
+            this.L_FY.Location = new System.Drawing.Point(72, 264);
+            this.L_FY.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_FY.Name = "L_FY";
-            this.L_FY.Size = new System.Drawing.Size(76, 16);
+            this.L_FY.Size = new System.Drawing.Size(127, 26);
             this.L_FY.TabIndex = 462;
             this.L_FY.Text = "Y Coordinate:";
             this.L_FY.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // NUD_FX
-            //
-            this.NUD_FX.Location = new System.Drawing.Point(125, 138);
+            // 
+            this.NUD_FX.Location = new System.Drawing.Point(208, 222);
+            this.NUD_FX.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_FX.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_FX.Name = "NUD_FX";
-            this.NUD_FX.Size = new System.Drawing.Size(53, 20);
+            this.NUD_FX.Size = new System.Drawing.Size(88, 29);
             this.NUD_FX.TabIndex = 461;
-            //
+            // 
             // L_FX
-            //
-            this.L_FX.Location = new System.Drawing.Point(43, 138);
+            // 
+            this.L_FX.Location = new System.Drawing.Point(72, 222);
+            this.L_FX.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_FX.Name = "L_FX";
-            this.L_FX.Size = new System.Drawing.Size(76, 16);
+            this.L_FX.Size = new System.Drawing.Size(127, 26);
             this.L_FX.TabIndex = 460;
             this.L_FX.Text = "X Coordinate:";
             this.L_FX.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // RTB_F
-            //
+            // 
             this.RTB_F.Font = new System.Drawing.Font("Courier New", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTB_F.Location = new System.Drawing.Point(6, 275);
+            this.RTB_F.Location = new System.Drawing.Point(10, 444);
+            this.RTB_F.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_F.Name = "RTB_F";
-            this.RTB_F.Size = new System.Drawing.Size(245, 42);
+            this.RTB_F.Size = new System.Drawing.Size(406, 65);
             this.RTB_F.TabIndex = 425;
             this.RTB_F.Text = "00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99 AA " +
     "BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF ";
             this.RTB_F.Visible = false;
             this.RTB_F.TextChanged += new System.EventHandler(this.ChangeRAW_F);
-            //
+            // 
             // NUD_FE
-            //
-            this.NUD_FE.Location = new System.Drawing.Point(75, 11);
+            // 
+            this.NUD_FE.Location = new System.Drawing.Point(125, 18);
+            this.NUD_FE.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_FE.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.NUD_FE.Name = "NUD_FE";
-            this.NUD_FE.Size = new System.Drawing.Size(53, 20);
+            this.NUD_FE.Size = new System.Drawing.Size(88, 29);
             this.NUD_FE.TabIndex = 423;
             this.NUD_FE.ValueChanged += new System.EventHandler(this.ChangeFurniture);
-            //
+            // 
             // L_FE
-            //
-            this.L_FE.Location = new System.Drawing.Point(3, 11);
+            // 
+            this.L_FE.Location = new System.Drawing.Point(5, 18);
+            this.L_FE.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_FE.Name = "L_FE";
-            this.L_FE.Size = new System.Drawing.Size(66, 15);
+            this.L_FE.Size = new System.Drawing.Size(110, 24);
             this.L_FE.TabIndex = 424;
             this.L_FE.Text = "Entry:";
             this.L_FE.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // tb_NPC
-            //
+            // 
             this.tb_NPC.Controls.Add(this.GB_N);
             this.tb_NPC.Controls.Add(this.NUD_NE);
             this.tb_NPC.Controls.Add(this.L_NE);
-            this.tb_NPC.Location = new System.Drawing.Point(4, 22);
+            this.tb_NPC.Location = new System.Drawing.Point(4, 30);
+            this.tb_NPC.Margin = new System.Windows.Forms.Padding(5);
             this.tb_NPC.Name = "tb_NPC";
-            this.tb_NPC.Padding = new System.Windows.Forms.Padding(3);
-            this.tb_NPC.Size = new System.Drawing.Size(337, 436);
+            this.tb_NPC.Padding = new System.Windows.Forms.Padding(5);
+            this.tb_NPC.Size = new System.Drawing.Size(567, 712);
             this.tb_NPC.TabIndex = 1;
             this.tb_NPC.Text = "NPC";
             this.tb_NPC.UseVisualStyleBackColor = true;
-            //
+            // 
             // GB_N
-            //
+            // 
             this.GB_N.Controls.Add(this.B_ResetNPC);
             this.GB_N.Controls.Add(this.NUD_NMove2);
             this.GB_N.Controls.Add(this.L_Move2);
@@ -669,328 +705,360 @@
             this.GB_N.Controls.Add(this.RTB_N);
             this.GB_N.Controls.Add(this.NUD_NID);
             this.GB_N.Controls.Add(this.L_NID);
-            this.GB_N.Location = new System.Drawing.Point(6, 40);
+            this.GB_N.Location = new System.Drawing.Point(10, 65);
+            this.GB_N.Margin = new System.Windows.Forms.Padding(5);
             this.GB_N.Name = "GB_N";
-            this.GB_N.Size = new System.Drawing.Size(325, 323);
+            this.GB_N.Padding = new System.Windows.Forms.Padding(5);
+            this.GB_N.Size = new System.Drawing.Size(542, 522);
             this.GB_N.TabIndex = 436;
             this.GB_N.TabStop = false;
             this.GB_N.Text = "Info:";
-            //
+            // 
             // B_ResetNPC
-            //
-            this.B_ResetNPC.Location = new System.Drawing.Point(257, 275);
+            // 
+            this.B_ResetNPC.Location = new System.Drawing.Point(428, 444);
+            this.B_ResetNPC.Margin = new System.Windows.Forms.Padding(5);
             this.B_ResetNPC.Name = "B_ResetNPC";
-            this.B_ResetNPC.Size = new System.Drawing.Size(62, 42);
+            this.B_ResetNPC.Size = new System.Drawing.Size(103, 68);
             this.B_ResetNPC.TabIndex = 458;
             this.B_ResetNPC.Text = "Reset\r\nNPC";
             this.B_ResetNPC.UseVisualStyleBackColor = true;
             this.B_ResetNPC.Click += new System.EventHandler(this.B_ResetNPC_Click);
-            //
+            // 
             // NUD_NMove2
-            //
-            this.NUD_NMove2.Location = new System.Drawing.Point(234, 146);
+            // 
+            this.NUD_NMove2.Location = new System.Drawing.Point(390, 236);
+            this.NUD_NMove2.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_NMove2.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_NMove2.Name = "NUD_NMove2";
-            this.NUD_NMove2.Size = new System.Drawing.Size(53, 20);
+            this.NUD_NMove2.Size = new System.Drawing.Size(88, 29);
             this.NUD_NMove2.TabIndex = 457;
-            //
+            // 
             // L_Move2
-            //
-            this.L_Move2.Location = new System.Drawing.Point(152, 146);
+            // 
+            this.L_Move2.Location = new System.Drawing.Point(253, 236);
+            this.L_Move2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Move2.Name = "L_Move2";
-            this.L_Move2.Size = new System.Drawing.Size(76, 16);
+            this.L_Move2.Size = new System.Drawing.Size(127, 26);
             this.L_Move2.TabIndex = 456;
             this.L_Move2.Text = "Move2:";
             this.L_Move2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // NUD_NMove1
-            //
-            this.NUD_NMove1.Location = new System.Drawing.Point(234, 120);
+            // 
+            this.NUD_NMove1.Location = new System.Drawing.Point(390, 194);
+            this.NUD_NMove1.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_NMove1.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_NMove1.Name = "NUD_NMove1";
-            this.NUD_NMove1.Size = new System.Drawing.Size(53, 20);
+            this.NUD_NMove1.Size = new System.Drawing.Size(88, 29);
             this.NUD_NMove1.TabIndex = 455;
-            //
+            // 
             // L_Move1
-            //
-            this.L_Move1.Location = new System.Drawing.Point(152, 120);
+            // 
+            this.L_Move1.Location = new System.Drawing.Point(253, 194);
+            this.L_Move1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Move1.Name = "L_Move1";
-            this.L_Move1.Size = new System.Drawing.Size(76, 16);
+            this.L_Move1.Size = new System.Drawing.Size(127, 26);
             this.L_Move1.TabIndex = 454;
             this.L_Move1.Text = "Move1:";
             this.L_Move1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // TB_Leash
-            //
-            this.TB_Leash.Location = new System.Drawing.Point(93, 250);
+            // 
+            this.TB_Leash.Location = new System.Drawing.Point(155, 404);
+            this.TB_Leash.Margin = new System.Windows.Forms.Padding(5);
             this.TB_Leash.Name = "TB_Leash";
             this.TB_Leash.ReadOnly = true;
-            this.TB_Leash.Size = new System.Drawing.Size(158, 20);
+            this.TB_Leash.Size = new System.Drawing.Size(261, 29);
             this.TB_Leash.TabIndex = 453;
-            //
+            // 
             // L_LeashInfo
-            //
-            this.L_LeashInfo.Location = new System.Drawing.Point(11, 251);
+            // 
+            this.L_LeashInfo.Location = new System.Drawing.Point(18, 406);
+            this.L_LeashInfo.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_LeashInfo.Name = "L_LeashInfo";
-            this.L_LeashInfo.Size = new System.Drawing.Size(76, 16);
+            this.L_LeashInfo.Size = new System.Drawing.Size(127, 26);
             this.L_LeashInfo.TabIndex = 452;
             this.L_LeashInfo.Text = "Leash Info:";
             this.L_LeashInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // L_NDeg
-            //
-            this.L_NDeg.Location = new System.Drawing.Point(11, 225);
+            // 
+            this.L_NDeg.Location = new System.Drawing.Point(18, 364);
+            this.L_NDeg.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_NDeg.Name = "L_NDeg";
-            this.L_NDeg.Size = new System.Drawing.Size(76, 16);
+            this.L_NDeg.Size = new System.Drawing.Size(127, 26);
             this.L_NDeg.TabIndex = 451;
             this.L_NDeg.Text = "Degrees (?):";
             this.L_NDeg.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // TB_NDeg
-            //
-            this.TB_NDeg.Location = new System.Drawing.Point(93, 224);
+            // 
+            this.TB_NDeg.Location = new System.Drawing.Point(155, 362);
+            this.TB_NDeg.Margin = new System.Windows.Forms.Padding(5);
             this.TB_NDeg.Name = "TB_NDeg";
             this.TB_NDeg.ReadOnly = true;
-            this.TB_NDeg.Size = new System.Drawing.Size(53, 20);
+            this.TB_NDeg.Size = new System.Drawing.Size(86, 29);
             this.TB_NDeg.TabIndex = 437;
-            //
+            // 
             // NUD_NRange
-            //
-            this.NUD_NRange.Location = new System.Drawing.Point(93, 146);
+            // 
+            this.NUD_NRange.Location = new System.Drawing.Point(155, 236);
+            this.NUD_NRange.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_NRange.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_NRange.Name = "NUD_NRange";
-            this.NUD_NRange.Size = new System.Drawing.Size(53, 20);
+            this.NUD_NRange.Size = new System.Drawing.Size(88, 29);
             this.NUD_NRange.TabIndex = 450;
-            //
+            // 
             // L_Range
-            //
-            this.L_Range.Location = new System.Drawing.Point(11, 146);
+            // 
+            this.L_Range.Location = new System.Drawing.Point(18, 236);
+            this.L_Range.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Range.Name = "L_Range";
-            this.L_Range.Size = new System.Drawing.Size(76, 16);
+            this.L_Range.Size = new System.Drawing.Size(127, 26);
             this.L_Range.TabIndex = 449;
             this.L_Range.Text = "Sight Range:";
             this.L_Range.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // L_ModelAsHex
-            //
+            // 
             this.L_ModelAsHex.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.L_ModelAsHex.AutoSize = true;
-            this.L_ModelAsHex.Location = new System.Drawing.Point(152, 44);
+            this.L_ModelAsHex.Location = new System.Drawing.Point(253, 72);
+            this.L_ModelAsHex.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_ModelAsHex.Name = "L_ModelAsHex";
-            this.L_ModelAsHex.Size = new System.Drawing.Size(29, 13);
+            this.L_ModelAsHex.Size = new System.Drawing.Size(41, 21);
             this.L_ModelAsHex.TabIndex = 448;
             this.L_ModelAsHex.Text = "HEX";
-            //
+            // 
             // NUD_NFlag
-            //
-            this.NUD_NFlag.Location = new System.Drawing.Point(93, 68);
+            // 
+            this.NUD_NFlag.Location = new System.Drawing.Point(155, 110);
+            this.NUD_NFlag.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_NFlag.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_NFlag.Name = "NUD_NFlag";
-            this.NUD_NFlag.Size = new System.Drawing.Size(53, 20);
+            this.NUD_NFlag.Size = new System.Drawing.Size(88, 29);
             this.NUD_NFlag.TabIndex = 447;
-            //
+            // 
             // L_NFlag
-            //
-            this.L_NFlag.Location = new System.Drawing.Point(11, 68);
+            // 
+            this.L_NFlag.Location = new System.Drawing.Point(18, 110);
+            this.L_NFlag.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_NFlag.Name = "L_NFlag";
-            this.L_NFlag.Size = new System.Drawing.Size(76, 16);
+            this.L_NFlag.Size = new System.Drawing.Size(127, 26);
             this.L_NFlag.TabIndex = 446;
             this.L_NFlag.Text = "Spawn Flag:";
             this.L_NFlag.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // NUD_NScript
-            //
-            this.NUD_NScript.Location = new System.Drawing.Point(93, 94);
+            // 
+            this.NUD_NScript.Location = new System.Drawing.Point(155, 152);
+            this.NUD_NScript.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_NScript.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_NScript.Name = "NUD_NScript";
-            this.NUD_NScript.Size = new System.Drawing.Size(53, 20);
+            this.NUD_NScript.Size = new System.Drawing.Size(88, 29);
             this.NUD_NScript.TabIndex = 445;
-            //
+            // 
             // L_NScript
-            //
-            this.L_NScript.Location = new System.Drawing.Point(11, 94);
+            // 
+            this.L_NScript.Location = new System.Drawing.Point(18, 152);
+            this.L_NScript.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_NScript.Name = "L_NScript";
-            this.L_NScript.Size = new System.Drawing.Size(76, 16);
+            this.L_NScript.Size = new System.Drawing.Size(127, 26);
             this.L_NScript.TabIndex = 444;
             this.L_NScript.Text = "Script:";
             this.L_NScript.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // NUD_NFace
-            //
-            this.NUD_NFace.Location = new System.Drawing.Point(93, 120);
+            // 
+            this.NUD_NFace.Location = new System.Drawing.Point(155, 194);
+            this.NUD_NFace.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_NFace.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_NFace.Name = "NUD_NFace";
-            this.NUD_NFace.Size = new System.Drawing.Size(53, 20);
+            this.NUD_NFace.Size = new System.Drawing.Size(88, 29);
             this.NUD_NFace.TabIndex = 443;
-            //
+            // 
             // L_NFaceDirection
-            //
-            this.L_NFaceDirection.Location = new System.Drawing.Point(11, 120);
+            // 
+            this.L_NFaceDirection.Location = new System.Drawing.Point(18, 194);
+            this.L_NFaceDirection.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_NFaceDirection.Name = "L_NFaceDirection";
-            this.L_NFaceDirection.Size = new System.Drawing.Size(76, 16);
+            this.L_NFaceDirection.Size = new System.Drawing.Size(127, 26);
             this.L_NFaceDirection.TabIndex = 442;
             this.L_NFaceDirection.Text = "Facing:";
             this.L_NFaceDirection.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // NUD_NY
-            //
-            this.NUD_NY.Location = new System.Drawing.Point(93, 198);
+            // 
+            this.NUD_NY.Location = new System.Drawing.Point(155, 320);
+            this.NUD_NY.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_NY.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_NY.Name = "NUD_NY";
-            this.NUD_NY.Size = new System.Drawing.Size(53, 20);
+            this.NUD_NY.Size = new System.Drawing.Size(88, 29);
             this.NUD_NY.TabIndex = 441;
-            //
+            // 
             // L_NY
-            //
-            this.L_NY.Location = new System.Drawing.Point(11, 198);
+            // 
+            this.L_NY.Location = new System.Drawing.Point(18, 320);
+            this.L_NY.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_NY.Name = "L_NY";
-            this.L_NY.Size = new System.Drawing.Size(76, 16);
+            this.L_NY.Size = new System.Drawing.Size(127, 26);
             this.L_NY.TabIndex = 440;
             this.L_NY.Text = "Y Coordinate:";
             this.L_NY.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // NUD_NX
-            //
-            this.NUD_NX.Location = new System.Drawing.Point(93, 172);
+            // 
+            this.NUD_NX.Location = new System.Drawing.Point(155, 278);
+            this.NUD_NX.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_NX.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_NX.Name = "NUD_NX";
-            this.NUD_NX.Size = new System.Drawing.Size(53, 20);
+            this.NUD_NX.Size = new System.Drawing.Size(88, 29);
             this.NUD_NX.TabIndex = 439;
-            //
+            // 
             // L_NX
-            //
-            this.L_NX.Location = new System.Drawing.Point(11, 172);
+            // 
+            this.L_NX.Location = new System.Drawing.Point(18, 278);
+            this.L_NX.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_NX.Name = "L_NX";
-            this.L_NX.Size = new System.Drawing.Size(76, 16);
+            this.L_NX.Size = new System.Drawing.Size(127, 26);
             this.L_NX.TabIndex = 438;
             this.L_NX.Text = "X Coordinate:";
             this.L_NX.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // NUD_NModel
-            //
-            this.NUD_NModel.Location = new System.Drawing.Point(93, 42);
+            // 
+            this.NUD_NModel.Location = new System.Drawing.Point(155, 68);
+            this.NUD_NModel.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_NModel.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_NModel.Name = "NUD_NModel";
-            this.NUD_NModel.Size = new System.Drawing.Size(53, 20);
+            this.NUD_NModel.Size = new System.Drawing.Size(88, 29);
             this.NUD_NModel.TabIndex = 437;
             this.NUD_NModel.ValueChanged += new System.EventHandler(this.ChangeNPC_Model);
-            //
+            // 
             // L_NModel
-            //
-            this.L_NModel.Location = new System.Drawing.Point(11, 42);
+            // 
+            this.L_NModel.Location = new System.Drawing.Point(18, 68);
+            this.L_NModel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_NModel.Name = "L_NModel";
-            this.L_NModel.Size = new System.Drawing.Size(76, 16);
+            this.L_NModel.Size = new System.Drawing.Size(127, 26);
             this.L_NModel.TabIndex = 436;
             this.L_NModel.Text = "Model:";
             this.L_NModel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // RTB_N
-            //
+            // 
             this.RTB_N.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.RTB_N.Font = new System.Drawing.Font("Courier New", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTB_N.Location = new System.Drawing.Point(6, 275);
+            this.RTB_N.Location = new System.Drawing.Point(10, 444);
+            this.RTB_N.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_N.Name = "RTB_N";
-            this.RTB_N.Size = new System.Drawing.Size(245, 42);
+            this.RTB_N.Size = new System.Drawing.Size(406, 65);
             this.RTB_N.TabIndex = 414;
             this.RTB_N.Text = "00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99 AA " +
     "BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF ";
             this.RTB_N.Visible = false;
             this.RTB_N.TextChanged += new System.EventHandler(this.ChangeRAW_N);
-            //
+            // 
             // NUD_NID
-            //
-            this.NUD_NID.Location = new System.Drawing.Point(93, 16);
+            // 
+            this.NUD_NID.Location = new System.Drawing.Point(155, 26);
+            this.NUD_NID.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_NID.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_NID.Name = "NUD_NID";
-            this.NUD_NID.Size = new System.Drawing.Size(53, 20);
+            this.NUD_NID.Size = new System.Drawing.Size(88, 29);
             this.NUD_NID.TabIndex = 435;
             this.NUD_NID.ValueChanged += new System.EventHandler(this.ChangeNPC_ID);
-            //
+            // 
             // L_NID
-            //
-            this.L_NID.Location = new System.Drawing.Point(11, 16);
+            // 
+            this.L_NID.Location = new System.Drawing.Point(18, 26);
+            this.L_NID.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_NID.Name = "L_NID";
-            this.L_NID.Size = new System.Drawing.Size(76, 16);
+            this.L_NID.Size = new System.Drawing.Size(127, 26);
             this.L_NID.TabIndex = 433;
             this.L_NID.Text = "Entity ID:";
             this.L_NID.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // NUD_NE
-            //
-            this.NUD_NE.Location = new System.Drawing.Point(75, 11);
+            // 
+            this.NUD_NE.Location = new System.Drawing.Point(125, 18);
+            this.NUD_NE.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_NE.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.NUD_NE.Name = "NUD_NE";
-            this.NUD_NE.Size = new System.Drawing.Size(53, 20);
+            this.NUD_NE.Size = new System.Drawing.Size(88, 29);
             this.NUD_NE.TabIndex = 425;
             this.NUD_NE.ValueChanged += new System.EventHandler(this.ChangeNPC);
-            //
+            // 
             // L_NE
-            //
-            this.L_NE.Location = new System.Drawing.Point(3, 11);
+            // 
+            this.L_NE.Location = new System.Drawing.Point(5, 18);
+            this.L_NE.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_NE.Name = "L_NE";
-            this.L_NE.Size = new System.Drawing.Size(66, 15);
+            this.L_NE.Size = new System.Drawing.Size(110, 24);
             this.L_NE.TabIndex = 426;
             this.L_NE.Text = "Entry:";
             this.L_NE.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // tb_Warp
-            //
+            // 
             this.tb_Warp.Controls.Add(this.GB_W);
             this.tb_Warp.Controls.Add(this.NUD_WE);
             this.tb_Warp.Controls.Add(this.L_WE);
-            this.tb_Warp.Location = new System.Drawing.Point(4, 22);
+            this.tb_Warp.Location = new System.Drawing.Point(4, 30);
+            this.tb_Warp.Margin = new System.Windows.Forms.Padding(5);
             this.tb_Warp.Name = "tb_Warp";
-            this.tb_Warp.Size = new System.Drawing.Size(337, 436);
+            this.tb_Warp.Size = new System.Drawing.Size(567, 712);
             this.tb_Warp.TabIndex = 2;
             this.tb_Warp.Text = "Warp";
             this.tb_Warp.UseVisualStyleBackColor = true;
-            //
+            // 
             // GB_W
-            //
+            // 
             this.GB_W.Controls.Add(this.B_ResetWarp);
             this.GB_W.Controls.Add(this.L_WpY);
             this.GB_W.Controls.Add(this.L_WpX);
@@ -1004,584 +1072,639 @@
             this.GB_W.Controls.Add(this.NUD_WTile);
             this.GB_W.Controls.Add(this.L_DestWarpTile);
             this.GB_W.Controls.Add(this.NUD_WMap);
-            this.GB_W.Location = new System.Drawing.Point(6, 40);
+            this.GB_W.Location = new System.Drawing.Point(10, 65);
+            this.GB_W.Margin = new System.Windows.Forms.Padding(5);
             this.GB_W.Name = "GB_W";
-            this.GB_W.Size = new System.Drawing.Size(325, 323);
+            this.GB_W.Padding = new System.Windows.Forms.Padding(5);
+            this.GB_W.Size = new System.Drawing.Size(542, 522);
             this.GB_W.TabIndex = 438;
             this.GB_W.TabStop = false;
             this.GB_W.Text = "Info:";
-            //
+            // 
             // B_ResetWarp
-            //
-            this.B_ResetWarp.Location = new System.Drawing.Point(256, 275);
+            // 
+            this.B_ResetWarp.Location = new System.Drawing.Point(427, 444);
+            this.B_ResetWarp.Margin = new System.Windows.Forms.Padding(5);
             this.B_ResetWarp.Name = "B_ResetWarp";
-            this.B_ResetWarp.Size = new System.Drawing.Size(62, 42);
+            this.B_ResetWarp.Size = new System.Drawing.Size(103, 68);
             this.B_ResetWarp.TabIndex = 466;
             this.B_ResetWarp.Text = "Reset\r\nWarp";
             this.B_ResetWarp.UseVisualStyleBackColor = true;
             this.B_ResetWarp.Click += new System.EventHandler(this.B_ResetWarp_Click);
-            //
+            // 
             // L_WpY
-            //
+            // 
             this.L_WpY.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.L_WpY.AutoSize = true;
-            this.L_WpY.Location = new System.Drawing.Point(253, 191);
+            this.L_WpY.Location = new System.Drawing.Point(422, 308);
+            this.L_WpY.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_WpY.Name = "L_WpY";
-            this.L_WpY.Size = new System.Drawing.Size(31, 13);
+            this.L_WpY.Size = new System.Drawing.Size(45, 21);
             this.L_WpY.TabIndex = 465;
             this.L_WpY.Text = "#/18";
-            //
+            // 
             // L_WpX
-            //
+            // 
             this.L_WpX.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.L_WpX.AutoSize = true;
-            this.L_WpX.Location = new System.Drawing.Point(253, 165);
+            this.L_WpX.Location = new System.Drawing.Point(422, 266);
+            this.L_WpX.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_WpX.Name = "L_WpX";
-            this.L_WpX.Size = new System.Drawing.Size(31, 13);
+            this.L_WpX.Size = new System.Drawing.Size(45, 21);
             this.L_WpX.TabIndex = 464;
             this.L_WpX.Text = "#/18";
-            //
+            // 
             // NUD_WY
-            //
+            // 
             this.NUD_WY.Increment = new decimal(new int[] {
             18,
             0,
             0,
             0});
-            this.NUD_WY.Location = new System.Drawing.Point(125, 189);
+            this.NUD_WY.Location = new System.Drawing.Point(208, 304);
+            this.NUD_WY.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_WY.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_WY.Name = "NUD_WY";
-            this.NUD_WY.Size = new System.Drawing.Size(53, 20);
+            this.NUD_WY.Size = new System.Drawing.Size(88, 29);
             this.NUD_WY.TabIndex = 463;
             this.NUD_WY.ValueChanged += new System.EventHandler(this.ChangeWarp_Y);
-            //
+            // 
             // L_WY
-            //
-            this.L_WY.Location = new System.Drawing.Point(43, 189);
+            // 
+            this.L_WY.Location = new System.Drawing.Point(72, 304);
+            this.L_WY.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_WY.Name = "L_WY";
-            this.L_WY.Size = new System.Drawing.Size(76, 16);
+            this.L_WY.Size = new System.Drawing.Size(127, 26);
             this.L_WY.TabIndex = 462;
             this.L_WY.Text = "Y Coordinate:";
             this.L_WY.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // NUD_WX
-            //
+            // 
             this.NUD_WX.Increment = new decimal(new int[] {
             18,
             0,
             0,
             0});
-            this.NUD_WX.Location = new System.Drawing.Point(125, 163);
+            this.NUD_WX.Location = new System.Drawing.Point(208, 262);
+            this.NUD_WX.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_WX.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_WX.Name = "NUD_WX";
-            this.NUD_WX.Size = new System.Drawing.Size(53, 20);
+            this.NUD_WX.Size = new System.Drawing.Size(88, 29);
             this.NUD_WX.TabIndex = 461;
             this.NUD_WX.ValueChanged += new System.EventHandler(this.ChangeWarp_X);
-            //
+            // 
             // L_WX
-            //
-            this.L_WX.Location = new System.Drawing.Point(43, 163);
+            // 
+            this.L_WX.Location = new System.Drawing.Point(72, 262);
+            this.L_WX.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_WX.Name = "L_WX";
-            this.L_WX.Size = new System.Drawing.Size(76, 16);
+            this.L_WX.Size = new System.Drawing.Size(127, 26);
             this.L_WX.TabIndex = 460;
             this.L_WX.Text = "X Coordinate:";
             this.L_WX.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // RTB_W
-            //
+            // 
             this.RTB_W.Font = new System.Drawing.Font("Courier New", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTB_W.Location = new System.Drawing.Point(6, 275);
+            this.RTB_W.Location = new System.Drawing.Point(10, 444);
+            this.RTB_W.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_W.Name = "RTB_W";
-            this.RTB_W.Size = new System.Drawing.Size(245, 42);
+            this.RTB_W.Size = new System.Drawing.Size(406, 65);
             this.RTB_W.TabIndex = 425;
             this.RTB_W.Text = "00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99 AA " +
     "BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF ";
             this.RTB_W.Visible = false;
             this.RTB_W.TextChanged += new System.EventHandler(this.ChangeRAW_W);
-            //
+            // 
             // L_WarpDest
-            //
-            this.L_WarpDest.Location = new System.Drawing.Point(58, 31);
+            // 
+            this.L_WarpDest.Location = new System.Drawing.Point(97, 51);
+            this.L_WarpDest.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_WarpDest.Name = "L_WarpDest";
-            this.L_WarpDest.Size = new System.Drawing.Size(120, 15);
+            this.L_WarpDest.Size = new System.Drawing.Size(200, 24);
             this.L_WarpDest.TabIndex = 432;
             this.L_WarpDest.Text = "Dest:";
             this.L_WarpDest.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.L_WarpDest.DoubleClick += new System.EventHandler(this.DclickDestMap);
-            //
+            // 
             // L_DestMap
-            //
-            this.L_DestMap.Location = new System.Drawing.Point(-1, 50);
+            // 
+            this.L_DestMap.Location = new System.Drawing.Point(-2, 80);
+            this.L_DestMap.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_DestMap.Name = "L_DestMap";
-            this.L_DestMap.Size = new System.Drawing.Size(120, 15);
+            this.L_DestMap.Size = new System.Drawing.Size(200, 24);
             this.L_DestMap.TabIndex = 428;
             this.L_DestMap.Text = "Destination Map:";
             this.L_DestMap.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // NUD_WTile
-            //
-            this.NUD_WTile.Location = new System.Drawing.Point(125, 70);
+            // 
+            this.NUD_WTile.Location = new System.Drawing.Point(208, 114);
+            this.NUD_WTile.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_WTile.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.NUD_WTile.Name = "NUD_WTile";
-            this.NUD_WTile.Size = new System.Drawing.Size(53, 20);
+            this.NUD_WTile.Size = new System.Drawing.Size(88, 29);
             this.NUD_WTile.TabIndex = 431;
-            //
+            // 
             // L_DestWarpTile
-            //
-            this.L_DestWarpTile.Location = new System.Drawing.Point(-1, 71);
+            // 
+            this.L_DestWarpTile.Location = new System.Drawing.Point(-2, 116);
+            this.L_DestWarpTile.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_DestWarpTile.Name = "L_DestWarpTile";
-            this.L_DestWarpTile.Size = new System.Drawing.Size(120, 15);
+            this.L_DestWarpTile.Size = new System.Drawing.Size(200, 24);
             this.L_DestWarpTile.TabIndex = 429;
             this.L_DestWarpTile.Text = "Destination WarpTile:";
             this.L_DestWarpTile.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // NUD_WMap
-            //
-            this.NUD_WMap.Location = new System.Drawing.Point(125, 49);
+            // 
+            this.NUD_WMap.Location = new System.Drawing.Point(208, 79);
+            this.NUD_WMap.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_WMap.Maximum = new decimal(new int[] {
             999,
             0,
             0,
             0});
             this.NUD_WMap.Name = "NUD_WMap";
-            this.NUD_WMap.Size = new System.Drawing.Size(53, 20);
+            this.NUD_WMap.Size = new System.Drawing.Size(88, 29);
             this.NUD_WMap.TabIndex = 430;
-            //
+            // 
             // NUD_WE
-            //
-            this.NUD_WE.Location = new System.Drawing.Point(75, 11);
+            // 
+            this.NUD_WE.Location = new System.Drawing.Point(125, 18);
+            this.NUD_WE.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_WE.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.NUD_WE.Name = "NUD_WE";
-            this.NUD_WE.Size = new System.Drawing.Size(53, 20);
+            this.NUD_WE.Size = new System.Drawing.Size(88, 29);
             this.NUD_WE.TabIndex = 425;
             this.NUD_WE.ValueChanged += new System.EventHandler(this.ChangeWarp);
-            //
+            // 
             // L_WE
-            //
-            this.L_WE.Location = new System.Drawing.Point(3, 11);
+            // 
+            this.L_WE.Location = new System.Drawing.Point(5, 18);
+            this.L_WE.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_WE.Name = "L_WE";
-            this.L_WE.Size = new System.Drawing.Size(66, 15);
+            this.L_WE.Size = new System.Drawing.Size(110, 24);
             this.L_WE.TabIndex = 426;
             this.L_WE.Text = "Entry:";
             this.L_WE.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // tb_Trigger1
-            //
+            // 
             this.tb_Trigger1.Controls.Add(this.GB_T1);
             this.tb_Trigger1.Controls.Add(this.NUD_TE);
             this.tb_Trigger1.Controls.Add(this.L_TE);
-            this.tb_Trigger1.Location = new System.Drawing.Point(4, 22);
+            this.tb_Trigger1.Location = new System.Drawing.Point(4, 30);
+            this.tb_Trigger1.Margin = new System.Windows.Forms.Padding(5);
             this.tb_Trigger1.Name = "tb_Trigger1";
-            this.tb_Trigger1.Size = new System.Drawing.Size(337, 436);
+            this.tb_Trigger1.Size = new System.Drawing.Size(567, 712);
             this.tb_Trigger1.TabIndex = 3;
             this.tb_Trigger1.Text = "Trigger1";
             this.tb_Trigger1.UseVisualStyleBackColor = true;
-            //
+            // 
             // GB_T1
-            //
+            // 
             this.GB_T1.Controls.Add(this.B_ResetTrigger1);
             this.GB_T1.Controls.Add(this.NUD_T1Y);
             this.GB_T1.Controls.Add(this.L_T1Y);
             this.GB_T1.Controls.Add(this.NUD_T1X);
             this.GB_T1.Controls.Add(this.L_T1X);
             this.GB_T1.Controls.Add(this.RTB_T1);
-            this.GB_T1.Location = new System.Drawing.Point(6, 40);
+            this.GB_T1.Location = new System.Drawing.Point(10, 65);
+            this.GB_T1.Margin = new System.Windows.Forms.Padding(5);
             this.GB_T1.Name = "GB_T1";
-            this.GB_T1.Size = new System.Drawing.Size(325, 323);
+            this.GB_T1.Padding = new System.Windows.Forms.Padding(5);
+            this.GB_T1.Size = new System.Drawing.Size(542, 522);
             this.GB_T1.TabIndex = 439;
             this.GB_T1.TabStop = false;
             this.GB_T1.Text = "Info:";
-            //
+            // 
             // B_ResetTrigger1
-            //
-            this.B_ResetTrigger1.Location = new System.Drawing.Point(257, 275);
+            // 
+            this.B_ResetTrigger1.Location = new System.Drawing.Point(428, 444);
+            this.B_ResetTrigger1.Margin = new System.Windows.Forms.Padding(5);
             this.B_ResetTrigger1.Name = "B_ResetTrigger1";
-            this.B_ResetTrigger1.Size = new System.Drawing.Size(62, 42);
+            this.B_ResetTrigger1.Size = new System.Drawing.Size(103, 68);
             this.B_ResetTrigger1.TabIndex = 467;
             this.B_ResetTrigger1.Text = "Reset\r\nTrigger1";
             this.B_ResetTrigger1.UseVisualStyleBackColor = true;
             this.B_ResetTrigger1.Click += new System.EventHandler(this.B_ResetTrigger1_Click);
-            //
+            // 
             // NUD_T1Y
-            //
-            this.NUD_T1Y.Location = new System.Drawing.Point(143, 164);
+            // 
+            this.NUD_T1Y.Location = new System.Drawing.Point(238, 264);
+            this.NUD_T1Y.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_T1Y.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_T1Y.Name = "NUD_T1Y";
-            this.NUD_T1Y.Size = new System.Drawing.Size(53, 20);
+            this.NUD_T1Y.Size = new System.Drawing.Size(88, 29);
             this.NUD_T1Y.TabIndex = 445;
-            //
+            // 
             // L_T1Y
-            //
-            this.L_T1Y.Location = new System.Drawing.Point(61, 164);
+            // 
+            this.L_T1Y.Location = new System.Drawing.Point(102, 264);
+            this.L_T1Y.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_T1Y.Name = "L_T1Y";
-            this.L_T1Y.Size = new System.Drawing.Size(76, 16);
+            this.L_T1Y.Size = new System.Drawing.Size(127, 26);
             this.L_T1Y.TabIndex = 444;
             this.L_T1Y.Text = "Y Coordinate:";
             this.L_T1Y.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // NUD_T1X
-            //
-            this.NUD_T1X.Location = new System.Drawing.Point(143, 138);
+            // 
+            this.NUD_T1X.Location = new System.Drawing.Point(238, 222);
+            this.NUD_T1X.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_T1X.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_T1X.Name = "NUD_T1X";
-            this.NUD_T1X.Size = new System.Drawing.Size(53, 20);
+            this.NUD_T1X.Size = new System.Drawing.Size(88, 29);
             this.NUD_T1X.TabIndex = 443;
-            //
+            // 
             // L_T1X
-            //
-            this.L_T1X.Location = new System.Drawing.Point(61, 138);
+            // 
+            this.L_T1X.Location = new System.Drawing.Point(102, 222);
+            this.L_T1X.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_T1X.Name = "L_T1X";
-            this.L_T1X.Size = new System.Drawing.Size(76, 16);
+            this.L_T1X.Size = new System.Drawing.Size(127, 26);
             this.L_T1X.TabIndex = 442;
             this.L_T1X.Text = "X Coordinate:";
             this.L_T1X.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // RTB_T1
-            //
+            // 
             this.RTB_T1.Font = new System.Drawing.Font("Courier New", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTB_T1.Location = new System.Drawing.Point(6, 275);
+            this.RTB_T1.Location = new System.Drawing.Point(10, 444);
+            this.RTB_T1.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_T1.Name = "RTB_T1";
-            this.RTB_T1.Size = new System.Drawing.Size(245, 42);
+            this.RTB_T1.Size = new System.Drawing.Size(406, 65);
             this.RTB_T1.TabIndex = 425;
             this.RTB_T1.Text = "00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99 AA " +
     "BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF ";
             this.RTB_T1.Visible = false;
             this.RTB_T1.TextChanged += new System.EventHandler(this.ChangeRAW_T1);
-            //
+            // 
             // NUD_TE
-            //
-            this.NUD_TE.Location = new System.Drawing.Point(75, 11);
+            // 
+            this.NUD_TE.Location = new System.Drawing.Point(125, 18);
+            this.NUD_TE.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_TE.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.NUD_TE.Name = "NUD_TE";
-            this.NUD_TE.Size = new System.Drawing.Size(53, 20);
+            this.NUD_TE.Size = new System.Drawing.Size(88, 29);
             this.NUD_TE.TabIndex = 425;
             this.NUD_TE.ValueChanged += new System.EventHandler(this.ChangeTrigger1);
-            //
+            // 
             // L_TE
-            //
-            this.L_TE.Location = new System.Drawing.Point(3, 11);
+            // 
+            this.L_TE.Location = new System.Drawing.Point(5, 18);
+            this.L_TE.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_TE.Name = "L_TE";
-            this.L_TE.Size = new System.Drawing.Size(66, 15);
+            this.L_TE.Size = new System.Drawing.Size(110, 24);
             this.L_TE.TabIndex = 426;
             this.L_TE.Text = "Entry:";
             this.L_TE.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // tb_Trigger2
-            //
+            // 
             this.tb_Trigger2.Controls.Add(this.GB_T2);
             this.tb_Trigger2.Controls.Add(this.NUD_UE);
             this.tb_Trigger2.Controls.Add(this.L_UE);
-            this.tb_Trigger2.Location = new System.Drawing.Point(4, 22);
+            this.tb_Trigger2.Location = new System.Drawing.Point(4, 30);
+            this.tb_Trigger2.Margin = new System.Windows.Forms.Padding(5);
             this.tb_Trigger2.Name = "tb_Trigger2";
-            this.tb_Trigger2.Padding = new System.Windows.Forms.Padding(3);
-            this.tb_Trigger2.Size = new System.Drawing.Size(337, 436);
+            this.tb_Trigger2.Padding = new System.Windows.Forms.Padding(5);
+            this.tb_Trigger2.Size = new System.Drawing.Size(567, 712);
             this.tb_Trigger2.TabIndex = 5;
             this.tb_Trigger2.Text = "Trigger2";
             this.tb_Trigger2.UseVisualStyleBackColor = true;
-            //
+            // 
             // GB_T2
-            //
+            // 
             this.GB_T2.Controls.Add(this.B_ResetTrigger2);
             this.GB_T2.Controls.Add(this.NUD_T2Y);
             this.GB_T2.Controls.Add(this.L_T2Y);
             this.GB_T2.Controls.Add(this.NUD_T2X);
             this.GB_T2.Controls.Add(this.L_T2X);
             this.GB_T2.Controls.Add(this.RTB_T2);
-            this.GB_T2.Location = new System.Drawing.Point(6, 40);
+            this.GB_T2.Location = new System.Drawing.Point(10, 65);
+            this.GB_T2.Margin = new System.Windows.Forms.Padding(5);
             this.GB_T2.Name = "GB_T2";
-            this.GB_T2.Size = new System.Drawing.Size(325, 323);
+            this.GB_T2.Padding = new System.Windows.Forms.Padding(5);
+            this.GB_T2.Size = new System.Drawing.Size(542, 522);
             this.GB_T2.TabIndex = 440;
             this.GB_T2.TabStop = false;
             this.GB_T2.Text = "Info:";
-            //
+            // 
             // B_ResetTrigger2
-            //
-            this.B_ResetTrigger2.Location = new System.Drawing.Point(257, 275);
+            // 
+            this.B_ResetTrigger2.Location = new System.Drawing.Point(428, 444);
+            this.B_ResetTrigger2.Margin = new System.Windows.Forms.Padding(5);
             this.B_ResetTrigger2.Name = "B_ResetTrigger2";
-            this.B_ResetTrigger2.Size = new System.Drawing.Size(62, 42);
+            this.B_ResetTrigger2.Size = new System.Drawing.Size(103, 68);
             this.B_ResetTrigger2.TabIndex = 467;
             this.B_ResetTrigger2.Text = "Reset\r\nTrigger2";
             this.B_ResetTrigger2.UseVisualStyleBackColor = true;
             this.B_ResetTrigger2.Click += new System.EventHandler(this.B_ResetTrigger2_Click);
-            //
+            // 
             // NUD_T2Y
-            //
-            this.NUD_T2Y.Location = new System.Drawing.Point(143, 164);
+            // 
+            this.NUD_T2Y.Location = new System.Drawing.Point(238, 264);
+            this.NUD_T2Y.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_T2Y.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_T2Y.Name = "NUD_T2Y";
-            this.NUD_T2Y.Size = new System.Drawing.Size(53, 20);
+            this.NUD_T2Y.Size = new System.Drawing.Size(88, 29);
             this.NUD_T2Y.TabIndex = 445;
-            //
+            // 
             // L_T2Y
-            //
-            this.L_T2Y.Location = new System.Drawing.Point(61, 164);
+            // 
+            this.L_T2Y.Location = new System.Drawing.Point(102, 264);
+            this.L_T2Y.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_T2Y.Name = "L_T2Y";
-            this.L_T2Y.Size = new System.Drawing.Size(76, 16);
+            this.L_T2Y.Size = new System.Drawing.Size(127, 26);
             this.L_T2Y.TabIndex = 444;
             this.L_T2Y.Text = "Y Coordinate:";
             this.L_T2Y.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // NUD_T2X
-            //
-            this.NUD_T2X.Location = new System.Drawing.Point(143, 138);
+            // 
+            this.NUD_T2X.Location = new System.Drawing.Point(238, 222);
+            this.NUD_T2X.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_T2X.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_T2X.Name = "NUD_T2X";
-            this.NUD_T2X.Size = new System.Drawing.Size(53, 20);
+            this.NUD_T2X.Size = new System.Drawing.Size(88, 29);
             this.NUD_T2X.TabIndex = 443;
-            //
+            // 
             // L_T2X
-            //
-            this.L_T2X.Location = new System.Drawing.Point(61, 138);
+            // 
+            this.L_T2X.Location = new System.Drawing.Point(102, 222);
+            this.L_T2X.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_T2X.Name = "L_T2X";
-            this.L_T2X.Size = new System.Drawing.Size(76, 16);
+            this.L_T2X.Size = new System.Drawing.Size(127, 26);
             this.L_T2X.TabIndex = 442;
             this.L_T2X.Text = "X Coordinate:";
             this.L_T2X.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // RTB_T2
-            //
+            // 
             this.RTB_T2.Font = new System.Drawing.Font("Courier New", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTB_T2.Location = new System.Drawing.Point(6, 275);
+            this.RTB_T2.Location = new System.Drawing.Point(10, 444);
+            this.RTB_T2.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_T2.Name = "RTB_T2";
-            this.RTB_T2.Size = new System.Drawing.Size(245, 42);
+            this.RTB_T2.Size = new System.Drawing.Size(406, 65);
             this.RTB_T2.TabIndex = 425;
             this.RTB_T2.Text = "00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99 AA " +
     "BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF ";
             this.RTB_T2.Visible = false;
             this.RTB_T2.TextChanged += new System.EventHandler(this.ChangeRAW_T2);
-            //
+            // 
             // NUD_UE
-            //
-            this.NUD_UE.Location = new System.Drawing.Point(75, 11);
+            // 
+            this.NUD_UE.Location = new System.Drawing.Point(125, 18);
+            this.NUD_UE.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_UE.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.NUD_UE.Name = "NUD_UE";
-            this.NUD_UE.Size = new System.Drawing.Size(53, 20);
+            this.NUD_UE.Size = new System.Drawing.Size(88, 29);
             this.NUD_UE.TabIndex = 427;
             this.NUD_UE.ValueChanged += new System.EventHandler(this.ChangeTrigger2);
-            //
+            // 
             // L_UE
-            //
-            this.L_UE.Location = new System.Drawing.Point(3, 11);
+            // 
+            this.L_UE.Location = new System.Drawing.Point(5, 18);
+            this.L_UE.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_UE.Name = "L_UE";
-            this.L_UE.Size = new System.Drawing.Size(66, 15);
+            this.L_UE.Size = new System.Drawing.Size(110, 24);
             this.L_UE.TabIndex = 428;
             this.L_UE.Text = "Entry:";
             this.L_UE.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // tb_Script
-            //
+            // 
             this.tb_Script.Controls.Add(this.RTB_OSP);
             this.tb_Script.Controls.Add(this.RTB_OS);
             this.tb_Script.Controls.Add(this.L_OWSCDesc);
             this.tb_Script.Controls.Add(this.RTB_OWSCMD);
-            this.tb_Script.Location = new System.Drawing.Point(4, 22);
+            this.tb_Script.Location = new System.Drawing.Point(4, 30);
+            this.tb_Script.Margin = new System.Windows.Forms.Padding(5);
             this.tb_Script.Name = "tb_Script";
-            this.tb_Script.Size = new System.Drawing.Size(337, 436);
+            this.tb_Script.Size = new System.Drawing.Size(567, 712);
             this.tb_Script.TabIndex = 4;
             this.tb_Script.Text = "Script";
             this.tb_Script.UseVisualStyleBackColor = true;
-            //
+            // 
             // RTB_OSP
-            //
-            this.RTB_OSP.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.RTB_OSP.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.RTB_OSP.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTB_OSP.Location = new System.Drawing.Point(6, 234);
+            this.RTB_OSP.Location = new System.Drawing.Point(10, 378);
+            this.RTB_OSP.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_OSP.Name = "RTB_OSP";
             this.RTB_OSP.ReadOnly = true;
-            this.RTB_OSP.Size = new System.Drawing.Size(331, 202);
+            this.RTB_OSP.Size = new System.Drawing.Size(549, 324);
             this.RTB_OSP.TabIndex = 425;
             this.RTB_OSP.Text = "Parse Output";
-            //
+            // 
             // RTB_OS
-            //
+            // 
             this.RTB_OS.Font = new System.Drawing.Font("Courier New", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTB_OS.Location = new System.Drawing.Point(97, 3);
+            this.RTB_OS.Location = new System.Drawing.Point(162, 5);
+            this.RTB_OS.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_OS.Name = "RTB_OS";
             this.RTB_OS.ReadOnly = true;
-            this.RTB_OS.Size = new System.Drawing.Size(85, 225);
+            this.RTB_OS.Size = new System.Drawing.Size(139, 361);
             this.RTB_OS.TabIndex = 424;
             this.RTB_OS.Text = "Raw Data";
-            //
+            // 
             // L_OWSCDesc
-            //
+            // 
             this.L_OWSCDesc.AutoSize = true;
-            this.L_OWSCDesc.Location = new System.Drawing.Point(188, 3);
+            this.L_OWSCDesc.Location = new System.Drawing.Point(313, 5);
+            this.L_OWSCDesc.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_OWSCDesc.Name = "L_OWSCDesc";
-            this.L_OWSCDesc.Size = new System.Drawing.Size(75, 13);
+            this.L_OWSCDesc.Size = new System.Drawing.Size(118, 21);
             this.L_OWSCDesc.TabIndex = 423;
             this.L_OWSCDesc.Text = "Script Analysis";
-            //
+            // 
             // RTB_OWSCMD
-            //
+            // 
             this.RTB_OWSCMD.Font = new System.Drawing.Font("Courier New", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTB_OWSCMD.Location = new System.Drawing.Point(6, 3);
+            this.RTB_OWSCMD.Location = new System.Drawing.Point(10, 5);
+            this.RTB_OWSCMD.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_OWSCMD.Name = "RTB_OWSCMD";
             this.RTB_OWSCMD.ReadOnly = true;
-            this.RTB_OWSCMD.Size = new System.Drawing.Size(85, 225);
+            this.RTB_OWSCMD.Size = new System.Drawing.Size(139, 361);
             this.RTB_OWSCMD.TabIndex = 422;
             this.RTB_OWSCMD.Text = "Script CMDs";
-            //
+            // 
             // NUD_NPCCount
-            //
+            // 
             this.NUD_NPCCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.NUD_NPCCount.Location = new System.Drawing.Point(422, 48);
+            this.NUD_NPCCount.Location = new System.Drawing.Point(703, 77);
+            this.NUD_NPCCount.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_NPCCount.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.NUD_NPCCount.Name = "NUD_NPCCount";
-            this.NUD_NPCCount.Size = new System.Drawing.Size(53, 20);
+            this.NUD_NPCCount.Size = new System.Drawing.Size(88, 29);
             this.NUD_NPCCount.TabIndex = 415;
             this.NUD_NPCCount.ValueChanged += new System.EventHandler(this.ChangeNPCCount);
-            //
+            // 
             // L_NPCCount
-            //
+            // 
             this.L_NPCCount.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.L_NPCCount.Location = new System.Drawing.Point(350, 48);
+            this.L_NPCCount.Location = new System.Drawing.Point(583, 77);
+            this.L_NPCCount.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_NPCCount.Name = "L_NPCCount";
-            this.L_NPCCount.Size = new System.Drawing.Size(66, 15);
+            this.L_NPCCount.Size = new System.Drawing.Size(110, 24);
             this.L_NPCCount.TabIndex = 416;
             this.L_NPCCount.Text = "NPC:";
             this.L_NPCCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // tb_MSC
-            //
+            // 
             this.tb_MSC.Controls.Add(this.RTB_MSP);
             this.tb_MSC.Controls.Add(this.RTB_MSCMD);
             this.tb_MSC.Controls.Add(this.L_MSSCDesc);
             this.tb_MSC.Controls.Add(this.RTB_MS);
-            this.tb_MSC.Location = new System.Drawing.Point(4, 22);
+            this.tb_MSC.Location = new System.Drawing.Point(4, 30);
+            this.tb_MSC.Margin = new System.Windows.Forms.Padding(5);
             this.tb_MSC.Name = "tb_MSC";
-            this.tb_MSC.Size = new System.Drawing.Size(486, 471);
+            this.tb_MSC.Size = new System.Drawing.Size(815, 769);
             this.tb_MSC.TabIndex = 2;
             this.tb_MSC.Text = "Map SC";
             this.tb_MSC.UseVisualStyleBackColor = true;
-            //
+            // 
             // RTB_MSP
-            //
-            this.RTB_MSP.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.RTB_MSP.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.RTB_MSP.Font = new System.Drawing.Font("Courier New", 8.25F);
-            this.RTB_MSP.Location = new System.Drawing.Point(3, 234);
+            this.RTB_MSP.Location = new System.Drawing.Point(5, 378);
+            this.RTB_MSP.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_MSP.Name = "RTB_MSP";
             this.RTB_MSP.ReadOnly = true;
-            this.RTB_MSP.Size = new System.Drawing.Size(483, 237);
+            this.RTB_MSP.Size = new System.Drawing.Size(802, 380);
             this.RTB_MSP.TabIndex = 428;
             this.RTB_MSP.Text = "Parse Output";
-            //
+            // 
             // RTB_MSCMD
-            //
+            // 
             this.RTB_MSCMD.Font = new System.Drawing.Font("Courier New", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTB_MSCMD.Location = new System.Drawing.Point(3, 3);
+            this.RTB_MSCMD.Location = new System.Drawing.Point(5, 5);
+            this.RTB_MSCMD.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_MSCMD.Name = "RTB_MSCMD";
             this.RTB_MSCMD.ReadOnly = true;
-            this.RTB_MSCMD.Size = new System.Drawing.Size(85, 225);
+            this.RTB_MSCMD.Size = new System.Drawing.Size(139, 361);
             this.RTB_MSCMD.TabIndex = 427;
             this.RTB_MSCMD.Text = "Script CMDs";
-            //
+            // 
             // L_MSSCDesc
-            //
+            // 
             this.L_MSSCDesc.AutoSize = true;
-            this.L_MSSCDesc.Location = new System.Drawing.Point(185, 3);
+            this.L_MSSCDesc.Location = new System.Drawing.Point(308, 5);
+            this.L_MSSCDesc.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_MSSCDesc.Name = "L_MSSCDesc";
-            this.L_MSSCDesc.Size = new System.Drawing.Size(75, 13);
+            this.L_MSSCDesc.Size = new System.Drawing.Size(118, 21);
             this.L_MSSCDesc.TabIndex = 426;
             this.L_MSSCDesc.Text = "Script Analysis";
-            //
+            // 
             // RTB_MS
-            //
+            // 
             this.RTB_MS.Font = new System.Drawing.Font("Courier New", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTB_MS.Location = new System.Drawing.Point(94, 3);
+            this.RTB_MS.Location = new System.Drawing.Point(157, 5);
+            this.RTB_MS.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_MS.Name = "RTB_MS";
             this.RTB_MS.ReadOnly = true;
-            this.RTB_MS.Size = new System.Drawing.Size(85, 225);
+            this.RTB_MS.Size = new System.Drawing.Size(139, 361);
             this.RTB_MS.TabIndex = 425;
             this.RTB_MS.Text = "Raw Data";
-            //
+            // 
             // tb_Encounters
-            //
+            // 
             this.tb_Encounters.Controls.Add(this.L_Encounters);
-            this.tb_Encounters.Location = new System.Drawing.Point(4, 22);
+            this.tb_Encounters.Location = new System.Drawing.Point(4, 30);
+            this.tb_Encounters.Margin = new System.Windows.Forms.Padding(5);
             this.tb_Encounters.Name = "tb_Encounters";
-            this.tb_Encounters.Size = new System.Drawing.Size(486, 471);
+            this.tb_Encounters.Size = new System.Drawing.Size(815, 769);
             this.tb_Encounters.TabIndex = 3;
             this.tb_Encounters.Text = "Encounters";
             this.tb_Encounters.UseVisualStyleBackColor = true;
-            //
+            // 
             // L_Encounters
-            //
+            // 
             this.L_Encounters.AutoSize = true;
-            this.L_Encounters.Location = new System.Drawing.Point(26, 26);
+            this.L_Encounters.Location = new System.Drawing.Point(43, 42);
+            this.L_Encounters.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Encounters.Name = "L_Encounters";
-            this.L_Encounters.Size = new System.Drawing.Size(241, 13);
+            this.L_Encounters.Size = new System.Drawing.Size(392, 21);
             this.L_Encounters.TabIndex = 0;
             this.L_Encounters.Text = "Encounters are handled in the regular Wild Editor.";
-            //
+            // 
             // tb_File5
-            //
+            // 
             this.tb_File5.Controls.Add(this.L_File5TabData);
-            this.tb_File5.Location = new System.Drawing.Point(4, 22);
+            this.tb_File5.Location = new System.Drawing.Point(4, 30);
+            this.tb_File5.Margin = new System.Windows.Forms.Padding(5);
             this.tb_File5.Name = "tb_File5";
-            this.tb_File5.Size = new System.Drawing.Size(486, 471);
+            this.tb_File5.Size = new System.Drawing.Size(815, 769);
             this.tb_File5.TabIndex = 4;
             this.tb_File5.Text = "File 5";
             this.tb_File5.UseVisualStyleBackColor = true;
-            //
+            // 
             // L_File5TabData
-            //
+            // 
             this.L_File5TabData.AutoSize = true;
-            this.L_File5TabData.Location = new System.Drawing.Point(26, 26);
+            this.L_File5TabData.Location = new System.Drawing.Point(43, 42);
+            this.L_File5TabData.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_File5TabData.Name = "L_File5TabData";
-            this.L_File5TabData.Size = new System.Drawing.Size(227, 13);
+            this.L_File5TabData.Size = new System.Drawing.Size(363, 21);
             this.L_File5TabData.TabIndex = 1;
             this.L_File5TabData.Text = "Functionality unknown. See RAW tab for data.";
-            //
+            // 
             // tb_RAW
-            //
+            // 
             this.tb_RAW.Controls.Add(this.L_ZD);
             this.tb_RAW.Controls.Add(this.L_File3);
             this.tb_RAW.Controls.Add(this.L_ZDMaster);
@@ -1595,131 +1718,144 @@
             this.tb_RAW.Controls.Add(this.RTB_OWSC);
             this.tb_RAW.Controls.Add(this.RTB_Encounter);
             this.tb_RAW.Controls.Add(this.RTB_MapSC);
-            this.tb_RAW.Location = new System.Drawing.Point(4, 22);
+            this.tb_RAW.Location = new System.Drawing.Point(4, 30);
+            this.tb_RAW.Margin = new System.Windows.Forms.Padding(5);
             this.tb_RAW.Name = "tb_RAW";
-            this.tb_RAW.Size = new System.Drawing.Size(486, 471);
+            this.tb_RAW.Size = new System.Drawing.Size(815, 769);
             this.tb_RAW.TabIndex = 5;
             this.tb_RAW.Text = "RAW";
             this.tb_RAW.UseVisualStyleBackColor = true;
-            //
+            // 
             // L_ZD
-            //
+            // 
             this.L_ZD.AutoSize = true;
             this.L_ZD.Font = new System.Drawing.Font("Courier New", 8.25F);
-            this.L_ZD.Location = new System.Drawing.Point(140, 346);
+            this.L_ZD.Location = new System.Drawing.Point(233, 558);
+            this.L_ZD.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_ZD.Name = "L_ZD";
             this.L_ZD.Size = new System.Drawing.Size(35, 28);
             this.L_ZD.TabIndex = 430;
             this.L_ZD.Text = "X: ~\r\nY: ~";
-            //
+            // 
             // L_File3
-            //
-            this.L_File3.Location = new System.Drawing.Point(70, 83);
+            // 
+            this.L_File3.Location = new System.Drawing.Point(117, 135);
+            this.L_File3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_File3.Name = "L_File3";
-            this.L_File3.Size = new System.Drawing.Size(141, 23);
+            this.L_File3.Size = new System.Drawing.Size(235, 37);
             this.L_File3.TabIndex = 429;
             this.L_File3.Text = "Map Environment [3]:";
             this.L_File3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // L_ZDMaster
-            //
-            this.L_ZDMaster.Location = new System.Drawing.Point(-4, 277);
+            // 
+            this.L_ZDMaster.Location = new System.Drawing.Point(-7, 448);
+            this.L_ZDMaster.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_ZDMaster.Name = "L_ZDMaster";
-            this.L_ZDMaster.Size = new System.Drawing.Size(141, 23);
+            this.L_ZDMaster.Size = new System.Drawing.Size(235, 37);
             this.L_ZDMaster.TabIndex = 428;
             this.L_ZDMaster.Text = "Master ZoneData Table:";
             this.L_ZDMaster.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // L_File5
-            //
-            this.L_File5.Location = new System.Drawing.Point(70, 167);
+            // 
+            this.L_File5.Location = new System.Drawing.Point(117, 270);
+            this.L_File5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_File5.Name = "L_File5";
-            this.L_File5.Size = new System.Drawing.Size(141, 23);
+            this.L_File5.Size = new System.Drawing.Size(235, 37);
             this.L_File5.TabIndex = 427;
             this.L_File5.Text = "Unknown [5]:";
             this.L_File5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // L_File4
-            //
-            this.L_File4.Location = new System.Drawing.Point(70, 125);
+            // 
+            this.L_File4.Location = new System.Drawing.Point(117, 201);
+            this.L_File4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_File4.Name = "L_File4";
-            this.L_File4.Size = new System.Drawing.Size(141, 23);
+            this.L_File4.Size = new System.Drawing.Size(235, 37);
             this.L_File4.TabIndex = 426;
             this.L_File4.Text = "Encounter Data [4]:";
             this.L_File4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // L_File2
-            //
-            this.L_File2.Location = new System.Drawing.Point(70, 41);
+            // 
+            this.L_File2.Location = new System.Drawing.Point(117, 66);
+            this.L_File2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_File2.Name = "L_File2";
-            this.L_File2.Size = new System.Drawing.Size(141, 23);
+            this.L_File2.Size = new System.Drawing.Size(235, 37);
             this.L_File2.TabIndex = 424;
             this.L_File2.Text = "Overworlds [2]:";
             this.L_File2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // L_File1
-            //
-            this.L_File1.Location = new System.Drawing.Point(70, -1);
+            // 
+            this.L_File1.Location = new System.Drawing.Point(117, -2);
+            this.L_File1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_File1.Name = "L_File1";
-            this.L_File1.Size = new System.Drawing.Size(141, 23);
+            this.L_File1.Size = new System.Drawing.Size(235, 37);
             this.L_File1.TabIndex = 423;
             this.L_File1.Text = "ZoneData [1]:";
             this.L_File1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // RTB_ZDMaster
-            //
+            // 
             this.RTB_ZDMaster.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTB_ZDMaster.Location = new System.Drawing.Point(143, 279);
+            this.RTB_ZDMaster.Location = new System.Drawing.Point(238, 452);
+            this.RTB_ZDMaster.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_ZDMaster.Name = "RTB_ZDMaster";
             this.RTB_ZDMaster.ReadOnly = true;
-            this.RTB_ZDMaster.Size = new System.Drawing.Size(340, 64);
+            this.RTB_ZDMaster.Size = new System.Drawing.Size(564, 100);
             this.RTB_ZDMaster.TabIndex = 422;
             this.RTB_ZDMaster.Text = "00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99 AA " +
     "BB CC DD EE FF 00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF 00 11 22 33 44 55" +
     " 66 77 88 99 AA BB CC DD EE FF";
-            //
+            // 
             // RTB_File5
-            //
+            // 
             this.RTB_File5.Font = new System.Drawing.Font("Courier New", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTB_File5.Location = new System.Drawing.Point(217, 171);
+            this.RTB_File5.Location = new System.Drawing.Point(362, 276);
+            this.RTB_File5.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_File5.Name = "RTB_File5";
             this.RTB_File5.ReadOnly = true;
-            this.RTB_File5.Size = new System.Drawing.Size(266, 36);
+            this.RTB_File5.Size = new System.Drawing.Size(441, 56);
             this.RTB_File5.TabIndex = 421;
             this.RTB_File5.Text = "00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF";
-            //
+            // 
             // RTB_OWSC
-            //
+            // 
             this.RTB_OWSC.Font = new System.Drawing.Font("Courier New", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTB_OWSC.Location = new System.Drawing.Point(217, 45);
+            this.RTB_OWSC.Location = new System.Drawing.Point(362, 74);
+            this.RTB_OWSC.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_OWSC.Name = "RTB_OWSC";
             this.RTB_OWSC.ReadOnly = true;
-            this.RTB_OWSC.Size = new System.Drawing.Size(266, 36);
+            this.RTB_OWSC.Size = new System.Drawing.Size(441, 56);
             this.RTB_OWSC.TabIndex = 418;
             this.RTB_OWSC.Text = "00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF";
-            //
+            // 
             // RTB_Encounter
-            //
+            // 
             this.RTB_Encounter.Font = new System.Drawing.Font("Courier New", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTB_Encounter.Location = new System.Drawing.Point(217, 129);
+            this.RTB_Encounter.Location = new System.Drawing.Point(362, 208);
+            this.RTB_Encounter.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_Encounter.Name = "RTB_Encounter";
             this.RTB_Encounter.ReadOnly = true;
-            this.RTB_Encounter.Size = new System.Drawing.Size(266, 36);
+            this.RTB_Encounter.Size = new System.Drawing.Size(441, 56);
             this.RTB_Encounter.TabIndex = 420;
             this.RTB_Encounter.Text = "00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF";
-            //
+            // 
             // RTB_MapSC
-            //
+            // 
             this.RTB_MapSC.Font = new System.Drawing.Font("Courier New", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTB_MapSC.Location = new System.Drawing.Point(217, 87);
+            this.RTB_MapSC.Location = new System.Drawing.Point(362, 140);
+            this.RTB_MapSC.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_MapSC.Name = "RTB_MapSC";
             this.RTB_MapSC.ReadOnly = true;
-            this.RTB_MapSC.Size = new System.Drawing.Size(266, 36);
+            this.RTB_MapSC.Size = new System.Drawing.Size(441, 56);
             this.RTB_MapSC.TabIndex = 419;
             this.RTB_MapSC.Text = "00 11 22 33 44 55 66 77 88 99 AA BB CC DD EE FF";
-            //
+            // 
             // tb_Dev
-            //
+            // 
             this.tb_Dev.Controls.Add(this.B_DumpZD);
             this.tb_Dev.Controls.Add(this.L_DeComp);
             this.tb_Dev.Controls.Add(this.RTB_CompressedScript);
@@ -1731,164 +1867,182 @@
             this.tb_Dev.Controls.Add(this.B_DumpWarp);
             this.tb_Dev.Controls.Add(this.B_DumpNPC);
             this.tb_Dev.Controls.Add(this.B_DumpFurniture);
-            this.tb_Dev.Location = new System.Drawing.Point(4, 22);
+            this.tb_Dev.Location = new System.Drawing.Point(4, 30);
+            this.tb_Dev.Margin = new System.Windows.Forms.Padding(5);
             this.tb_Dev.Name = "tb_Dev";
-            this.tb_Dev.Padding = new System.Windows.Forms.Padding(3);
-            this.tb_Dev.Size = new System.Drawing.Size(486, 471);
+            this.tb_Dev.Padding = new System.Windows.Forms.Padding(5);
+            this.tb_Dev.Size = new System.Drawing.Size(815, 769);
             this.tb_Dev.TabIndex = 7;
             this.tb_Dev.Text = "Dev";
             this.tb_Dev.UseVisualStyleBackColor = true;
-            //
+            // 
             // B_DumpZD
-            //
-            this.B_DumpZD.Location = new System.Drawing.Point(149, 51);
+            // 
+            this.B_DumpZD.Location = new System.Drawing.Point(248, 82);
+            this.B_DumpZD.Margin = new System.Windows.Forms.Padding(5);
             this.B_DumpZD.Name = "B_DumpZD";
-            this.B_DumpZD.Size = new System.Drawing.Size(89, 39);
+            this.B_DumpZD.Size = new System.Drawing.Size(148, 63);
             this.B_DumpZD.TabIndex = 431;
             this.B_DumpZD.Text = "Dump all ZD";
             this.B_DumpZD.UseVisualStyleBackColor = true;
             this.B_DumpZD.Click += new System.EventHandler(this.B_DumpZD_Click);
-            //
+            // 
             // L_DeComp
-            //
+            // 
             this.L_DeComp.AutoSize = true;
-            this.L_DeComp.Location = new System.Drawing.Point(395, 224);
+            this.L_DeComp.Location = new System.Drawing.Point(658, 362);
+            this.L_DeComp.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_DeComp.Name = "L_DeComp";
-            this.L_DeComp.Size = new System.Drawing.Size(78, 13);
+            this.L_DeComp.Size = new System.Drawing.Size(122, 21);
             this.L_DeComp.TabIndex = 430;
             this.L_DeComp.Text = "Decompressed";
-            //
+            // 
             // RTB_CompressedScript
-            //
+            // 
             this.RTB_CompressedScript.Font = new System.Drawing.Font("Courier New", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTB_CompressedScript.Location = new System.Drawing.Point(304, 240);
+            this.RTB_CompressedScript.Location = new System.Drawing.Point(507, 388);
+            this.RTB_CompressedScript.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_CompressedScript.Name = "RTB_CompressedScript";
-            this.RTB_CompressedScript.Size = new System.Drawing.Size(85, 225);
+            this.RTB_CompressedScript.Size = new System.Drawing.Size(139, 361);
             this.RTB_CompressedScript.TabIndex = 429;
             this.RTB_CompressedScript.Text = "Script CMDs";
             this.RTB_CompressedScript.TextChanged += new System.EventHandler(this.PasteScript);
-            //
+            // 
             // RTB_DecompressedScript
-            //
+            // 
             this.RTB_DecompressedScript.Font = new System.Drawing.Font("Courier New", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.RTB_DecompressedScript.Location = new System.Drawing.Point(395, 240);
+            this.RTB_DecompressedScript.Location = new System.Drawing.Point(658, 388);
+            this.RTB_DecompressedScript.Margin = new System.Windows.Forms.Padding(5);
             this.RTB_DecompressedScript.Name = "RTB_DecompressedScript";
             this.RTB_DecompressedScript.ReadOnly = true;
-            this.RTB_DecompressedScript.Size = new System.Drawing.Size(85, 225);
+            this.RTB_DecompressedScript.Size = new System.Drawing.Size(139, 361);
             this.RTB_DecompressedScript.TabIndex = 428;
             this.RTB_DecompressedScript.Text = "Raw Data";
-            //
+            // 
             // L_Comp
-            //
+            // 
             this.L_Comp.AutoSize = true;
-            this.L_Comp.Location = new System.Drawing.Point(301, 224);
+            this.L_Comp.Location = new System.Drawing.Point(502, 362);
+            this.L_Comp.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Comp.Name = "L_Comp";
-            this.L_Comp.Size = new System.Drawing.Size(65, 13);
+            this.L_Comp.Size = new System.Drawing.Size(104, 21);
             this.L_Comp.TabIndex = 426;
             this.L_Comp.Text = "Compressed";
-            //
+            // 
             // B_DumpMaps
-            //
-            this.B_DumpMaps.Location = new System.Drawing.Point(149, 6);
+            // 
+            this.B_DumpMaps.Location = new System.Drawing.Point(248, 10);
+            this.B_DumpMaps.Margin = new System.Windows.Forms.Padding(5);
             this.B_DumpMaps.Name = "B_DumpMaps";
-            this.B_DumpMaps.Size = new System.Drawing.Size(89, 39);
+            this.B_DumpMaps.Size = new System.Drawing.Size(148, 63);
             this.B_DumpMaps.TabIndex = 425;
             this.B_DumpMaps.Text = "Dump all Maps";
             this.B_DumpMaps.UseVisualStyleBackColor = true;
             this.B_DumpMaps.Click += new System.EventHandler(this.B_DumpMaps_Click);
-            //
+            // 
             // B_DumpUnk
-            //
-            this.B_DumpUnk.Location = new System.Drawing.Point(6, 186);
+            // 
+            this.B_DumpUnk.Location = new System.Drawing.Point(10, 301);
+            this.B_DumpUnk.Margin = new System.Windows.Forms.Padding(5);
             this.B_DumpUnk.Name = "B_DumpUnk";
-            this.B_DumpUnk.Size = new System.Drawing.Size(89, 39);
+            this.B_DumpUnk.Size = new System.Drawing.Size(148, 63);
             this.B_DumpUnk.TabIndex = 424;
             this.B_DumpUnk.Text = "Dump all\r\nUnk";
             this.B_DumpUnk.UseVisualStyleBackColor = true;
             this.B_DumpUnk.Click += new System.EventHandler(this.B_DumpUnk_Click);
-            //
+            // 
             // B_DumpTrigger
-            //
-            this.B_DumpTrigger.Location = new System.Drawing.Point(6, 141);
+            // 
+            this.B_DumpTrigger.Location = new System.Drawing.Point(10, 228);
+            this.B_DumpTrigger.Margin = new System.Windows.Forms.Padding(5);
             this.B_DumpTrigger.Name = "B_DumpTrigger";
-            this.B_DumpTrigger.Size = new System.Drawing.Size(89, 39);
+            this.B_DumpTrigger.Size = new System.Drawing.Size(148, 63);
             this.B_DumpTrigger.TabIndex = 423;
             this.B_DumpTrigger.Text = "Dump all\r\nTriggers";
             this.B_DumpTrigger.UseVisualStyleBackColor = true;
             this.B_DumpTrigger.Click += new System.EventHandler(this.B_DumpTrigger_Click);
-            //
+            // 
             // B_DumpWarp
-            //
-            this.B_DumpWarp.Location = new System.Drawing.Point(6, 96);
+            // 
+            this.B_DumpWarp.Location = new System.Drawing.Point(10, 156);
+            this.B_DumpWarp.Margin = new System.Windows.Forms.Padding(5);
             this.B_DumpWarp.Name = "B_DumpWarp";
-            this.B_DumpWarp.Size = new System.Drawing.Size(89, 39);
+            this.B_DumpWarp.Size = new System.Drawing.Size(148, 63);
             this.B_DumpWarp.TabIndex = 422;
             this.B_DumpWarp.Text = "Dump all\r\nWarp Bytes";
             this.B_DumpWarp.UseVisualStyleBackColor = true;
             this.B_DumpWarp.Click += new System.EventHandler(this.B_DumpWarp_Click);
-            //
+            // 
             // B_DumpNPC
-            //
-            this.B_DumpNPC.Location = new System.Drawing.Point(6, 51);
+            // 
+            this.B_DumpNPC.Location = new System.Drawing.Point(10, 82);
+            this.B_DumpNPC.Margin = new System.Windows.Forms.Padding(5);
             this.B_DumpNPC.Name = "B_DumpNPC";
-            this.B_DumpNPC.Size = new System.Drawing.Size(89, 39);
+            this.B_DumpNPC.Size = new System.Drawing.Size(148, 63);
             this.B_DumpNPC.TabIndex = 421;
             this.B_DumpNPC.Text = "Dump all\r\nNPC Bytes";
             this.B_DumpNPC.UseVisualStyleBackColor = true;
             this.B_DumpNPC.Click += new System.EventHandler(this.B_DumpNPC_Click);
-            //
+            // 
             // B_DumpFurniture
-            //
-            this.B_DumpFurniture.Location = new System.Drawing.Point(6, 6);
+            // 
+            this.B_DumpFurniture.Location = new System.Drawing.Point(10, 10);
+            this.B_DumpFurniture.Margin = new System.Windows.Forms.Padding(5);
             this.B_DumpFurniture.Name = "B_DumpFurniture";
-            this.B_DumpFurniture.Size = new System.Drawing.Size(89, 39);
+            this.B_DumpFurniture.Size = new System.Drawing.Size(148, 63);
             this.B_DumpFurniture.TabIndex = 420;
             this.B_DumpFurniture.Text = "Dump all\r\nFurniture Bytes";
             this.B_DumpFurniture.UseVisualStyleBackColor = true;
             this.B_DumpFurniture.Click += new System.EventHandler(this.B_DumpFurniture_Click);
-            //
+            // 
             // B_Map
-            //
-            this.B_Map.Location = new System.Drawing.Point(318, 5);
+            // 
+            this.B_Map.Location = new System.Drawing.Point(530, 9);
+            this.B_Map.Margin = new System.Windows.Forms.Padding(5);
             this.B_Map.Name = "B_Map";
-            this.B_Map.Size = new System.Drawing.Size(89, 23);
+            this.B_Map.Size = new System.Drawing.Size(148, 37);
             this.B_Map.TabIndex = 420;
             this.B_Map.Text = "Show Map";
             this.B_Map.UseVisualStyleBackColor = true;
             this.B_Map.Click += new System.EventHandler(this.B_Map_Click);
-            //
+            // 
             // L_ZDPreview
-            //
+            // 
             this.L_ZDPreview.AutoSize = true;
-            this.L_ZDPreview.Location = new System.Drawing.Point(216, 3);
+            this.L_ZDPreview.Location = new System.Drawing.Point(360, 5);
+            this.L_ZDPreview.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_ZDPreview.Name = "L_ZDPreview";
-            this.L_ZDPreview.Size = new System.Drawing.Size(50, 26);
+            this.L_ZDPreview.Size = new System.Drawing.Size(80, 42);
             this.L_ZDPreview.TabIndex = 418;
             this.L_ZDPreview.Text = "Text File:\r\nMap File:";
-            //
+            // 
             // B_HLCMD
-            //
-            this.B_HLCMD.Location = new System.Drawing.Point(413, 5);
+            // 
+            this.B_HLCMD.Location = new System.Drawing.Point(688, 9);
+            this.B_HLCMD.Margin = new System.Windows.Forms.Padding(5);
             this.B_HLCMD.Name = "B_HLCMD";
-            this.B_HLCMD.Size = new System.Drawing.Size(89, 23);
+            this.B_HLCMD.Size = new System.Drawing.Size(148, 37);
             this.B_HLCMD.TabIndex = 419;
             this.B_HLCMD.Text = "HL **CMD**";
             this.B_HLCMD.UseVisualStyleBackColor = true;
             this.B_HLCMD.Click += new System.EventHandler(this.B_HLCMD_Click);
-            //
+            // 
             // OWSE
-            //
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(514, 537);
+            this.ClientSize = new System.Drawing.Size(857, 868);
             this.Controls.Add(this.B_Map);
             this.Controls.Add(this.B_HLCMD);
             this.Controls.Add(this.L_ZDPreview);
             this.Controls.Add(this.tb_Zone);
             this.Controls.Add(this.L_Location);
             this.Controls.Add(this.CB_LocationID);
+            this.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(530, 575);
+            this.MinimumSize = new System.Drawing.Size(873, 905);
             this.Name = "OWSE";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Overworld Editor";

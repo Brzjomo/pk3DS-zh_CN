@@ -103,7 +103,7 @@ namespace pk3DS
             int entry = Main.Config.Personal.GetFormIndex(species, formnum);
 
             trpk_abil[slot].Items.Clear();
-            trpk_abil[slot].Items.Add("Any (1 or 2)");
+            trpk_abil[slot].Items.Add("任意（1 或 2）");
             trpk_abil[slot].Items.Add(abilitylist[Main.SpeciesStat[entry].Abilities[0]] + " (1)");
             trpk_abil[slot].Items.Add(abilitylist[Main.SpeciesStat[entry].Abilities[1]] + " (2)");
             trpk_abil[slot].Items.Add(abilitylist[Main.SpeciesStat[entry].Abilities[2]] + " (H)");
@@ -167,7 +167,7 @@ namespace pk3DS
             toret += CB_TrainerID.SelectedIndex + " - " + CB_Trainer_Class.Text.Substring(0, CB_Trainer_Class.Text.Length - 6) + " " + CB_TrainerID.Text.Substring(0, CB_TrainerID.Text.Length - 6) + Environment.NewLine;
             toret += "======" + Environment.NewLine;
             int pkm = CB_numPokemon.SelectedIndex;
-            toret += "Pokemon: " + pkm + Environment.NewLine;
+            toret += "宝可梦: " + pkm + Environment.NewLine;
             for (int i = 0; i < pkm; i++)
             {
                 toret += trpk_pkm[i].Text + " (Lv. " + trpk_lvl[i].SelectedIndex + ") ";
@@ -177,18 +177,18 @@ namespace pk3DS
                 {
                     string abil = trpk_abil[i].Text;
                     abil = abil.Substring(0, abil.Length - 4);
-                    toret += " (Ability: " + abil + ")";
+                    toret += " (特性: " + abil + ")";
                 }
                 if (checkBox_Moves.Checked)
                 {
-                    toret += " (Moves: ";
+                    toret += " (招式: ";
                     if (trpk_m1[i].SelectedIndex > 0) toret += trpk_m1[i].Text;
                     if (trpk_m2[i].SelectedIndex > 0) toret += " / " + trpk_m2[i].Text;
                     if (trpk_m3[i].SelectedIndex > 0) toret += " / " + trpk_m3[i].Text;
                     if (trpk_m4[i].SelectedIndex > 0) toret += " / " + trpk_m4[i].Text;
                     toret += ")";
                 }
-                toret += " IVs: All " + (Convert.ToInt32(trpk_IV[i].SelectedIndex) / 8);
+                toret += " 个体值: 合计 " + (Convert.ToInt32(trpk_IV[i].SelectedIndex) / 8);
                 toret += Environment.NewLine;
             }
             toret += Environment.NewLine;
@@ -357,7 +357,7 @@ namespace pk3DS
             Array.Resize(ref trName, trdata.Length);
             CB_TrainerID.Items.Clear();
             for (int i = 0; i < trdata.Length; i++)
-                CB_TrainerID.Items.Add($"{trName[i] ?? "UNKNOWN"} - {i:000}");
+                CB_TrainerID.Items.Add($"{trName[i] ?? "-- 未知 --"} - {i:000}");
 
             CB_Trainer_Class.Items.Clear();
             for (int i = 0; i < trClass.Length; i++)
@@ -398,9 +398,9 @@ namespace pk3DS
                     trpk_IV[i].Items.Add(z.ToString());
 
                 trpk_gender[i].Items.Clear();
-                trpk_gender[i].Items.Add("- / Genderless/Random");
-                trpk_gender[i].Items.Add("♂ / Male");
-                trpk_gender[i].Items.Add("♀ / Female");
+                trpk_gender[i].Items.Add("无性别 / 随机");
+                trpk_gender[i].Items.Add("♂ 雄性");
+                trpk_gender[i].Items.Add("♀ 雌性");
 
                 trpk_form[i].Items.Add("");
 
@@ -425,11 +425,11 @@ namespace pk3DS
             { CB_AI.Items.Add(i.ToString()); CB_Money.Items.Add(i.ToString()); }
 
             CB_Battle_Type.Items.Clear();
-            CB_Battle_Type.Items.Add("Single");
-            CB_Battle_Type.Items.Add("Double");
-            CB_Battle_Type.Items.Add("Triple");
-            CB_Battle_Type.Items.Add("Rotation");
-            if (Main.Config.ORAS) CB_Battle_Type.Items.Add("Horde");
+            CB_Battle_Type.Items.Add("单打对战");
+            CB_Battle_Type.Items.Add("双打对战");
+            CB_Battle_Type.Items.Add("三打对战");
+            CB_Battle_Type.Items.Add("轮盘对战");
+            if (Main.Config.ORAS) CB_Battle_Type.Items.Add("群聚对战");
             megaEvos = Main.Config.ORAS
                 ? new[] { 15, 18, 80, 208, 254, 260, 302, 319, 323, 334, 362, 373, 376, 380, 381, 428, 475, 531, 719, 3, 6, 9, 65, 94, 115, 127, 130, 142, 150, 181, 212, 214, 229, 248, 257, 282, 303, 306, 308, 310, 354, 359, 445, 448, 460 }
                 : new[] { 3, 6, 9, 65, 94, 115, 127, 130, 142, 150, 181, 212, 214, 229, 248, 257, 282, 303, 306, 308, 310, 354, 359, 445, 448, 460 };
@@ -494,7 +494,7 @@ namespace pk3DS
                 if (mEvoTypes.Length < 13 && rTypeTheme)
                 {
                     WinFormsUtil.Alert("There are insufficient Types with at least one mega evolution to Guarantee story Mega Evos while keeping Type theming.",
-                    "Re-Randomize Personal or don't choose both options."); return; }
+                    "重新随机化个体值或不要同时选择。"); return; }
                 GymE4Types.AddRange(mEvoTypes);
             }
             else
@@ -570,7 +570,7 @@ namespace pk3DS
                 trpoke[i] = t.WriteTeam();
             }
             CB_TrainerID.SelectedIndex = 1;
-            WinFormsUtil.Alert("Randomized all Trainers according to specification!", "Press the Dump to .TXT button to view the new Trainer information!");
+            WinFormsUtil.Alert("已根据设置随机化全部训练家！");
         }
 
         private static void RandomizeTeam(TrainerData6 t, MoveRandomizer move, LearnsetRandomizer learn, ushort[] itemvals, int type, bool mevo, bool typerand)
@@ -612,8 +612,18 @@ namespace pk3DS
                     pk.Level = (ushort)Randomizer.GetModifiedLevel(pk.Level, rLevelMultiplier);
                 if (rAbility)
                     pk.Ability = (int)(1 + (Rand() % 3));
+
                 if (rDiffIV)
+                {
                     pk.IVs = 255;
+                }
+                else
+                {
+                    byte[] buffer = Guid.NewGuid().ToByteArray();
+                    int iSeed = BitConverter.ToInt32(buffer, 0);
+                    Random random = new Random(iSeed);
+                    pk.IVs = (byte)random.Next(0, 256);
+                }
 
                 if (mevo && p == last && stones != null)
                     pk.Item = (ushort)stones[Rand() % stones.Length];
@@ -722,7 +732,18 @@ namespace pk3DS
         private static void RandomizeTrainerAIClass(TrainerData6 t, string[] trClass)
         {
             if (rDiffAI)
-                t.AI |= 7; // Set first 3 bits, keep any other flag if present
+            {
+                //t.AI |= 7; // Set first 3 bits, keep any other flag if present
+                t.AI = 255;
+            }
+            else
+            {
+                byte[] buffer = Guid.NewGuid().ToByteArray();
+                int iSeed = BitConverter.ToInt32(buffer, 0);
+                Random random = new Random(iSeed);
+                t.AI = (byte)random.Next(0, 256);
+            }
+                
 
             if (rClass && rModelRestricted.Contains(t.Class) && !rIgnoreClass.Contains(t.Class)) // shuffle classes with 3D models
             {
@@ -949,7 +970,7 @@ namespace pk3DS
                     MEvoTypes.Add(Main.SpeciesStat[spec].Types[1]);
             }
             MEvoTypes.Sort();
-            Console.WriteLine("There are " + MEvoTypes.Count + " Types capable of Mega Evolution.");
+            Console.WriteLine("共有 " + MEvoTypes.Count + " 种宝可梦能够Mega进化。");
             return MEvoTypes.ToArray();
         }
 

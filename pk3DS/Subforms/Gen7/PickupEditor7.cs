@@ -50,10 +50,10 @@ namespace pk3DS
             int c = 0;
             DataGridViewComboBoxColumn dgvItemVal = new DataGridViewComboBoxColumn
             {
-                HeaderText = "Item",
+                HeaderText = "物品",
                 DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing,
                 DisplayIndex = c++,
-                Width = 135,
+                Width = 250,
                 FlatStyle = FlatStyle.Flat
             };
             dgv.Columns.Add(dgvItemVal);
@@ -65,7 +65,7 @@ namespace pk3DS
                 {
                     dgvIndex.HeaderText = rate;
                     dgvIndex.DisplayIndex = c++;
-                    dgvIndex.Width = 45;
+                    dgvIndex.Width = 50;
                     dgvIndex.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                     ((DataGridViewTextBoxColumn)dgvIndex).MaxInputLength = 2;
                 }
@@ -130,7 +130,7 @@ namespace pk3DS
                 if (sum == 100) // good
                     continue;
 
-                WinFormsUtil.Alert($"Sum of Column {i+1} needs to equal 100.", $"Got {sum}.");
+                WinFormsUtil.Alert($"{i+1}列的总列数必须等于100。", $"现有{sum}。");
                 return null;
             }
 
@@ -168,7 +168,7 @@ namespace pk3DS
 
         private void B_Randomize_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, "Randomize pickup lists?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机化捡拾列表？"))
                 return;
 
             int[] validItems = Randomizer.GetRandomItemList();
@@ -181,12 +181,12 @@ namespace pk3DS
                 if (ctr <= validItems.Length) continue;
                 Util.Shuffle(validItems); ctr = 0;
             }
-            WinFormsUtil.Alert("Randomized!");
+            //WinFormsUtil.Alert("已随机！");
         }
 
         private void B_AddRow_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Add a row at the bottom?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否在末尾新增1行？"))
                 return;
 
             int row = dgvCommon.RowCount;
@@ -198,7 +198,7 @@ namespace pk3DS
 
         private void B_DeleteRow_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Delete the bottom row?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否删除最后1行？"))
                 return;
 
             dgvCommon.Rows.RemoveAt(dgvCommon.RowCount - 1);

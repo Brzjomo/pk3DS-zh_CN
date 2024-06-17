@@ -39,6 +39,8 @@ namespace pk3DS
             CB_Species.DataSource = newlist;
             CB_Species.SelectedIndex = 0;
             RandSettings.GetFormSettings(this, groupBox1.Controls);
+
+            new ToolTip().SetToolTip(L_STAB, "同属性招式几率");
         }
 
         private readonly byte[][] files;
@@ -52,19 +54,19 @@ namespace pk3DS
             Array.Sort(sortedmoves);
             DataGridViewColumn dgvLevel = new DataGridViewTextBoxColumn();
             {
-                dgvLevel.HeaderText = "Level";
+                dgvLevel.HeaderText = "等级";
                 dgvLevel.DisplayIndex = 0;
-                dgvLevel.Width = 45;
+                dgvLevel.Width = 70;
                 dgvLevel.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
             DataGridViewComboBoxColumn dgvMove = new DataGridViewComboBoxColumn();
             {
-                dgvMove.HeaderText = "Move";
+                dgvMove.HeaderText = "招式";
                 dgvMove.DisplayIndex = 1;
                 for (int i = 0; i < movelist.Length; i++)
                     dgvMove.Items.Add(sortedmoves[i]); // add only the Names
 
-                dgvMove.Width = 135;
+                dgvMove.Width = 230;
                 dgvMove.FlatStyle = FlatStyle.Flat;
             }
             dgv.Columns.Add(dgvLevel);
@@ -79,12 +81,39 @@ namespace pk3DS
 
             int[] specForm = Main.Config.Personal.GetSpeciesForm(entry, Main.Config);
             string filename = "_" + specForm[0] + (entry > 721 ? "_" + (specForm[1] + 1) : "");
-            PB_MonSprite.Image = (Bitmap)Resources.ResourceManager.GetObject(filename);
+
+            Bitmap rawImg = (Bitmap)Resources.ResourceManager.GetObject(filename);
+            if (rawImg != null)
+            {
+                Bitmap bigImg = new Bitmap(rawImg.Width * 2, rawImg.Height * 2);
+                for (int x = 0; x < rawImg.Width; x++)
+                {
+                    for (int y = 0; y < rawImg.Height; y++)
+                    {
+                        Color c = rawImg.GetPixel(x, y);
+                        bigImg.SetPixel(2 * x, 2 * y, c);
+                        bigImg.SetPixel((2 * x) + 1, 2 * y, c);
+                        bigImg.SetPixel(2 * x, (2 * y) + 1, c);
+                        bigImg.SetPixel((2 * x) + 1, (2 * y) + 1, c);
+                    }
+                }
+                PB_MonSprite.Image = bigImg;
+            } else
+            {
+                PB_MonSprite.Image = (Bitmap)Resources.ResourceManager.GetObject(filename);
+            }
 
             dgv.Rows.Clear();
             byte[] input = files[entry];
             if (input.Length <= 4) { files[entry] = BitConverter.GetBytes(-1); return; }
             pkm = new Learnset6(input);
+
+            //判断是否指定范围
+            if (CHK_Expand.Checked)
+            {
+                //最大值为25，超过该值，进游戏黑屏
+                pkm.Count = (int)NUD_Moves.Value;
+            }
 
             dgv.Rows.Add(pkm.Count);
 
@@ -122,12 +151,18 @@ namespace pk3DS
 
         private void ChangeEntry(object sender, EventArgs e)
         {
+            if (CHK_Expand.Checked)
+            {
+                CHK_Expand.Checked = false;
+            }
             SetList();
             GetList();
         }
 
         private void B_RandAll_Click(object sender, EventArgs e)
         {
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否确认随机化升级招式？", "无法撤销。") != DialogResult.Yes) return;
+
             ushort[] HMs = { 15, 19, 57, 70, 127, 249, 291 };
             if (CHK_HMs.Checked && Main.ExeFSPath != null)
                 TMHMEditor6.GetTMHMList(out _, out HMs);
@@ -155,12 +190,15 @@ namespace pk3DS
             rand.Execute();
             sets.Select(z => z.Write()).ToArray().CopyTo(files, 0);
             GetList();
-            WinFormsUtil.Alert("All Pokémon's Level Up Moves have been randomized!", "Press the Dump button to see the new Level Up Moves!");
+            //WinFormsUtil.Alert("已随机化全部宝可梦的升级招式！");
+            CalcStats();
         }
 
         private void B_Metronome_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Play using Metronome Mode?", "This will modify learnsets to only have Metronome.") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否使用挥指模式？", "这将导致宝可梦只能学习挥指。") != DialogResult.Yes) return;
+
+            CHK_Expand.Checked = false;
 
             // clear all data, then only assign Metronome at Lv1
             for (int i = 0; i < CB_Species.Items.Count; i++)
@@ -172,12 +210,12 @@ namespace pk3DS
                 dgv.Rows[0].Cells[1].Value = movelist[118];
             }
             CB_Species.SelectedIndex = 0;
-            WinFormsUtil.Alert("All Pokémon now only know the move Metronome!");
+            WinFormsUtil.Alert("现在所有宝可梦都只会挥指！");
         }
 
         private void B_Dump_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Dump all Level Up Moves to Text File?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否导出所有升级招式至TXT文件？"))
                 return;
 
             dumping = true;
@@ -242,7 +280,7 @@ namespace pk3DS
                         stab++;
                 }
             }
-            WinFormsUtil.Alert($"Moves Learned: {movectr}\r\nMost Learned: {max} @ {spec}\r\nSTAB Count: {stab}");
+            WinFormsUtil.Alert($"共习得招式: {movectr}\r\n单个宝可梦最大招式习得数: {max}\r\n同属性增益计数: {stab}");
         }
     }
 }

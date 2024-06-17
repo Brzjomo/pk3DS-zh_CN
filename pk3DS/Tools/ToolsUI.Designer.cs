@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ToolsUI));
             this.PB_Unpack = new System.Windows.Forms.Panel();
             this.L_DARCMini = new System.Windows.Forms.Label();
             this.CHK_PNG = new System.Windows.Forms.CheckBox();
@@ -50,9 +51,10 @@
             this.PB_Unpack.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PB_Unpack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PB_Unpack.Location = new System.Drawing.Point(12, 25);
+            this.PB_Unpack.Location = new System.Drawing.Point(20, 40);
+            this.PB_Unpack.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.PB_Unpack.Name = "PB_Unpack";
-            this.PB_Unpack.Size = new System.Drawing.Size(300, 67);
+            this.PB_Unpack.Size = new System.Drawing.Size(499, 107);
             this.PB_Unpack.TabIndex = 0;
             this.PB_Unpack.MouseLeave += new System.EventHandler(this.DropLeave);
             this.PB_Unpack.MouseHover += new System.EventHandler(this.DropHover);
@@ -60,18 +62,20 @@
             // L_DARCMini
             // 
             this.L_DARCMini.AutoSize = true;
-            this.L_DARCMini.Location = new System.Drawing.Point(9, 9);
+            this.L_DARCMini.Location = new System.Drawing.Point(15, 14);
+            this.L_DARCMini.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_DARCMini.Name = "L_DARCMini";
-            this.L_DARCMini.Size = new System.Drawing.Size(294, 13);
+            this.L_DARCMini.Size = new System.Drawing.Size(461, 21);
             this.L_DARCMini.TabIndex = 1;
             this.L_DARCMini.Text = "GARC, DARC && Mini Unpack (CTRL to Skip Decompression)";
             // 
             // CHK_PNG
             // 
             this.CHK_PNG.AutoSize = true;
-            this.CHK_PNG.Location = new System.Drawing.Point(89, 209);
+            this.CHK_PNG.Location = new System.Drawing.Point(148, 338);
+            this.CHK_PNG.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.CHK_PNG.Name = "CHK_PNG";
-            this.CHK_PNG.Size = new System.Drawing.Size(97, 17);
+            this.CHK_PNG.Size = new System.Drawing.Size(139, 25);
             this.CHK_PNG.TabIndex = 2;
             this.CHK_PNG.Text = "Autosave PNG";
             this.CHK_PNG.UseVisualStyleBackColor = true;
@@ -79,9 +83,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 210);
+            this.label1.Location = new System.Drawing.Point(15, 340);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(74, 13);
+            this.label1.Size = new System.Drawing.Size(117, 21);
             this.label1.TabIndex = 3;
             this.label1.Text = "BCLIM Viewer";
             // 
@@ -90,44 +95,49 @@
             this.PB_Repack.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.PB_Repack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PB_Repack.Location = new System.Drawing.Point(168, 124);
+            this.PB_Repack.Location = new System.Drawing.Point(280, 200);
+            this.PB_Repack.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.PB_Repack.Name = "PB_Repack";
-            this.PB_Repack.Size = new System.Drawing.Size(144, 67);
+            this.PB_Repack.Size = new System.Drawing.Size(239, 107);
             this.PB_Repack.TabIndex = 5;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 108);
+            this.label4.Location = new System.Drawing.Point(15, 175);
+            this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(77, 13);
+            this.label4.Size = new System.Drawing.Size(118, 21);
             this.label4.TabIndex = 7;
             this.label4.Text = "Folder Repack";
             // 
             // CB_Repack
             // 
             this.CB_Repack.FormattingEnabled = true;
-            this.CB_Repack.Location = new System.Drawing.Point(12, 124);
+            this.CB_Repack.Location = new System.Drawing.Point(20, 200);
+            this.CB_Repack.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.CB_Repack.Name = "CB_Repack";
-            this.CB_Repack.Size = new System.Drawing.Size(150, 21);
+            this.CB_Repack.Size = new System.Drawing.Size(247, 29);
             this.CB_Repack.TabIndex = 8;
             // 
             // PB_BCLIM
             // 
             this.PB_BCLIM.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.PB_BCLIM.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PB_BCLIM.Location = new System.Drawing.Point(12, 226);
+            this.PB_BCLIM.Location = new System.Drawing.Point(20, 366);
+            this.PB_BCLIM.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.PB_BCLIM.Name = "PB_BCLIM";
-            this.PB_BCLIM.Size = new System.Drawing.Size(300, 124);
+            this.PB_BCLIM.Size = new System.Drawing.Size(499, 200);
             this.PB_BCLIM.TabIndex = 1;
             this.PB_BCLIM.TabStop = false;
             this.PB_BCLIM.Click += new System.EventHandler(this.PB_BCLIM_Click);
             // 
             // B_Reset
             // 
-            this.B_Reset.Location = new System.Drawing.Point(12, 184);
+            this.B_Reset.Location = new System.Drawing.Point(20, 298);
+            this.B_Reset.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.B_Reset.Name = "B_Reset";
-            this.B_Reset.Size = new System.Drawing.Size(80, 23);
+            this.B_Reset.Size = new System.Drawing.Size(133, 37);
             this.B_Reset.TabIndex = 9;
             this.B_Reset.Text = "Reset View";
             this.B_Reset.UseVisualStyleBackColor = true;
@@ -138,9 +148,10 @@
             this.CHK_Delete.AutoSize = true;
             this.CHK_Delete.Checked = true;
             this.CHK_Delete.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CHK_Delete.Location = new System.Drawing.Point(12, 148);
+            this.CHK_Delete.Location = new System.Drawing.Point(20, 240);
+            this.CHK_Delete.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.CHK_Delete.Name = "CHK_Delete";
-            this.CHK_Delete.Size = new System.Drawing.Size(155, 17);
+            this.CHK_Delete.Size = new System.Drawing.Size(237, 25);
             this.CHK_Delete.TabIndex = 10;
             this.CHK_Delete.Text = "Delete Folder after Packing";
             this.CHK_Delete.UseVisualStyleBackColor = true;
@@ -149,22 +160,24 @@
             // 
             this.pBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pBar1.Location = new System.Drawing.Point(12, 95);
+            this.pBar1.Location = new System.Drawing.Point(20, 154);
+            this.pBar1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.pBar1.Name = "pBar1";
-            this.pBar1.Size = new System.Drawing.Size(300, 12);
+            this.pBar1.Size = new System.Drawing.Size(500, 19);
             this.pBar1.TabIndex = 11;
             // 
             // NUD_Padding
             // 
             this.NUD_Padding.Hexadecimal = true;
-            this.NUD_Padding.Location = new System.Drawing.Point(118, 164);
+            this.NUD_Padding.Location = new System.Drawing.Point(197, 264);
+            this.NUD_Padding.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.NUD_Padding.Maximum = new decimal(new int[] {
             65536,
             0,
             0,
             0});
             this.NUD_Padding.Name = "NUD_Padding";
-            this.NUD_Padding.Size = new System.Drawing.Size(44, 20);
+            this.NUD_Padding.Size = new System.Drawing.Size(73, 29);
             this.NUD_Padding.TabIndex = 12;
             this.NUD_Padding.Value = new decimal(new int[] {
             4,
@@ -174,9 +187,10 @@
             // 
             // L_Padding
             // 
-            this.L_Padding.Location = new System.Drawing.Point(12, 164);
+            this.L_Padding.Location = new System.Drawing.Point(20, 264);
+            this.L_Padding.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Padding.Name = "L_Padding";
-            this.L_Padding.Size = new System.Drawing.Size(100, 20);
+            this.L_Padding.Size = new System.Drawing.Size(167, 32);
             this.L_Padding.TabIndex = 13;
             this.L_Padding.Text = "GARC Padding:";
             this.L_Padding.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -184,9 +198,9 @@
             // ToolsUI
             // 
             this.AllowDrop = true;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(324, 362);
+            this.ClientSize = new System.Drawing.Size(540, 584);
             this.Controls.Add(this.L_Padding);
             this.Controls.Add(this.NUD_Padding);
             this.Controls.Add(this.pBar1);
@@ -200,8 +214,11 @@
             this.Controls.Add(this.PB_BCLIM);
             this.Controls.Add(this.L_DARCMini);
             this.Controls.Add(this.PB_Unpack);
+            this.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(340, 400);
+            this.MinimumSize = new System.Drawing.Size(556, 622);
             this.Name = "ToolsUI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Tools";

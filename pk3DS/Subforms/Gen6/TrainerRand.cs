@@ -17,6 +17,10 @@ namespace pk3DS
             foreach (string tclass in trClass.Where(tclass => !trClassnorep.Contains(tclass) && !tclass.StartsWith("[~")))
                 trClassnorep.Add(tclass);
             trClassnorep.Sort();
+
+            new ToolTip().SetToolTip(CHK_BST, "BST：Base Stat Total\n指总种族值");
+            new ToolTip().SetToolTip(CHK_RandomGift, "对战胜利后，获得战利品");
+
             RandSettings.GetFormSettings(this, Controls);
         }
 
@@ -33,7 +37,7 @@ namespace pk3DS
 
         private void B_Save_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Randomize all? Cannot undo.", "Double check Randomization settings before continuing.") != DialogResult.Yes)
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否全部随机化？无法撤销") != DialogResult.Yes)
                 return;
 
             RSTE.rPKM = CHK_RandomPKM.Checked;
@@ -137,6 +141,10 @@ namespace pk3DS
         private void CHK_Level_CheckedChanged(object sender, EventArgs e)
         {
             NUD_Level.Enabled = CHK_Level.Checked;
+            if (CHK_Level.Checked)
+            {
+                NUD_Level.Value = 1.2M;
+            }
         }
 
         private void ChangeLevelPercent(object sender, EventArgs e)

@@ -166,7 +166,7 @@ namespace pk3DS
             {
                 HeaderText = "Line",
                 DisplayIndex = 0,
-                Width = 32,
+                Width = 50,
                 ReadOnly = true,
                 SortMode = DataGridViewColumnSortMode.NotSortable
             };

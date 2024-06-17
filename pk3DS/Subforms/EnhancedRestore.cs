@@ -151,12 +151,13 @@ namespace pk3DS
                         if (File.Exists(src)) // only restore files that exist
                             File.Copy(src, dest, overwrite: true); count++;
                     }
-                    catch { Debug.WriteLine("Unable to overwrite backup: " + dest); }
+                    catch { Debug.WriteLine("无法写入备份: " + dest); }
                 }
             }
 
-            WinFormsUtil.Alert($"Restored {count} file(s).", "The program will now close.");
-            Environment.Exit(-1); // do not call closing events that repackage personal/gametext
+            WinFormsUtil.Alert($"已恢复 {count} 个文件。");
+            // do not call closing events that repackage personal/gametext
+            // Environment.Exit(-1);
         }
 
         private void B_All_Click(object sender, EventArgs e)

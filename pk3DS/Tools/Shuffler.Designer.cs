@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Shuffler));
             this.CB_a = new System.Windows.Forms.ComboBox();
             this.CB_b = new System.Windows.Forms.ComboBox();
             this.CB_c = new System.Windows.Forms.ComboBox();
@@ -45,9 +46,10 @@
             "1",
             "2",
             "3"});
-            this.CB_a.Location = new System.Drawing.Point(36, 11);
+            this.CB_a.Location = new System.Drawing.Point(60, 18);
+            this.CB_a.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.CB_a.Name = "CB_a";
-            this.CB_a.Size = new System.Drawing.Size(34, 21);
+            this.CB_a.Size = new System.Drawing.Size(54, 29);
             this.CB_a.TabIndex = 0;
             this.CB_a.SelectedIndexChanged += new System.EventHandler(this.UpdateLabel);
             // 
@@ -66,9 +68,10 @@
             "7",
             "8",
             "9"});
-            this.CB_b.Location = new System.Drawing.Point(76, 11);
+            this.CB_b.Location = new System.Drawing.Point(127, 18);
+            this.CB_b.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.CB_b.Name = "CB_b";
-            this.CB_b.Size = new System.Drawing.Size(34, 21);
+            this.CB_b.Size = new System.Drawing.Size(54, 29);
             this.CB_b.TabIndex = 1;
             this.CB_b.SelectedIndexChanged += new System.EventHandler(this.UpdateLabel);
             // 
@@ -87,35 +90,39 @@
             "7",
             "8",
             "9"});
-            this.CB_c.Location = new System.Drawing.Point(116, 11);
+            this.CB_c.Location = new System.Drawing.Point(193, 18);
+            this.CB_c.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.CB_c.Name = "CB_c";
-            this.CB_c.Size = new System.Drawing.Size(34, 21);
+            this.CB_c.Size = new System.Drawing.Size(54, 29);
             this.CB_c.TabIndex = 2;
             this.CB_c.SelectedIndexChanged += new System.EventHandler(this.UpdateLabel);
             // 
             // L_a
             // 
-            this.L_a.Location = new System.Drawing.Point(12, 9);
+            this.L_a.Location = new System.Drawing.Point(20, 14);
+            this.L_a.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_a.Name = "L_a";
-            this.L_a.Size = new System.Drawing.Size(18, 23);
+            this.L_a.Size = new System.Drawing.Size(30, 37);
             this.L_a.TabIndex = 3;
             this.L_a.Text = "a";
             this.L_a.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // L_File
             // 
-            this.L_File.Location = new System.Drawing.Point(15, 35);
+            this.L_File.Location = new System.Drawing.Point(25, 56);
+            this.L_File.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_File.Name = "L_File";
-            this.L_File.Size = new System.Drawing.Size(135, 23);
+            this.L_File.Size = new System.Drawing.Size(225, 37);
             this.L_File.TabIndex = 4;
             this.L_File.Text = "FILENAME HERE";
             this.L_File.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // B_Shuffle
             // 
-            this.B_Shuffle.Location = new System.Drawing.Point(76, 67);
+            this.B_Shuffle.Location = new System.Drawing.Point(127, 108);
+            this.B_Shuffle.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.B_Shuffle.Name = "B_Shuffle";
-            this.B_Shuffle.Size = new System.Drawing.Size(75, 23);
+            this.B_Shuffle.Size = new System.Drawing.Size(125, 37);
             this.B_Shuffle.TabIndex = 5;
             this.B_Shuffle.Text = "Shuffle!";
             this.B_Shuffle.UseVisualStyleBackColor = true;
@@ -123,20 +130,23 @@
             // 
             // Shuffler
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(164, 102);
+            this.ClientSize = new System.Drawing.Size(273, 163);
             this.Controls.Add(this.B_Shuffle);
             this.Controls.Add(this.L_File);
             this.Controls.Add(this.L_a);
             this.Controls.Add(this.CB_c);
             this.Controls.Add(this.CB_b);
             this.Controls.Add(this.CB_a);
+            this.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(180, 140);
+            this.MaximumSize = new System.Drawing.Size(289, 202);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(180, 140);
+            this.MinimumSize = new System.Drawing.Size(289, 202);
             this.Name = "Shuffler";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Shuffler";

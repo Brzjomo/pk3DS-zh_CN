@@ -87,18 +87,18 @@ namespace pk3DS
         {
             if (value >= effects.Length || X >= types.Length || Y >= types.Length)
                 return; // clicking and moving outside the box has invalid values
-            L_Hover.Text = $"[{X:00}x{Y:00}: {value:00}] {types[Y]} attacking {types[X]} {effects[value]}";
+            L_Hover.Text = $"[{X:00}x{Y:00}: {value:00}] <<{types[Y]}>> 攻击 <<{types[X]}>> {effects[value]}";
         }
 
         private readonly string[] effects =
         {
-            "has no effect!",
+            "没有效果",
             "",
-            "is not very effective.",
+            "不是很有效",
             "",
-            "does regular damage.",
+            "效果一般",
             "", "", "",
-            "is super effective!"
+            "效果绝佳！"
         };
     }
 }

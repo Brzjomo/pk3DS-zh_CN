@@ -30,6 +30,7 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MartEditor7));
             this.CB_Location = new System.Windows.Forms.ComboBox();
             this.dgv = new System.Windows.Forms.DataGridView();
             this.dgvIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -54,9 +55,10 @@
             // 
             this.CB_Location.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CB_Location.FormattingEnabled = true;
-            this.CB_Location.Location = new System.Drawing.Point(69, 6);
+            this.CB_Location.Location = new System.Drawing.Point(76, 10);
+            this.CB_Location.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Location.Name = "CB_Location";
-            this.CB_Location.Size = new System.Drawing.Size(243, 21);
+            this.CB_Location.Size = new System.Drawing.Size(441, 29);
             this.CB_Location.TabIndex = 0;
             this.CB_Location.SelectedIndexChanged += new System.EventHandler(this.ChangeIndex);
             // 
@@ -70,9 +72,10 @@
             this.dgv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvIndex,
             this.dgvItem});
-            this.dgv.Location = new System.Drawing.Point(12, 33);
+            this.dgv.Location = new System.Drawing.Point(20, 52);
+            this.dgv.Margin = new System.Windows.Forms.Padding(5);
             this.dgv.Name = "dgv";
-            this.dgv.Size = new System.Drawing.Size(300, 284);
+            this.dgv.Size = new System.Drawing.Size(500, 458);
             this.dgv.TabIndex = 1;
             // 
             // dgvIndex
@@ -94,68 +97,75 @@
             // L_Mart
             // 
             this.L_Mart.AutoSize = true;
-            this.L_Mart.Location = new System.Drawing.Point(12, 9);
+            this.L_Mart.Location = new System.Drawing.Point(20, 14);
+            this.L_Mart.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Mart.Name = "L_Mart";
-            this.L_Mart.Size = new System.Drawing.Size(51, 13);
+            this.L_Mart.Size = new System.Drawing.Size(46, 21);
             this.L_Mart.TabIndex = 2;
-            this.L_Mart.Text = "Location:";
+            this.L_Mart.Text = "地点:";
             // 
             // B_Randomize
             // 
-            this.B_Randomize.Location = new System.Drawing.Point(12, 326);
+            this.B_Randomize.Location = new System.Drawing.Point(20, 527);
+            this.B_Randomize.Margin = new System.Windows.Forms.Padding(5);
             this.B_Randomize.Name = "B_Randomize";
-            this.B_Randomize.Size = new System.Drawing.Size(87, 23);
+            this.B_Randomize.Size = new System.Drawing.Size(145, 37);
             this.B_Randomize.TabIndex = 3;
-            this.B_Randomize.Text = "Randomize";
+            this.B_Randomize.Text = "随机化";
             this.B_Randomize.UseVisualStyleBackColor = true;
             this.B_Randomize.Click += new System.EventHandler(this.B_Randomize_Click);
             // 
             // B_Save
             // 
-            this.B_Save.Location = new System.Drawing.Point(559, 326);
+            this.B_Save.Location = new System.Drawing.Point(932, 527);
+            this.B_Save.Margin = new System.Windows.Forms.Padding(5);
             this.B_Save.Name = "B_Save";
-            this.B_Save.Size = new System.Drawing.Size(68, 23);
+            this.B_Save.Size = new System.Drawing.Size(113, 37);
             this.B_Save.TabIndex = 4;
-            this.B_Save.Text = "Save";
+            this.B_Save.Text = "保存";
             this.B_Save.UseVisualStyleBackColor = true;
             this.B_Save.Click += new System.EventHandler(this.B_Save_Click);
             // 
             // B_Cancel
             // 
-            this.B_Cancel.Location = new System.Drawing.Point(485, 326);
+            this.B_Cancel.Location = new System.Drawing.Point(808, 527);
+            this.B_Cancel.Margin = new System.Windows.Forms.Padding(5);
             this.B_Cancel.Name = "B_Cancel";
-            this.B_Cancel.Size = new System.Drawing.Size(68, 23);
+            this.B_Cancel.Size = new System.Drawing.Size(113, 37);
             this.B_Cancel.TabIndex = 5;
-            this.B_Cancel.Text = "Cancel";
+            this.B_Cancel.Text = "取消";
             this.B_Cancel.UseVisualStyleBackColor = true;
             this.B_Cancel.Click += new System.EventHandler(this.B_Cancel_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(327, 9);
+            this.label1.Location = new System.Drawing.Point(545, 14);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(51, 13);
+            this.label1.Size = new System.Drawing.Size(46, 21);
             this.label1.TabIndex = 8;
-            this.label1.Text = "Location:";
+            this.label1.Text = "地点:";
             // 
             // CB_LocationBP
             // 
             this.CB_LocationBP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CB_LocationBP.FormattingEnabled = true;
-            this.CB_LocationBP.Location = new System.Drawing.Point(384, 6);
+            this.CB_LocationBP.Location = new System.Drawing.Point(601, 10);
+            this.CB_LocationBP.Margin = new System.Windows.Forms.Padding(5);
             this.CB_LocationBP.Name = "CB_LocationBP";
-            this.CB_LocationBP.Size = new System.Drawing.Size(243, 21);
+            this.CB_LocationBP.Size = new System.Drawing.Size(441, 29);
             this.CB_LocationBP.TabIndex = 6;
             this.CB_LocationBP.SelectedIndexChanged += new System.EventHandler(this.ChangeIndexBP);
             // 
             // B_RandomizeBP
             // 
-            this.B_RandomizeBP.Location = new System.Drawing.Point(327, 326);
+            this.B_RandomizeBP.Location = new System.Drawing.Point(545, 527);
+            this.B_RandomizeBP.Margin = new System.Windows.Forms.Padding(5);
             this.B_RandomizeBP.Name = "B_RandomizeBP";
-            this.B_RandomizeBP.Size = new System.Drawing.Size(87, 23);
+            this.B_RandomizeBP.Size = new System.Drawing.Size(145, 37);
             this.B_RandomizeBP.TabIndex = 9;
-            this.B_RandomizeBP.Text = "Randomize";
+            this.B_RandomizeBP.Text = "随机化";
             this.B_RandomizeBP.UseVisualStyleBackColor = true;
             this.B_RandomizeBP.Click += new System.EventHandler(this.B_RandomizeBP_Click);
             // 
@@ -170,9 +180,10 @@
             this.dgvIndexBP,
             this.dgvItemBP,
             this.dgvPriceBP});
-            this.dgvbp.Location = new System.Drawing.Point(327, 33);
+            this.dgvbp.Location = new System.Drawing.Point(545, 52);
+            this.dgvbp.Margin = new System.Windows.Forms.Padding(5);
             this.dgvbp.Name = "dgvbp";
-            this.dgvbp.Size = new System.Drawing.Size(300, 284);
+            this.dgvbp.Size = new System.Drawing.Size(500, 458);
             this.dgvbp.TabIndex = 10;
             // 
             // dgvIndexBP
@@ -204,18 +215,19 @@
             this.CHK_XItems.AutoSize = true;
             this.CHK_XItems.Checked = true;
             this.CHK_XItems.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CHK_XItems.Location = new System.Drawing.Point(106, 330);
+            this.CHK_XItems.Location = new System.Drawing.Point(177, 534);
+            this.CHK_XItems.Margin = new System.Windows.Forms.Padding(5);
             this.CHK_XItems.Name = "CHK_XItems";
-            this.CHK_XItems.Size = new System.Drawing.Size(200, 17);
+            this.CHK_XItems.Size = new System.Drawing.Size(237, 25);
             this.CHK_XItems.TabIndex = 304;
-            this.CHK_XItems.Text = "Don\'t Randomize X Items (Speedrun)";
+            this.CHK_XItems.Text = "不要随机强化道具（速通用）";
             this.CHK_XItems.UseVisualStyleBackColor = true;
             // 
             // MartEditor7
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(639, 361);
+            this.ClientSize = new System.Drawing.Size(1065, 583);
             this.Controls.Add(this.CHK_XItems);
             this.Controls.Add(this.dgvbp);
             this.Controls.Add(this.B_RandomizeBP);
@@ -227,11 +239,14 @@
             this.Controls.Add(this.L_Mart);
             this.Controls.Add(this.dgv);
             this.Controls.Add(this.CB_Location);
+            this.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(340, 400);
+            this.MinimumSize = new System.Drawing.Size(556, 622);
             this.Name = "MartEditor7";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Mart Editor";
+            this.Text = "友好商店编辑器";
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvbp)).EndInit();
             this.ResumeLayout(false);

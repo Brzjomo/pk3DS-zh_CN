@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TMEditor7));
             this.dgvTM = new System.Windows.Forms.DataGridView();
             this.L_TM = new System.Windows.Forms.Label();
             this.B_RTM = new System.Windows.Forms.Button();
@@ -44,44 +45,49 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvTM.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvTM.Location = new System.Drawing.Point(9, 25);
+            this.dgvTM.Location = new System.Drawing.Point(15, 40);
+            this.dgvTM.Margin = new System.Windows.Forms.Padding(5);
             this.dgvTM.Name = "dgvTM";
-            this.dgvTM.Size = new System.Drawing.Size(240, 299);
+            this.dgvTM.Size = new System.Drawing.Size(285, 483);
             this.dgvTM.TabIndex = 1;
             // 
             // L_TM
             // 
             this.L_TM.AutoSize = true;
-            this.L_TM.Location = new System.Drawing.Point(9, 9);
+            this.L_TM.Location = new System.Drawing.Point(11, 14);
+            this.L_TM.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_TM.Name = "L_TM";
-            this.L_TM.Size = new System.Drawing.Size(26, 13);
+            this.L_TM.Size = new System.Drawing.Size(46, 21);
             this.L_TM.TabIndex = 2;
-            this.L_TM.Text = "TM:";
+            this.L_TM.Text = "招式:";
             // 
             // B_RTM
             // 
-            this.B_RTM.Location = new System.Drawing.Point(41, 1);
+            this.B_RTM.Location = new System.Drawing.Point(176, 2);
+            this.B_RTM.Margin = new System.Windows.Forms.Padding(5);
             this.B_RTM.Name = "B_RTM";
-            this.B_RTM.Size = new System.Drawing.Size(75, 23);
+            this.B_RTM.Size = new System.Drawing.Size(125, 37);
             this.B_RTM.TabIndex = 5;
-            this.B_RTM.Text = "Randomize";
+            this.B_RTM.Text = "随机化";
             this.B_RTM.UseVisualStyleBackColor = true;
             this.B_RTM.Click += new System.EventHandler(this.B_RandomTM_Click);
             // 
             // TMEditor7
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(259, 331);
+            this.ClientSize = new System.Drawing.Size(314, 536);
             this.Controls.Add(this.B_RTM);
             this.Controls.Add(this.L_TM);
             this.Controls.Add(this.dgvTM);
+            this.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(520, 670);
-            this.MinimumSize = new System.Drawing.Size(275, 370);
+            this.MaximumSize = new System.Drawing.Size(856, 1057);
             this.Name = "TMEditor7";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "TM Editor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "招式编号编辑器（7代）";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_Closing);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTM)).EndInit();
             this.ResumeLayout(false);

@@ -35,10 +35,10 @@ namespace pk3DS
 
         private readonly string[] locationsTutor =
         {
-            "Big Wave Beach",
-            "Heahea Beach",
-            "Ula'ula Beach",
-            "Battle Tree",
+            "大浪海滩",
+            "慷待海滩",
+            "乌拉乌拉海滩",
+            "对战树",
         };
 
         private void B_Save_Click(object sender, EventArgs e)
@@ -95,7 +95,7 @@ namespace pk3DS
 
         private void B_Randomize_Click(object sender, EventArgs e)
         {
-            WinFormsUtil.Alert("Not currently implemented.");
+            WinFormsUtil.Alert("目前尚未实现");
         }
     }
 }

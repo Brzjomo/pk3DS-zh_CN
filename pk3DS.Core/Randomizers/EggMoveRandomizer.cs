@@ -38,6 +38,7 @@ namespace pk3DS.Core.Randomizers
                 for (int i = 0; i <= Config.MaxSpeciesID; i++)
                 {
                     Randomize(Sets[i], i);
+                    //mega
                     int formoff = ((EggMoves7) Sets[i]).FormTableIndex;
                     int count = Config.Personal[i].FormeCount;
                     for (int j = 1; j < count; j++)

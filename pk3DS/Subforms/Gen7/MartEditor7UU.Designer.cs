@@ -30,6 +30,7 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MartEditor7UU));
             this.CB_Location = new System.Windows.Forms.ComboBox();
             this.dgv = new System.Windows.Forms.DataGridView();
             this.dgvIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -61,9 +62,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CB_Location.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CB_Location.FormattingEnabled = true;
-            this.CB_Location.Location = new System.Drawing.Point(60, 3);
+            this.CB_Location.Location = new System.Drawing.Point(68, 5);
+            this.CB_Location.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Location.Name = "CB_Location";
-            this.CB_Location.Size = new System.Drawing.Size(254, 21);
+            this.CB_Location.Size = new System.Drawing.Size(453, 29);
             this.CB_Location.TabIndex = 0;
             this.CB_Location.SelectedIndexChanged += new System.EventHandler(this.ChangeIndexItem);
             // 
@@ -80,9 +82,10 @@
             this.dgv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dgvIndex,
             this.dgvItem});
-            this.dgv.Location = new System.Drawing.Point(0, 27);
+            this.dgv.Location = new System.Drawing.Point(0, 44);
+            this.dgv.Margin = new System.Windows.Forms.Padding(5);
             this.dgv.Name = "dgv";
-            this.dgv.Size = new System.Drawing.Size(317, 265);
+            this.dgv.Size = new System.Drawing.Size(528, 421);
             this.dgv.TabIndex = 1;
             // 
             // dgvIndex
@@ -104,53 +107,58 @@
             // L_Mart
             // 
             this.L_Mart.AutoSize = true;
-            this.L_Mart.Location = new System.Drawing.Point(6, 6);
+            this.L_Mart.Location = new System.Drawing.Point(12, 10);
+            this.L_Mart.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Mart.Name = "L_Mart";
-            this.L_Mart.Size = new System.Drawing.Size(51, 13);
+            this.L_Mart.Size = new System.Drawing.Size(46, 21);
             this.L_Mart.TabIndex = 2;
-            this.L_Mart.Text = "Location:";
+            this.L_Mart.Text = "地点:";
             // 
             // B_Randomize
             // 
             this.B_Randomize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.B_Randomize.Location = new System.Drawing.Point(12, 336);
+            this.B_Randomize.Location = new System.Drawing.Point(20, 542);
+            this.B_Randomize.Margin = new System.Windows.Forms.Padding(5);
             this.B_Randomize.Name = "B_Randomize";
-            this.B_Randomize.Size = new System.Drawing.Size(87, 23);
+            this.B_Randomize.Size = new System.Drawing.Size(145, 37);
             this.B_Randomize.TabIndex = 3;
-            this.B_Randomize.Text = "Randomize";
+            this.B_Randomize.Text = "随机化";
             this.B_Randomize.UseVisualStyleBackColor = true;
             this.B_Randomize.Click += new System.EventHandler(this.B_Randomize_Click);
             // 
             // B_Save
             // 
             this.B_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.B_Save.Location = new System.Drawing.Point(265, 336);
+            this.B_Save.Location = new System.Drawing.Point(442, 542);
+            this.B_Save.Margin = new System.Windows.Forms.Padding(5);
             this.B_Save.Name = "B_Save";
-            this.B_Save.Size = new System.Drawing.Size(68, 23);
+            this.B_Save.Size = new System.Drawing.Size(113, 37);
             this.B_Save.TabIndex = 4;
-            this.B_Save.Text = "Save";
+            this.B_Save.Text = "保存";
             this.B_Save.UseVisualStyleBackColor = true;
             this.B_Save.Click += new System.EventHandler(this.B_Save_Click);
             // 
             // B_Cancel
             // 
             this.B_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.B_Cancel.Location = new System.Drawing.Point(191, 336);
+            this.B_Cancel.Location = new System.Drawing.Point(318, 542);
+            this.B_Cancel.Margin = new System.Windows.Forms.Padding(5);
             this.B_Cancel.Name = "B_Cancel";
-            this.B_Cancel.Size = new System.Drawing.Size(68, 23);
+            this.B_Cancel.Size = new System.Drawing.Size(113, 37);
             this.B_Cancel.TabIndex = 5;
-            this.B_Cancel.Text = "Cancel";
+            this.B_Cancel.Text = "取消";
             this.B_Cancel.UseVisualStyleBackColor = true;
             this.B_Cancel.Click += new System.EventHandler(this.B_Cancel_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 6);
+            this.label1.Location = new System.Drawing.Point(12, 10);
+            this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(51, 13);
+            this.label1.Size = new System.Drawing.Size(46, 21);
             this.label1.TabIndex = 8;
-            this.label1.Text = "Location:";
+            this.label1.Text = "地点:";
             // 
             // CB_LocationBPItem
             // 
@@ -158,9 +166,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CB_LocationBPItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CB_LocationBPItem.FormattingEnabled = true;
-            this.CB_LocationBPItem.Location = new System.Drawing.Point(60, 3);
+            this.CB_LocationBPItem.Location = new System.Drawing.Point(68, 5);
+            this.CB_LocationBPItem.Margin = new System.Windows.Forms.Padding(5);
             this.CB_LocationBPItem.Name = "CB_LocationBPItem";
-            this.CB_LocationBPItem.Size = new System.Drawing.Size(254, 21);
+            this.CB_LocationBPItem.Size = new System.Drawing.Size(453, 29);
             this.CB_LocationBPItem.TabIndex = 6;
             this.CB_LocationBPItem.SelectedIndexChanged += new System.EventHandler(this.ChangeIndexBPItem);
             // 
@@ -178,9 +187,10 @@
             this.dgvIndexBP,
             this.dgvItemBP,
             this.dgvPriceBP});
-            this.dgvbp.Location = new System.Drawing.Point(0, 27);
+            this.dgvbp.Location = new System.Drawing.Point(0, 44);
+            this.dgvbp.Margin = new System.Windows.Forms.Padding(5);
             this.dgvbp.Name = "dgvbp";
-            this.dgvbp.Size = new System.Drawing.Size(317, 241);
+            this.dgvbp.Size = new System.Drawing.Size(528, 388);
             this.dgvbp.TabIndex = 10;
             // 
             // dgvIndexBP
@@ -214,10 +224,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Location = new System.Drawing.Point(20, 19);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(5);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(325, 318);
+            this.tabControl1.Size = new System.Drawing.Size(542, 514);
             this.tabControl1.TabIndex = 15;
             // 
             // tabPage1
@@ -225,12 +236,13 @@
             this.tabPage1.Controls.Add(this.L_Mart);
             this.tabPage1.Controls.Add(this.CB_Location);
             this.tabPage1.Controls.Add(this.dgv);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Location = new System.Drawing.Point(4, 30);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(5);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(317, 292);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(5);
+            this.tabPage1.Size = new System.Drawing.Size(534, 480);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Poké Mart";
+            this.tabPage1.Text = "友好商店";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // tabPage2
@@ -238,12 +250,13 @@
             this.tabPage2.Controls.Add(this.CB_LocationBPItem);
             this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.dgvbp);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 30);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(5);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(317, 268);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(5);
+            this.tabPage2.Size = new System.Drawing.Size(534, 480);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "BP Items";
+            this.tabPage2.Text = "对战点数物品";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // CHK_XItems
@@ -251,28 +264,32 @@
             this.CHK_XItems.AutoSize = true;
             this.CHK_XItems.Checked = true;
             this.CHK_XItems.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CHK_XItems.Location = new System.Drawing.Point(13, 364);
+            this.CHK_XItems.Location = new System.Drawing.Point(22, 588);
+            this.CHK_XItems.Margin = new System.Windows.Forms.Padding(5);
             this.CHK_XItems.Name = "CHK_XItems";
-            this.CHK_XItems.Size = new System.Drawing.Size(200, 17);
+            this.CHK_XItems.Size = new System.Drawing.Size(237, 25);
             this.CHK_XItems.TabIndex = 304;
-            this.CHK_XItems.Text = "Don\'t Randomize X Items (Speedrun)";
+            this.CHK_XItems.Text = "不要随机强化道具（速通用）";
             this.CHK_XItems.UseVisualStyleBackColor = true;
             // 
             // MartEditor7UU
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(344, 387);
+            this.ClientSize = new System.Drawing.Size(573, 625);
             this.Controls.Add(this.CHK_XItems);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.B_Cancel);
             this.Controls.Add(this.B_Save);
             this.Controls.Add(this.B_Randomize);
+            this.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(360, 300);
+            this.MinimumSize = new System.Drawing.Size(589, 461);
             this.Name = "MartEditor7UU";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Mart Editor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "友好商店编辑器";
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvbp)).EndInit();
             this.tabControl1.ResumeLayout(false);

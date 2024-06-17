@@ -48,12 +48,12 @@ namespace pk3DS
             Array.Sort(sortedmoves);
             DataGridViewComboBoxColumn dgvMove = new DataGridViewComboBoxColumn();
             {
-                dgvMove.HeaderText = "Move";
+                dgvMove.HeaderText = "招式";
                 dgvMove.DisplayIndex = 0;
                 for (int i = 0; i < movelist.Length; i++)
                     dgvMove.Items.Add(sortedmoves[i]); // add only the Names
 
-                dgvMove.Width = 135;
+                dgvMove.Width = 230;
                 dgvMove.FlatStyle = FlatStyle.Flat;
             }
             dgv.Columns.Add(dgvMove);
@@ -66,13 +66,34 @@ namespace pk3DS
             entry = WinFormsUtil.GetIndex(CB_Species);
 
             int[] specForm = Main.Config.Personal.GetSpeciesForm(entry, Main.Config);
-            string filename = "_" + specForm[0] + (entry > 721 ? "_" + (specForm[1] + 1) : "");
-            PB_MonSprite.Image = (Bitmap)Resources.ResourceManager.GetObject(filename);
+            //string filename = "_" + specForm[0] + (entry > 721 ? "_" + (specForm[1] + 1) : "");
+            //PB_MonSprite.Image = (Bitmap)Resources.ResourceManager.GetObject(filename);
+            Bitmap rawImg = (Bitmap)Resources.ResourceManager.GetObject("_" + specForm[0]);
+            Bitmap bigImg = new Bitmap(rawImg.Width * 2, rawImg.Height * 2);
+            for (int x = 0; x < rawImg.Width; x++)
+            {
+                for (int y = 0; y < rawImg.Height; y++)
+                {
+                    Color c = rawImg.GetPixel(x, y);
+                    bigImg.SetPixel(2 * x, 2 * y, c);
+                    bigImg.SetPixel((2 * x) + 1, 2 * y, c);
+                    bigImg.SetPixel(2 * x, (2 * y) + 1, c);
+                    bigImg.SetPixel((2 * x) + 1, (2 * y) + 1, c);
+                }
+            }
+            PB_MonSprite.Image = bigImg;
 
             dgv.Rows.Clear();
             byte[] input = files[entry];
             if (input.Length == 0) return;
             pkm = new EggMoves6(input);
+
+            //判断是否指定范围
+            if (CHK_Expand.Checked)
+            {
+                pkm.Count = (int)NUD_Moves.Value;
+            }
+
             if (pkm.Count < 1) { files[entry] = Array.Empty<byte>(); return; }
             dgv.Rows.Add(pkm.Count);
 
@@ -99,12 +120,14 @@ namespace pk3DS
 
         private void ChangeEntry(object sender, EventArgs e)
         {
+            CHK_Expand.Checked = false;
             SetList();
             GetList();
         }
 
         private void B_RandAll_Click(object sender, EventArgs e)
         {
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否确认随机化蛋招式？", "无法撤销！") != DialogResult.Yes) return;
             ushort[] HMs = { 15, 19, 57, 70, 127, 249, 291 };
             if (CHK_HMs.Checked && Main.ExeFSPath != null)
                 TMHMEditor6.GetTMHMList(out _, out HMs);
@@ -126,12 +149,13 @@ namespace pk3DS
             rand.Execute();
             sets.Select(z => z.Write()).ToArray().CopyTo(files, 0);
             GetList();
-            WinFormsUtil.Alert("All Pokémon's Egg Moves have been randomized!", "Press the Dump button to see the new Egg Moves!");
+            //CalcStats();
+            //WinFormsUtil.Alert("全部宝可梦蛋招式已被随机化！");
         }
 
         private void B_Dump_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Dump all Egg Moves to Text File?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否导出全部蛋招式至TXT文件？"))
                 return;
 
             dumping = true;
@@ -194,7 +218,7 @@ namespace pk3DS
                 }
             }
             WinFormsUtil.Alert(
-                $"Moves Learned: {movectr}\r\nMost Learned: {max} @ {spec}\r\nSTAB Count: {stab}\r\nSpecies with EggMoves: {species}");
+                $"共指定蛋招式: {movectr}\r\n同属性增益计数: {stab}\r\n拥有蛋招式的宝可梦数: {species}");
         }
     }
 }
