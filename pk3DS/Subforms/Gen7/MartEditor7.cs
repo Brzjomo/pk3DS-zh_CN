@@ -71,23 +71,23 @@ namespace pk3DS
 
         private readonly string[] locations =
         {
-            "No Trials", "1 Trial", "2 Trials", "3 Trials", "4 Trials", "5 Trials", "6 Trials", "7 Trials",
-            "Konikoni City [Incenses]",
-            "Konikoni City [Herbs]",
-            "Hau'oli City [X Items]",
-            "Route 2 [Misc]",
-            "Heahea City [TMs]",
-            "Royal Avenue [TMs]",
-            "Route 8 [Misc]",
-            "Paniola Town [Poké Balls]",
-            "Malie City [TMs]",
-            "Mount Hokulani [Vitamins]",
-            "Seafolk Village [TMs]",
-            "Konikoni City [TMs]",
-            "Konikoni City [Stones]",
-            "Thrifty Megamart, Left [Poké Balls]",
-            "Thrifty Megamart, Middle [Misc]",
-            "Thrifty Megamart, Right [Strange Souvenir]"
+            "未试练", "1个试练", "2个试练", "3个试练", "4个试练", "5个试练", "6个试练", "7个试练",
+            "可霓可市 [薰香]",
+            "可霓可市 [草药]",
+            "好奥乐市 [强化道具]",
+            "2号道路 [杂项]",
+            "慷待市 [招式学习器]",
+            "皇家大道 [招式学习器]",
+            "8号道路 [杂项]",
+            "欧哈纳镇 [精灵球]",
+            "马利埃静市 [招式学习器]",
+            "辉克拉尼山 [增强剂]",
+            "海洋居民之村 [招式学习器]",
+            "可霓可市 [招式学习器]",
+            "可霓可市 [进化石]",
+            "超值超市, 左侧 [精灵球]",
+            "超值超市, 中间 [杂项]",
+            "超值超市, 右侧 [神秘摆设]"
         };
 
         private readonly int[] entriesBP =
@@ -102,12 +102,12 @@ namespace pk3DS
 
         private readonly string[] locationsBP =
         {
-            "Battle Royal Dome [Medicine]",
-            "Battle Royal Dome [EV Training]",
-            "Battle Royal Dome [Held Items]",
-            "Battle Tree [Trade Evolution Items]",
-            "Battle Tree [Held Items]",
-            "Battle Tree [Mega Stones]",
+            "皇家巨蛋 [提升道具]",
+            "皇家巨蛋 [努力值道具]",
+            "皇家巨蛋 [对战道具]",
+            "对战树 [交换进化道具]",
+            "对战树 [对战道具]",
+            "对战树 [超级进化石]"
         };
         #endregion
 
@@ -194,7 +194,7 @@ namespace pk3DS
 
         private void B_Randomize_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, "Randomize mart inventories?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机商店物品?"))
                 return;
 
             int[] validItems = Randomizer.GetRandomItemList();
@@ -202,7 +202,7 @@ namespace pk3DS
             int ctr = 0;
             Util.Shuffle(validItems);
 
-            bool specialOnly = DialogResult.Yes == WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Randomize only special marts?", "Will leave regular necessities intact.");
+            bool specialOnly = DialogResult.Yes == WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否仅随机特殊商店?", "不会修改常规必需品。");
             int start = specialOnly ? 8 : 0;
             for (int i = start; i < CB_Location.Items.Count; i++)
             {
@@ -219,7 +219,7 @@ namespace pk3DS
                     Util.Shuffle(validItems); ctr = 0;
                 }
             }
-            WinFormsUtil.Alert("Randomized!");
+            WinFormsUtil.Alert("已随机化!");
         }
 
         private void GetDataOffsetBP(int index)
@@ -269,7 +269,7 @@ namespace pk3DS
 
         private void B_RandomizeBP_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, "Randomize BP inventories?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机化对战点数物品?"))
                 return;
 
             int[] validItems = Randomizer.GetRandomItemList();
@@ -287,7 +287,7 @@ namespace pk3DS
                     Util.Shuffle(validItems); ctr = 0;
                 }
             }
-            WinFormsUtil.Alert("Randomized!");
+            WinFormsUtil.Alert("已随机化!");
         }
     }
 }

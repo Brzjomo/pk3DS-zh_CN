@@ -11,11 +11,11 @@ namespace pk3DS
         public PickupEditor6()
         {
             InitializeComponent();
-            if (Main.ExeFSPath == null) { WinFormsUtil.Alert("No exeFS code to load."); Close(); }
+            if (Main.ExeFSPath == null) { WinFormsUtil.Alert("未加载exeFS代码"); Close(); }
             string[] files = Directory.GetFiles(Main.ExeFSPath);
             if (!File.Exists(files[0]) || !Path.GetFileNameWithoutExtension(files[0]).Contains("code")) { WinFormsUtil.Alert("No .code.bin detected."); Close(); }
             data = File.ReadAllBytes(files[0]);
-            if (data.Length % 0x200 != 0) { WinFormsUtil.Alert(".code.bin not decompressed. Aborting."); Close(); }
+            if (data.Length % 0x200 != 0) { WinFormsUtil.Alert(".code.bin未解压，程序已终止"); Close(); }
             offset = Util.IndexOfBytes(data, new byte[] { 0x1E, 0x28, 0x32, 0x3C, 0x46, 0x50, 0x5A, 0x5E, 0x62, 0x05, 0x0A, 0x0F, 0x14, 0x19, 0x1E, 0x23, 0x28, 0x2D, 0x32 }, 0x400000, 0) - 0x3A;
             codebin = files[0];
             itemlist[0] = "";
@@ -39,20 +39,20 @@ namespace pk3DS
             dgvCommon.Columns.Clear(); dgvRare.Columns.Clear();
             DataGridViewColumn dgvIndex = new DataGridViewTextBoxColumn();
             {
-                dgvIndex.HeaderText = "Index";
+                dgvIndex.HeaderText = "序号";
                 dgvIndex.DisplayIndex = 0;
-                dgvIndex.Width = 45;
+                dgvIndex.Width = 50;
                 dgvIndex.ReadOnly = true;
                 dgvIndex.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             }
             DataGridViewComboBoxColumn dgvMove = new DataGridViewComboBoxColumn();
             {
-                dgvMove.HeaderText = "Item";
+                dgvMove.HeaderText = "物品";
                 dgvMove.DisplayIndex = 1;
                 foreach (string t in itemlist)
                     dgvMove.Items.Add(t); // add only the Names
 
-                dgvMove.Width = 133;
+                dgvMove.Width = 285;
                 dgvMove.FlatStyle = FlatStyle.Flat;
             }
             dgvCommon.Columns.Add(dgvIndex);
@@ -117,7 +117,7 @@ namespace pk3DS
 
         private void B_Randomize_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, "Randomize pickup lists?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机化捡拾列表？"))
                 return;
 
             int[] validItems = Randomizer.GetRandomItemList();
@@ -136,7 +136,7 @@ namespace pk3DS
                 if (ctr <= validItems.Length) continue;
                 Util.Shuffle(validItems); ctr = 0;
             }
-            WinFormsUtil.Alert("Randomized!");
+            //WinFormsUtil.Alert("已随机！");
         }
     }
 }

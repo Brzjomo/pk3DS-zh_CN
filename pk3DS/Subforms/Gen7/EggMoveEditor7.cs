@@ -21,6 +21,17 @@ namespace pk3DS
             files = infiles;
             string[] species = Main.Config.GetText(TextName.SpeciesNames);
             string[][] AltForms = Main.Config.Personal.GetFormList(species, Main.Config.MaxSpeciesID);
+
+            // Alt Forms
+            if (Main.ifFixChineseDisplay && Main.Config.USUM && Main.Language > 7)
+            {
+                string[] temp = new string[species.Length];
+                temp[0] = species[0];
+                Array.Copy(Main.pokemonNameUSSC_Sim, 0, temp, 1, Main.pokemonNameUSSC_Sim.Length);
+
+                AltForms = Main.Config.Personal.GetFormList(temp, Main.Config.MaxSpeciesID);
+            }
+
             string[] specieslist = Main.Config.Personal.GetPersonalEntryList(AltForms, species, Main.Config.MaxSpeciesID, out _, out _);
             specieslist[0] = movelist[0] = "";
 
@@ -28,14 +39,32 @@ namespace pk3DS
             entries = infiles.Select(z => new EggMoves7(z)).ToArray();
             string[] names = new string[entries.Length];
 
-            for (int i = 0; i < species.Length; i++) // add all species & forms
+            // Species
+            for (int i = 0; i < species.Length; i++)
             {
-                names[i] = species[i];
-                int formoff = entries[i].FormTableIndex;
-                int count = Main.Config.Personal[i].FormeCount;
-                for (int j = 1; j < count; j++)
+                if (Main.ifFixChineseDisplay && Main.Config.USUM && Main.Language > 7 && i != 0)
                 {
-                    names[formoff + j - 1] ??= $"{species[i]} [{AltForms[i][j].Replace(species[i] + " ", "")}]";
+                    string[] temp = new string[species.Length];
+                    temp[0] = species[0];
+                    Array.Copy(Main.pokemonNameUSSC_Sim, 0, temp, 1, Main.pokemonNameUSSC_Sim.Length);
+
+                    names[i] = temp[i];
+                    int formoff = entries[i].FormTableIndex;
+                    int count = Main.Config.Personal[i].FormeCount;
+                    for (int j = 1; j < count; j++)
+                    {
+                        names[formoff + j - 1] ??= $"{temp[i]} [{AltForms[i][j].Replace(temp[i] + " ", "")}]";
+                    }
+                }
+                else
+                {
+                    names[i] = species[i];
+                    int formoff = entries[i].FormTableIndex;
+                    int count = Main.Config.Personal[i].FormeCount;
+                    for (int j = 1; j < count; j++)
+                    {
+                        names[formoff + j - 1] ??= $"{species[i]} [{AltForms[i][j].Replace(species[i] + " ", "")}]";
+                    }
                 }
             }
 
@@ -67,12 +96,12 @@ namespace pk3DS
             Array.Sort(sortedmoves);
             DataGridViewComboBoxColumn dgvMove = new DataGridViewComboBoxColumn();
             {
-                dgvMove.HeaderText = "Move";
+                dgvMove.HeaderText = "招式";
                 dgvMove.DisplayIndex = 0;
                 for (int i = 0; i < movelist.Length; i++)
                     dgvMove.Items.Add(sortedmoves[i]); // add only the Names
 
-                dgvMove.Width = 135;
+                dgvMove.Width = 230;
                 dgvMove.FlatStyle = FlatStyle.Flat;
             }
             dgv.Columns.Add(dgvMove);
@@ -89,11 +118,33 @@ namespace pk3DS
                 s = entry;
             }
             int[] specForm = { s, f };
-            string filename = "_" + specForm[0] + (entry > Main.Config.MaxSpeciesID ? "_" + (specForm[1] + 1) : "");
-            PB_MonSprite.Image = (Bitmap)Resources.ResourceManager.GetObject(filename);
+            //string filename = "_" + specForm[0] + (entry > Main.Config.MaxSpeciesID ? "_" + (specForm[1] + 1) : "");
+
+            //DialogResult dialogResult = MessageBox.Show(filename + "");
+            Bitmap rawImg = (Bitmap)Resources.ResourceManager.GetObject("_" + specForm[0]);
+            Bitmap bigImg = new Bitmap(rawImg.Width * 2, rawImg.Height * 2);
+            for (int x = 0; x < rawImg.Width; x++)
+            {
+                for (int y = 0; y < rawImg.Height; y++)
+                {
+                    Color c = rawImg.GetPixel(x, y);
+                    bigImg.SetPixel(2 * x, 2 * y, c);
+                    bigImg.SetPixel((2 * x) + 1, 2 * y, c);
+                    bigImg.SetPixel(2 * x, (2 * y) + 1, c);
+                    bigImg.SetPixel((2 * x) + 1, (2 * y) + 1, c);
+                }
+            }
+            PB_MonSprite.Image = bigImg;
 
             dgv.Rows.Clear();
             pkm = entries[entry];
+
+            //判断是否指定范围
+            if (CHK_Expand.Checked)
+            {
+                pkm.Count = (int)NUD_Moves.Value;
+            }
+
             NUD_FormTable.Value = pkm.FormTableIndex;
             if (pkm.Count < 1) { files[entry] = Array.Empty<byte>(); return; }
             dgv.Rows.Add(pkm.Count);
@@ -122,12 +173,14 @@ namespace pk3DS
 
         private void ChangeEntry(object sender, EventArgs e)
         {
+            CHK_Expand.Checked = false;
             SetList();
             GetList();
         }
 
         private void B_RandAll_Click(object sender, EventArgs e)
         {
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否确认随机化蛋招式？", "无法撤销！") != DialogResult.Yes) return;
             var sets = entries;
             var rand = new EggMoveRandomizer(Main.Config, sets)
             {
@@ -138,14 +191,15 @@ namespace pk3DS
                 BannedMoves = new[] { 165, 621, 464 }.Concat(Legal.Z_Moves).ToArray(), // Struggle, Hyperspace Fury, Dark Void
             };
             rand.Execute();
-            // sets.Select(z => z.Write()).ToArray().CopyTo(files, 0);
+            sets.Select(z => z.Write()).ToArray().CopyTo(files, 0);
             GetList();
-            WinFormsUtil.Alert("All Pokémon's Egg Moves have been randomized!", "Press the Dump All button to see the new Egg Moves!");
+            //CalcStats();
+            //WinFormsUtil.Alert("全部宝可梦蛋招式已被随机化！");
         }
 
         private void B_Dump_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Dump all Egg Moves to Text File?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否导出全部蛋招式至TXT文件？"))
                 return;
 
             dumping = true;
@@ -204,7 +258,7 @@ namespace pk3DS
                         stab++;
                 }
             }
-            WinFormsUtil.Alert($"Egg Moves: {movectr}\r\nMost Moves: {max} @ {spec}\r\nSTAB Count: {stab}");
+            WinFormsUtil.Alert($"共指定蛋招式: {movectr}\r\n同属性增益计数: {stab}");
         }
     }
 }

@@ -40,6 +40,9 @@ namespace pk3DS
             Setup(); //Turn string resources into arrays
             CB_Species.SelectedIndex = 1;
             RandSettings.GetFormSettings(this, TP_Randomizer.Controls);
+
+            NUD_EXP.Enabled = CHK_EXP.Checked;
+            NUD_CatchRateMod.Enabled = CHK_CatchRateMod.Checked;
         }
         #region Global Variables
         private readonly string mode = Main.Config.ORAS ? "ORAS" : "XY";
@@ -163,14 +166,91 @@ namespace pk3DS
             foreach (ComboBox cb in eggGroup_boxes)
             {
                 foreach (string eg in eggGroups)
-                    cb.Items.Add(eg);
+                {
+                    switch (eg)
+                    {
+                        case "Monster":
+                            cb.Items.Add("怪兽");
+                            break;
+                        case "Water 1":
+                            cb.Items.Add("水 1");
+                            break;
+                        case "Bug":
+                            cb.Items.Add("虫");
+                            break;
+                        case "Flying":
+                            cb.Items.Add("飞行");
+                            break;
+                        case "Field":
+                            cb.Items.Add("陆上");
+                            break;
+                        case "Fairy":
+                            cb.Items.Add("妖精");
+                            break;
+                        case "Grass":
+                            cb.Items.Add("植物");
+                            break;
+                        case "Human-Like":
+                            cb.Items.Add("人型");
+                            break;
+                        case "Water 3":
+                            cb.Items.Add("水 3");
+                            break;
+                        case "Mineral":
+                            cb.Items.Add("矿物");
+                            break;
+                        case "Amorphous":
+                            cb.Items.Add("不定形");
+                            break;
+                        case "Water 2":
+                            cb.Items.Add("水 2");
+                            break;
+                        case "Ditto":
+                            cb.Items.Add("百变怪");
+                            break;
+                        case "Dragon":
+                            cb.Items.Add("龙");
+                            break;
+                        case "Undiscovered":
+                            cb.Items.Add("未发现");
+                            break;
+                        default:
+                            cb.Items.Add(eg);
+                            break;
+                    }
+                }
             }
 
             foreach (string co in colors)
                 CB_Color.Items.Add(co);
 
             foreach (string eg in EXPGroups)
-                CB_EXPGroup.Items.Add(eg);
+            {
+                switch (eg)
+                {
+                    case "Medium-Fast":
+                        CB_EXPGroup.Items.Add("较快");
+                        break;
+                    case "Erratic":
+                        CB_EXPGroup.Items.Add("最快");
+                        break;
+                    case "Fluctuating":
+                        CB_EXPGroup.Items.Add("最慢");
+                        break;
+                    case "Medium-Slow":
+                        CB_EXPGroup.Items.Add("较慢");
+                        break;
+                    case "Fast":
+                        CB_EXPGroup.Items.Add("快");
+                        break;
+                    case "Slow":
+                        CB_EXPGroup.Items.Add("慢");
+                        break;
+                    default:
+                        CB_EXPGroup.Items.Add(eg);
+                        break;
+                }
+            }
         }
 
         private void CB_Species_SelectedIndexChanged(object sender, EventArgs e)
@@ -235,9 +315,46 @@ namespace pk3DS
 
             TB_FormeCount.Text = pkm.FormeCount.ToString("000");
             TB_FormeSprite.Text = pkm.FormeSprite.ToString("000");
-
             TB_RawColor.Text = pkm.Color.ToString("000");
+
             CB_Color.SelectedIndex = pkm.Color & 0xF;
+
+            switch (CB_Color.SelectedIndex)
+            {
+                case 0:
+                    TB_RawColor.BackColor = Color.Red;
+                    break;
+                case 1:
+                    TB_RawColor.BackColor = Color.Blue;
+                    break;
+                case 2:
+                    TB_RawColor.BackColor = Color.Yellow;
+                    break;
+                case 3:
+                    TB_RawColor.BackColor = Color.Green;
+                    break;
+                case 4:
+                    TB_RawColor.BackColor = Color.Black;
+                    break;
+                case 5:
+                    TB_RawColor.BackColor = Color.Brown;
+                    break;
+                case 6:
+                    TB_RawColor.BackColor = Color.Purple;
+                    break;
+                case 7:
+                    TB_RawColor.BackColor = Color.Gray;
+                    break;
+                case 8:
+                    TB_RawColor.BackColor = Color.White;
+                    break;
+                case 9:
+                    TB_RawColor.BackColor = Color.Pink;
+                    break;
+                default:
+                    TB_RawColor.BackColor = Color.White;
+                    break;
+            }
 
             TB_BaseExp.Text = pkm.BaseEXP.ToString("000");
             TB_BST.Text = pkm.BST.ToString("000");
@@ -353,7 +470,7 @@ namespace pk3DS
 
         private void B_Randomize_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Randomize all? Cannot undo.", "Double check Randomization settings in the Enhancements tab.") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否全部随机化？无法撤销。", "请先确认随机化选项。") != DialogResult.Yes) return;
             SaveEntry();
 
             // input settings
@@ -382,12 +499,12 @@ namespace pk3DS
             Main.SpeciesStat.Select(z => z.Write()).ToArray().CopyTo(files, 0);
 
             ReadEntry();
-            WinFormsUtil.Alert("Randomized all Pokémon Personal data entries according to specification!", "Press the Dump All button to view the new Personal data!");
+            WinFormsUtil.Alert("已根据设置随机化全部宝可梦个体数据！");
         }
 
         private void B_ModifyAll(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Modify all? Cannot undo.", "Double check Modification settings in the Enhancements tab.") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否全部修改？无法撤销。", "请先确认修改器选项。") != DialogResult.Yes) return;
 
             for (int i = 1; i < CB_Species.Items.Count; i++)
             {
@@ -439,16 +556,16 @@ namespace pk3DS
                     TB_CatchRate.Text = ((int)NUD_CatchRateMod.Value).ToString();
             }
             CB_Species.SelectedIndex = 1;
-            WinFormsUtil.Alert("Modified all Pokémon Personal data entries according to specification!", "Press the Dump All button to view the new Personal data!");
+            WinFormsUtil.Alert("已根据设置修改全部宝可梦个体数据！");
         }
 
         private bool dumping;
 
         private void B_Dump_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Dump all Personal Entries to Text File?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否导出全部个体数据至TXT文件？"))
                 return;
-            SaveFileDialog sfd = new SaveFileDialog { FileName = "Personal Entries.txt", Filter = "Text File|*.txt" };
+            SaveFileDialog sfd = new SaveFileDialog { FileName = "宝可梦个体数据.txt", Filter = "Text File|*.txt" };
             SystemSounds.Asterisk.Play();
             if (sfd.ShowDialog() != DialogResult.OK)
                 return;
@@ -459,25 +576,25 @@ namespace pk3DS
             {
                 CB_Species.SelectedIndex = i; // Get new Species
                 lines.Add("======");
-                lines.Add($"{entry} - {CB_Species.Text} (Stage: {TB_Stage.Text})");
+                lines.Add($"{entry} - {CB_Species.Text} (进化阶段: {TB_Stage.Text})");
                 lines.Add("======");
-                lines.Add($"Base Stats: {TB_BaseHP.Text}.{TB_BaseATK.Text}.{TB_BaseDEF.Text}.{TB_BaseSPA.Text}.{TB_BaseSPD.Text}.{TB_BaseSPE.Text} (BST: {pkm.BST})");
-                lines.Add($"EV Yield: {TB_HPEVs.Text}.{TB_ATKEVs.Text}.{TB_DEFEVs.Text}.{TB_SPAEVs.Text}.{TB_SPDEVs.Text}.{TB_SPEEVs.Text}");
-                lines.Add($"Abilities: {CB_Ability1.Text} (1) | {CB_Ability2.Text} (2) | {CB_Ability3.Text} (H)");
+                lines.Add($"种族值: {TB_BaseHP.Text}.{TB_BaseATK.Text}.{TB_BaseDEF.Text}.{TB_BaseSPA.Text}.{TB_BaseSPD.Text}.{TB_BaseSPE.Text} (总种族值: {pkm.BST})");
+                lines.Add($"取得基础点数: {TB_HPEVs.Text}.{TB_ATKEVs.Text}.{TB_DEFEVs.Text}.{TB_SPAEVs.Text}.{TB_SPDEVs.Text}.{TB_SPEEVs.Text}");
+                lines.Add($"特性: {CB_Ability1.Text} (1) | {CB_Ability2.Text} (2) | {CB_Ability3.Text} (H)");
                 lines.Add(string.Format(CB_Type1.SelectedIndex != CB_Type2.SelectedIndex
-                    ? "Type: {0} / {1}"
-                    : "Type: {0}", CB_Type1.Text, CB_Type2.Text));
+                    ? "属性: {0} / {1}"
+                    : "属性: {0}", CB_Type1.Text, CB_Type2.Text));
 
-                lines.Add($"Item 1 (50%): {CB_HeldItem1.Text}");
-                lines.Add($"Item 2 (5%): {CB_HeldItem2.Text}");
-                lines.Add($"Item 3 (1%): {CB_HeldItem3.Text}");
+                lines.Add($"物品 1 (50%): {CB_HeldItem1.Text}");
+                lines.Add($"物品 2 (5%): {CB_HeldItem2.Text}");
+                lines.Add($"物品 3 (1%): {CB_HeldItem3.Text}");
 
-                lines.Add($"EXP Group: {CB_EXPGroup.Text}");
+                lines.Add($"经验值累积速度: {CB_EXPGroup.Text}");
                 lines.Add(string.Format(CB_EggGroup1.SelectedIndex != CB_EggGroup2.SelectedIndex
-                        ? "Egg Group: {0} / {1}"
-                        : "Egg Group: {0}", CB_EggGroup1.Text, CB_EggGroup2.Text));
-                lines.Add($"Hatch Cycles: {TB_HatchCycles.Text}");
-                lines.Add($"Height: {TB_Height.Text} m, Weight: {TB_Weight.Text} kg, Color: {CB_Color.Text}");
+                        ? "蛋群: {0} / {1}"
+                        : "蛋群: {0}", CB_EggGroup1.Text, CB_EggGroup2.Text));
+                lines.Add($"孵蛋周期: {TB_HatchCycles.Text}");
+                lines.Add($"身高: {TB_Height.Text} 米, 体重: {TB_Weight.Text} 千克, 颜色: {CB_Color.Text}");
                 lines.Add("");
             }
             string path = sfd.FileName;
@@ -486,8 +603,70 @@ namespace pk3DS
 
         private void CHK_Stats_CheckedChanged(object sender, EventArgs e)
         {
-            L_StatDev.Visible = NUD_StatDev.Visible = CHK_Stats.Checked;
+            NUD_StatDev.Enabled = CHK_Stats.Checked;
             CHK_rHP.Enabled = CHK_rATK.Enabled = CHK_rDEF.Enabled = CHK_rSPA.Enabled = CHK_rSPD.Enabled = CHK_rSPE.Enabled = CHK_Stats.Checked;
+        }
+
+        private void CB_Color_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            pkm.Color = (byte)(Convert.ToByte(CB_Color.SelectedIndex));
+            TB_RawColor.Text = pkm.Color.ToString("000");
+            switch (CB_Color.SelectedIndex)
+            {
+                case 0:
+                    TB_RawColor.BackColor = Color.Red;
+                    break;
+                case 1:
+                    TB_RawColor.BackColor = Color.Blue;
+                    break;
+                case 2:
+                    TB_RawColor.BackColor = Color.Yellow;
+                    break;
+                case 3:
+                    TB_RawColor.BackColor = Color.Green;
+                    break;
+                case 4:
+                    TB_RawColor.BackColor = Color.Black;
+                    break;
+                case 5:
+                    TB_RawColor.BackColor = Color.Brown;
+                    break;
+                case 6:
+                    TB_RawColor.BackColor = Color.Purple;
+                    break;
+                case 7:
+                    TB_RawColor.BackColor = Color.Gray;
+                    break;
+                case 8:
+                    TB_RawColor.BackColor = Color.White;
+                    break;
+                case 9:
+                    TB_RawColor.BackColor = Color.Pink;
+                    break;
+                default:
+                    TB_RawColor.BackColor = Color.White;
+                    break;
+            }
+        }
+
+        private void CHK_Type_CheckedChanged(object sender, EventArgs e)
+        {
+            NUD_TypePercent.Enabled = CHK_Type.Checked;
+        }
+
+        private void CHK_EggGroup_CheckedChanged(object sender, EventArgs e)
+        {
+            NUD_Egg.Enabled = CHK_EggGroup.Checked;
+        }
+
+        private void CHK_EXP_CheckedChanged(object sender, EventArgs e)
+        {
+            NUD_EXP.Enabled = CHK_EXP.Checked;
+        }
+
+        private void CHK_CatchRateMod_CheckedChanged(object sender, EventArgs e)
+        {
+            NUD_CatchRateMod.Enabled = CHK_CatchRateMod.Checked;
         }
 
         private void CHK_Ability_CheckedChanged(object sender, EventArgs e)

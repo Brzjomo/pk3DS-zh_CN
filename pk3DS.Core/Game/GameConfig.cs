@@ -4,6 +4,7 @@ using System.Linq;
 using pk3DS.Core.CTR;
 using pk3DS.Core.Structures.PersonalInfo;
 using pk3DS.Core.Structures;
+using System.Text;
 
 namespace pk3DS.Core
 {
@@ -246,7 +247,13 @@ namespace pk3DS.Core
 
         public string[] GetText(TextName file)
         {
-            return (string[])GameTextStrings[GetGameText(file).Index].Clone();
+            string[] temp = (string[])GameTextStrings[GetGameText(file).Index].Clone();
+            for (int i = 0; i < temp.Length; i++)
+            {
+                temp[i] = Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(temp[i]));
+            }
+
+            return temp;
         }
 
         public bool SetText(TextName file, string[] strings)

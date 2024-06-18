@@ -28,17 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TutorEditor7));
             this.B_Randomize = new System.Windows.Forms.Button();
             this.B_Save = new System.Windows.Forms.Button();
             this.B_Cancel = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.CB_LocationBPMove = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.dgvmv = new System.Windows.Forms.DataGridView();
-            this.dgvmvBP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvmvMove = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.dgvmvIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvmvMove = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.dgvmvBP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label2 = new System.Windows.Forms.Label();
+            this.CB_LocationBPMove = new System.Windows.Forms.ComboBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvmv)).BeginInit();
@@ -48,33 +49,36 @@
             // B_Randomize
             // 
             this.B_Randomize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.B_Randomize.Location = new System.Drawing.Point(12, 493);
+            this.B_Randomize.Location = new System.Drawing.Point(20, 574);
+            this.B_Randomize.Margin = new System.Windows.Forms.Padding(5);
             this.B_Randomize.Name = "B_Randomize";
-            this.B_Randomize.Size = new System.Drawing.Size(87, 23);
+            this.B_Randomize.Size = new System.Drawing.Size(145, 37);
             this.B_Randomize.TabIndex = 3;
-            this.B_Randomize.Text = "Randomize";
+            this.B_Randomize.Text = "随机化";
             this.B_Randomize.UseVisualStyleBackColor = true;
             this.B_Randomize.Click += new System.EventHandler(this.B_Randomize_Click);
             // 
             // B_Save
             // 
             this.B_Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.B_Save.Location = new System.Drawing.Point(265, 493);
+            this.B_Save.Location = new System.Drawing.Point(442, 574);
+            this.B_Save.Margin = new System.Windows.Forms.Padding(5);
             this.B_Save.Name = "B_Save";
-            this.B_Save.Size = new System.Drawing.Size(68, 23);
+            this.B_Save.Size = new System.Drawing.Size(113, 37);
             this.B_Save.TabIndex = 4;
-            this.B_Save.Text = "Save";
+            this.B_Save.Text = "保存";
             this.B_Save.UseVisualStyleBackColor = true;
             this.B_Save.Click += new System.EventHandler(this.B_Save_Click);
             // 
             // B_Cancel
             // 
             this.B_Cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.B_Cancel.Location = new System.Drawing.Point(191, 493);
+            this.B_Cancel.Location = new System.Drawing.Point(318, 574);
+            this.B_Cancel.Margin = new System.Windows.Forms.Padding(5);
             this.B_Cancel.Name = "B_Cancel";
-            this.B_Cancel.Size = new System.Drawing.Size(68, 23);
+            this.B_Cancel.Size = new System.Drawing.Size(113, 37);
             this.B_Cancel.TabIndex = 5;
-            this.B_Cancel.Text = "Cancel";
+            this.B_Cancel.Text = "取消";
             this.B_Cancel.UseVisualStyleBackColor = true;
             this.B_Cancel.Click += new System.EventHandler(this.B_Cancel_Click);
             // 
@@ -83,34 +87,14 @@
             this.tabPage3.Controls.Add(this.dgvmv);
             this.tabPage3.Controls.Add(this.label2);
             this.tabPage3.Controls.Add(this.CB_LocationBPMove);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Location = new System.Drawing.Point(4, 30);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(5);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(317, 446);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(5);
+            this.tabPage3.Size = new System.Drawing.Size(534, 507);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Move Tutors";
+            this.tabPage3.Text = "招式导师";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // CB_LocationBPMove
-            // 
-            this.CB_LocationBPMove.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CB_LocationBPMove.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CB_LocationBPMove.FormattingEnabled = true;
-            this.CB_LocationBPMove.Location = new System.Drawing.Point(60, 3);
-            this.CB_LocationBPMove.Name = "CB_LocationBPMove";
-            this.CB_LocationBPMove.Size = new System.Drawing.Size(254, 21);
-            this.CB_LocationBPMove.TabIndex = 11;
-            this.CB_LocationBPMove.SelectedIndexChanged += new System.EventHandler(this.ChangeIndexBPMove);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 6);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(51, 13);
-            this.label2.TabIndex = 12;
-            this.label2.Text = "Location:";
             // 
             // dgvmv
             // 
@@ -126,17 +110,22 @@
             this.dgvmvIndex,
             this.dgvmvMove,
             this.dgvmvBP});
-            this.dgvmv.Location = new System.Drawing.Point(0, 27);
+            this.dgvmv.Location = new System.Drawing.Point(0, 44);
+            this.dgvmv.Margin = new System.Windows.Forms.Padding(5);
             this.dgvmv.Name = "dgvmv";
-            this.dgvmv.Size = new System.Drawing.Size(317, 419);
+            this.dgvmv.RowHeadersWidth = 40;
+            this.dgvmv.Size = new System.Drawing.Size(528, 447);
             this.dgvmv.TabIndex = 14;
             // 
-            // dgvmvBP
+            // dgvmvIndex
             // 
-            this.dgvmvBP.HeaderText = "Price";
-            this.dgvmvBP.MaxInputLength = 3;
-            this.dgvmvBP.Name = "dgvmvBP";
-            this.dgvmvBP.Width = 65;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvmvIndex.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvmvIndex.HeaderText = "Index";
+            this.dgvmvIndex.MaxInputLength = 3;
+            this.dgvmvIndex.Name = "dgvmvIndex";
+            this.dgvmvIndex.ReadOnly = true;
+            this.dgvmvIndex.Width = 45;
             // 
             // dgvmvMove
             // 
@@ -145,15 +134,35 @@
             this.dgvmvMove.Name = "dgvmvMove";
             this.dgvmvMove.Width = 135;
             // 
-            // dgvmvIndex
+            // dgvmvBP
             // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.dgvmvIndex.DefaultCellStyle = dataGridViewCellStyle7;
-            this.dgvmvIndex.HeaderText = "Index";
-            this.dgvmvIndex.MaxInputLength = 3;
-            this.dgvmvIndex.Name = "dgvmvIndex";
-            this.dgvmvIndex.ReadOnly = true;
-            this.dgvmvIndex.Width = 45;
+            this.dgvmvBP.HeaderText = "Price";
+            this.dgvmvBP.MaxInputLength = 3;
+            this.dgvmvBP.Name = "dgvmvBP";
+            this.dgvmvBP.Width = 65;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 10);
+            this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(46, 21);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "地点:";
+            // 
+            // CB_LocationBPMove
+            // 
+            this.CB_LocationBPMove.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.CB_LocationBPMove.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CB_LocationBPMove.FormattingEnabled = true;
+            this.CB_LocationBPMove.Location = new System.Drawing.Point(68, 5);
+            this.CB_LocationBPMove.Margin = new System.Windows.Forms.Padding(5);
+            this.CB_LocationBPMove.Name = "CB_LocationBPMove";
+            this.CB_LocationBPMove.Size = new System.Drawing.Size(453, 29);
+            this.CB_LocationBPMove.TabIndex = 11;
+            this.CB_LocationBPMove.SelectedIndexChanged += new System.EventHandler(this.ChangeIndexBPMove);
             // 
             // tabControl1
             // 
@@ -161,26 +170,30 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Location = new System.Drawing.Point(20, 19);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(5);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(325, 472);
+            this.tabControl1.Size = new System.Drawing.Size(542, 541);
             this.tabControl1.TabIndex = 15;
             // 
             // TutorEditor7
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(344, 528);
+            this.ClientSize = new System.Drawing.Size(573, 630);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.B_Cancel);
             this.Controls.Add(this.B_Save);
             this.Controls.Add(this.B_Randomize);
+            this.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(360, 300);
+            this.MinimumSize = new System.Drawing.Size(589, 461);
             this.Name = "TutorEditor7";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Tutor Editor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "招式导师";
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvmv)).EndInit();

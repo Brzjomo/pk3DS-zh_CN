@@ -42,21 +42,21 @@ namespace pk3DS
             dgvTM.Columns.Clear(); dgvHM.Columns.Clear();
             DataGridViewColumn dgvIndex = new DataGridViewTextBoxColumn();
             {
-                dgvIndex.HeaderText = "Index";
+                dgvIndex.HeaderText = "序号";
                 dgvIndex.DisplayIndex = 0;
-                dgvIndex.Width = 45;
+                dgvIndex.Width = 60;
                 dgvIndex.ReadOnly = true;
                 dgvIndex.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 dgvIndex.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
             DataGridViewComboBoxColumn dgvMove = new DataGridViewComboBoxColumn();
             {
-                dgvMove.HeaderText = "Move";
+                dgvMove.HeaderText = "招式";
                 dgvMove.DisplayIndex = 1;
                 foreach (string t in movelist)
                     dgvMove.Items.Add(t); // add only the Names
 
-                dgvMove.Width = 133;
+                dgvMove.Width = 160;
                 dgvMove.FlatStyle = FlatStyle.Flat;
                 dgvIndex.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
@@ -161,8 +161,8 @@ namespace pk3DS
 
         private void B_RandomTM_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Randomize TMs? Cannot undo.", "Move compatibility will be the same as the base TMs.") != DialogResult.Yes) return;
-            if (CHK_RandomizeHM.Checked && WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Randomizing HMs can halt story progression!", "Continue anyway?") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机化招式？", "招式兼容性将与先前一致。") != DialogResult.Yes) return;
+            if (CHK_RandomizeHM.Checked && WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "随机化秘传机可能会导致游戏卡关！", "是否继续？") != DialogResult.Yes) return;
 
             int[] randomMoves = Enumerable.Range(1, movelist.Length - 1).Select(i => i).ToArray();
             Util.Shuffle(randomMoves);
@@ -200,7 +200,7 @@ namespace pk3DS
                     dgvHM.Rows[j].Cells[1].Value = movelist[randomMoves[ctr++]];
                 }
             }
-            WinFormsUtil.Alert("Randomized!");
+            //WinFormsUtil.Alert("已随机化！");
         }
 
         internal static void GetTMHMList(out ushort[] TMs, out ushort[] HMs)

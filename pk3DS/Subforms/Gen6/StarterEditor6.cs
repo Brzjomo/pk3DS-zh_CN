@@ -56,8 +56,8 @@ namespace pk3DS
         private readonly Label[] Labels;
 
         private readonly string[] StarterSummary = Main.Config.ORAS
-            ? new[] { "Gen 3 Starters", "Gen 2 Starters", "Gen 4 Starters", "Gen 5 Starters" }
-            : new[] { "Gen 6 Starters", "Gen 1 Starters" };
+            ? new[] { "第3世代", "第2世代", "第4世代", "第5世代" }
+            : new[] { "第6世代", "第1世代" };
 
         private byte[] Data;
         private byte[] FieldData;
@@ -155,8 +155,8 @@ namespace pk3DS
         private void B_Randomize_Click(object sender, EventArgs e)
         {
             bool blind = DialogResult.Yes ==
-                         WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Hide randomization, save, and close?",
-                             "If you want the Starters to be a surprise :)");
+                         WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "随机化后是否直接关闭？",
+                             "留给你一点惊喜(*/ω＼*)");
             if (blind)
                 Hide();
 
@@ -164,8 +164,7 @@ namespace pk3DS
             for (int i = 0; i < Count; i++)
             {
                 // Get Species List
-
-                int gen = int.Parse(Labels[i].Text[4] + "");
+                int gen = int.Parse(Labels[i].Text[1] + "");
                 var rand = new SpeciesRandomizer(Main.Config)
                 {
                     G1 = !CHK_Gen.Checked || gen == 1,

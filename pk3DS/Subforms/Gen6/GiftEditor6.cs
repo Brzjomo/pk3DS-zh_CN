@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -7,6 +8,7 @@ using System.Windows.Forms;
 using pk3DS.Core;
 using pk3DS.Core.Randomizers;
 using pk3DS.Core.Structures;
+using pk3DS.Properties;
 
 namespace pk3DS
 {
@@ -18,7 +20,7 @@ namespace pk3DS
             Array.Resize(ref specieslist, Main.Config.MaxSpeciesID + 1);
             if (!File.Exists(FieldPath))
             {
-                WinFormsUtil.Error("CRO does not exist! Closing.", FieldPath);
+                WinFormsUtil.Error("CRO文件不存在！关闭中...", FieldPath);
                 Close();
             }
             InitializeComponent();
@@ -26,7 +28,7 @@ namespace pk3DS
             MegaDictionary = megaDictionary;
 
             specieslist[0] = "---";
-            itemlist[0] = "(None)"; // blank == -1
+            itemlist[0] = "(未持有)"; // blank == -1
 
             CB_Species.Items.Clear();
             foreach (string s in specieslist)
@@ -34,7 +36,7 @@ namespace pk3DS
             CB_HeldItem.Items.Clear();
             foreach (string s in itemlist)
                 CB_HeldItem.Items.Add(s);
-            CB_Nature.Items.Add("Random");
+            CB_Nature.Items.Add("--- 随机 ---");
             CB_Nature.Items.AddRange(natureslist.Take(25).ToArray());
             RandSettings.GetFormSettings(this, tabPage2.Controls);
 
@@ -65,10 +67,10 @@ namespace pk3DS
 
         private readonly string[] ability =
         {
-            "Any (1 or 2)",
-            "Ability 1",
-            "Ability 2",
-            "Hidden Ability",
+            "任意（1 或 2）",
+            "特性 1",
+            "特性 2",
+            "隐藏特性",
         };
 
         private void B_Save_Click(object sender, EventArgs e)
@@ -97,9 +99,9 @@ namespace pk3DS
             foreach (var s in ability) CB_Ability.Items.Add(s);
 
             CB_Gender.Items.Clear();
-            CB_Gender.Items.Add("- / Genderless/Random");
-            CB_Gender.Items.Add("♂ / Male");
-            CB_Gender.Items.Add("♀ / Female");
+            CB_Gender.Items.Add("无性别 / 随机");
+            CB_Gender.Items.Add("♂ 雄性");
+            CB_Gender.Items.Add("♀ 雌性");
 
             loaded = true;
             LB_Gifts.SelectedIndex = 0;
@@ -136,7 +138,7 @@ namespace pk3DS
             }
 
             if (starters) // are modified
-                WinFormsUtil.Alert("Starters have been modified.", "Be sure to update the Starters in DllPoke3Select.cro by updating via the Starter Editor.");
+                WinFormsUtil.Alert("Starters 已经被修改。", "Be sure to update the Starters in DllPoke3Select.cro by updating via the Starter Editor.");
 
             File.WriteAllBytes(FieldPath, FieldData);
         }
@@ -204,7 +206,7 @@ namespace pk3DS
 
         private void B_RandAll_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Randomize all? Cannot undo.", "Double check Randomization settings in the Randomizer Options tab.") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否全部随机化？无法撤销。", "请先检查随机化选项页的设置。") != DialogResult.Yes) return;
 
             var formrand = new FormRandomizer(Main.Config) { AllowMega = false, AllowAlolanForm = false };
             var specrand = new SpeciesRandomizer(Main.Config)
@@ -276,7 +278,7 @@ namespace pk3DS
                 if (MegaDictionary.Values.Any(z => z.Contains(CB_HeldItem.SelectedIndex)) && NUD_Form.Value != 0)
                     NUD_Form.Value = 0; // don't allow mega gifts to be form 1
             }
-            WinFormsUtil.Alert("Randomized all Gift Pokémon according to specification!");
+            WinFormsUtil.Alert("已根据设置随机化全部礼物宝可梦！");
         }
 
         private int[] GetRandomMega(out int species)
@@ -343,18 +345,34 @@ namespace pk3DS
         {
             int index = LB_Gifts.SelectedIndex;
             LB_Gifts.Items[index] = index.ToString("00") + " - " + CB_Species.Text;
+
+            //DialogResult dialogResult = MessageBox.Show("_" + Array.IndexOf(specieslist, CB_Species.Text));
+            Bitmap rawImg = (Bitmap)Resources.ResourceManager.GetObject("_" + Array.IndexOf(specieslist, CB_Species.Text));
+            Bitmap bigImg = new Bitmap(rawImg.Width * 2, rawImg.Height * 2);
+            for (int x = 0; x < rawImg.Width; x++)
+            {
+                for (int y = 0; y < rawImg.Height; y++)
+                {
+                    Color c = rawImg.GetPixel(x, y);
+                    bigImg.SetPixel(2 * x, 2 * y, c);
+                    bigImg.SetPixel((2 * x) + 1, 2 * y, c);
+                    bigImg.SetPixel(2 * x, (2 * y) + 1, c);
+                    bigImg.SetPixel((2 * x) + 1, (2 * y) + 1, c);
+                }
+            }
+            PB_TOP.Image = bigImg;
         }
 
         private void ModifyLevels(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Modify all current Levels?", "Cannot undo.") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否修改当前所有宝可梦等级？", "无法撤销。") != DialogResult.Yes) return;
 
             for (int i = 0; i < LB_Gifts.Items.Count; i++)
             {
                 LB_Gifts.SelectedIndex = i;
                 NUD_Level.Value = Randomizer.GetModifiedLevel((int)NUD_Level.Value, NUD_LevelBoost.Value);
             }
-            WinFormsUtil.Alert("Modified all Levels according to specification!");
+            WinFormsUtil.Alert("已根据设置修改全部宝可梦等级！");
         }
     }
 }

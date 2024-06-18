@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MoveEditor6));
             this.L_Type = new System.Windows.Forms.Label();
             this.CB_Move = new System.Windows.Forms.ComboBox();
             this.L_Move = new System.Windows.Forms.Label();
@@ -119,11 +120,12 @@
             // L_Type
             // 
             this.L_Type.AutoSize = true;
-            this.L_Type.Location = new System.Drawing.Point(32, 38);
+            this.L_Type.Location = new System.Drawing.Point(26, 56);
+            this.L_Type.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Type.Name = "L_Type";
-            this.L_Type.Size = new System.Drawing.Size(34, 13);
+            this.L_Type.Size = new System.Drawing.Size(46, 21);
             this.L_Type.TabIndex = 0;
-            this.L_Type.Text = "Type:";
+            this.L_Type.Text = "属性:";
             this.L_Type.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // CB_Move
@@ -132,126 +134,139 @@
             this.CB_Move.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_Move.DropDownWidth = 120;
             this.CB_Move.FormattingEnabled = true;
-            this.CB_Move.Location = new System.Drawing.Point(71, 10);
+            this.CB_Move.Location = new System.Drawing.Point(65, 11);
+            this.CB_Move.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Move.Name = "CB_Move";
-            this.CB_Move.Size = new System.Drawing.Size(130, 21);
+            this.CB_Move.Size = new System.Drawing.Size(295, 29);
             this.CB_Move.TabIndex = 1;
             this.CB_Move.SelectedIndexChanged += new System.EventHandler(this.ChangeEntry);
             // 
             // L_Move
             // 
             this.L_Move.AutoSize = true;
-            this.L_Move.Location = new System.Drawing.Point(33, 13);
+            this.L_Move.Location = new System.Drawing.Point(15, 15);
+            this.L_Move.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Move.Name = "L_Move";
-            this.L_Move.Size = new System.Drawing.Size(37, 13);
+            this.L_Move.Size = new System.Drawing.Size(46, 21);
             this.L_Move.TabIndex = 2;
-            this.L_Move.Text = "Move:";
+            this.L_Move.Text = "招式:";
             this.L_Move.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // CB_Type
             // 
             this.CB_Type.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CB_Type.FormattingEnabled = true;
-            this.CB_Type.Location = new System.Drawing.Point(71, 35);
+            this.CB_Type.Location = new System.Drawing.Point(75, 52);
+            this.CB_Type.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Type.Name = "CB_Type";
-            this.CB_Type.Size = new System.Drawing.Size(99, 21);
+            this.CB_Type.Size = new System.Drawing.Size(162, 29);
             this.CB_Type.TabIndex = 3;
             // 
             // CB_Category
             // 
             this.CB_Category.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CB_Category.FormattingEnabled = true;
-            this.CB_Category.Location = new System.Drawing.Point(71, 58);
+            this.CB_Category.Location = new System.Drawing.Point(75, 88);
+            this.CB_Category.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Category.Name = "CB_Category";
-            this.CB_Category.Size = new System.Drawing.Size(99, 21);
+            this.CB_Category.Size = new System.Drawing.Size(162, 29);
             this.CB_Category.TabIndex = 4;
             // 
             // L_Category
             // 
             this.L_Category.AutoSize = true;
-            this.L_Category.Location = new System.Drawing.Point(18, 61);
+            this.L_Category.Location = new System.Drawing.Point(26, 92);
+            this.L_Category.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Category.Name = "L_Category";
-            this.L_Category.Size = new System.Drawing.Size(52, 13);
+            this.L_Category.Size = new System.Drawing.Size(46, 21);
             this.L_Category.TabIndex = 5;
-            this.L_Category.Text = "Category:";
+            this.L_Category.Text = "分类:";
             this.L_Category.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // L_BP
             // 
             this.L_BP.AutoSize = true;
-            this.L_BP.Location = new System.Drawing.Point(26, 132);
+            this.L_BP.Location = new System.Drawing.Point(53, 207);
+            this.L_BP.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_BP.Name = "L_BP";
-            this.L_BP.Size = new System.Drawing.Size(40, 13);
+            this.L_BP.Size = new System.Drawing.Size(46, 21);
             this.L_BP.TabIndex = 7;
-            this.L_BP.Text = "Power:";
+            this.L_BP.Text = "威力:";
             this.L_BP.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // L_PP
             // 
             this.L_PP.AutoSize = true;
-            this.L_PP.Location = new System.Drawing.Point(15, 174);
+            this.L_PP.Location = new System.Drawing.Point(33, 275);
+            this.L_PP.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_PP.Name = "L_PP";
-            this.L_PP.Size = new System.Drawing.Size(51, 13);
+            this.L_PP.Size = new System.Drawing.Size(66, 21);
             this.L_PP.TabIndex = 8;
-            this.L_PP.Text = "Base PP:";
+            this.L_PP.Text = "基础PP:";
             this.L_PP.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // L_Min
             // 
             this.L_Min.AutoSize = true;
-            this.L_Min.Location = new System.Drawing.Point(236, 132);
+            this.L_Min.Location = new System.Drawing.Point(394, 207);
+            this.L_Min.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Min.Name = "L_Min";
-            this.L_Min.Size = new System.Drawing.Size(48, 13);
+            this.L_Min.Size = new System.Drawing.Size(78, 21);
             this.L_Min.TabIndex = 10;
-            this.L_Min.Text = "Min Hits:";
+            this.L_Min.Text = "最小命中:";
             this.L_Min.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // L_Max
             // 
             this.L_Max.AutoSize = true;
-            this.L_Max.Location = new System.Drawing.Point(233, 153);
+            this.L_Max.Location = new System.Drawing.Point(394, 241);
+            this.L_Max.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Max.Name = "L_Max";
-            this.L_Max.Size = new System.Drawing.Size(51, 13);
+            this.L_Max.Size = new System.Drawing.Size(78, 21);
             this.L_Max.TabIndex = 12;
-            this.L_Max.Text = "Max Hits:";
+            this.L_Max.Text = "最大命中:";
             this.L_Max.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // L_Priority
             // 
             this.L_Priority.AutoSize = true;
-            this.L_Priority.Location = new System.Drawing.Point(25, 195);
+            this.L_Priority.Location = new System.Drawing.Point(37, 309);
+            this.L_Priority.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Priority.Name = "L_Priority";
-            this.L_Priority.Size = new System.Drawing.Size(41, 13);
+            this.L_Priority.Size = new System.Drawing.Size(62, 21);
             this.L_Priority.TabIndex = 17;
-            this.L_Priority.Text = "Priority:";
+            this.L_Priority.Text = "优先度:";
             // 
             // NUD_HitMax
             // 
-            this.NUD_HitMax.Location = new System.Drawing.Point(290, 151);
+            this.NUD_HitMax.Location = new System.Drawing.Point(475, 237);
+            this.NUD_HitMax.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_HitMax.Maximum = new decimal(new int[] {
             6,
             0,
             0,
             0});
             this.NUD_HitMax.Name = "NUD_HitMax";
-            this.NUD_HitMax.Size = new System.Drawing.Size(30, 20);
+            this.NUD_HitMax.Size = new System.Drawing.Size(67, 29);
             this.NUD_HitMax.TabIndex = 18;
             // 
             // NUD_HitMin
             // 
-            this.NUD_HitMin.Location = new System.Drawing.Point(290, 130);
+            this.NUD_HitMin.Location = new System.Drawing.Point(475, 203);
+            this.NUD_HitMin.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_HitMin.Maximum = new decimal(new int[] {
             6,
             0,
             0,
             0});
             this.NUD_HitMin.Name = "NUD_HitMin";
-            this.NUD_HitMin.Size = new System.Drawing.Size(30, 20);
+            this.NUD_HitMin.Size = new System.Drawing.Size(67, 29);
             this.NUD_HitMin.TabIndex = 19;
             // 
             // NUD_Priority
             // 
-            this.NUD_Priority.Location = new System.Drawing.Point(72, 193);
+            this.NUD_Priority.Location = new System.Drawing.Point(102, 305);
+            this.NUD_Priority.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_Priority.Maximum = new decimal(new int[] {
             8,
             0,
@@ -263,163 +278,177 @@
             0,
             -2147483648});
             this.NUD_Priority.Name = "NUD_Priority";
-            this.NUD_Priority.Size = new System.Drawing.Size(35, 20);
+            this.NUD_Priority.Size = new System.Drawing.Size(67, 29);
             this.NUD_Priority.TabIndex = 20;
             // 
             // NUD_PP
             // 
-            this.NUD_PP.Location = new System.Drawing.Point(72, 172);
+            this.NUD_PP.Location = new System.Drawing.Point(102, 271);
+            this.NUD_PP.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_PP.Maximum = new decimal(new int[] {
             40,
             0,
             0,
             0});
             this.NUD_PP.Name = "NUD_PP";
-            this.NUD_PP.Size = new System.Drawing.Size(35, 20);
+            this.NUD_PP.Size = new System.Drawing.Size(67, 29);
             this.NUD_PP.TabIndex = 21;
             // 
             // NUD_Power
             // 
-            this.NUD_Power.Location = new System.Drawing.Point(72, 130);
+            this.NUD_Power.Location = new System.Drawing.Point(102, 203);
+            this.NUD_Power.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_Power.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.NUD_Power.Name = "NUD_Power";
-            this.NUD_Power.Size = new System.Drawing.Size(45, 20);
+            this.NUD_Power.Size = new System.Drawing.Size(67, 29);
             this.NUD_Power.TabIndex = 22;
             // 
             // NUD_TurnMin
             // 
-            this.NUD_TurnMin.Location = new System.Drawing.Point(290, 172);
+            this.NUD_TurnMin.Location = new System.Drawing.Point(475, 271);
+            this.NUD_TurnMin.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_TurnMin.Maximum = new decimal(new int[] {
             15,
             0,
             0,
             0});
             this.NUD_TurnMin.Name = "NUD_TurnMin";
-            this.NUD_TurnMin.Size = new System.Drawing.Size(30, 20);
+            this.NUD_TurnMin.Size = new System.Drawing.Size(67, 29);
             this.NUD_TurnMin.TabIndex = 26;
             // 
             // L_TrapMin
             // 
             this.L_TrapMin.AutoSize = true;
-            this.L_TrapMin.Location = new System.Drawing.Point(227, 174);
+            this.L_TrapMin.Location = new System.Drawing.Point(394, 275);
+            this.L_TrapMin.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_TrapMin.Name = "L_TrapMin";
-            this.L_TrapMin.Size = new System.Drawing.Size(57, 13);
+            this.L_TrapMin.Size = new System.Drawing.Size(78, 21);
             this.L_TrapMin.TabIndex = 23;
-            this.L_TrapMin.Text = "Min Turns:";
+            this.L_TrapMin.Text = "最小回合:";
             this.L_TrapMin.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // NUD_TurnMax
             // 
-            this.NUD_TurnMax.Location = new System.Drawing.Point(290, 193);
+            this.NUD_TurnMax.Location = new System.Drawing.Point(475, 305);
+            this.NUD_TurnMax.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_TurnMax.Maximum = new decimal(new int[] {
             15,
             0,
             0,
             0});
             this.NUD_TurnMax.Name = "NUD_TurnMax";
-            this.NUD_TurnMax.Size = new System.Drawing.Size(30, 20);
+            this.NUD_TurnMax.Size = new System.Drawing.Size(67, 29);
             this.NUD_TurnMax.TabIndex = 25;
             // 
             // L_TrapMax
             // 
             this.L_TrapMax.AutoSize = true;
-            this.L_TrapMax.Location = new System.Drawing.Point(224, 195);
+            this.L_TrapMax.Location = new System.Drawing.Point(394, 309);
+            this.L_TrapMax.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_TrapMax.Name = "L_TrapMax";
-            this.L_TrapMax.Size = new System.Drawing.Size(60, 13);
+            this.L_TrapMax.Size = new System.Drawing.Size(78, 21);
             this.L_TrapMax.TabIndex = 24;
-            this.L_TrapMax.Text = "Max Turns:";
+            this.L_TrapMax.Text = "最大回合:";
             this.L_TrapMax.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // NUD_Recoil
             // 
-            this.NUD_Recoil.Location = new System.Drawing.Point(184, 172);
+            this.NUD_Recoil.Location = new System.Drawing.Point(296, 271);
+            this.NUD_Recoil.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_Recoil.Minimum = new decimal(new int[] {
             100,
             0,
             0,
             -2147483648});
             this.NUD_Recoil.Name = "NUD_Recoil";
-            this.NUD_Recoil.Size = new System.Drawing.Size(40, 20);
+            this.NUD_Recoil.Size = new System.Drawing.Size(67, 29);
             this.NUD_Recoil.TabIndex = 34;
             // 
             // L_Recoil
             // 
             this.L_Recoil.AutoSize = true;
-            this.L_Recoil.Location = new System.Drawing.Point(114, 174);
+            this.L_Recoil.Location = new System.Drawing.Point(194, 275);
+            this.L_Recoil.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Recoil.Name = "L_Recoil";
-            this.L_Recoil.Size = new System.Drawing.Size(64, 13);
+            this.L_Recoil.Size = new System.Drawing.Size(99, 21);
             this.L_Recoil.TabIndex = 31;
-            this.L_Recoil.Text = "Rec/Abs %:";
+            this.L_Recoil.Text = "吸取/再生%:";
             this.L_Recoil.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // NUD_Heal
             // 
-            this.NUD_Heal.Location = new System.Drawing.Point(184, 151);
+            this.NUD_Heal.Location = new System.Drawing.Point(296, 237);
+            this.NUD_Heal.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_Heal.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.NUD_Heal.Name = "NUD_Heal";
-            this.NUD_Heal.Size = new System.Drawing.Size(40, 20);
+            this.NUD_Heal.Size = new System.Drawing.Size(67, 29);
             this.NUD_Heal.TabIndex = 33;
             // 
             // L_Heal
             // 
             this.L_Heal.AutoSize = true;
-            this.L_Heal.Location = new System.Drawing.Point(135, 153);
+            this.L_Heal.Location = new System.Drawing.Point(233, 241);
+            this.L_Heal.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Heal.Name = "L_Heal";
-            this.L_Heal.Size = new System.Drawing.Size(43, 13);
+            this.L_Heal.Size = new System.Drawing.Size(60, 21);
             this.L_Heal.TabIndex = 32;
-            this.L_Heal.Text = "Heal %:";
+            this.L_Heal.Text = "回复%:";
             this.L_Heal.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // NUD_CritStage
             // 
-            this.NUD_CritStage.Location = new System.Drawing.Point(184, 193);
+            this.NUD_CritStage.Location = new System.Drawing.Point(296, 305);
+            this.NUD_CritStage.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_CritStage.Maximum = new decimal(new int[] {
             6,
             0,
             0,
             0});
             this.NUD_CritStage.Name = "NUD_CritStage";
-            this.NUD_CritStage.Size = new System.Drawing.Size(30, 20);
+            this.NUD_CritStage.Size = new System.Drawing.Size(67, 29);
             this.NUD_CritStage.TabIndex = 30;
             // 
             // L_CritStage
             // 
             this.L_CritStage.AutoSize = true;
-            this.L_CritStage.Location = new System.Drawing.Point(122, 195);
+            this.L_CritStage.Location = new System.Drawing.Point(215, 308);
+            this.L_CritStage.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_CritStage.Name = "L_CritStage";
-            this.L_CritStage.Size = new System.Drawing.Size(56, 13);
+            this.L_CritStage.Size = new System.Drawing.Size(78, 21);
             this.L_CritStage.TabIndex = 27;
-            this.L_CritStage.Text = "Crit Stage:";
+            this.L_CritStage.Text = "击中要害:";
             this.L_CritStage.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // NUD_Flinch
             // 
-            this.NUD_Flinch.Location = new System.Drawing.Point(184, 130);
+            this.NUD_Flinch.Location = new System.Drawing.Point(296, 203);
+            this.NUD_Flinch.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_Flinch.Maximum = new decimal(new int[] {
             101,
             0,
             0,
             0});
             this.NUD_Flinch.Name = "NUD_Flinch";
-            this.NUD_Flinch.Size = new System.Drawing.Size(40, 20);
+            this.NUD_Flinch.Size = new System.Drawing.Size(67, 29);
             this.NUD_Flinch.TabIndex = 29;
             // 
             // L_Flinch
             // 
             this.L_Flinch.AutoSize = true;
-            this.L_Flinch.Location = new System.Drawing.Point(129, 132);
+            this.L_Flinch.Location = new System.Drawing.Point(233, 207);
+            this.L_Flinch.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Flinch.Name = "L_Flinch";
-            this.L_Flinch.Size = new System.Drawing.Size(49, 13);
+            this.L_Flinch.Size = new System.Drawing.Size(60, 21);
             this.L_Flinch.TabIndex = 28;
-            this.L_Flinch.Text = "Flinch %:";
+            this.L_Flinch.Text = "畏缩%:";
             this.L_Flinch.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // GB_Stat
@@ -436,52 +465,58 @@
             this.GB_Stat.Controls.Add(this.L_Stage3);
             this.GB_Stat.Controls.Add(this.L_Stage2);
             this.GB_Stat.Controls.Add(this.L_Stage1);
-            this.GB_Stat.Location = new System.Drawing.Point(11, 216);
+            this.GB_Stat.Location = new System.Drawing.Point(19, 344);
+            this.GB_Stat.Margin = new System.Windows.Forms.Padding(5);
             this.GB_Stat.Name = "GB_Stat";
-            this.GB_Stat.Size = new System.Drawing.Size(212, 100);
+            this.GB_Stat.Padding = new System.Windows.Forms.Padding(5);
+            this.GB_Stat.Size = new System.Drawing.Size(353, 139);
             this.GB_Stat.TabIndex = 35;
             this.GB_Stat.TabStop = false;
-            this.GB_Stat.Text = "Stat Stage Changes";
+            this.GB_Stat.Text = "能力变化";
             // 
             // NUD_StatP3
             // 
-            this.NUD_StatP3.Location = new System.Drawing.Point(165, 68);
+            this.NUD_StatP3.Location = new System.Drawing.Point(277, 100);
+            this.NUD_StatP3.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_StatP3.Maximum = new decimal(new int[] {
             101,
             0,
             0,
             0});
             this.NUD_StatP3.Name = "NUD_StatP3";
-            this.NUD_StatP3.Size = new System.Drawing.Size(40, 20);
+            this.NUD_StatP3.Size = new System.Drawing.Size(67, 29);
             this.NUD_StatP3.TabIndex = 44;
             // 
             // NUD_StatP2
             // 
-            this.NUD_StatP2.Location = new System.Drawing.Point(165, 46);
+            this.NUD_StatP2.Location = new System.Drawing.Point(277, 63);
+            this.NUD_StatP2.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_StatP2.Maximum = new decimal(new int[] {
             101,
             0,
             0,
             0});
             this.NUD_StatP2.Name = "NUD_StatP2";
-            this.NUD_StatP2.Size = new System.Drawing.Size(40, 20);
+            this.NUD_StatP2.Size = new System.Drawing.Size(67, 29);
             this.NUD_StatP2.TabIndex = 43;
             // 
             // NUD_StatP1
             // 
-            this.NUD_StatP1.Location = new System.Drawing.Point(165, 24);
+            this.NUD_StatP1.Location = new System.Drawing.Point(277, 26);
+            this.NUD_StatP1.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_StatP1.Maximum = new decimal(new int[] {
             101,
             0,
             0,
             0});
             this.NUD_StatP1.Name = "NUD_StatP1";
-            this.NUD_StatP1.Size = new System.Drawing.Size(40, 20);
+            this.NUD_StatP1.Size = new System.Drawing.Size(67, 29);
             this.NUD_StatP1.TabIndex = 42;
             // 
             // NUD_Stat2
             // 
-            this.NUD_Stat2.Location = new System.Drawing.Point(127, 46);
+            this.NUD_Stat2.Location = new System.Drawing.Point(205, 63);
+            this.NUD_Stat2.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_Stat2.Maximum = new decimal(new int[] {
             5,
             0,
@@ -493,12 +528,13 @@
             0,
             -2147483648});
             this.NUD_Stat2.Name = "NUD_Stat2";
-            this.NUD_Stat2.Size = new System.Drawing.Size(35, 20);
+            this.NUD_Stat2.Size = new System.Drawing.Size(67, 29);
             this.NUD_Stat2.TabIndex = 41;
             // 
             // NUD_Stat3
             // 
-            this.NUD_Stat3.Location = new System.Drawing.Point(127, 68);
+            this.NUD_Stat3.Location = new System.Drawing.Point(205, 100);
+            this.NUD_Stat3.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_Stat3.Maximum = new decimal(new int[] {
             5,
             0,
@@ -510,12 +546,13 @@
             0,
             -2147483648});
             this.NUD_Stat3.Name = "NUD_Stat3";
-            this.NUD_Stat3.Size = new System.Drawing.Size(35, 20);
+            this.NUD_Stat3.Size = new System.Drawing.Size(67, 29);
             this.NUD_Stat3.TabIndex = 40;
             // 
             // NUD_Stat1
             // 
-            this.NUD_Stat1.Location = new System.Drawing.Point(127, 24);
+            this.NUD_Stat1.Location = new System.Drawing.Point(205, 26);
+            this.NUD_Stat1.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_Stat1.Maximum = new decimal(new int[] {
             5,
             0,
@@ -527,91 +564,98 @@
             0,
             -2147483648});
             this.NUD_Stat1.Name = "NUD_Stat1";
-            this.NUD_Stat1.Size = new System.Drawing.Size(35, 20);
+            this.NUD_Stat1.Size = new System.Drawing.Size(67, 29);
             this.NUD_Stat1.TabIndex = 39;
             // 
             // CB_Stat3
             // 
             this.CB_Stat3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CB_Stat3.FormattingEnabled = true;
-            this.CB_Stat3.Location = new System.Drawing.Point(27, 67);
+            this.CB_Stat3.Location = new System.Drawing.Point(38, 100);
+            this.CB_Stat3.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Stat3.Name = "CB_Stat3";
-            this.CB_Stat3.Size = new System.Drawing.Size(99, 21);
+            this.CB_Stat3.Size = new System.Drawing.Size(162, 29);
             this.CB_Stat3.TabIndex = 38;
             // 
             // CB_Stat2
             // 
             this.CB_Stat2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CB_Stat2.FormattingEnabled = true;
-            this.CB_Stat2.Location = new System.Drawing.Point(27, 45);
+            this.CB_Stat2.Location = new System.Drawing.Point(38, 63);
+            this.CB_Stat2.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Stat2.Name = "CB_Stat2";
-            this.CB_Stat2.Size = new System.Drawing.Size(99, 21);
+            this.CB_Stat2.Size = new System.Drawing.Size(162, 29);
             this.CB_Stat2.TabIndex = 37;
             // 
             // CB_Stat1
             // 
             this.CB_Stat1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CB_Stat1.FormattingEnabled = true;
-            this.CB_Stat1.Location = new System.Drawing.Point(27, 23);
+            this.CB_Stat1.Location = new System.Drawing.Point(38, 26);
+            this.CB_Stat1.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Stat1.Name = "CB_Stat1";
-            this.CB_Stat1.Size = new System.Drawing.Size(99, 21);
+            this.CB_Stat1.Size = new System.Drawing.Size(162, 29);
             this.CB_Stat1.TabIndex = 36;
             // 
             // L_Stage3
             // 
             this.L_Stage3.AutoSize = true;
-            this.L_Stage3.Location = new System.Drawing.Point(5, 70);
+            this.L_Stage3.Location = new System.Drawing.Point(12, 104);
+            this.L_Stage3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Stage3.Name = "L_Stage3";
-            this.L_Stage3.Size = new System.Drawing.Size(16, 13);
+            this.L_Stage3.Size = new System.Drawing.Size(23, 21);
             this.L_Stage3.TabIndex = 2;
             this.L_Stage3.Text = "3:";
             // 
             // L_Stage2
             // 
             this.L_Stage2.AutoSize = true;
-            this.L_Stage2.Location = new System.Drawing.Point(5, 48);
+            this.L_Stage2.Location = new System.Drawing.Point(12, 67);
+            this.L_Stage2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Stage2.Name = "L_Stage2";
-            this.L_Stage2.Size = new System.Drawing.Size(16, 13);
+            this.L_Stage2.Size = new System.Drawing.Size(23, 21);
             this.L_Stage2.TabIndex = 1;
             this.L_Stage2.Text = "2:";
             // 
             // L_Stage1
             // 
             this.L_Stage1.AutoSize = true;
-            this.L_Stage1.Location = new System.Drawing.Point(5, 26);
+            this.L_Stage1.Location = new System.Drawing.Point(12, 30);
+            this.L_Stage1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Stage1.Name = "L_Stage1";
-            this.L_Stage1.Size = new System.Drawing.Size(16, 13);
+            this.L_Stage1.Size = new System.Drawing.Size(23, 21);
             this.L_Stage1.TabIndex = 0;
             this.L_Stage1.Text = "1:";
             // 
             // L_Targeting
             // 
             this.L_Targeting.AutoSize = true;
-            this.L_Targeting.Location = new System.Drawing.Point(173, 38);
+            this.L_Targeting.Location = new System.Drawing.Point(299, 56);
+            this.L_Targeting.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Targeting.Name = "L_Targeting";
-            this.L_Targeting.Size = new System.Drawing.Size(55, 13);
+            this.L_Targeting.Size = new System.Drawing.Size(78, 21);
             this.L_Targeting.TabIndex = 36;
-            this.L_Targeting.Text = "Targeting:";
+            this.L_Targeting.Text = "目标范围:";
             this.L_Targeting.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // L_Influcts
             // 
             this.L_Influcts.AutoSize = true;
-            this.L_Influcts.Location = new System.Drawing.Point(188, 60);
+            this.L_Influcts.Location = new System.Drawing.Point(299, 92);
+            this.L_Influcts.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Influcts.Name = "L_Influcts";
-            this.L_Influcts.Size = new System.Drawing.Size(40, 13);
+            this.L_Influcts.Size = new System.Drawing.Size(78, 21);
             this.L_Influcts.TabIndex = 37;
-            this.L_Influcts.Text = "Inflicts:";
+            this.L_Influcts.Text = "异常状态:";
             this.L_Influcts.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // RTB
             // 
-            this.RTB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.RTB.Location = new System.Drawing.Point(12, 324);
+            this.RTB.Location = new System.Drawing.Point(19, 499);
+            this.RTB.Margin = new System.Windows.Forms.Padding(5);
             this.RTB.Name = "RTB";
             this.RTB.ReadOnly = true;
-            this.RTB.Size = new System.Drawing.Size(316, 51);
+            this.RTB.Size = new System.Drawing.Size(523, 102);
             this.RTB.TabIndex = 38;
             this.RTB.Text = "";
             // 
@@ -620,9 +664,10 @@
             this.CB_Targeting.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CB_Targeting.DropDownWidth = 150;
             this.CB_Targeting.FormattingEnabled = true;
-            this.CB_Targeting.Location = new System.Drawing.Point(228, 35);
+            this.CB_Targeting.Location = new System.Drawing.Point(380, 52);
+            this.CB_Targeting.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Targeting.Name = "CB_Targeting";
-            this.CB_Targeting.Size = new System.Drawing.Size(99, 21);
+            this.CB_Targeting.Size = new System.Drawing.Size(162, 29);
             this.CB_Targeting.TabIndex = 39;
             // 
             // CB_Inflict
@@ -630,75 +675,82 @@
             this.CB_Inflict.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CB_Inflict.DropDownWidth = 150;
             this.CB_Inflict.FormattingEnabled = true;
-            this.CB_Inflict.Location = new System.Drawing.Point(228, 57);
+            this.CB_Inflict.Location = new System.Drawing.Point(380, 88);
+            this.CB_Inflict.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Inflict.Name = "CB_Inflict";
-            this.CB_Inflict.Size = new System.Drawing.Size(99, 21);
+            this.CB_Inflict.Size = new System.Drawing.Size(162, 29);
             this.CB_Inflict.TabIndex = 40;
             // 
             // L_Inflict
             // 
             this.L_Inflict.AutoSize = true;
-            this.L_Inflict.Location = new System.Drawing.Point(238, 81);
+            this.L_Inflict.Location = new System.Drawing.Point(375, 128);
+            this.L_Inflict.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Inflict.Name = "L_Inflict";
-            this.L_Inflict.Size = new System.Drawing.Size(46, 13);
+            this.L_Inflict.Size = new System.Drawing.Size(97, 21);
             this.L_Inflict.TabIndex = 41;
-            this.L_Inflict.Text = "Inflict %:";
+            this.L_Inflict.Text = "异常几率 %:";
             this.L_Inflict.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // NUD_Inflict
             // 
-            this.NUD_Inflict.Location = new System.Drawing.Point(287, 78);
+            this.NUD_Inflict.Location = new System.Drawing.Point(475, 124);
+            this.NUD_Inflict.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_Inflict.Maximum = new decimal(new int[] {
             101,
             0,
             0,
             0});
             this.NUD_Inflict.Name = "NUD_Inflict";
-            this.NUD_Inflict.Size = new System.Drawing.Size(40, 20);
+            this.NUD_Inflict.Size = new System.Drawing.Size(67, 29);
             this.NUD_Inflict.TabIndex = 42;
             // 
             // NUD_Effect
             // 
-            this.NUD_Effect.Location = new System.Drawing.Point(150, 103);
+            this.NUD_Effect.Location = new System.Drawing.Point(135, 160);
+            this.NUD_Effect.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_Effect.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
             this.NUD_Effect.Name = "NUD_Effect";
-            this.NUD_Effect.Size = new System.Drawing.Size(50, 20);
+            this.NUD_Effect.Size = new System.Drawing.Size(83, 29);
             this.NUD_Effect.TabIndex = 44;
             // 
             // L_Effect
             // 
             this.L_Effect.AutoSize = true;
-            this.L_Effect.Location = new System.Drawing.Point(106, 106);
+            this.L_Effect.Location = new System.Drawing.Point(70, 164);
+            this.L_Effect.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Effect.Name = "L_Effect";
-            this.L_Effect.Size = new System.Drawing.Size(38, 13);
+            this.L_Effect.Size = new System.Drawing.Size(62, 21);
             this.L_Effect.TabIndex = 45;
-            this.L_Effect.Text = "Effect:";
+            this.L_Effect.Text = "效果码:";
             this.L_Effect.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // NUD_Accuracy
             // 
-            this.NUD_Accuracy.Location = new System.Drawing.Point(72, 151);
+            this.NUD_Accuracy.Location = new System.Drawing.Point(102, 237);
+            this.NUD_Accuracy.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_Accuracy.Maximum = new decimal(new int[] {
             101,
             0,
             0,
             0});
             this.NUD_Accuracy.Name = "NUD_Accuracy";
-            this.NUD_Accuracy.Size = new System.Drawing.Size(40, 20);
+            this.NUD_Accuracy.Size = new System.Drawing.Size(67, 29);
             this.NUD_Accuracy.TabIndex = 47;
             // 
             // L_Accuracy
             // 
             this.L_Accuracy.AutoSize = true;
-            this.L_Accuracy.Location = new System.Drawing.Point(17, 153);
+            this.L_Accuracy.Location = new System.Drawing.Point(39, 241);
+            this.L_Accuracy.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Accuracy.Name = "L_Accuracy";
-            this.L_Accuracy.Size = new System.Drawing.Size(49, 13);
+            this.L_Accuracy.Size = new System.Drawing.Size(60, 21);
             this.L_Accuracy.TabIndex = 46;
-            this.L_Accuracy.Text = "Accur %:";
+            this.L_Accuracy.Text = "命中%:";
             this.L_Accuracy.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // CB_Quality
@@ -706,50 +758,55 @@
             this.CB_Quality.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CB_Quality.DropDownWidth = 170;
             this.CB_Quality.FormattingEnabled = true;
-            this.CB_Quality.Location = new System.Drawing.Point(71, 81);
+            this.CB_Quality.Location = new System.Drawing.Point(75, 124);
+            this.CB_Quality.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Quality.Name = "CB_Quality";
-            this.CB_Quality.Size = new System.Drawing.Size(129, 21);
+            this.CB_Quality.Size = new System.Drawing.Size(285, 29);
             this.CB_Quality.TabIndex = 48;
             // 
             // L_Quality
             // 
             this.L_Quality.AutoSize = true;
-            this.L_Quality.Location = new System.Drawing.Point(20, 84);
+            this.L_Quality.Location = new System.Drawing.Point(26, 128);
+            this.L_Quality.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Quality.Name = "L_Quality";
-            this.L_Quality.Size = new System.Drawing.Size(50, 13);
+            this.L_Quality.Size = new System.Drawing.Size(46, 21);
             this.L_Quality.TabIndex = 49;
-            this.L_Quality.Text = "Qualities:";
+            this.L_Quality.Text = "效果:";
             this.L_Quality.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // L_0xB
             // 
             this.L_0xB.AutoSize = true;
-            this.L_0xB.Location = new System.Drawing.Point(256, 101);
+            this.L_0xB.Location = new System.Drawing.Point(431, 164);
+            this.L_0xB.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_0xB.Name = "L_0xB";
-            this.L_0xB.Size = new System.Drawing.Size(28, 13);
+            this.L_0xB.Size = new System.Drawing.Size(41, 21);
             this.L_0xB.TabIndex = 50;
             this.L_0xB.Text = "0xB:";
             this.L_0xB.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // NUD_0xB
             // 
-            this.NUD_0xB.Location = new System.Drawing.Point(287, 99);
+            this.NUD_0xB.Location = new System.Drawing.Point(475, 160);
+            this.NUD_0xB.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_0xB.Maximum = new decimal(new int[] {
             255,
             0,
             0,
             0});
             this.NUD_0xB.Name = "NUD_0xB";
-            this.NUD_0xB.Size = new System.Drawing.Size(40, 20);
+            this.NUD_0xB.Size = new System.Drawing.Size(67, 29);
             this.NUD_0xB.TabIndex = 51;
             // 
             // B_RandAll
             // 
-            this.B_RandAll.Location = new System.Drawing.Point(333, 10);
+            this.B_RandAll.Location = new System.Drawing.Point(555, 11);
+            this.B_RandAll.Margin = new System.Windows.Forms.Padding(5);
             this.B_RandAll.Name = "B_RandAll";
-            this.B_RandAll.Size = new System.Drawing.Size(98, 23);
+            this.B_RandAll.Size = new System.Drawing.Size(163, 57);
             this.B_RandAll.TabIndex = 63;
-            this.B_RandAll.Text = "Randomize!";
+            this.B_RandAll.Text = "随机化";
             this.B_RandAll.UseVisualStyleBackColor = true;
             this.B_RandAll.Click += new System.EventHandler(this.B_RandAll_Click);
             // 
@@ -757,66 +814,73 @@
             // 
             this.groupBox1.Controls.Add(this.CHK_Category);
             this.groupBox1.Controls.Add(this.CHK_Type);
-            this.groupBox1.Location = new System.Drawing.Point(333, 60);
+            this.groupBox1.Location = new System.Drawing.Point(555, 124);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(98, 55);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(5);
+            this.groupBox1.Size = new System.Drawing.Size(163, 61);
             this.groupBox1.TabIndex = 64;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Options";
+            this.groupBox1.Text = "选项";
             // 
             // CHK_Category
             // 
             this.CHK_Category.AutoSize = true;
-            this.CHK_Category.Location = new System.Drawing.Point(6, 34);
+            this.CHK_Category.Location = new System.Drawing.Point(94, 27);
+            this.CHK_Category.Margin = new System.Windows.Forms.Padding(5);
             this.CHK_Category.Name = "CHK_Category";
-            this.CHK_Category.Size = new System.Drawing.Size(68, 17);
+            this.CHK_Category.Size = new System.Drawing.Size(61, 25);
             this.CHK_Category.TabIndex = 1;
-            this.CHK_Category.Text = "Category";
+            this.CHK_Category.Text = "分类";
             this.CHK_Category.UseVisualStyleBackColor = true;
             // 
             // CHK_Type
             // 
             this.CHK_Type.AutoSize = true;
-            this.CHK_Type.Location = new System.Drawing.Point(6, 19);
+            this.CHK_Type.Location = new System.Drawing.Point(23, 27);
+            this.CHK_Type.Margin = new System.Windows.Forms.Padding(5);
             this.CHK_Type.Name = "CHK_Type";
-            this.CHK_Type.Size = new System.Drawing.Size(50, 17);
+            this.CHK_Type.Size = new System.Drawing.Size(61, 25);
             this.CHK_Type.TabIndex = 0;
-            this.CHK_Type.Text = "Type";
+            this.CHK_Type.Text = "属性";
             this.CHK_Type.UseVisualStyleBackColor = true;
             // 
             // B_Metronome
             // 
-            this.B_Metronome.Location = new System.Drawing.Point(333, 33);
+            this.B_Metronome.Location = new System.Drawing.Point(555, 78);
+            this.B_Metronome.Margin = new System.Windows.Forms.Padding(5);
             this.B_Metronome.Name = "B_Metronome";
-            this.B_Metronome.Size = new System.Drawing.Size(98, 23);
+            this.B_Metronome.Size = new System.Drawing.Size(163, 40);
             this.B_Metronome.TabIndex = 65;
-            this.B_Metronome.Text = "Metronome Mode";
+            this.B_Metronome.Text = "挥指模式";
             this.B_Metronome.UseVisualStyleBackColor = true;
             this.B_Metronome.Click += new System.EventHandler(this.B_Metronome_Click);
             // 
             // B_Table
             // 
-            this.B_Table.Location = new System.Drawing.Point(356, 117);
+            this.B_Table.Location = new System.Drawing.Point(555, 190);
+            this.B_Table.Margin = new System.Windows.Forms.Padding(5);
             this.B_Table.Name = "B_Table";
-            this.B_Table.Size = new System.Drawing.Size(75, 23);
+            this.B_Table.Size = new System.Drawing.Size(163, 40);
             this.B_Table.TabIndex = 66;
-            this.B_Table.Text = "Export Table";
+            this.B_Table.Text = "导出至剪切板";
             this.B_Table.UseVisualStyleBackColor = true;
             this.B_Table.Click += new System.EventHandler(this.B_Table_Click);
             // 
             // CLB_Flags
             // 
             this.CLB_Flags.FormattingEnabled = true;
-            this.CLB_Flags.Location = new System.Drawing.Point(328, 146);
+            this.CLB_Flags.Location = new System.Drawing.Point(555, 236);
+            this.CLB_Flags.Margin = new System.Windows.Forms.Padding(5);
             this.CLB_Flags.Name = "CLB_Flags";
-            this.CLB_Flags.Size = new System.Drawing.Size(103, 229);
+            this.CLB_Flags.Size = new System.Drawing.Size(163, 364);
             this.CLB_Flags.TabIndex = 70;
             // 
             // MoveEditor6
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(439, 381);
+            this.ClientSize = new System.Drawing.Size(740, 621);
             this.Controls.Add(this.CLB_Flags);
             this.Controls.Add(this.B_Table);
             this.Controls.Add(this.B_Metronome);
@@ -866,12 +930,14 @@
             this.Controls.Add(this.L_Max);
             this.Controls.Add(this.L_Move);
             this.Controls.Add(this.CB_Move);
+            this.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(455, 420);
-            this.MinimumSize = new System.Drawing.Size(355, 420);
+            this.MaximumSize = new System.Drawing.Size(756, 730);
             this.Name = "MoveEditor6";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Move Editor";
+            this.Text = "招式编辑器";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CloseForm);
             ((System.ComponentModel.ISupportInitialize)(this.NUD_HitMax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_HitMin)).EndInit();

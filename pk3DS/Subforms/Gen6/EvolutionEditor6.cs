@@ -25,40 +25,40 @@ namespace pk3DS
             string[] evolutionMethods =
             {
                 "",
-                "Level Up with Friendship",
-                "Level Up at Morning with Friendship",
-                "Level Up at Night with Friendship",
-                "Level Up",
-                "Trade",
-                "Trade with Held Item",
-                $"Trade for opposite {specieslist[588]}/{specieslist[616]}", // Shelmet&Karrablast
-                "Used Item",
-                "Level Up (Attack > Defense)",
-                "Level Up (Attack = Defense)",
-                "Level Up (Attack < Defense)",
-                "Level Up (Random < 5)",
-                "Level Up (Random > 5)",
-                $"Level Up ({specieslist[291]})", // Ninjask
-                $"Level Up ({specieslist[292]})", // Shedinja
-                "Level Up (Beauty)",
-                "Used Item (Male)", // Kirlia->Gallade
-                "Used Item (Female)", // Snorunt->Froslass
-                "Level Up with Held Item (Day)",
-                "Level Up with Held Item (Night)",
-                "Level Up with Move",
-                "Level Up with Party",
-                "Level Up Male",
-                "Level Up Female",
-                "Level Up at Electric",
-                "Level Up at Forest",
-                "Level Up at Cold",
-                "Level Up with 3DS Upside Down",
-                "Level Up with 50 Affection + MoveType",
-                $"{typelist[16]} Type in Party",
-                "Overworld Rain",
-                "Level Up (@) at Morning",
-                "Level Up (@) at Night",
-                "Level Up Female (SetForm 1)",
+                "友好度进化",
+                "白天友好度进化",
+                "夜晚友好度进化",
+                "升级",
+                "通讯进化",
+                "持有物品时通讯进化",
+                $"互换通讯进化 {specieslist[588]}/{specieslist[616]}", // Shelmet&Karrablast
+                "使用物品",
+                "升级 (攻击 > 防御)",
+                "升级 (攻击 = 防御)",
+                "升级 (攻击 < 防御)",
+                "升级 (任意能力值 < 5)",
+                "升级 (任意能力值 > 5)",
+                $"升级 ({specieslist[291]})", // Ninjask
+                $"升级 ({specieslist[292]})", // Shedinja
+                "升级 (美丽度)",
+                "使用物品 (雄性)", // Kirlia->Gallade
+                "使用物品 (雌性)", // Snorunt->Froslass
+                "持有物品时升级 (白天)",
+                "持有物品时升级 (夜晚)",
+                "习得招式时升级",
+                "队伍中存在指定宝可梦时升级",
+                "雄性升级",
+                "雌性升级",
+                "电气场地升级",
+                "森林中升级",
+                "寒冷地带升级",
+                "翻盖3DS时升级",
+                "满50友好度并学会指定属性招式",
+                $"队伍中存在 {typelist[16]} 属性",
+                "下雨天",
+                "白天升级",
+                "夜晚升级",
+                "雌性升级 (SetForm 1)",
             };
 
             mb = new[] { CB_M1, CB_M2, CB_M3, CB_M4, CB_M5, CB_M6, CB_M7, CB_M8 };
@@ -127,7 +127,7 @@ namespace pk3DS
 
         private void B_RandAll_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Randomize all resulting species?", "Evolution methods and parameters will stay the same."))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机全部宝可梦？", "进化方式和进化条件将保持不变。"))
                 return;
 
             SetList();
@@ -144,12 +144,12 @@ namespace pk3DS
             evos.Select(z => z.Write()).ToArray().CopyTo(files, 0);
             GetList();
 
-            WinFormsUtil.Alert("All Pokémon's Evolutions have been randomized!");
+            WinFormsUtil.Alert("宝可梦进化已全部随机！");
         }
 
         private void B_Trade_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Remove all trade evolutions?", "Evolution methods will be altered so that evolutions will be possible with only one game."))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否移除全部通讯进化？", "通讯进化方式将会被替代，以便单人游戏也可进化。"))
                 return;
 
             SetList();
@@ -160,12 +160,12 @@ namespace pk3DS
             evos.Select(z => z.Write()).ToArray().CopyTo(files, 0);
             GetList();
 
-            WinFormsUtil.Alert("All trade evolutions have been removed!", "Trade evolutions will now occur after reaching a certain Level, or after leveling up while holding its appropriate trade item.");
+            WinFormsUtil.Alert("已移除全部通讯进化！", "通讯进化将在到达指定等级，或持有相关道具并升级时进行。");
         }
 
         private void B_EveryLevel_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Modify evolutions?", "This will make it to where your Pokémon will evolve into something random every time it levels up."))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否确认修改？", "你的宝可梦每次升级都会进化为随机的宝可梦。"))
                 return;
 
             SetList();
@@ -186,7 +186,7 @@ namespace pk3DS
 
         private void B_Dump_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Dump all Evolutions to Text File?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否导出所有进化到TXT文本？"))
                 return;
 
             dumping = true;
@@ -201,7 +201,7 @@ namespace pk3DS
                     // int param = pb[j].SelectedIndex;
                     int poke = rb[j].SelectedIndex;
                     if (poke > 0 && methodval > 0)
-                        result += mb[j].Text + (pb[j].Visible ? " [" + pb[j].Text + "]" : "") + " into " + rb[j].Text + Environment.NewLine;
+                        result += mb[j].Text + (pb[j].Visible ? " [" + pb[j].Text + "]" : "") + " 进化 " + rb[j].Text + Environment.NewLine;
                 }
 
                 result += Environment.NewLine;
@@ -267,7 +267,42 @@ namespace pk3DS
         {
             if (sender is not ComboBox cb)
                 return;
-            pic[Array.IndexOf(rb, cb)].Image = (Bitmap)Resources.ResourceManager.GetObject("_" + Array.IndexOf(specieslist, cb.Text));
+
+            Bitmap rawImg = (Bitmap)Resources.ResourceManager.GetObject("_" + Array.IndexOf(specieslist, cb.Text));
+            Bitmap bigImg = new Bitmap(rawImg.Width * 2, rawImg.Height * 2);
+            for (int x = 0; x < rawImg.Width; x++)
+            {
+                for (int y = 0; y < rawImg.Height; y++)
+                {
+                    Color c = rawImg.GetPixel(x, y);
+                    bigImg.SetPixel(2 * x, 2 * y, c);
+                    bigImg.SetPixel((2 * x) + 1, 2 * y, c);
+                    bigImg.SetPixel(2 * x, (2 * y) + 1, c);
+                    bigImg.SetPixel((2 * x) + 1, (2 * y) + 1, c);
+                }
+            }
+            pic[Array.IndexOf(rb, cb)].Image = bigImg;
+        }
+
+        private void ImgChangeInto(object sender, EventArgs e)
+        {
+            SetList();
+            GetList();
+
+            Bitmap rawImg = (Bitmap)Resources.ResourceManager.GetObject("_" + Array.IndexOf(specieslist, CB_Species.Text));
+            Bitmap bigImg = new Bitmap(rawImg.Width * 2, rawImg.Height * 2);
+            for (int x = 0; x < rawImg.Width; x++)
+            {
+                for (int y = 0; y < rawImg.Height; y++)
+                {
+                    Color c = rawImg.GetPixel(x, y);
+                    bigImg.SetPixel(2 * x, 2 * y, c);
+                    bigImg.SetPixel((2 * x) + 1, 2 * y, c);
+                    bigImg.SetPixel(2 * x, (2 * y) + 1, c);
+                    bigImg.SetPixel((2 * x) + 1, (2 * y) + 1, c);
+                }
+            }
+            PB_TOP.Image = bigImg;
         }
     }
 }

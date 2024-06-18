@@ -39,7 +39,19 @@ namespace pk3DS
             Array.Resize(ref specieslist, Main.Config.MaxSpeciesID + 1);
             specieslist[0] = itemlist[0] = "";
             specieslist[32] += "♂"; specieslist[29] += "♀";
-            AltForms = Main.Config.Personal.GetFormList(specieslist, Main.Config.MaxSpeciesID);
+
+            if (Main.ifFixChineseDisplay && Main.Config.USUM && Main.Language > 7)
+            {
+                string[] temp = new string[specieslist.Length];
+                temp[0] = specieslist[0];
+                Array.Copy(Main.pokemonNameUSSC_Sim, 0, temp, 1, Main.pokemonNameUSSC_Sim.Length);
+
+                AltForms = Main.Config.Personal.GetFormList(temp, Main.Config.MaxSpeciesID);
+            }
+            else
+            {
+                AltForms = Main.Config.Personal.GetFormList(specieslist, Main.Config.MaxSpeciesID);
+            }
 
             groupbox_spec = new[] { GB_MEvo1, GB_MEvo2 };
             item_spec = new[] { CB_Item1, CB_Item2 };
@@ -56,7 +68,42 @@ namespace pk3DS
             List<string> temp_list = new List<string>(specieslist);
             temp_list.Sort();
 
-            CB_Species.DataSource = temp_list.ConvertAll(mon => new ComboItem { Text = mon, Value = Array.IndexOf(specieslist, mon) });
+            // CB_Species.DataSource = temp_list.ConvertAll(mon => new ComboItem { Text = mon, Value = Array.IndexOf(specieslist, mon) });
+
+            if (Main.ifFixChineseDisplay && Main.Config.USUM && Main.Language > 7)
+            {
+                List<ComboItem> comboItems = new List<ComboItem>();
+                for (int i = 0; i < temp_list.Count; i++)
+                {
+                    string mon;
+                    int value = i;
+
+                    if (i == 0)
+                    {
+                        mon = temp_list[i];
+                    } else
+                    {
+                        mon = Main.pokemonNameUSSC_Sim[i - 1];
+                    }
+
+                    if (i == 0) { 
+                        mon = temp_list[i];
+                    }
+
+                    ComboItem comboItem = new ComboItem
+                    {
+                        Text = mon,
+                        Value = value
+                    };
+
+                    comboItems.Add(comboItem);
+                }
+
+                CB_Species.DataSource = comboItems;
+            } else
+            {
+                CB_Species.DataSource = temp_list.ConvertAll(mon => new ComboItem { Text = mon, Value = Array.IndexOf(specieslist, mon) });
+            }
 
             List<string> items = new List<string>(itemlist);
             List<string> sorted_items = new List<string>(itemlist);
@@ -191,7 +238,7 @@ namespace pk3DS
 
         private void B_Dump_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Dump all Mega Evolutions to Text File?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否导出全部Mega进化至TXT文档？"))
                 return;
             dumping = true;
             string result = "";

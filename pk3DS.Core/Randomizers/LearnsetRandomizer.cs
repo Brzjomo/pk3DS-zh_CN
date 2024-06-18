@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace pk3DS.Core.Randomizers
 {
@@ -62,6 +63,7 @@ namespace pk3DS.Core.Randomizers
             int[] levels = new int[count];
             if (count == 0)
                 return levels;
+            //平均分布
             if (Spread)
             {
                 levels[0] = 1;
@@ -70,14 +72,52 @@ namespace pk3DS.Core.Randomizers
                     levels[i] = (int)(i * increment);
                 return levels;
             }
-            if (levels.Length == count && levels.Length == set.Levels.Length)
-                return set.Levels; // don't modify
 
-            var exist = set.Levels;
-            int lastlevel = Math.Min(1, exist.LastOrDefault());
-            exist.CopyTo(levels, 0);
-            for (int i = exist.Length; i < levels.Length; i++)
-                levels[i] = Math.Max(100, lastlevel + (exist.Length - i + 1));
+            int baselevel = 1;
+            byte[] buffer = Guid.NewGuid().ToByteArray();
+            int iSeed = BitConverter.ToInt32(buffer, 0);
+            Random random = new Random(iSeed);
+            for (int i = 0; i < count; i++)
+            {
+                if (i == 0)
+                {
+                    levels[i] = 1;
+                } else
+                {
+                    int startNum;
+                    int endNum;
+                    int randNum;
+
+                    //使低等级学习更多招式
+                    if (i < 5)
+                    {
+                        startNum = 1;
+                        endNum = 3;
+                        randNum = random.Next(startNum, endNum);
+                    } else
+                    {
+                        if (count > 25 && count <= 50)
+                        {
+                            startNum = 1;
+                            endNum = 4;
+                            randNum = random.Next(startNum, endNum);
+                        }
+                        else if (count > 50 && count <= 100)
+                        {
+                            startNum = 1;
+                            endNum = 3;
+                            randNum = random.Next(startNum, endNum);
+                        } else
+                        {
+                            startNum = 1;
+                            endNum = 6;
+                            randNum = random.Next(startNum, endNum);
+                        }
+                    }
+                    levels[i] = Math.Min(baselevel + randNum, 100);
+                    baselevel += randNum;
+                }
+            }
 
             return levels;
         }
