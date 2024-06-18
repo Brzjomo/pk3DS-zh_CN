@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using System.Threading;
 #endif
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     internal static class Program
     {
@@ -47,7 +47,7 @@ namespace pk3DS
                 try
                 {
                     // Todo: make this translatable
-                    MessageBox.Show("A fatal error has occurred in pk3DS, and the details could not be displayed.  Please report this to the author.", "pk3DS Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show("A fatal error has occurred in pk3DS.WinForms, and the details could not be displayed.  Please report this to the author.", "pk3DS.WinForms Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
                 finally
                 {

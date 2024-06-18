@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public partial class Patch : Form
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using pk3DS.Core.Structures;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public partial class MoveEditor6 : Form
     {

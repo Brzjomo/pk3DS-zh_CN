@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 using pk3DS.Core;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public partial class EnhancedRestore : Form
     {

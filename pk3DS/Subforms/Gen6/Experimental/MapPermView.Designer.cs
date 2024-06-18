@@ -1,4 +1,4 @@
-﻿namespace pk3DS.Subforms
+﻿namespace pk3DS.WinForms.Subforms
 {
     partial class MapPermView
     {

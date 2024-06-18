@@ -1,4 +1,4 @@
-﻿using pk3DS.ARCUtil;
+﻿using pk3DS.WinForms.ARCUtil;
 using pk3DS.Core.CTR;
 using System;
 using System.Drawing;
@@ -8,7 +8,7 @@ using System.Threading;
 using System.Windows.Forms;
 using pk3DS.Core;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public sealed partial class ToolsUI : Form
     {

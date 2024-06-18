@@ -4,11 +4,11 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using pk3DS.Subforms;
+using pk3DS.WinForms.Subforms;
 using pk3DS.Core;
 using pk3DS.Core.CTR;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public sealed partial class OWSE : Form
     {

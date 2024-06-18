@@ -10,7 +10,7 @@ using pk3DS.Core;
 using pk3DS.Core.CTR;
 using pk3DS.Core.Randomizers;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public partial class SMWE : Form
     {

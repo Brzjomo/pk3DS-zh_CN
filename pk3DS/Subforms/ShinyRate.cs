@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public partial class ShinyRate : Form
     {
@@ -42,11 +42,11 @@ namespace pk3DS
                 var instruction = InstructionList.Find(z => z.ArgVal == val);
                 if (instruction == null)
                 {
-                    WinFormsUtil.Alert(".code.bin was modified externally.", "Existing value not loaded.");
+                    WinFormsUtil.Alert(".code.bin已被外部修改", "现有数值将不会加载。");
                 }
                 else
                 {
-                    WinFormsUtil.Alert(".code.bin was already patched for shiny rate.", "Loaded existing value.");
+                    WinFormsUtil.Alert("已修改过闪光率", "将加载已修改的数值。");
                     NUD_Rerolls.Value = instruction.Value;
                 }
                 modified = true;

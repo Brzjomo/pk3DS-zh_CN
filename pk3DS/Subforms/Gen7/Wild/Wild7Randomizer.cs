@@ -4,7 +4,7 @@ using System.Linq;
 using pk3DS.Core;
 using pk3DS.Core.Randomizers;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public class Wild7Randomizer
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using pk3DS.Core.Randomizers;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public partial class RSWE : Form
     {

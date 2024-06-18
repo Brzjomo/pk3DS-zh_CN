@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using pk3DS.Core;
 using pk3DS.Core.Structures;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public partial class ItemEditor7 : Form
     {

@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Windows.Forms;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public partial class MartEditor6 : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace pk3DS
+﻿namespace pk3DS.WinForms
 {
     sealed partial class Main
     {

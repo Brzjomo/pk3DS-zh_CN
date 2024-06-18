@@ -5,7 +5,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public sealed partial class Icon : Form
     {

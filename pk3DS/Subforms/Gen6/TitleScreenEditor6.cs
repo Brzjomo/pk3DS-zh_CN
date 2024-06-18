@@ -7,7 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using pk3DS.Core;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public sealed partial class TitleScreenEditor6 : Form
     {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using pk3DS.Core.CTR;
 
-namespace pk3DS.ARCUtil
+namespace pk3DS.WinForms.ARCUtil
 {
     public static class ARC
     {

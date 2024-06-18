@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public partial class PickupEditor7 : Form
     {

@@ -8,9 +8,9 @@ using System.Windows.Forms;
 using pk3DS.Core;
 using pk3DS.Core.Randomizers;
 using pk3DS.Core.Structures;
-using pk3DS.Properties;
+using pk3DS.WinForms.Properties;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public partial class GiftEditor6 : Form
     {

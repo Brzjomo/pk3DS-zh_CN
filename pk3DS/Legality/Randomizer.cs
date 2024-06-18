@@ -2,7 +2,7 @@
 using pk3DS.Core.Structures.PersonalInfo;
 using System.Linq;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public static class Randomizer
     {

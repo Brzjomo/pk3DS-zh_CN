@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     /* GARC File Shuffler
      * Shuffles the FATB table references around (Start/End/Length)

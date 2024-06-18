@@ -1,9 +1,8 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pk3DS", "pk3DS\pk3DS.csproj", "{C4CB2488-2DB9-489F-8B02-A8E872C6C6AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pk3DS.WinForms", "pk3DS\pk3DS.WinForms.csproj", "{C4CB2488-2DB9-489F-8B02-A8E872C6C6AB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pk3DS.Core", "pk3DS.Core\pk3DS.Core.csproj", "{053212FC-2D93-427B-8695-78EC87E4C43C}"
 EndProject

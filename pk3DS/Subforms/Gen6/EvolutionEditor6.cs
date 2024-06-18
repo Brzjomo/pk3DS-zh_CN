@@ -5,12 +5,12 @@ using System.Linq;
 using System.Media;
 using System.Text;
 using System.Windows.Forms;
-using pk3DS.Properties;
+using pk3DS.WinForms.Properties;
 using pk3DS.Core;
 using pk3DS.Core.Randomizers;
 using pk3DS.Core.Structures;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public partial class EvolutionEditor6 : Form
     {

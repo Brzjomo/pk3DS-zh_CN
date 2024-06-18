@@ -28,7 +28,7 @@ using System.Net.Http;
 using HtmlDocument = HtmlAgilityPack.HtmlDocument;
 using System.Diagnostics;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public sealed partial class Main : Form
     {

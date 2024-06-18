@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using System.Linq;
 using pk3DS.Core;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public partial class TMEditor7 : Form
     {

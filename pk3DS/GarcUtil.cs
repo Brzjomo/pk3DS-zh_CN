@@ -4,7 +4,7 @@ using System.IO;
 using System.Media;
 using System.Windows.Forms;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     /// <summary>
     /// Windows-forms friendly wrapper for GARC functions

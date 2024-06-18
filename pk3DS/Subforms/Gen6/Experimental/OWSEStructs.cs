@@ -6,7 +6,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     #region Game Related Classes
     public class MapMatrix

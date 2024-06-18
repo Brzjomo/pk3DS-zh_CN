@@ -13,7 +13,7 @@ namespace pk3DS.Core
 
         public static void BackupFiles(this GameConfig config, bool overwrite = false)
         {
-            // Users may use pk3DS for multiple games, and even the same game but from different paths.
+            // Users may use pk3DS.WinForms for multiple games, and even the same game but from different paths.
             // A simple way is to create a backup for each unique game, but... some carts may be pre-patched.
             // Just save the backup based on the folder name, as the user may move that parent folder.
             // Store a text file in each backup to keep track of its origin in case they rename the folder.

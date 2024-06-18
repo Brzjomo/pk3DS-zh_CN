@@ -11,7 +11,7 @@ using pk3DS.Core;
 using pk3DS.Core.Randomizers;
 using pk3DS.Core.Structures;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public partial class SMTE : Form
     {

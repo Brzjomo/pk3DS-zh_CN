@@ -4,7 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using pk3DS.Core.CTR;
 
-namespace pk3DS.Subforms
+namespace pk3DS.WinForms.Subforms
 {
     public partial class MapPermView : Form
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     // Big thanks to FireFly for figuring out the 7/6-bit compression routine for scripts.
     public static class Scripts

@@ -8,9 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using pk3DS.Properties;
+using pk3DS.WinForms.Properties;
 
-namespace pk3DS
+namespace pk3DS.WinForms
 {
     public static class WinFormsUtil
     {
