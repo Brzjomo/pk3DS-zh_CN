@@ -9,7 +9,6 @@
 	
   <ItemGroup>
     <ProjectReference Include="..\pk3DS.Core\pk3DS.Core.csproj" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   
   <ItemGroup>
