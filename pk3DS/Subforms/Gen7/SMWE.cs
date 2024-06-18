@@ -25,9 +25,11 @@ namespace pk3DS
 
             font = L_Location.Font;
 
-            speciesList[0] = "(None)";
+            speciesList[0] = "(无)";
             var locationList = Main.Config.GetText(TextName.metlist_000000);
             locationList = GetGoodLocationList(locationList);
+
+            FixChineseDisplay();
 
             nup_spec = LoadFormeNUD();
             cb_spec = LoadSpeciesComboBoxes();
@@ -107,9 +109,20 @@ namespace pk3DS
             return list;
         }
 
+        private void FixChineseDisplay()
+        {
+            if (Main.ifFixChineseDisplay && Main.Config.USUM && Main.Language > 7)
+            {
+                string[] temp = new string[speciesList.Length];
+                temp[0] = speciesList[0];
+                Array.Copy(Main.pokemonNameUSSC_Sim, 0, temp, 1, Main.pokemonNameUSSC_Sim.Length);
+                speciesList = temp;
+            }
+        }
+
         private readonly Area7[] Areas;
         private readonly LazyGARCFile encdata;
-        private readonly string[] speciesList = Main.Config.GetText(TextName.SpeciesNames);
+        private string[] speciesList = Main.Config.GetText(TextName.SpeciesNames);
         private readonly Font font;
         private readonly NumericUpDown[][] nup_spec;
         private readonly ComboBox[][] cb_spec;
@@ -141,13 +154,13 @@ namespace pk3DS
             {
                 for (int i = 0; i < Areas[CB_LocationID.SelectedIndex].Tables.Count; i += 2)
                 {
-                    CB_TableID.Items.Add($"{(i / 2) + 1} (Day)");
-                    CB_TableID.Items.Add($"{(i / 2) + 1} (Night)");
+                    CB_TableID.Items.Add($"{(i / 2) + 1} (白天)");
+                    CB_TableID.Items.Add($"{(i / 2) + 1} (晚上)");
                 }
             }
             else
             {
-                CB_TableID.Items.Add("(None)");
+                CB_TableID.Items.Add("(无)");
             }
 
             CB_TableID.SelectedIndex = 0;
@@ -287,7 +300,7 @@ namespace pk3DS
             cur_pb.Image = cur_img;
 
             var sum = TotalEncounterRate;
-            GB_Encounters.Text = $"Encounters ({sum}%)";
+            GB_Encounters.Text = $"遭遇机率 ({sum}%)";
         }
 
         private byte[] CopyTable;
@@ -298,14 +311,14 @@ namespace pk3DS
             var Map = Areas[CB_LocationID.SelectedIndex];
             if (!Map.HasTables)
             {
-                WinFormsUtil.Alert("No tables to copy.");
+                WinFormsUtil.Alert("没有要复制的表格");
                 return;
             }
             CurrentTable.Write();
             CopyTable = (byte[])CurrentTable.Data.Clone();
             CopyCount = CurrentTable.Encounter7s[0].Count(z => z.Species != 0);
             B_Paste.Enabled = B_PasteAll.Enabled = true;
-            WinFormsUtil.Alert("Copied table data.");
+            WinFormsUtil.Alert("已复制表格数据");
         }
 
         private void B_Paste_Click(object sender, EventArgs e)
@@ -313,7 +326,7 @@ namespace pk3DS
             var Map = Areas[CB_LocationID.SelectedIndex];
             if (!Map.HasTables)
             {
-                WinFormsUtil.Alert("No table to paste to.");
+                WinFormsUtil.Alert("没有要粘贴的表格");
                 return;
             }
             CurrentTable.Reset(CopyTable);
@@ -331,7 +344,7 @@ namespace pk3DS
             var Map = Areas[CB_LocationID.SelectedIndex];
             if (!Map.HasTables)
             {
-                WinFormsUtil.Alert("No table to paste to.");
+                WinFormsUtil.Alert("没有要粘贴的表格");
                 return;
             }
             B_Paste_Click(sender, e);
@@ -344,7 +357,7 @@ namespace pk3DS
             var sum = TotalEncounterRate;
             if (sum != 100 && sum != 0)
             {
-                WinFormsUtil.Error("Encounter rates must add up to either 0% or 100%.");
+                WinFormsUtil.Error("遭遇机率加起来必须为 0% 或 100%");
                 return;
             }
 
@@ -360,13 +373,16 @@ namespace pk3DS
         {
             B_Save_Click(sender, e);
 
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "此操作将在pk3DS目录下创建encdata目录，并保存Map数据，是否继续?") != DialogResult.Yes)
+                return;
+
             Directory.CreateDirectory("encdata");
             foreach (var Map in Areas)
             {
                 var packed = Area7.GetDayNightTableBinary(Map.Tables);
                 File.WriteAllBytes(Path.Combine("encdata", Map.FileNumber.ToString()), packed);
             }
-            WinFormsUtil.Alert("Exported all tables!");
+            WinFormsUtil.Alert("已导出全部表格");
         }
 
         private void DumpTables(object sender, EventArgs e)
@@ -383,7 +399,7 @@ namespace pk3DS
         // Randomization & Bulk Modification
         private void B_Randomize_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Randomize all? Cannot undo.", "Double check Randomization settings at the bottom left."))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否全部随机化？无法撤消。", "请先核对左下角的随机化设置。"))
                 return;
 
             Enabled = false;
@@ -391,7 +407,7 @@ namespace pk3DS
             UpdatePanel(null, null);
             Enabled = true;
 
-            WinFormsUtil.Alert("Randomized all Wild Encounters according to specification!", "Press the Dump Tables button to view the new Wild Encounter information!");
+            WinFormsUtil.Alert("已根据设置，随机化全部野外遭遇！", "按下“导出表格”按钮来查看新的野外遭遇信息。");
         }
 
         private void ExecuteRandomization()
@@ -429,7 +445,7 @@ namespace pk3DS
 
         private void CopySOS_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Copy initial species to SOS slots?", "Cannot undo.") != DialogResult.Yes)
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否将常规遭遇的宝可梦，复制到SOS闯入对战?", "无法撤销") != DialogResult.Yes)
                 return;
 
             // first table is copied to all other tables except weather (last)
@@ -441,12 +457,12 @@ namespace pk3DS
                     cb_spec[i][s].SelectedIndex = cb_spec[0][s].SelectedIndex;
                 }
             }
-            WinFormsUtil.Alert("All initial species copied to SOS slots!");
+            WinFormsUtil.Alert("已将常规遭遇的宝可梦，复制到SOS闯入对战");
         }
 
         private void ModifyAllLevelRanges(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Modify all current Level ranges?", "Cannot undo."))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否修改全部遭遇宝可梦的等级", "无法撤销"))
                 return;
 
             // Disable Interface while modifying
@@ -468,7 +484,7 @@ namespace pk3DS
 
             // Enable Interface... modification complete.
             Enabled = true;
-            WinFormsUtil.Alert("Modified all Level ranges according to specification!", "Press the Dump Tables button to view the new Level ranges!");
+            WinFormsUtil.Alert("已根据设置，修改全部遭遇宝可梦的等级", "按下“导出表格”按钮来查看新的宝可梦等级");
 
             UpdatePanel(sender, e);
         }
@@ -519,7 +535,7 @@ namespace pk3DS
                 g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit;
                 for (int i = 0; i < table.Rates.Length; i++)
                     g.DrawString($"{table.Rates[i]}%", font, Brushes.Black, new PointF((40 * i) + 10, 10));
-                g.DrawString("Weather: ", font, Brushes.Black, new PointF(10, 280));
+                g.DrawString("天气: ", font, Brushes.Black, new PointF(10, 280));
 
                 // Draw Sprites
                 for (int i = 0; i < table.Encounter7s.Length - 1; i++)

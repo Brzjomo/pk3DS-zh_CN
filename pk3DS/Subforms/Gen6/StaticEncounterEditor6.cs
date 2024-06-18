@@ -50,10 +50,10 @@ namespace pk3DS
 
         private readonly string[] ability =
         {
-            "Any (1 or 2)",
-            "Ability 1",
-            "Ability 2",
-            "Hidden Ability",
+            "任意（1 或 2）",
+            "特性 1",
+            "特性 2",
+            "隐藏特性",
         };
 
         private void B_Save_Click(object sender, EventArgs e)
@@ -82,9 +82,9 @@ namespace pk3DS
             foreach (var s in ability) CB_Ability.Items.Add(s);
 
             CB_Gender.Items.Clear();
-            CB_Gender.Items.Add("- / Genderless/Random");
-            CB_Gender.Items.Add("♂ / Male");
-            CB_Gender.Items.Add("♀ / Female");
+            CB_Gender.Items.Add("无性别 / 随机");
+            CB_Gender.Items.Add("♂ 雄性");
+            CB_Gender.Items.Add("♀ 雌性");
 
             loaded = true;
             LB_Encounters.SelectedIndex = 0;
@@ -150,7 +150,7 @@ namespace pk3DS
 
         private void B_RandAll_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Randomize all? Cannot undo.", "Double check Randomization settings in the Randomizer Options tab.") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否全部随机化？无法撤销。", "继续前，请先检查随机化选项。") != DialogResult.Yes) return;
 
             var formrand = new FormRandomizer(Main.Config) { AllowMega = false, AllowAlolanForm = false };
             var specrand = new SpeciesRandomizer(Main.Config)
@@ -218,7 +218,7 @@ namespace pk3DS
                 NUD_Form.Value = formrand.GetRandomForme(species);
                 CB_Gender.SelectedIndex = 0; // random
             }
-            WinFormsUtil.Alert("Randomized all Static Encounters according to specification!");
+            WinFormsUtil.Alert("已根据选项随机化固定遭遇！");
         }
 
         private void ChangeSpecies(object sender, EventArgs e)
@@ -229,14 +229,14 @@ namespace pk3DS
 
         private void ModifyLevels(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Modify all current Levels?", "Cannot undo.") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否修改全部当前等级？", "无法撤销。") != DialogResult.Yes) return;
 
             for (int i = 0; i < LB_Encounters.Items.Count; i++)
             {
                 LB_Encounters.SelectedIndex = i;
                 NUD_Level.Value = Randomizer.GetModifiedLevel((int)NUD_Level.Value, NUD_LevelBoost.Value);
             }
-            WinFormsUtil.Alert("Modified all Levels according to specification!");
+            WinFormsUtil.Alert("已根据选项修改全部等级！");
         }
     }
 }

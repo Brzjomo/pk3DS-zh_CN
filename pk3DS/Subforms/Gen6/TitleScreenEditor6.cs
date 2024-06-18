@@ -24,12 +24,12 @@ namespace pk3DS
             PB_Image.DragDrop += TC_Main_DragDrop;
 
             // Add tooltip to image
-            new ToolTip().SetToolTip(PB_Image, "Click to toggle Green Screen\nRightClick for I/O\nCTRL+Click for Copy->Clipboard.");
+            new ToolTip().SetToolTip(PB_Image, "点击切换绿幕\n鼠标右键导入 \\ 导出图片\nCTRL + 鼠标左键复制到剪贴板");
 
             // Add context menus
             ContextMenuStrip mnu = new ContextMenuStrip();
-            ToolStripMenuItem mnuR = new ToolStripMenuItem("Replace with...");
-            ToolStripMenuItem mnuS = new ToolStripMenuItem("Save as...");
+            ToolStripMenuItem mnuR = new ToolStripMenuItem("导入图片...");
+            ToolStripMenuItem mnuS = new ToolStripMenuItem("导出图片...");
             // Assign event handlers
             mnuR.Click += ClickOpen;
             mnuS.Click += ClickSave;
@@ -63,7 +63,7 @@ namespace pk3DS
                 {
                     pos += 4;
                     if (pos >= data.Length)
-                        throw new Exception("Invalid DARC?\n\n" + usedFiles[i]);
+                        throw new Exception("无效DARC?\n\n" + usedFiles[i]);
                 }
                 var darcData = data.Skip(pos).ToArray();
                 darcs[i] = new DARC(darcData);
@@ -101,6 +101,9 @@ namespace pk3DS
             CB_File.SelectedIndex = CB_File.Items.Count - 1; // Load last (version)
         }
 
+        private int imgWidth;
+        private int imgHeight;
+
         private void ChangeFile(object sender, EventArgs e)
         {
             // When the file is changed, we need to display the new file.
@@ -116,7 +119,7 @@ namespace pk3DS
                 break;
             }
 
-            if (entry < 0) throw new Exception("File not found!?");
+            if (entry < 0) throw new Exception("文件未找到!?");
 
             // Load file
             var en = darc.Entries[entry];
@@ -130,14 +133,26 @@ namespace pk3DS
             // store image locally for saving if need be
             currentBytes = data;
 
-            L_Dimensions.Text = $"Dimensions: {PB_Image.Width}w && {PB_Image.Height}h";
+            UpdateImgSize();
+            L_Dimensions.Text = $"宽: {imgWidth}px  高: {imgHeight}px";
+        }
+
+        private void UpdateImgSize()
+        {
+            imgWidth = PB_Image.Width;
+            imgHeight = PB_Image.Height;
+            if (PB_Image.BorderStyle == BorderStyle.FixedSingle)
+            {
+                imgWidth = PB_Image.Width - 2;
+                imgHeight = PB_Image.Height - 2;
+            }
         }
 
         private byte[] currentBytes;
 
         private void InsertFile(string path)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Overwrite image?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否覆盖？"))
                 return;
             byte[] bclim;
 
@@ -145,10 +160,11 @@ namespace pk3DS
             {
                 byte[] data = File.ReadAllBytes(path);
                 var img = BCLIM.Analyze(data, path);
-                if (img.Width != PB_Image.Width || img.Height != PB_Image.Height)
+                UpdateImgSize();
+                if (img.Width != imgWidth || img.Height != imgHeight)
                 {
-                    WinFormsUtil.Alert("Image sizes do not match.",
-                        $"Width: {img.Width} - {PB_Image.Width}\nHeight: {img.Height} - {PB_Image.Height}");
+                    WinFormsUtil.Alert("尺寸不匹配！",
+                        $"原始尺寸: {imgWidth}px X {imgHeight}px\n导入尺寸: {img.Width}px X {img.Height}px");
                     return;
                 }
                 bclim = data;
@@ -156,10 +172,11 @@ namespace pk3DS
             else // image
             {
                 Image img = Image.FromFile(path);
-                if (img.Width != PB_Image.Width || img.Height != PB_Image.Height)
+                UpdateImgSize();
+                if (img.Width != imgWidth || img.Height != imgHeight)
                 {
-                    WinFormsUtil.Alert("Image sizes do not match.",
-                        $"Width: {img.Width} - {PB_Image.Width}\nHeight: {img.Height} - {PB_Image.Height}");
+                    WinFormsUtil.Alert("尺寸不匹配！",
+                        $"原始尺寸: {imgWidth}px X {imgHeight}px\n导入尺寸: {img.Width}px X {img.Height}px");
                     return;
                 }
                 bclim = BCLIM.IMGToBCLIM(img, '9');
@@ -178,7 +195,7 @@ namespace pk3DS
                 }
             }
 
-            if (entry < 0) throw new Exception("File not found!?");
+            if (entry < 0) throw new Exception("文件未找到!?");
 
             DARC.InsertFile(ref darc, entry, bclim);
             darcs[CB_DARC.SelectedIndex] = darc;
@@ -202,7 +219,7 @@ namespace pk3DS
         private void Form_Closing(object sender, FormClosingEventArgs e)
         {
             if (compressed)
-                WinFormsUtil.Alert("Recompressing may take some time...", "Don't panic if the Progress Bar doesn't move!");
+                WinFormsUtil.Alert("重新压缩可能需要一些时间...", "如果进度条不动，不要慌！");
             // Write darcs
             for (int i = 0; i < darcs.Length; i++)
             {
@@ -270,8 +287,11 @@ namespace pk3DS
 
         private void PB_Image_Click(object sender, EventArgs e)
         {
-            if (ModifierKeys == Keys.Control && WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Copy image to clipboard?") == DialogResult.Yes)
+            if (ModifierKeys == Keys.Control && WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否复制图片到剪贴板？") == DialogResult.Yes)
+            {
+                PB_Image.BackgroundImage = PB_Image.Image;
                 Clipboard.SetImage(PB_Image.BackgroundImage);
+            }
             else if (PB_Image.BackColor == Color.Transparent)
                 PB_Image.BackColor = Color.GreenYellow;
             else PB_Image.BackColor = Color.Transparent;

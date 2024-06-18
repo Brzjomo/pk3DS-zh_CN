@@ -520,7 +520,7 @@ namespace pk3DS.ARCUtil
                 //if (dr != DialogResult.Yes) 
                 return;
             }
-            WinFormsUtil.Alert("Not finished.");
+            WinFormsUtil.Alert("未完成！");
         }
 
         // Generic Utility

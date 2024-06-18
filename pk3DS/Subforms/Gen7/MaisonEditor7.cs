@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -42,7 +43,19 @@ namespace pk3DS
         {
             for (int i = 0; i < trClass.Length; i++)
                 CB_Class.Items.Add($"{trClass[i]} - {i:000}");
-            foreach (string s in specieslist) CB_Species.Items.Add(s);
+
+            for (int i = 0; i < specieslist.Length; i++)
+            {
+                if (Main.ifFixChineseDisplay && Main.Config.USUM && Main.Language > 7 && i != 0)
+                {
+                    CB_Species.Items.Add(Main.pokemonNameUSSC_Sim[i - 1]);
+                }
+                else
+                {
+                    CB_Species.Items.Add(specieslist[i]);
+                }
+            }
+
             foreach (string s in movelist) CB_Move1.Items.Add(s);
             foreach (string s in movelist) CB_Move2.Items.Add(s);
             foreach (string s in movelist) CB_Move3.Items.Add(s);
@@ -50,7 +63,7 @@ namespace pk3DS
             foreach (string s in natures) CB_Nature.Items.Add(s);
             foreach (string s in itemlist) CB_Item.Items.Add(s);
             for (int i = 0; i < trNames.Length; i++)
-                CB_Trainer.Items.Add($"{trNames[i] ?? "UNKNOWN"} - {i:000}");
+                CB_Trainer.Items.Add($"{trNames[i] ?? "-- 未知 --"} - {i:000}");
             for (int i = 0; i < pkFiles.Length; i++) CB_Pokemon.Items.Add(i.ToString());
 
             CB_Trainer.SelectedIndex = 1;
@@ -156,7 +169,20 @@ namespace pk3DS
 
         private void ChangeSpecies(object sender, EventArgs e)
         {
-            PB_PKM.Image = WinFormsUtil.GetSprite(CB_Species.SelectedIndex, (int)NUD_Form.Value, 0, CB_Item.SelectedIndex, Main.Config);
+            Bitmap rawImg = WinFormsUtil.GetSprite(CB_Species.SelectedIndex, (int)NUD_Form.Value, 0, CB_Item.SelectedIndex, Main.Config);
+            Bitmap bigImg = new Bitmap(rawImg.Width * 2, rawImg.Height * 2);
+            for (int x = 0; x < rawImg.Width; x++)
+            {
+                for (int y = 0; y < rawImg.Height; y++)
+                {
+                    Color c = rawImg.GetPixel(x, y);
+                    bigImg.SetPixel(2 * x, 2 * y, c);
+                    bigImg.SetPixel((2 * x) + 1, 2 * y, c);
+                    bigImg.SetPixel(2 * x, (2 * y) + 1, c);
+                    bigImg.SetPixel((2 * x) + 1, (2 * y) + 1, c);
+                }
+            }
+            PB_PKM.Image = bigImg;
         }
 
         private void B_Remove_Click(object sender, EventArgs e)
@@ -204,6 +230,8 @@ namespace pk3DS
 
         private void DumpTRs_Click(object sender, EventArgs e)
         {
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否确认导出训练家信息至TXT文件？") != DialogResult.Yes) return;
+
             dumping = true;
             string result = "";
             for (int i = 0; i < CB_Trainer.Items.Count; i++)
@@ -234,6 +262,8 @@ namespace pk3DS
 
         private void B_DumpPKs_Click(object sender, EventArgs e)
         {
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否确认导出宝可梦信息至TXT文件？") != DialogResult.Yes) return;
+
             //File.WriteAllBytes("maiz", pkFiles.SelectMany(t => t).ToArray());
             string[] stats = {"HP", "ATK", "DEF", "Spe", "SpA", "SpD"};
             string result = "";
@@ -246,12 +276,12 @@ namespace pk3DS
                 result += "======" + Environment.NewLine;
                 result += $"{i} - {specieslist[pk.Species]}" + Environment.NewLine;
                 result += "======" + Environment.NewLine;
-                result += $"Held Item: {itemlist[pk.Item]}" + Environment.NewLine;
-                result += $"Nature: {natures[pk.Nature]}" + Environment.NewLine;
-                result += $"Move 1: {movelist[pk.Move1]}" + Environment.NewLine;
-                result += $"Move 2: {movelist[pk.Move2]}" + Environment.NewLine;
-                result += $"Move 3: {movelist[pk.Move3]}" + Environment.NewLine;
-                result += $"Move 4: {movelist[pk.Move4]}" + Environment.NewLine;
+                result += $"持有物品: {itemlist[pk.Item]}" + Environment.NewLine;
+                result += $"特性: {natures[pk.Nature]}" + Environment.NewLine;
+                result += $"招式 1: {movelist[pk.Move1]}" + Environment.NewLine;
+                result += $"招式 2: {movelist[pk.Move2]}" + Environment.NewLine;
+                result += $"招式 3: {movelist[pk.Move3]}" + Environment.NewLine;
+                result += $"招式 4: {movelist[pk.Move4]}" + Environment.NewLine;
 
                 var EVstr = string.Join(",", pk.EVs.Select((iv, x) => iv ? stats[x] : string.Empty).Where(x => !string.IsNullOrWhiteSpace(x)));
                 result += $"EV'd in: {(pk.EVs.Length > 0 ? EVstr : "None")}" + Environment.NewLine;

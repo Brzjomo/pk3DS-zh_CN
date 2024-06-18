@@ -213,8 +213,8 @@ namespace pk3DS.Subforms
 
         private void DclickMap(object sender, EventArgs e)
         {
-            DialogResult dr = WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, "Copy image to Clipboard?",
-                "Yes: Map & Overworlds" + Environment.NewLine + "No: Map Only");
+            DialogResult dr = WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, "是否复制图片到剪切板?",
+                "是: Map & Overworlds" + Environment.NewLine + "否: Map Only");
             if (dr == DialogResult.No) // Map Only
                 Clipboard.SetImage(WinFormsUtil.TrimBitmap(baseImage));
             if (dr == DialogResult.Yes)

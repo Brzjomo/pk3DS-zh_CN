@@ -39,14 +39,17 @@ namespace pk3DS
             Array.Resize(ref specieslist, Main.Config.MaxSpeciesID + 1);
             specieslist[0] = itemlist[0] = "";
             specieslist[32] += "♂"; specieslist[29] += "♀";
+
             AltForms = Main.Config.Personal.GetFormList(specieslist, Main.Config.MaxSpeciesID);
 
             groupbox_spec = new[] { GB_MEvo1, GB_MEvo2, GB_MEvo3 };
             item_spec = new[] { CB_Item1, CB_Item2, CB_Item3 };
             forme_spec = new[] { CB_Forme1, CB_Forme2, CB_Forme3 };
             checkbox_spec = new[] { CHK_MEvo1, CHK_MEvo2, CHK_MEvo3 };
+
             picturebox_spec = new[] { new[] { PB_S1, PB_S2, PB_S3 }, new[] { PB_M1, PB_M2, PB_M3 } };
             #endregion
+
             Setup();
             CB_Species.SelectedIndex = 0;
         }
@@ -116,11 +119,21 @@ namespace pk3DS
             foreach (ComboBox CB in forme_spec)
                 FormUtil.SetForms(entry, CB, AltForms);
 
+            //foreach (ComboBox CB in forme_spec)
+            //    FormUtil.SetForms(CB, specieslist, true);
+
             me = new MegaEvolutions(data);
             for (int i = 0; i < 3; i++)
             {
                 checkbox_spec[i].Checked = me.Method[i] == 1;
                 item_spec[i].SelectedValue = (int)me.Argument[i];
+
+                //handle incorrect data
+                if (me.Form[i] > 1)
+                {
+                    me.Form[i] = 0;
+                }
+
                 forme_spec[i].SelectedIndex = me.Form[i];
             }
         }
@@ -191,7 +204,7 @@ namespace pk3DS
 
         private void B_Dump_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Dump all Mega Evolutions to Text File?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否导出全部Mega进化至TXT文档？"))
                 return;
             dumping = true;
             string result = "";

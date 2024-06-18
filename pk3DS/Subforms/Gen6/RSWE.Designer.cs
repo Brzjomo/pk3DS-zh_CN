@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RSWE));
             this.CB_LocationID = new System.Windows.Forms.ComboBox();
             this.B_Save = new System.Windows.Forms.Button();
             this.L_Location = new System.Windows.Forms.Label();
@@ -35,6 +36,7 @@
             this.CB_FormeList = new System.Windows.Forms.ComboBox();
             this.TabPage_Horde = new System.Windows.Forms.TabPage();
             this.GB_Tweak = new System.Windows.Forms.GroupBox();
+            this.CHK_HomogeneousHordes = new System.Windows.Forms.CheckBox();
             this.CHK_MegaForm = new System.Windows.Forms.CheckBox();
             this.L_RandOpt = new System.Windows.Forms.Label();
             this.CHK_BST = new System.Windows.Forms.CheckBox();
@@ -388,7 +390,6 @@
             this.TabControl_EncounterData = new System.Windows.Forms.TabControl();
             this.B_Dump = new System.Windows.Forms.Button();
             this.B_Randomize = new System.Windows.Forms.Button();
-            this.CHK_HomogeneousHordes = new System.Windows.Forms.CheckBox();
             this.TabPage_Horde.SuspendLayout();
             this.GB_Tweak.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_LevelAmp)).BeginInit();
@@ -586,40 +587,44 @@
             this.CB_LocationID.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_LocationID.Enabled = false;
             this.CB_LocationID.FormattingEnabled = true;
-            this.CB_LocationID.Location = new System.Drawing.Point(233, 8);
+            this.CB_LocationID.Location = new System.Drawing.Point(388, 15);
+            this.CB_LocationID.Margin = new System.Windows.Forms.Padding(5);
             this.CB_LocationID.Name = "CB_LocationID";
-            this.CB_LocationID.Size = new System.Drawing.Size(164, 21);
+            this.CB_LocationID.Size = new System.Drawing.Size(271, 29);
             this.CB_LocationID.TabIndex = 407;
             this.CB_LocationID.SelectedIndexChanged += new System.EventHandler(this.CB_LocationID_SelectedIndexChanged);
             // 
             // B_Save
             // 
             this.B_Save.Enabled = false;
-            this.B_Save.Location = new System.Drawing.Point(403, 7);
+            this.B_Save.Location = new System.Drawing.Point(672, 10);
+            this.B_Save.Margin = new System.Windows.Forms.Padding(5);
             this.B_Save.Name = "B_Save";
-            this.B_Save.Size = new System.Drawing.Size(135, 23);
+            this.B_Save.Size = new System.Drawing.Size(225, 37);
             this.B_Save.TabIndex = 410;
-            this.B_Save.Text = "Save Current Encounters";
+            this.B_Save.Text = "保存当前遭遇";
             this.B_Save.UseVisualStyleBackColor = true;
             this.B_Save.Click += new System.EventHandler(this.B_Save_Click);
             // 
             // L_Location
             // 
             this.L_Location.AutoSize = true;
-            this.L_Location.Location = new System.Drawing.Point(201, 12);
+            this.L_Location.Location = new System.Drawing.Point(335, 19);
+            this.L_Location.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Location.Name = "L_Location";
-            this.L_Location.Size = new System.Drawing.Size(28, 13);
+            this.L_Location.Size = new System.Drawing.Size(46, 21);
             this.L_Location.TabIndex = 411;
-            this.L_Location.Text = "Loc:";
+            this.L_Location.Text = "地点:";
             // 
             // L_FormList
             // 
             this.L_FormList.AutoSize = true;
-            this.L_FormList.Location = new System.Drawing.Point(752, 12);
+            this.L_FormList.Location = new System.Drawing.Point(1260, 16);
+            this.L_FormList.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_FormList.Name = "L_FormList";
-            this.L_FormList.Size = new System.Drawing.Size(58, 13);
+            this.L_FormList.Size = new System.Drawing.Size(78, 21);
             this.L_FormList.TabIndex = 414;
-            this.L_FormList.Text = "Forme List:";
+            this.L_FormList.Text = "形态列表:";
             // 
             // CB_FormeList
             // 
@@ -755,9 +760,10 @@
             "Genesect-Electric - 2",
             "Genesect-Fire - 3",
             "Genesect-Ice - 4"});
-            this.CB_FormeList.Location = new System.Drawing.Point(816, 8);
+            this.CB_FormeList.Location = new System.Drawing.Point(1360, 12);
+            this.CB_FormeList.Margin = new System.Windows.Forms.Padding(5);
             this.CB_FormeList.Name = "CB_FormeList";
-            this.CB_FormeList.Size = new System.Drawing.Size(108, 21);
+            this.CB_FormeList.Size = new System.Drawing.Size(177, 29);
             this.CB_FormeList.TabIndex = 413;
             // 
             // TabPage_Horde
@@ -835,12 +841,13 @@
             this.TabPage_Horde.Controls.Add(this.CB_HordeB1);
             this.TabPage_Horde.Controls.Add(this.NUP_HordeAMin3);
             this.TabPage_Horde.Controls.Add(this.NUP_HordeAMax3);
-            this.TabPage_Horde.Location = new System.Drawing.Point(4, 22);
+            this.TabPage_Horde.Location = new System.Drawing.Point(4, 30);
+            this.TabPage_Horde.Margin = new System.Windows.Forms.Padding(5);
             this.TabPage_Horde.Name = "TabPage_Horde";
-            this.TabPage_Horde.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage_Horde.Size = new System.Drawing.Size(918, 369);
+            this.TabPage_Horde.Padding = new System.Windows.Forms.Padding(5);
+            this.TabPage_Horde.Size = new System.Drawing.Size(1535, 575);
             this.TabPage_Horde.TabIndex = 2;
-            this.TabPage_Horde.Text = "Horde";
+            this.TabPage_Horde.Text = "群聚";
             this.TabPage_Horde.UseVisualStyleBackColor = true;
             // 
             // GB_Tweak
@@ -860,40 +867,56 @@
             this.GB_Tweak.Controls.Add(this.B_LevelPlus);
             this.GB_Tweak.Controls.Add(this.NUD_LevelAmp);
             this.GB_Tweak.Controls.Add(this.CHK_Level);
-            this.GB_Tweak.Location = new System.Drawing.Point(341, 243);
+            this.GB_Tweak.Location = new System.Drawing.Point(27, 285);
+            this.GB_Tweak.Margin = new System.Windows.Forms.Padding(5);
             this.GB_Tweak.Name = "GB_Tweak";
-            this.GB_Tweak.Size = new System.Drawing.Size(282, 120);
+            this.GB_Tweak.Padding = new System.Windows.Forms.Padding(5);
+            this.GB_Tweak.Size = new System.Drawing.Size(470, 194);
             this.GB_Tweak.TabIndex = 322;
             this.GB_Tweak.TabStop = false;
-            this.GB_Tweak.Text = "Extra Tweaks";
+            this.GB_Tweak.Text = "额外调整";
+            // 
+            // CHK_HomogeneousHordes
+            // 
+            this.CHK_HomogeneousHordes.AutoSize = true;
+            this.CHK_HomogeneousHordes.Location = new System.Drawing.Point(30, 158);
+            this.CHK_HomogeneousHordes.Margin = new System.Windows.Forms.Padding(5);
+            this.CHK_HomogeneousHordes.Name = "CHK_HomogeneousHordes";
+            this.CHK_HomogeneousHordes.Size = new System.Drawing.Size(109, 25);
+            this.CHK_HomogeneousHordes.TabIndex = 296;
+            this.CHK_HomogeneousHordes.Text = "单物种群聚";
+            this.CHK_HomogeneousHordes.UseVisualStyleBackColor = true;
             // 
             // CHK_MegaForm
             // 
             this.CHK_MegaForm.AutoSize = true;
-            this.CHK_MegaForm.Location = new System.Drawing.Point(152, 97);
+            this.CHK_MegaForm.Location = new System.Drawing.Point(253, 158);
+            this.CHK_MegaForm.Margin = new System.Windows.Forms.Padding(5);
             this.CHK_MegaForm.Name = "CHK_MegaForm";
-            this.CHK_MegaForm.Size = new System.Drawing.Size(127, 17);
+            this.CHK_MegaForm.Size = new System.Drawing.Size(121, 25);
             this.CHK_MegaForm.TabIndex = 295;
-            this.CHK_MegaForm.Text = "Random Mega Forms";
+            this.CHK_MegaForm.Text = "随机Mega表";
             this.CHK_MegaForm.UseVisualStyleBackColor = true;
             // 
             // L_RandOpt
             // 
             this.L_RandOpt.AutoSize = true;
-            this.L_RandOpt.Location = new System.Drawing.Point(30, 34);
+            this.L_RandOpt.Location = new System.Drawing.Point(50, 54);
+            this.L_RandOpt.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_RandOpt.Name = "L_RandOpt";
-            this.L_RandOpt.Size = new System.Drawing.Size(105, 13);
+            this.L_RandOpt.Size = new System.Drawing.Size(106, 21);
             this.L_RandOpt.TabIndex = 294;
-            this.L_RandOpt.Text = "Randomizer Options:";
+            this.L_RandOpt.Text = "随机化选项：";
             // 
             // CHK_BST
             // 
             this.CHK_BST.AutoSize = true;
-            this.CHK_BST.Location = new System.Drawing.Point(152, 82);
+            this.CHK_BST.Location = new System.Drawing.Point(253, 133);
+            this.CHK_BST.Margin = new System.Windows.Forms.Padding(5);
             this.CHK_BST.Name = "CHK_BST";
-            this.CHK_BST.Size = new System.Drawing.Size(117, 17);
+            this.CHK_BST.Size = new System.Drawing.Size(137, 25);
             this.CHK_BST.TabIndex = 288;
-            this.CHK_BST.Text = "Randomize by BST";
+            this.CHK_BST.Text = "通过BST随机化";
             this.CHK_BST.UseVisualStyleBackColor = true;
             // 
             // CHK_E
@@ -901,9 +924,10 @@
             this.CHK_E.AutoSize = true;
             this.CHK_E.Checked = true;
             this.CHK_E.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CHK_E.Location = new System.Drawing.Point(152, 67);
+            this.CHK_E.Location = new System.Drawing.Point(253, 108);
+            this.CHK_E.Margin = new System.Windows.Forms.Padding(5);
             this.CHK_E.Name = "CHK_E";
-            this.CHK_E.Size = new System.Drawing.Size(98, 17);
+            this.CHK_E.Size = new System.Drawing.Size(139, 25);
             this.CHK_E.TabIndex = 287;
             this.CHK_E.Text = "Event Legends";
             this.CHK_E.UseVisualStyleBackColor = true;
@@ -913,9 +937,10 @@
             this.CHK_L.AutoSize = true;
             this.CHK_L.Checked = true;
             this.CHK_L.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CHK_L.Location = new System.Drawing.Point(152, 52);
+            this.CHK_L.Location = new System.Drawing.Point(253, 84);
+            this.CHK_L.Margin = new System.Windows.Forms.Padding(5);
             this.CHK_L.Name = "CHK_L";
-            this.CHK_L.Size = new System.Drawing.Size(98, 17);
+            this.CHK_L.Size = new System.Drawing.Size(142, 25);
             this.CHK_L.TabIndex = 286;
             this.CHK_L.Text = "Game Legends";
             this.CHK_L.UseVisualStyleBackColor = true;
@@ -925,11 +950,12 @@
             this.CHK_G6.AutoSize = true;
             this.CHK_G6.Checked = true;
             this.CHK_G6.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CHK_G6.Location = new System.Drawing.Point(91, 82);
+            this.CHK_G6.Location = new System.Drawing.Point(152, 133);
+            this.CHK_G6.Margin = new System.Windows.Forms.Padding(5);
             this.CHK_G6.Name = "CHK_G6";
-            this.CHK_G6.Size = new System.Drawing.Size(55, 17);
+            this.CHK_G6.Size = new System.Drawing.Size(86, 25);
             this.CHK_G6.TabIndex = 285;
-            this.CHK_G6.Text = "Gen 6";
+            this.CHK_G6.Text = "第6世代";
             this.CHK_G6.UseVisualStyleBackColor = true;
             // 
             // CHK_G5
@@ -937,11 +963,12 @@
             this.CHK_G5.AutoSize = true;
             this.CHK_G5.Checked = true;
             this.CHK_G5.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CHK_G5.Location = new System.Drawing.Point(91, 67);
+            this.CHK_G5.Location = new System.Drawing.Point(152, 108);
+            this.CHK_G5.Margin = new System.Windows.Forms.Padding(5);
             this.CHK_G5.Name = "CHK_G5";
-            this.CHK_G5.Size = new System.Drawing.Size(55, 17);
+            this.CHK_G5.Size = new System.Drawing.Size(86, 25);
             this.CHK_G5.TabIndex = 284;
-            this.CHK_G5.Text = "Gen 5";
+            this.CHK_G5.Text = "第5世代";
             this.CHK_G5.UseVisualStyleBackColor = true;
             // 
             // CHK_G4
@@ -949,11 +976,12 @@
             this.CHK_G4.AutoSize = true;
             this.CHK_G4.Checked = true;
             this.CHK_G4.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CHK_G4.Location = new System.Drawing.Point(91, 52);
+            this.CHK_G4.Location = new System.Drawing.Point(152, 84);
+            this.CHK_G4.Margin = new System.Windows.Forms.Padding(5);
             this.CHK_G4.Name = "CHK_G4";
-            this.CHK_G4.Size = new System.Drawing.Size(55, 17);
+            this.CHK_G4.Size = new System.Drawing.Size(86, 25);
             this.CHK_G4.TabIndex = 283;
-            this.CHK_G4.Text = "Gen 4";
+            this.CHK_G4.Text = "第4世代";
             this.CHK_G4.UseVisualStyleBackColor = true;
             // 
             // CHK_G3
@@ -961,11 +989,12 @@
             this.CHK_G3.AutoSize = true;
             this.CHK_G3.Checked = true;
             this.CHK_G3.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CHK_G3.Location = new System.Drawing.Point(33, 82);
+            this.CHK_G3.Location = new System.Drawing.Point(55, 133);
+            this.CHK_G3.Margin = new System.Windows.Forms.Padding(5);
             this.CHK_G3.Name = "CHK_G3";
-            this.CHK_G3.Size = new System.Drawing.Size(55, 17);
+            this.CHK_G3.Size = new System.Drawing.Size(86, 25);
             this.CHK_G3.TabIndex = 282;
-            this.CHK_G3.Text = "Gen 3";
+            this.CHK_G3.Text = "第3世代";
             this.CHK_G3.UseVisualStyleBackColor = true;
             // 
             // CHK_G2
@@ -973,11 +1002,12 @@
             this.CHK_G2.AutoSize = true;
             this.CHK_G2.Checked = true;
             this.CHK_G2.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CHK_G2.Location = new System.Drawing.Point(33, 67);
+            this.CHK_G2.Location = new System.Drawing.Point(55, 108);
+            this.CHK_G2.Margin = new System.Windows.Forms.Padding(5);
             this.CHK_G2.Name = "CHK_G2";
-            this.CHK_G2.Size = new System.Drawing.Size(55, 17);
+            this.CHK_G2.Size = new System.Drawing.Size(86, 25);
             this.CHK_G2.TabIndex = 281;
-            this.CHK_G2.Text = "Gen 2";
+            this.CHK_G2.Text = "第2世代";
             this.CHK_G2.UseVisualStyleBackColor = true;
             // 
             // CHK_G1
@@ -985,20 +1015,22 @@
             this.CHK_G1.AutoSize = true;
             this.CHK_G1.Checked = true;
             this.CHK_G1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CHK_G1.Location = new System.Drawing.Point(33, 52);
+            this.CHK_G1.Location = new System.Drawing.Point(55, 84);
+            this.CHK_G1.Margin = new System.Windows.Forms.Padding(5);
             this.CHK_G1.Name = "CHK_G1";
-            this.CHK_G1.Size = new System.Drawing.Size(55, 17);
+            this.CHK_G1.Size = new System.Drawing.Size(86, 25);
             this.CHK_G1.TabIndex = 280;
-            this.CHK_G1.Text = "Gen 1";
+            this.CHK_G1.Text = "第1世代";
             this.CHK_G1.UseVisualStyleBackColor = true;
             // 
             // B_LevelPlus
             // 
-            this.B_LevelPlus.Location = new System.Drawing.Point(199, 14);
+            this.B_LevelPlus.Location = new System.Drawing.Point(249, 23);
+            this.B_LevelPlus.Margin = new System.Windows.Forms.Padding(5);
             this.B_LevelPlus.Name = "B_LevelPlus";
-            this.B_LevelPlus.Size = new System.Drawing.Size(70, 23);
+            this.B_LevelPlus.Size = new System.Drawing.Size(117, 37);
             this.B_LevelPlus.TabIndex = 277;
-            this.B_LevelPlus.Text = "× Current";
+            this.B_LevelPlus.Text = "× 当前值";
             this.B_LevelPlus.UseVisualStyleBackColor = true;
             this.B_LevelPlus.Click += new System.EventHandler(this.ModifyLevels);
             // 
@@ -1010,7 +1042,8 @@
             0,
             0,
             131072});
-            this.NUD_LevelAmp.Location = new System.Drawing.Point(152, 16);
+            this.NUD_LevelAmp.Location = new System.Drawing.Point(170, 27);
+            this.NUD_LevelAmp.Margin = new System.Windows.Forms.Padding(5);
             this.NUD_LevelAmp.Maximum = new decimal(new int[] {
             3,
             0,
@@ -1022,7 +1055,7 @@
             0,
             65536});
             this.NUD_LevelAmp.Name = "NUD_LevelAmp";
-            this.NUD_LevelAmp.Size = new System.Drawing.Size(41, 20);
+            this.NUD_LevelAmp.Size = new System.Drawing.Size(68, 29);
             this.NUD_LevelAmp.TabIndex = 276;
             this.NUD_LevelAmp.Value = new decimal(new int[] {
             10,
@@ -1033,68 +1066,76 @@
             // CHK_Level
             // 
             this.CHK_Level.AutoSize = true;
-            this.CHK_Level.Location = new System.Drawing.Point(18, 17);
+            this.CHK_Level.Location = new System.Drawing.Point(30, 28);
+            this.CHK_Level.Margin = new System.Windows.Forms.Padding(5);
             this.CHK_Level.Name = "CHK_Level";
-            this.CHK_Level.Size = new System.Drawing.Size(135, 17);
+            this.CHK_Level.Size = new System.Drawing.Size(141, 25);
             this.CHK_Level.TabIndex = 279;
-            this.CHK_Level.Text = "Multiply PKM Levels by";
+            this.CHK_Level.Text = "宝可梦等级倍增";
             this.CHK_Level.UseVisualStyleBackColor = true;
             // 
             // L_HordeC_Max
             // 
             this.L_HordeC_Max.AutoSize = true;
-            this.L_HordeC_Max.Location = new System.Drawing.Point(825, 13);
+            this.L_HordeC_Max.Location = new System.Drawing.Point(1429, 21);
+            this.L_HordeC_Max.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_HordeC_Max.Name = "L_HordeC_Max";
-            this.L_HordeC_Max.Size = new System.Drawing.Size(27, 13);
+            this.L_HordeC_Max.Size = new System.Drawing.Size(42, 21);
             this.L_HordeC_Max.TabIndex = 320;
-            this.L_HordeC_Max.Text = "Max";
+            this.L_HordeC_Max.Text = "最大";
             // 
             // L_HordeC_Min
             // 
             this.L_HordeC_Min.AutoSize = true;
-            this.L_HordeC_Min.Location = new System.Drawing.Point(778, 13);
+            this.L_HordeC_Min.Location = new System.Drawing.Point(1351, 21);
+            this.L_HordeC_Min.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_HordeC_Min.Name = "L_HordeC_Min";
-            this.L_HordeC_Min.Size = new System.Drawing.Size(24, 13);
+            this.L_HordeC_Min.Size = new System.Drawing.Size(42, 21);
             this.L_HordeC_Min.TabIndex = 319;
-            this.L_HordeC_Min.Text = "Min";
+            this.L_HordeC_Min.Text = "最小";
             // 
             // L_HordeC_F
             // 
             this.L_HordeC_F.AutoSize = true;
-            this.L_HordeC_F.Location = new System.Drawing.Point(731, 13);
+            this.L_HordeC_F.Location = new System.Drawing.Point(1272, 21);
+            this.L_HordeC_F.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_HordeC_F.Name = "L_HordeC_F";
-            this.L_HordeC_F.Size = new System.Drawing.Size(36, 13);
+            this.L_HordeC_F.Size = new System.Drawing.Size(42, 21);
             this.L_HordeC_F.TabIndex = 318;
-            this.L_HordeC_F.Text = "Forme";
+            this.L_HordeC_F.Text = "形态";
             // 
             // L_HordeC
             // 
             this.L_HordeC.AutoSize = true;
-            this.L_HordeC.Location = new System.Drawing.Point(607, 13);
+            this.L_HordeC.Location = new System.Drawing.Point(1066, 21);
+            this.L_HordeC.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_HordeC.Name = "L_HordeC";
-            this.L_HordeC.Size = new System.Drawing.Size(69, 13);
+            this.L_HordeC.Size = new System.Drawing.Size(96, 21);
             this.L_HordeC.TabIndex = 317;
-            this.L_HordeC.Text = "Horde C (5%)";
+            this.L_HordeC.Text = "群聚 C (5%)";
             // 
             // NUP_HordeCMax5
             // 
-            this.NUP_HordeCMax5.Location = new System.Drawing.Point(828, 138);
+            this.NUP_HordeCMax5.Location = new System.Drawing.Point(1434, 220);
+            this.NUP_HordeCMax5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeCMax5.Name = "NUP_HordeCMax5";
-            this.NUP_HordeCMax5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeCMax5.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeCMax5.TabIndex = 316;
             // 
             // NUP_HordeCMin5
             // 
-            this.NUP_HordeCMin5.Location = new System.Drawing.Point(781, 138);
+            this.NUP_HordeCMin5.Location = new System.Drawing.Point(1356, 220);
+            this.NUP_HordeCMin5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeCMin5.Name = "NUP_HordeCMin5";
-            this.NUP_HordeCMin5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeCMin5.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeCMin5.TabIndex = 315;
             // 
             // NUP_HordeCForme5
             // 
-            this.NUP_HordeCForme5.Location = new System.Drawing.Point(734, 138);
+            this.NUP_HordeCForme5.Location = new System.Drawing.Point(1277, 220);
+            this.NUP_HordeCForme5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeCForme5.Name = "NUP_HordeCForme5";
-            this.NUP_HordeCForme5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeCForme5.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeCForme5.TabIndex = 314;
             // 
             // CB_HordeC5
@@ -1104,7 +1145,7 @@
             this.CB_HordeC5.FormattingEnabled = true;
             this.CB_HordeC5.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -1753,30 +1794,34 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_HordeC5.Location = new System.Drawing.Point(607, 137);
+            this.CB_HordeC5.Location = new System.Drawing.Point(1066, 220);
+            this.CB_HordeC5.Margin = new System.Windows.Forms.Padding(5);
             this.CB_HordeC5.Name = "CB_HordeC5";
-            this.CB_HordeC5.Size = new System.Drawing.Size(121, 21);
+            this.CB_HordeC5.Size = new System.Drawing.Size(199, 29);
             this.CB_HordeC5.TabIndex = 313;
             // 
             // NUP_HordeCMax4
             // 
-            this.NUP_HordeCMax4.Location = new System.Drawing.Point(828, 111);
+            this.NUP_HordeCMax4.Location = new System.Drawing.Point(1434, 176);
+            this.NUP_HordeCMax4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeCMax4.Name = "NUP_HordeCMax4";
-            this.NUP_HordeCMax4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeCMax4.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeCMax4.TabIndex = 312;
             // 
             // NUP_HordeCMin4
             // 
-            this.NUP_HordeCMin4.Location = new System.Drawing.Point(781, 111);
+            this.NUP_HordeCMin4.Location = new System.Drawing.Point(1356, 176);
+            this.NUP_HordeCMin4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeCMin4.Name = "NUP_HordeCMin4";
-            this.NUP_HordeCMin4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeCMin4.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeCMin4.TabIndex = 311;
             // 
             // NUP_HordeCForme4
             // 
-            this.NUP_HordeCForme4.Location = new System.Drawing.Point(734, 111);
+            this.NUP_HordeCForme4.Location = new System.Drawing.Point(1277, 176);
+            this.NUP_HordeCForme4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeCForme4.Name = "NUP_HordeCForme4";
-            this.NUP_HordeCForme4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeCForme4.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeCForme4.TabIndex = 310;
             // 
             // CB_HordeC4
@@ -1786,7 +1831,7 @@
             this.CB_HordeC4.FormattingEnabled = true;
             this.CB_HordeC4.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -2435,30 +2480,34 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_HordeC4.Location = new System.Drawing.Point(607, 110);
+            this.CB_HordeC4.Location = new System.Drawing.Point(1066, 178);
+            this.CB_HordeC4.Margin = new System.Windows.Forms.Padding(5);
             this.CB_HordeC4.Name = "CB_HordeC4";
-            this.CB_HordeC4.Size = new System.Drawing.Size(121, 21);
+            this.CB_HordeC4.Size = new System.Drawing.Size(199, 29);
             this.CB_HordeC4.TabIndex = 309;
             // 
             // NUP_HordeCMax3
             // 
-            this.NUP_HordeCMax3.Location = new System.Drawing.Point(828, 84);
+            this.NUP_HordeCMax3.Location = new System.Drawing.Point(1434, 134);
+            this.NUP_HordeCMax3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeCMax3.Name = "NUP_HordeCMax3";
-            this.NUP_HordeCMax3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeCMax3.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeCMax3.TabIndex = 308;
             // 
             // NUP_HordeCMin3
             // 
-            this.NUP_HordeCMin3.Location = new System.Drawing.Point(781, 84);
+            this.NUP_HordeCMin3.Location = new System.Drawing.Point(1356, 134);
+            this.NUP_HordeCMin3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeCMin3.Name = "NUP_HordeCMin3";
-            this.NUP_HordeCMin3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeCMin3.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeCMin3.TabIndex = 307;
             // 
             // NUP_HordeCForme3
             // 
-            this.NUP_HordeCForme3.Location = new System.Drawing.Point(734, 84);
+            this.NUP_HordeCForme3.Location = new System.Drawing.Point(1277, 134);
+            this.NUP_HordeCForme3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeCForme3.Name = "NUP_HordeCForme3";
-            this.NUP_HordeCForme3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeCForme3.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeCForme3.TabIndex = 306;
             // 
             // CB_HordeC3
@@ -2468,7 +2517,7 @@
             this.CB_HordeC3.FormattingEnabled = true;
             this.CB_HordeC3.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -3117,30 +3166,34 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_HordeC3.Location = new System.Drawing.Point(607, 83);
+            this.CB_HordeC3.Location = new System.Drawing.Point(1066, 135);
+            this.CB_HordeC3.Margin = new System.Windows.Forms.Padding(5);
             this.CB_HordeC3.Name = "CB_HordeC3";
-            this.CB_HordeC3.Size = new System.Drawing.Size(121, 21);
+            this.CB_HordeC3.Size = new System.Drawing.Size(199, 29);
             this.CB_HordeC3.TabIndex = 305;
             // 
             // NUP_HordeCMax2
             // 
-            this.NUP_HordeCMax2.Location = new System.Drawing.Point(828, 57);
+            this.NUP_HordeCMax2.Location = new System.Drawing.Point(1434, 91);
+            this.NUP_HordeCMax2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeCMax2.Name = "NUP_HordeCMax2";
-            this.NUP_HordeCMax2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeCMax2.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeCMax2.TabIndex = 304;
             // 
             // NUP_HordeCMin2
             // 
-            this.NUP_HordeCMin2.Location = new System.Drawing.Point(781, 57);
+            this.NUP_HordeCMin2.Location = new System.Drawing.Point(1356, 91);
+            this.NUP_HordeCMin2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeCMin2.Name = "NUP_HordeCMin2";
-            this.NUP_HordeCMin2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeCMin2.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeCMin2.TabIndex = 303;
             // 
             // NUP_HordeCForme2
             // 
-            this.NUP_HordeCForme2.Location = new System.Drawing.Point(734, 57);
+            this.NUP_HordeCForme2.Location = new System.Drawing.Point(1277, 91);
+            this.NUP_HordeCForme2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeCForme2.Name = "NUP_HordeCForme2";
-            this.NUP_HordeCForme2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeCForme2.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeCForme2.TabIndex = 302;
             // 
             // CB_HordeC2
@@ -3150,7 +3203,7 @@
             this.CB_HordeC2.FormattingEnabled = true;
             this.CB_HordeC2.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -3799,30 +3852,34 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_HordeC2.Location = new System.Drawing.Point(607, 56);
+            this.CB_HordeC2.Location = new System.Drawing.Point(1066, 91);
+            this.CB_HordeC2.Margin = new System.Windows.Forms.Padding(5);
             this.CB_HordeC2.Name = "CB_HordeC2";
-            this.CB_HordeC2.Size = new System.Drawing.Size(121, 21);
+            this.CB_HordeC2.Size = new System.Drawing.Size(199, 29);
             this.CB_HordeC2.TabIndex = 301;
             // 
             // NUP_HordeCMax1
             // 
-            this.NUP_HordeCMax1.Location = new System.Drawing.Point(828, 30);
+            this.NUP_HordeCMax1.Location = new System.Drawing.Point(1434, 47);
+            this.NUP_HordeCMax1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeCMax1.Name = "NUP_HordeCMax1";
-            this.NUP_HordeCMax1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeCMax1.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeCMax1.TabIndex = 300;
             // 
             // NUP_HordeCMin1
             // 
-            this.NUP_HordeCMin1.Location = new System.Drawing.Point(781, 30);
+            this.NUP_HordeCMin1.Location = new System.Drawing.Point(1356, 47);
+            this.NUP_HordeCMin1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeCMin1.Name = "NUP_HordeCMin1";
-            this.NUP_HordeCMin1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeCMin1.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeCMin1.TabIndex = 299;
             // 
             // NUP_HordeCForme1
             // 
-            this.NUP_HordeCForme1.Location = new System.Drawing.Point(734, 30);
+            this.NUP_HordeCForme1.Location = new System.Drawing.Point(1277, 47);
+            this.NUP_HordeCForme1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeCForme1.Name = "NUP_HordeCForme1";
-            this.NUP_HordeCForme1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeCForme1.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeCForme1.TabIndex = 298;
             // 
             // CB_HordeC1
@@ -3832,7 +3889,7 @@
             this.CB_HordeC1.FormattingEnabled = true;
             this.CB_HordeC1.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -4481,79 +4538,88 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_HordeC1.Location = new System.Drawing.Point(607, 29);
+            this.CB_HordeC1.Location = new System.Drawing.Point(1066, 47);
+            this.CB_HordeC1.Margin = new System.Windows.Forms.Padding(5);
             this.CB_HordeC1.Name = "CB_HordeC1";
-            this.CB_HordeC1.Size = new System.Drawing.Size(121, 21);
+            this.CB_HordeC1.Size = new System.Drawing.Size(199, 29);
             this.CB_HordeC1.TabIndex = 297;
             // 
             // L_HordeB_Max
             // 
             this.L_HordeB_Max.AutoSize = true;
-            this.L_HordeB_Max.Location = new System.Drawing.Point(530, 13);
+            this.L_HordeB_Max.Location = new System.Drawing.Point(910, 21);
+            this.L_HordeB_Max.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_HordeB_Max.Name = "L_HordeB_Max";
-            this.L_HordeB_Max.Size = new System.Drawing.Size(27, 13);
+            this.L_HordeB_Max.Size = new System.Drawing.Size(42, 21);
             this.L_HordeB_Max.TabIndex = 296;
-            this.L_HordeB_Max.Text = "Max";
+            this.L_HordeB_Max.Text = "最大";
             // 
             // L_HordeA_Max
             // 
             this.L_HordeA_Max.AutoSize = true;
-            this.L_HordeA_Max.Location = new System.Drawing.Point(234, 13);
+            this.L_HordeA_Max.Location = new System.Drawing.Point(390, 21);
+            this.L_HordeA_Max.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_HordeA_Max.Name = "L_HordeA_Max";
-            this.L_HordeA_Max.Size = new System.Drawing.Size(27, 13);
+            this.L_HordeA_Max.Size = new System.Drawing.Size(42, 21);
             this.L_HordeA_Max.TabIndex = 296;
-            this.L_HordeA_Max.Text = "Max";
+            this.L_HordeA_Max.Text = "最大";
             // 
             // L_HordeB_Min
             // 
             this.L_HordeB_Min.AutoSize = true;
-            this.L_HordeB_Min.Location = new System.Drawing.Point(483, 13);
+            this.L_HordeB_Min.Location = new System.Drawing.Point(832, 21);
+            this.L_HordeB_Min.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_HordeB_Min.Name = "L_HordeB_Min";
-            this.L_HordeB_Min.Size = new System.Drawing.Size(24, 13);
+            this.L_HordeB_Min.Size = new System.Drawing.Size(42, 21);
             this.L_HordeB_Min.TabIndex = 295;
-            this.L_HordeB_Min.Text = "Min";
+            this.L_HordeB_Min.Text = "最小";
             // 
             // L_HordeA
             // 
             this.L_HordeA.AutoSize = true;
-            this.L_HordeA.Location = new System.Drawing.Point(16, 13);
+            this.L_HordeA.Location = new System.Drawing.Point(27, 21);
+            this.L_HordeA.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_HordeA.Name = "L_HordeA";
-            this.L_HordeA.Size = new System.Drawing.Size(75, 13);
+            this.L_HordeA.Size = new System.Drawing.Size(105, 21);
             this.L_HordeA.TabIndex = 293;
-            this.L_HordeA.Text = "Horde A (60%)";
+            this.L_HordeA.Text = "群聚 A (60%)";
             // 
             // L_HordeB_F
             // 
             this.L_HordeB_F.AutoSize = true;
-            this.L_HordeB_F.Location = new System.Drawing.Point(436, 13);
+            this.L_HordeB_F.Location = new System.Drawing.Point(754, 21);
+            this.L_HordeB_F.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_HordeB_F.Name = "L_HordeB_F";
-            this.L_HordeB_F.Size = new System.Drawing.Size(36, 13);
+            this.L_HordeB_F.Size = new System.Drawing.Size(42, 21);
             this.L_HordeB_F.TabIndex = 294;
-            this.L_HordeB_F.Text = "Forme";
+            this.L_HordeB_F.Text = "形态";
             // 
             // L_HordeA_Min
             // 
             this.L_HordeA_Min.AutoSize = true;
-            this.L_HordeA_Min.Location = new System.Drawing.Point(187, 13);
+            this.L_HordeA_Min.Location = new System.Drawing.Point(312, 21);
+            this.L_HordeA_Min.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_HordeA_Min.Name = "L_HordeA_Min";
-            this.L_HordeA_Min.Size = new System.Drawing.Size(24, 13);
+            this.L_HordeA_Min.Size = new System.Drawing.Size(42, 21);
             this.L_HordeA_Min.TabIndex = 295;
-            this.L_HordeA_Min.Text = "Min";
+            this.L_HordeA_Min.Text = "最小";
             // 
             // L_HordeB
             // 
             this.L_HordeB.AutoSize = true;
-            this.L_HordeB.Location = new System.Drawing.Point(312, 13);
+            this.L_HordeB.Location = new System.Drawing.Point(547, 21);
+            this.L_HordeB.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_HordeB.Name = "L_HordeB";
-            this.L_HordeB.Size = new System.Drawing.Size(75, 13);
+            this.L_HordeB.Size = new System.Drawing.Size(104, 21);
             this.L_HordeB.TabIndex = 293;
-            this.L_HordeB.Text = "Horde B (35%)";
+            this.L_HordeB.Text = "群聚 B (35%)";
             // 
             // NUP_HordeBMax5
             // 
-            this.NUP_HordeBMax5.Location = new System.Drawing.Point(533, 138);
+            this.NUP_HordeBMax5.Location = new System.Drawing.Point(915, 220);
+            this.NUP_HordeBMax5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeBMax5.Name = "NUP_HordeBMax5";
-            this.NUP_HordeBMax5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeBMax5.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeBMax5.TabIndex = 292;
             // 
             // CB_HordeA1
@@ -4563,7 +4629,7 @@
             this.CB_HordeA1.FormattingEnabled = true;
             this.CB_HordeA1.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -5212,39 +5278,44 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_HordeA1.Location = new System.Drawing.Point(16, 29);
+            this.CB_HordeA1.Location = new System.Drawing.Point(27, 47);
+            this.CB_HordeA1.Margin = new System.Windows.Forms.Padding(5);
             this.CB_HordeA1.Name = "CB_HordeA1";
-            this.CB_HordeA1.Size = new System.Drawing.Size(121, 21);
+            this.CB_HordeA1.Size = new System.Drawing.Size(199, 29);
             this.CB_HordeA1.TabIndex = 273;
             // 
             // NUP_HordeBMin5
             // 
-            this.NUP_HordeBMin5.Location = new System.Drawing.Point(486, 138);
+            this.NUP_HordeBMin5.Location = new System.Drawing.Point(837, 220);
+            this.NUP_HordeBMin5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeBMin5.Name = "NUP_HordeBMin5";
-            this.NUP_HordeBMin5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeBMin5.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeBMin5.TabIndex = 291;
             // 
             // L_HordeA_F
             // 
             this.L_HordeA_F.AutoSize = true;
-            this.L_HordeA_F.Location = new System.Drawing.Point(140, 13);
+            this.L_HordeA_F.Location = new System.Drawing.Point(233, 21);
+            this.L_HordeA_F.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_HordeA_F.Name = "L_HordeA_F";
-            this.L_HordeA_F.Size = new System.Drawing.Size(36, 13);
+            this.L_HordeA_F.Size = new System.Drawing.Size(42, 21);
             this.L_HordeA_F.TabIndex = 294;
-            this.L_HordeA_F.Text = "Forme";
+            this.L_HordeA_F.Text = "形态";
             // 
             // NUP_HordeBForme5
             // 
-            this.NUP_HordeBForme5.Location = new System.Drawing.Point(439, 138);
+            this.NUP_HordeBForme5.Location = new System.Drawing.Point(759, 220);
+            this.NUP_HordeBForme5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeBForme5.Name = "NUP_HordeBForme5";
-            this.NUP_HordeBForme5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeBForme5.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeBForme5.TabIndex = 290;
             // 
             // NUP_HordeAForme1
             // 
-            this.NUP_HordeAForme1.Location = new System.Drawing.Point(143, 30);
+            this.NUP_HordeAForme1.Location = new System.Drawing.Point(238, 47);
+            this.NUP_HordeAForme1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeAForme1.Name = "NUP_HordeAForme1";
-            this.NUP_HordeAForme1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeAForme1.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeAForme1.TabIndex = 274;
             // 
             // CB_HordeB5
@@ -5254,7 +5325,7 @@
             this.CB_HordeB5.FormattingEnabled = true;
             this.CB_HordeB5.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -5903,58 +5974,66 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_HordeB5.Location = new System.Drawing.Point(312, 137);
+            this.CB_HordeB5.Location = new System.Drawing.Point(547, 220);
+            this.CB_HordeB5.Margin = new System.Windows.Forms.Padding(5);
             this.CB_HordeB5.Name = "CB_HordeB5";
-            this.CB_HordeB5.Size = new System.Drawing.Size(121, 21);
+            this.CB_HordeB5.Size = new System.Drawing.Size(199, 29);
             this.CB_HordeB5.TabIndex = 289;
             // 
             // NUP_HordeAMin1
             // 
-            this.NUP_HordeAMin1.Location = new System.Drawing.Point(190, 30);
+            this.NUP_HordeAMin1.Location = new System.Drawing.Point(317, 47);
+            this.NUP_HordeAMin1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeAMin1.Name = "NUP_HordeAMin1";
-            this.NUP_HordeAMin1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeAMin1.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeAMin1.TabIndex = 275;
             // 
             // NUP_HordeBMax4
             // 
-            this.NUP_HordeBMax4.Location = new System.Drawing.Point(533, 111);
+            this.NUP_HordeBMax4.Location = new System.Drawing.Point(915, 176);
+            this.NUP_HordeBMax4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeBMax4.Name = "NUP_HordeBMax4";
-            this.NUP_HordeBMax4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeBMax4.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeBMax4.TabIndex = 288;
             // 
             // NUP_HordeAMax5
             // 
-            this.NUP_HordeAMax5.Location = new System.Drawing.Point(237, 138);
+            this.NUP_HordeAMax5.Location = new System.Drawing.Point(395, 220);
+            this.NUP_HordeAMax5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeAMax5.Name = "NUP_HordeAMax5";
-            this.NUP_HordeAMax5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeAMax5.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeAMax5.TabIndex = 292;
             // 
             // NUP_HordeBMin4
             // 
-            this.NUP_HordeBMin4.Location = new System.Drawing.Point(486, 111);
+            this.NUP_HordeBMin4.Location = new System.Drawing.Point(837, 176);
+            this.NUP_HordeBMin4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeBMin4.Name = "NUP_HordeBMin4";
-            this.NUP_HordeBMin4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeBMin4.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeBMin4.TabIndex = 287;
             // 
             // NUP_HordeAMax1
             // 
-            this.NUP_HordeAMax1.Location = new System.Drawing.Point(237, 30);
+            this.NUP_HordeAMax1.Location = new System.Drawing.Point(395, 47);
+            this.NUP_HordeAMax1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeAMax1.Name = "NUP_HordeAMax1";
-            this.NUP_HordeAMax1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeAMax1.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeAMax1.TabIndex = 276;
             // 
             // NUP_HordeBForme4
             // 
-            this.NUP_HordeBForme4.Location = new System.Drawing.Point(439, 111);
+            this.NUP_HordeBForme4.Location = new System.Drawing.Point(759, 176);
+            this.NUP_HordeBForme4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeBForme4.Name = "NUP_HordeBForme4";
-            this.NUP_HordeBForme4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeBForme4.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeBForme4.TabIndex = 286;
             // 
             // NUP_HordeAMin5
             // 
-            this.NUP_HordeAMin5.Location = new System.Drawing.Point(190, 138);
+            this.NUP_HordeAMin5.Location = new System.Drawing.Point(317, 220);
+            this.NUP_HordeAMin5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeAMin5.Name = "NUP_HordeAMin5";
-            this.NUP_HordeAMin5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeAMin5.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeAMin5.TabIndex = 291;
             // 
             // CB_HordeB4
@@ -5964,7 +6043,7 @@
             this.CB_HordeB4.FormattingEnabled = true;
             this.CB_HordeB4.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -6613,9 +6692,10 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_HordeB4.Location = new System.Drawing.Point(312, 110);
+            this.CB_HordeB4.Location = new System.Drawing.Point(547, 178);
+            this.CB_HordeB4.Margin = new System.Windows.Forms.Padding(5);
             this.CB_HordeB4.Name = "CB_HordeB4";
-            this.CB_HordeB4.Size = new System.Drawing.Size(121, 21);
+            this.CB_HordeB4.Size = new System.Drawing.Size(199, 29);
             this.CB_HordeB4.TabIndex = 285;
             // 
             // CB_HordeA2
@@ -6625,7 +6705,7 @@
             this.CB_HordeA2.FormattingEnabled = true;
             this.CB_HordeA2.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -7274,44 +7354,50 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_HordeA2.Location = new System.Drawing.Point(16, 56);
+            this.CB_HordeA2.Location = new System.Drawing.Point(27, 91);
+            this.CB_HordeA2.Margin = new System.Windows.Forms.Padding(5);
             this.CB_HordeA2.Name = "CB_HordeA2";
-            this.CB_HordeA2.Size = new System.Drawing.Size(121, 21);
+            this.CB_HordeA2.Size = new System.Drawing.Size(199, 29);
             this.CB_HordeA2.TabIndex = 277;
             // 
             // NUP_HordeBMax3
             // 
-            this.NUP_HordeBMax3.Location = new System.Drawing.Point(533, 84);
+            this.NUP_HordeBMax3.Location = new System.Drawing.Point(915, 134);
+            this.NUP_HordeBMax3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeBMax3.Name = "NUP_HordeBMax3";
-            this.NUP_HordeBMax3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeBMax3.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeBMax3.TabIndex = 284;
             // 
             // NUP_HordeAForme5
             // 
-            this.NUP_HordeAForme5.Location = new System.Drawing.Point(143, 138);
+            this.NUP_HordeAForme5.Location = new System.Drawing.Point(238, 220);
+            this.NUP_HordeAForme5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeAForme5.Name = "NUP_HordeAForme5";
-            this.NUP_HordeAForme5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeAForme5.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeAForme5.TabIndex = 290;
             // 
             // NUP_HordeBMin3
             // 
-            this.NUP_HordeBMin3.Location = new System.Drawing.Point(486, 84);
+            this.NUP_HordeBMin3.Location = new System.Drawing.Point(837, 134);
+            this.NUP_HordeBMin3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeBMin3.Name = "NUP_HordeBMin3";
-            this.NUP_HordeBMin3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeBMin3.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeBMin3.TabIndex = 283;
             // 
             // NUP_HordeAForme2
             // 
-            this.NUP_HordeAForme2.Location = new System.Drawing.Point(143, 57);
+            this.NUP_HordeAForme2.Location = new System.Drawing.Point(238, 91);
+            this.NUP_HordeAForme2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeAForme2.Name = "NUP_HordeAForme2";
-            this.NUP_HordeAForme2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeAForme2.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeAForme2.TabIndex = 278;
             // 
             // NUP_HordeBForme3
             // 
-            this.NUP_HordeBForme3.Location = new System.Drawing.Point(439, 84);
+            this.NUP_HordeBForme3.Location = new System.Drawing.Point(759, 134);
+            this.NUP_HordeBForme3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeBForme3.Name = "NUP_HordeBForme3";
-            this.NUP_HordeBForme3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeBForme3.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeBForme3.TabIndex = 282;
             // 
             // CB_HordeA5
@@ -7321,7 +7407,7 @@
             this.CB_HordeA5.FormattingEnabled = true;
             this.CB_HordeA5.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -7970,9 +8056,10 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_HordeA5.Location = new System.Drawing.Point(16, 137);
+            this.CB_HordeA5.Location = new System.Drawing.Point(27, 220);
+            this.CB_HordeA5.Margin = new System.Windows.Forms.Padding(5);
             this.CB_HordeA5.Name = "CB_HordeA5";
-            this.CB_HordeA5.Size = new System.Drawing.Size(121, 21);
+            this.CB_HordeA5.Size = new System.Drawing.Size(199, 29);
             this.CB_HordeA5.TabIndex = 289;
             // 
             // CB_HordeB3
@@ -7982,7 +8069,7 @@
             this.CB_HordeB3.FormattingEnabled = true;
             this.CB_HordeB3.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -8631,58 +8718,66 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_HordeB3.Location = new System.Drawing.Point(312, 83);
+            this.CB_HordeB3.Location = new System.Drawing.Point(547, 135);
+            this.CB_HordeB3.Margin = new System.Windows.Forms.Padding(5);
             this.CB_HordeB3.Name = "CB_HordeB3";
-            this.CB_HordeB3.Size = new System.Drawing.Size(121, 21);
+            this.CB_HordeB3.Size = new System.Drawing.Size(199, 29);
             this.CB_HordeB3.TabIndex = 281;
             // 
             // NUP_HordeAMin2
             // 
-            this.NUP_HordeAMin2.Location = new System.Drawing.Point(190, 57);
+            this.NUP_HordeAMin2.Location = new System.Drawing.Point(317, 91);
+            this.NUP_HordeAMin2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeAMin2.Name = "NUP_HordeAMin2";
-            this.NUP_HordeAMin2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeAMin2.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeAMin2.TabIndex = 279;
             // 
             // NUP_HordeBMax2
             // 
-            this.NUP_HordeBMax2.Location = new System.Drawing.Point(533, 57);
+            this.NUP_HordeBMax2.Location = new System.Drawing.Point(915, 91);
+            this.NUP_HordeBMax2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeBMax2.Name = "NUP_HordeBMax2";
-            this.NUP_HordeBMax2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeBMax2.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeBMax2.TabIndex = 280;
             // 
             // NUP_HordeAMax4
             // 
-            this.NUP_HordeAMax4.Location = new System.Drawing.Point(237, 111);
+            this.NUP_HordeAMax4.Location = new System.Drawing.Point(395, 176);
+            this.NUP_HordeAMax4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeAMax4.Name = "NUP_HordeAMax4";
-            this.NUP_HordeAMax4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeAMax4.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeAMax4.TabIndex = 288;
             // 
             // NUP_HordeBMin2
             // 
-            this.NUP_HordeBMin2.Location = new System.Drawing.Point(486, 57);
+            this.NUP_HordeBMin2.Location = new System.Drawing.Point(837, 91);
+            this.NUP_HordeBMin2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeBMin2.Name = "NUP_HordeBMin2";
-            this.NUP_HordeBMin2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeBMin2.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeBMin2.TabIndex = 279;
             // 
             // NUP_HordeAMax2
             // 
-            this.NUP_HordeAMax2.Location = new System.Drawing.Point(237, 57);
+            this.NUP_HordeAMax2.Location = new System.Drawing.Point(395, 91);
+            this.NUP_HordeAMax2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeAMax2.Name = "NUP_HordeAMax2";
-            this.NUP_HordeAMax2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeAMax2.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeAMax2.TabIndex = 280;
             // 
             // NUP_HordeBForme2
             // 
-            this.NUP_HordeBForme2.Location = new System.Drawing.Point(439, 57);
+            this.NUP_HordeBForme2.Location = new System.Drawing.Point(759, 91);
+            this.NUP_HordeBForme2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeBForme2.Name = "NUP_HordeBForme2";
-            this.NUP_HordeBForme2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeBForme2.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeBForme2.TabIndex = 278;
             // 
             // NUP_HordeAMin4
             // 
-            this.NUP_HordeAMin4.Location = new System.Drawing.Point(190, 111);
+            this.NUP_HordeAMin4.Location = new System.Drawing.Point(317, 176);
+            this.NUP_HordeAMin4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeAMin4.Name = "NUP_HordeAMin4";
-            this.NUP_HordeAMin4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeAMin4.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeAMin4.TabIndex = 287;
             // 
             // CB_HordeB2
@@ -8692,7 +8787,7 @@
             this.CB_HordeB2.FormattingEnabled = true;
             this.CB_HordeB2.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -9341,9 +9436,10 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_HordeB2.Location = new System.Drawing.Point(312, 56);
+            this.CB_HordeB2.Location = new System.Drawing.Point(547, 91);
+            this.CB_HordeB2.Margin = new System.Windows.Forms.Padding(5);
             this.CB_HordeB2.Name = "CB_HordeB2";
-            this.CB_HordeB2.Size = new System.Drawing.Size(121, 21);
+            this.CB_HordeB2.Size = new System.Drawing.Size(199, 29);
             this.CB_HordeB2.TabIndex = 277;
             // 
             // CB_HordeA3
@@ -9353,7 +9449,7 @@
             this.CB_HordeA3.FormattingEnabled = true;
             this.CB_HordeA3.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -10002,44 +10098,50 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_HordeA3.Location = new System.Drawing.Point(16, 83);
+            this.CB_HordeA3.Location = new System.Drawing.Point(27, 135);
+            this.CB_HordeA3.Margin = new System.Windows.Forms.Padding(5);
             this.CB_HordeA3.Name = "CB_HordeA3";
-            this.CB_HordeA3.Size = new System.Drawing.Size(121, 21);
+            this.CB_HordeA3.Size = new System.Drawing.Size(199, 29);
             this.CB_HordeA3.TabIndex = 281;
             // 
             // NUP_HordeBMax1
             // 
-            this.NUP_HordeBMax1.Location = new System.Drawing.Point(533, 30);
+            this.NUP_HordeBMax1.Location = new System.Drawing.Point(915, 47);
+            this.NUP_HordeBMax1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeBMax1.Name = "NUP_HordeBMax1";
-            this.NUP_HordeBMax1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeBMax1.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeBMax1.TabIndex = 276;
             // 
             // NUP_HordeAForme4
             // 
-            this.NUP_HordeAForme4.Location = new System.Drawing.Point(143, 111);
+            this.NUP_HordeAForme4.Location = new System.Drawing.Point(238, 176);
+            this.NUP_HordeAForme4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeAForme4.Name = "NUP_HordeAForme4";
-            this.NUP_HordeAForme4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeAForme4.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeAForme4.TabIndex = 286;
             // 
             // NUP_HordeBMin1
             // 
-            this.NUP_HordeBMin1.Location = new System.Drawing.Point(486, 30);
+            this.NUP_HordeBMin1.Location = new System.Drawing.Point(837, 47);
+            this.NUP_HordeBMin1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeBMin1.Name = "NUP_HordeBMin1";
-            this.NUP_HordeBMin1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeBMin1.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeBMin1.TabIndex = 275;
             // 
             // NUP_HordeAForme3
             // 
-            this.NUP_HordeAForme3.Location = new System.Drawing.Point(143, 84);
+            this.NUP_HordeAForme3.Location = new System.Drawing.Point(238, 134);
+            this.NUP_HordeAForme3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeAForme3.Name = "NUP_HordeAForme3";
-            this.NUP_HordeAForme3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeAForme3.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeAForme3.TabIndex = 282;
             // 
             // NUP_HordeBForme1
             // 
-            this.NUP_HordeBForme1.Location = new System.Drawing.Point(439, 30);
+            this.NUP_HordeBForme1.Location = new System.Drawing.Point(759, 47);
+            this.NUP_HordeBForme1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeBForme1.Name = "NUP_HordeBForme1";
-            this.NUP_HordeBForme1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeBForme1.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeBForme1.TabIndex = 274;
             // 
             // CB_HordeA4
@@ -10049,7 +10151,7 @@
             this.CB_HordeA4.FormattingEnabled = true;
             this.CB_HordeA4.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -10698,9 +10800,10 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_HordeA4.Location = new System.Drawing.Point(16, 110);
+            this.CB_HordeA4.Location = new System.Drawing.Point(27, 178);
+            this.CB_HordeA4.Margin = new System.Windows.Forms.Padding(5);
             this.CB_HordeA4.Name = "CB_HordeA4";
-            this.CB_HordeA4.Size = new System.Drawing.Size(121, 21);
+            this.CB_HordeA4.Size = new System.Drawing.Size(199, 29);
             this.CB_HordeA4.TabIndex = 285;
             // 
             // CB_HordeB1
@@ -10710,7 +10813,7 @@
             this.CB_HordeB1.FormattingEnabled = true;
             this.CB_HordeB1.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -11359,23 +11462,26 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_HordeB1.Location = new System.Drawing.Point(312, 29);
+            this.CB_HordeB1.Location = new System.Drawing.Point(547, 47);
+            this.CB_HordeB1.Margin = new System.Windows.Forms.Padding(5);
             this.CB_HordeB1.Name = "CB_HordeB1";
-            this.CB_HordeB1.Size = new System.Drawing.Size(121, 21);
+            this.CB_HordeB1.Size = new System.Drawing.Size(199, 29);
             this.CB_HordeB1.TabIndex = 273;
             // 
             // NUP_HordeAMin3
             // 
-            this.NUP_HordeAMin3.Location = new System.Drawing.Point(190, 84);
+            this.NUP_HordeAMin3.Location = new System.Drawing.Point(317, 134);
+            this.NUP_HordeAMin3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeAMin3.Name = "NUP_HordeAMin3";
-            this.NUP_HordeAMin3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeAMin3.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeAMin3.TabIndex = 283;
             // 
             // NUP_HordeAMax3
             // 
-            this.NUP_HordeAMax3.Location = new System.Drawing.Point(237, 84);
+            this.NUP_HordeAMax3.Location = new System.Drawing.Point(395, 134);
+            this.NUP_HordeAMax3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_HordeAMax3.Name = "NUP_HordeAMax3";
-            this.NUP_HordeAMax3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_HordeAMax3.Size = new System.Drawing.Size(68, 29);
             this.NUP_HordeAMax3.TabIndex = 284;
             // 
             // TabPage_Water
@@ -11466,85 +11572,94 @@
             this.TabPage_Water.Controls.Add(this.label23);
             this.TabPage_Water.Controls.Add(this.label24);
             this.TabPage_Water.Controls.Add(this.label25);
-            this.TabPage_Water.Location = new System.Drawing.Point(4, 22);
+            this.TabPage_Water.Location = new System.Drawing.Point(4, 30);
+            this.TabPage_Water.Margin = new System.Windows.Forms.Padding(5);
             this.TabPage_Water.Name = "TabPage_Water";
-            this.TabPage_Water.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage_Water.Size = new System.Drawing.Size(918, 369);
+            this.TabPage_Water.Padding = new System.Windows.Forms.Padding(5);
+            this.TabPage_Water.Size = new System.Drawing.Size(1535, 575);
             this.TabPage_Water.TabIndex = 1;
-            this.TabPage_Water.Text = "Water";
+            this.TabPage_Water.Text = "水中";
             this.TabPage_Water.UseVisualStyleBackColor = true;
             // 
             // label116
             // 
             this.label116.AutoSize = true;
-            this.label116.Location = new System.Drawing.Point(313, 285);
+            this.label116.Location = new System.Drawing.Point(35, 492);
+            this.label116.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label116.Name = "label116";
-            this.label116.Size = new System.Drawing.Size(21, 13);
+            this.label116.Size = new System.Drawing.Size(33, 21);
             this.label116.TabIndex = 351;
             this.label116.Text = "1%";
             // 
             // label117
             // 
             this.label117.AutoSize = true;
-            this.label117.Location = new System.Drawing.Point(313, 258);
+            this.label117.Location = new System.Drawing.Point(35, 448);
+            this.label117.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label117.Name = "label117";
-            this.label117.Size = new System.Drawing.Size(21, 13);
+            this.label117.Size = new System.Drawing.Size(33, 21);
             this.label117.TabIndex = 350;
             this.label117.Text = "4%";
             // 
             // label118
             // 
             this.label118.AutoSize = true;
-            this.label118.Location = new System.Drawing.Point(307, 231);
+            this.label118.Location = new System.Drawing.Point(25, 405);
+            this.label118.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label118.Name = "label118";
-            this.label118.Size = new System.Drawing.Size(27, 13);
+            this.label118.Size = new System.Drawing.Size(42, 21);
             this.label118.TabIndex = 349;
             this.label118.Text = "15%";
             // 
             // label119
             // 
             this.label119.AutoSize = true;
-            this.label119.Location = new System.Drawing.Point(307, 204);
+            this.label119.Location = new System.Drawing.Point(25, 361);
+            this.label119.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label119.Name = "label119";
-            this.label119.Size = new System.Drawing.Size(27, 13);
+            this.label119.Size = new System.Drawing.Size(42, 21);
             this.label119.TabIndex = 348;
             this.label119.Text = "30%";
             // 
             // label120
             // 
             this.label120.AutoSize = true;
-            this.label120.Location = new System.Drawing.Point(307, 177);
+            this.label120.Location = new System.Drawing.Point(25, 317);
+            this.label120.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label120.Name = "label120";
-            this.label120.Size = new System.Drawing.Size(27, 13);
+            this.label120.Size = new System.Drawing.Size(42, 21);
             this.label120.TabIndex = 347;
             this.label120.Text = "50%";
             // 
             // label103
             // 
             this.label103.AutoSize = true;
-            this.label103.Location = new System.Drawing.Point(558, 159);
+            this.label103.Location = new System.Drawing.Point(433, 289);
+            this.label103.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label103.Name = "label103";
-            this.label103.Size = new System.Drawing.Size(27, 13);
+            this.label103.Size = new System.Drawing.Size(42, 21);
             this.label103.TabIndex = 288;
-            this.label103.Text = "Max";
+            this.label103.Text = "最大";
             // 
             // L_Super
             // 
             this.L_Super.AutoSize = true;
-            this.L_Super.Location = new System.Drawing.Point(639, 13);
+            this.L_Super.Location = new System.Drawing.Point(1065, 21);
+            this.L_Super.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Super.Name = "L_Super";
-            this.L_Super.Size = new System.Drawing.Size(58, 13);
+            this.L_Super.Size = new System.Drawing.Size(74, 21);
             this.L_Super.TabIndex = 340;
-            this.L_Super.Text = "Super Rod";
+            this.L_Super.Text = "厉害钓竿";
             // 
             // label104
             // 
             this.label104.AutoSize = true;
-            this.label104.Location = new System.Drawing.Point(511, 159);
+            this.label104.Location = new System.Drawing.Point(355, 289);
+            this.label104.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label104.Name = "label104";
-            this.label104.Size = new System.Drawing.Size(24, 13);
+            this.label104.Size = new System.Drawing.Size(42, 21);
             this.label104.TabIndex = 287;
-            this.label104.Text = "Min";
+            this.label104.Text = "最小";
             // 
             // CB_Super1
             // 
@@ -11553,7 +11668,7 @@
             this.CB_Super1.FormattingEnabled = true;
             this.CB_Super1.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -12202,35 +12317,39 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_Super1.Location = new System.Drawing.Point(642, 29);
+            this.CB_Super1.Location = new System.Drawing.Point(1070, 47);
+            this.CB_Super1.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Super1.Name = "CB_Super1";
-            this.CB_Super1.Size = new System.Drawing.Size(121, 21);
+            this.CB_Super1.Size = new System.Drawing.Size(199, 29);
             this.CB_Super1.TabIndex = 328;
             // 
             // label105
             // 
             this.label105.AutoSize = true;
-            this.label105.Location = new System.Drawing.Point(464, 159);
+            this.label105.Location = new System.Drawing.Point(276, 289);
+            this.label105.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label105.Name = "label105";
-            this.label105.Size = new System.Drawing.Size(36, 13);
+            this.label105.Size = new System.Drawing.Size(42, 21);
             this.label105.TabIndex = 286;
-            this.label105.Text = "Forme";
+            this.label105.Text = "形态";
             // 
             // NUP_SuperForme1
             // 
-            this.NUP_SuperForme1.Location = new System.Drawing.Point(769, 30);
+            this.NUP_SuperForme1.Location = new System.Drawing.Point(1282, 48);
+            this.NUP_SuperForme1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SuperForme1.Name = "NUP_SuperForme1";
-            this.NUP_SuperForme1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SuperForme1.Size = new System.Drawing.Size(68, 29);
             this.NUP_SuperForme1.TabIndex = 329;
             // 
             // L_Surf
             // 
             this.L_Surf.AutoSize = true;
-            this.L_Surf.Location = new System.Drawing.Point(340, 159);
+            this.L_Surf.Location = new System.Drawing.Point(66, 289);
+            this.L_Surf.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Surf.Name = "L_Surf";
-            this.L_Surf.Size = new System.Drawing.Size(40, 13);
+            this.L_Surf.Size = new System.Drawing.Size(42, 21);
             this.L_Surf.TabIndex = 285;
-            this.L_Surf.Text = "Surfing";
+            this.L_Surf.Text = "冲浪";
             // 
             // CB_Surf1
             // 
@@ -12239,7 +12358,7 @@
             this.CB_Surf1.FormattingEnabled = true;
             this.CB_Surf1.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -12888,37 +13007,42 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_Surf1.Location = new System.Drawing.Point(340, 174);
+            this.CB_Surf1.Location = new System.Drawing.Point(70, 314);
+            this.CB_Surf1.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Surf1.Name = "CB_Surf1";
-            this.CB_Surf1.Size = new System.Drawing.Size(121, 21);
+            this.CB_Surf1.Size = new System.Drawing.Size(199, 29);
             this.CB_Surf1.TabIndex = 265;
             // 
             // NUP_SuperMin1
             // 
-            this.NUP_SuperMin1.Location = new System.Drawing.Point(816, 30);
+            this.NUP_SuperMin1.Location = new System.Drawing.Point(1360, 48);
+            this.NUP_SuperMin1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SuperMin1.Name = "NUP_SuperMin1";
-            this.NUP_SuperMin1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SuperMin1.Size = new System.Drawing.Size(68, 29);
             this.NUP_SuperMin1.TabIndex = 330;
             // 
             // NUP_SurfForme1
             // 
-            this.NUP_SurfForme1.Location = new System.Drawing.Point(467, 175);
+            this.NUP_SurfForme1.Location = new System.Drawing.Point(281, 316);
+            this.NUP_SurfForme1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SurfForme1.Name = "NUP_SurfForme1";
-            this.NUP_SurfForme1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SurfForme1.Size = new System.Drawing.Size(68, 29);
             this.NUP_SurfForme1.TabIndex = 266;
             // 
             // NUP_SuperMax1
             // 
-            this.NUP_SuperMax1.Location = new System.Drawing.Point(863, 30);
+            this.NUP_SuperMax1.Location = new System.Drawing.Point(1438, 48);
+            this.NUP_SuperMax1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SuperMax1.Name = "NUP_SuperMax1";
-            this.NUP_SuperMax1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SuperMax1.Size = new System.Drawing.Size(68, 29);
             this.NUP_SuperMax1.TabIndex = 331;
             // 
             // NUP_SurfMin1
             // 
-            this.NUP_SurfMin1.Location = new System.Drawing.Point(514, 175);
+            this.NUP_SurfMin1.Location = new System.Drawing.Point(360, 316);
+            this.NUP_SurfMin1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SurfMin1.Name = "NUP_SurfMin1";
-            this.NUP_SurfMin1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SurfMin1.Size = new System.Drawing.Size(68, 29);
             this.NUP_SurfMin1.TabIndex = 267;
             // 
             // CB_Super2
@@ -12928,7 +13052,7 @@
             this.CB_Super2.FormattingEnabled = true;
             this.CB_Super2.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -13577,23 +13701,26 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_Super2.Location = new System.Drawing.Point(642, 56);
+            this.CB_Super2.Location = new System.Drawing.Point(1070, 91);
+            this.CB_Super2.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Super2.Name = "CB_Super2";
-            this.CB_Super2.Size = new System.Drawing.Size(121, 21);
+            this.CB_Super2.Size = new System.Drawing.Size(199, 29);
             this.CB_Super2.TabIndex = 332;
             // 
             // NUP_SurfMax1
             // 
-            this.NUP_SurfMax1.Location = new System.Drawing.Point(561, 175);
+            this.NUP_SurfMax1.Location = new System.Drawing.Point(438, 316);
+            this.NUP_SurfMax1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SurfMax1.Name = "NUP_SurfMax1";
-            this.NUP_SurfMax1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SurfMax1.Size = new System.Drawing.Size(68, 29);
             this.NUP_SurfMax1.TabIndex = 268;
             // 
             // NUP_SuperForme2
             // 
-            this.NUP_SuperForme2.Location = new System.Drawing.Point(769, 57);
+            this.NUP_SuperForme2.Location = new System.Drawing.Point(1282, 92);
+            this.NUP_SuperForme2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SuperForme2.Name = "NUP_SuperForme2";
-            this.NUP_SuperForme2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SuperForme2.Size = new System.Drawing.Size(68, 29);
             this.NUP_SuperForme2.TabIndex = 333;
             // 
             // CB_Surf2
@@ -13603,7 +13730,7 @@
             this.CB_Surf2.FormattingEnabled = true;
             this.CB_Surf2.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -14252,37 +14379,42 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_Surf2.Location = new System.Drawing.Point(340, 201);
+            this.CB_Surf2.Location = new System.Drawing.Point(70, 358);
+            this.CB_Surf2.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Surf2.Name = "CB_Surf2";
-            this.CB_Surf2.Size = new System.Drawing.Size(121, 21);
+            this.CB_Surf2.Size = new System.Drawing.Size(199, 29);
             this.CB_Surf2.TabIndex = 269;
             // 
             // NUP_SuperMin2
             // 
-            this.NUP_SuperMin2.Location = new System.Drawing.Point(816, 57);
+            this.NUP_SuperMin2.Location = new System.Drawing.Point(1360, 92);
+            this.NUP_SuperMin2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SuperMin2.Name = "NUP_SuperMin2";
-            this.NUP_SuperMin2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SuperMin2.Size = new System.Drawing.Size(68, 29);
             this.NUP_SuperMin2.TabIndex = 334;
             // 
             // NUP_SurfForme2
             // 
-            this.NUP_SurfForme2.Location = new System.Drawing.Point(467, 202);
+            this.NUP_SurfForme2.Location = new System.Drawing.Point(281, 358);
+            this.NUP_SurfForme2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SurfForme2.Name = "NUP_SurfForme2";
-            this.NUP_SurfForme2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SurfForme2.Size = new System.Drawing.Size(68, 29);
             this.NUP_SurfForme2.TabIndex = 270;
             // 
             // NUP_SuperMax2
             // 
-            this.NUP_SuperMax2.Location = new System.Drawing.Point(863, 57);
+            this.NUP_SuperMax2.Location = new System.Drawing.Point(1438, 92);
+            this.NUP_SuperMax2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SuperMax2.Name = "NUP_SuperMax2";
-            this.NUP_SuperMax2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SuperMax2.Size = new System.Drawing.Size(68, 29);
             this.NUP_SuperMax2.TabIndex = 335;
             // 
             // NUP_SurfMin2
             // 
-            this.NUP_SurfMin2.Location = new System.Drawing.Point(514, 202);
+            this.NUP_SurfMin2.Location = new System.Drawing.Point(360, 358);
+            this.NUP_SurfMin2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SurfMin2.Name = "NUP_SurfMin2";
-            this.NUP_SurfMin2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SurfMin2.Size = new System.Drawing.Size(68, 29);
             this.NUP_SurfMin2.TabIndex = 271;
             // 
             // CB_Super3
@@ -14292,7 +14424,7 @@
             this.CB_Super3.FormattingEnabled = true;
             this.CB_Super3.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -14941,51 +15073,58 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_Super3.Location = new System.Drawing.Point(642, 83);
+            this.CB_Super3.Location = new System.Drawing.Point(1070, 135);
+            this.CB_Super3.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Super3.Name = "CB_Super3";
-            this.CB_Super3.Size = new System.Drawing.Size(121, 21);
+            this.CB_Super3.Size = new System.Drawing.Size(199, 29);
             this.CB_Super3.TabIndex = 336;
             // 
             // NUP_SurfMax5
             // 
-            this.NUP_SurfMax5.Location = new System.Drawing.Point(561, 283);
+            this.NUP_SurfMax5.Location = new System.Drawing.Point(438, 489);
+            this.NUP_SurfMax5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SurfMax5.Name = "NUP_SurfMax5";
-            this.NUP_SurfMax5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SurfMax5.Size = new System.Drawing.Size(68, 29);
             this.NUP_SurfMax5.TabIndex = 284;
             // 
             // NUP_SuperForme3
             // 
-            this.NUP_SuperForme3.Location = new System.Drawing.Point(769, 84);
+            this.NUP_SuperForme3.Location = new System.Drawing.Point(1282, 135);
+            this.NUP_SuperForme3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SuperForme3.Name = "NUP_SuperForme3";
-            this.NUP_SuperForme3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SuperForme3.Size = new System.Drawing.Size(68, 29);
             this.NUP_SuperForme3.TabIndex = 337;
             // 
             // NUP_SurfMax2
             // 
-            this.NUP_SurfMax2.Location = new System.Drawing.Point(561, 202);
+            this.NUP_SurfMax2.Location = new System.Drawing.Point(438, 358);
+            this.NUP_SurfMax2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SurfMax2.Name = "NUP_SurfMax2";
-            this.NUP_SurfMax2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SurfMax2.Size = new System.Drawing.Size(68, 29);
             this.NUP_SurfMax2.TabIndex = 272;
             // 
             // NUP_SuperMin3
             // 
-            this.NUP_SuperMin3.Location = new System.Drawing.Point(816, 84);
+            this.NUP_SuperMin3.Location = new System.Drawing.Point(1360, 135);
+            this.NUP_SuperMin3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SuperMin3.Name = "NUP_SuperMin3";
-            this.NUP_SuperMin3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SuperMin3.Size = new System.Drawing.Size(68, 29);
             this.NUP_SuperMin3.TabIndex = 338;
             // 
             // NUP_SurfMin5
             // 
-            this.NUP_SurfMin5.Location = new System.Drawing.Point(514, 283);
+            this.NUP_SurfMin5.Location = new System.Drawing.Point(360, 489);
+            this.NUP_SurfMin5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SurfMin5.Name = "NUP_SurfMin5";
-            this.NUP_SurfMin5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SurfMin5.Size = new System.Drawing.Size(68, 29);
             this.NUP_SurfMin5.TabIndex = 283;
             // 
             // NUP_SuperMax3
             // 
-            this.NUP_SuperMax3.Location = new System.Drawing.Point(863, 84);
+            this.NUP_SuperMax3.Location = new System.Drawing.Point(1438, 135);
+            this.NUP_SuperMax3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SuperMax3.Name = "NUP_SuperMax3";
-            this.NUP_SuperMax3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SuperMax3.Size = new System.Drawing.Size(68, 29);
             this.NUP_SuperMax3.TabIndex = 339;
             // 
             // CB_Surf3
@@ -14995,7 +15134,7 @@
             this.CB_Surf3.FormattingEnabled = true;
             this.CB_Surf3.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -15644,49 +15783,55 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_Surf3.Location = new System.Drawing.Point(340, 228);
+            this.CB_Surf3.Location = new System.Drawing.Point(70, 400);
+            this.CB_Surf3.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Surf3.Name = "CB_Surf3";
-            this.CB_Surf3.Size = new System.Drawing.Size(121, 21);
+            this.CB_Surf3.Size = new System.Drawing.Size(199, 29);
             this.CB_Surf3.TabIndex = 273;
             // 
             // label49
             // 
             this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(615, 86);
+            this.label49.Location = new System.Drawing.Point(1034, 138);
+            this.label49.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(21, 13);
+            this.label49.Size = new System.Drawing.Size(33, 21);
             this.label49.TabIndex = 346;
             this.label49.Text = "5%";
             // 
             // NUP_SurfForme5
             // 
-            this.NUP_SurfForme5.Location = new System.Drawing.Point(467, 283);
+            this.NUP_SurfForme5.Location = new System.Drawing.Point(281, 489);
+            this.NUP_SurfForme5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SurfForme5.Name = "NUP_SurfForme5";
-            this.NUP_SurfForme5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SurfForme5.Size = new System.Drawing.Size(68, 29);
             this.NUP_SurfForme5.TabIndex = 282;
             // 
             // label98
             // 
             this.label98.AutoSize = true;
-            this.label98.Location = new System.Drawing.Point(609, 59);
+            this.label98.Location = new System.Drawing.Point(1025, 94);
+            this.label98.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label98.Name = "label98";
-            this.label98.Size = new System.Drawing.Size(27, 13);
+            this.label98.Size = new System.Drawing.Size(42, 21);
             this.label98.TabIndex = 345;
             this.label98.Text = "35%";
             // 
             // NUP_SurfForme3
             // 
-            this.NUP_SurfForme3.Location = new System.Drawing.Point(467, 229);
+            this.NUP_SurfForme3.Location = new System.Drawing.Point(281, 401);
+            this.NUP_SurfForme3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SurfForme3.Name = "NUP_SurfForme3";
-            this.NUP_SurfForme3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SurfForme3.Size = new System.Drawing.Size(68, 29);
             this.NUP_SurfForme3.TabIndex = 274;
             // 
             // label99
             // 
             this.label99.AutoSize = true;
-            this.label99.Location = new System.Drawing.Point(609, 32);
+            this.label99.Location = new System.Drawing.Point(1025, 52);
+            this.label99.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label99.Name = "label99";
-            this.label99.Size = new System.Drawing.Size(27, 13);
+            this.label99.Size = new System.Drawing.Size(42, 21);
             this.label99.TabIndex = 344;
             this.label99.Text = "60%";
             // 
@@ -15697,7 +15842,7 @@
             this.CB_Surf5.FormattingEnabled = true;
             this.CB_Surf5.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -16346,73 +16491,82 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_Surf5.Location = new System.Drawing.Point(340, 282);
+            this.CB_Surf5.Location = new System.Drawing.Point(70, 487);
+            this.CB_Surf5.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Surf5.Name = "CB_Surf5";
-            this.CB_Surf5.Size = new System.Drawing.Size(121, 21);
+            this.CB_Surf5.Size = new System.Drawing.Size(199, 29);
             this.CB_Surf5.TabIndex = 281;
             // 
             // label100
             // 
             this.label100.AutoSize = true;
-            this.label100.Location = new System.Drawing.Point(766, 14);
+            this.label100.Location = new System.Drawing.Point(1277, 23);
+            this.label100.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label100.Name = "label100";
-            this.label100.Size = new System.Drawing.Size(36, 13);
+            this.label100.Size = new System.Drawing.Size(42, 21);
             this.label100.TabIndex = 341;
-            this.label100.Text = "Forme";
+            this.label100.Text = "形态";
             // 
             // NUP_SurfMin3
             // 
-            this.NUP_SurfMin3.Location = new System.Drawing.Point(514, 229);
+            this.NUP_SurfMin3.Location = new System.Drawing.Point(360, 401);
+            this.NUP_SurfMin3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SurfMin3.Name = "NUP_SurfMin3";
-            this.NUP_SurfMin3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SurfMin3.Size = new System.Drawing.Size(68, 29);
             this.NUP_SurfMin3.TabIndex = 275;
             // 
             // label101
             // 
             this.label101.AutoSize = true;
-            this.label101.Location = new System.Drawing.Point(813, 14);
+            this.label101.Location = new System.Drawing.Point(1355, 23);
+            this.label101.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label101.Name = "label101";
-            this.label101.Size = new System.Drawing.Size(24, 13);
+            this.label101.Size = new System.Drawing.Size(42, 21);
             this.label101.TabIndex = 342;
-            this.label101.Text = "Min";
+            this.label101.Text = "最小";
             // 
             // NUP_SurfMax4
             // 
-            this.NUP_SurfMax4.Location = new System.Drawing.Point(561, 256);
+            this.NUP_SurfMax4.Location = new System.Drawing.Point(438, 445);
+            this.NUP_SurfMax4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SurfMax4.Name = "NUP_SurfMax4";
-            this.NUP_SurfMax4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SurfMax4.Size = new System.Drawing.Size(68, 29);
             this.NUP_SurfMax4.TabIndex = 280;
             // 
             // label102
             // 
             this.label102.AutoSize = true;
-            this.label102.Location = new System.Drawing.Point(860, 14);
+            this.label102.Location = new System.Drawing.Point(1433, 23);
+            this.label102.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label102.Name = "label102";
-            this.label102.Size = new System.Drawing.Size(27, 13);
+            this.label102.Size = new System.Drawing.Size(42, 21);
             this.label102.TabIndex = 343;
-            this.label102.Text = "Max";
+            this.label102.Text = "最大";
             // 
             // NUP_SurfMax3
             // 
-            this.NUP_SurfMax3.Location = new System.Drawing.Point(561, 229);
+            this.NUP_SurfMax3.Location = new System.Drawing.Point(438, 401);
+            this.NUP_SurfMax3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SurfMax3.Name = "NUP_SurfMax3";
-            this.NUP_SurfMax3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SurfMax3.Size = new System.Drawing.Size(68, 29);
             this.NUP_SurfMax3.TabIndex = 276;
             // 
             // L_Good
             // 
             this.L_Good.AutoSize = true;
-            this.L_Good.Location = new System.Drawing.Point(340, 13);
+            this.L_Good.Location = new System.Drawing.Point(567, 21);
+            this.L_Good.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Good.Name = "L_Good";
-            this.L_Good.Size = new System.Drawing.Size(56, 13);
+            this.L_Good.Size = new System.Drawing.Size(58, 21);
             this.L_Good.TabIndex = 321;
-            this.L_Good.Text = "Good Rod";
+            this.L_Good.Text = "好钓竿";
             // 
             // NUP_SurfMin4
             // 
-            this.NUP_SurfMin4.Location = new System.Drawing.Point(514, 256);
+            this.NUP_SurfMin4.Location = new System.Drawing.Point(360, 445);
+            this.NUP_SurfMin4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SurfMin4.Name = "NUP_SurfMin4";
-            this.NUP_SurfMin4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SurfMin4.Size = new System.Drawing.Size(68, 29);
             this.NUP_SurfMin4.TabIndex = 279;
             // 
             // CB_Good1
@@ -16422,7 +16576,7 @@
             this.CB_Good1.FormattingEnabled = true;
             this.CB_Good1.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -17071,9 +17225,10 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_Good1.Location = new System.Drawing.Point(340, 29);
+            this.CB_Good1.Location = new System.Drawing.Point(567, 47);
+            this.CB_Good1.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Good1.Name = "CB_Good1";
-            this.CB_Good1.Size = new System.Drawing.Size(121, 21);
+            this.CB_Good1.Size = new System.Drawing.Size(199, 29);
             this.CB_Good1.TabIndex = 309;
             // 
             // CB_Surf4
@@ -17083,7 +17238,7 @@
             this.CB_Surf4.FormattingEnabled = true;
             this.CB_Surf4.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -17732,37 +17887,42 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_Surf4.Location = new System.Drawing.Point(340, 255);
+            this.CB_Surf4.Location = new System.Drawing.Point(70, 443);
+            this.CB_Surf4.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Surf4.Name = "CB_Surf4";
-            this.CB_Surf4.Size = new System.Drawing.Size(121, 21);
+            this.CB_Surf4.Size = new System.Drawing.Size(199, 29);
             this.CB_Surf4.TabIndex = 277;
             // 
             // NUP_GoodForme1
             // 
-            this.NUP_GoodForme1.Location = new System.Drawing.Point(467, 30);
+            this.NUP_GoodForme1.Location = new System.Drawing.Point(778, 48);
+            this.NUP_GoodForme1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GoodForme1.Name = "NUP_GoodForme1";
-            this.NUP_GoodForme1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GoodForme1.Size = new System.Drawing.Size(68, 29);
             this.NUP_GoodForme1.TabIndex = 310;
             // 
             // NUP_SurfForme4
             // 
-            this.NUP_SurfForme4.Location = new System.Drawing.Point(467, 256);
+            this.NUP_SurfForme4.Location = new System.Drawing.Point(281, 445);
+            this.NUP_SurfForme4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SurfForme4.Name = "NUP_SurfForme4";
-            this.NUP_SurfForme4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SurfForme4.Size = new System.Drawing.Size(68, 29);
             this.NUP_SurfForme4.TabIndex = 278;
             // 
             // NUP_GoodMin1
             // 
-            this.NUP_GoodMin1.Location = new System.Drawing.Point(514, 30);
+            this.NUP_GoodMin1.Location = new System.Drawing.Point(857, 48);
+            this.NUP_GoodMin1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GoodMin1.Name = "NUP_GoodMin1";
-            this.NUP_GoodMin1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GoodMin1.Size = new System.Drawing.Size(68, 29);
             this.NUP_GoodMin1.TabIndex = 311;
             // 
             // NUP_GoodMax1
             // 
-            this.NUP_GoodMax1.Location = new System.Drawing.Point(561, 30);
+            this.NUP_GoodMax1.Location = new System.Drawing.Point(935, 48);
+            this.NUP_GoodMax1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GoodMax1.Name = "NUP_GoodMax1";
-            this.NUP_GoodMax1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GoodMax1.Size = new System.Drawing.Size(68, 29);
             this.NUP_GoodMax1.TabIndex = 312;
             // 
             // CB_Good2
@@ -17772,7 +17932,7 @@
             this.CB_Good2.FormattingEnabled = true;
             this.CB_Good2.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -18421,30 +18581,34 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_Good2.Location = new System.Drawing.Point(340, 56);
+            this.CB_Good2.Location = new System.Drawing.Point(567, 91);
+            this.CB_Good2.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Good2.Name = "CB_Good2";
-            this.CB_Good2.Size = new System.Drawing.Size(121, 21);
+            this.CB_Good2.Size = new System.Drawing.Size(199, 29);
             this.CB_Good2.TabIndex = 313;
             // 
             // NUP_GoodForme2
             // 
-            this.NUP_GoodForme2.Location = new System.Drawing.Point(467, 57);
+            this.NUP_GoodForme2.Location = new System.Drawing.Point(778, 92);
+            this.NUP_GoodForme2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GoodForme2.Name = "NUP_GoodForme2";
-            this.NUP_GoodForme2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GoodForme2.Size = new System.Drawing.Size(68, 29);
             this.NUP_GoodForme2.TabIndex = 314;
             // 
             // NUP_GoodMin2
             // 
-            this.NUP_GoodMin2.Location = new System.Drawing.Point(514, 57);
+            this.NUP_GoodMin2.Location = new System.Drawing.Point(857, 92);
+            this.NUP_GoodMin2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GoodMin2.Name = "NUP_GoodMin2";
-            this.NUP_GoodMin2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GoodMin2.Size = new System.Drawing.Size(68, 29);
             this.NUP_GoodMin2.TabIndex = 315;
             // 
             // NUP_GoodMax2
             // 
-            this.NUP_GoodMax2.Location = new System.Drawing.Point(561, 57);
+            this.NUP_GoodMax2.Location = new System.Drawing.Point(935, 92);
+            this.NUP_GoodMax2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GoodMax2.Name = "NUP_GoodMax2";
-            this.NUP_GoodMax2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GoodMax2.Size = new System.Drawing.Size(68, 29);
             this.NUP_GoodMax2.TabIndex = 316;
             // 
             // CB_Good3
@@ -18454,7 +18618,7 @@
             this.CB_Good3.FormattingEnabled = true;
             this.CB_Good3.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -19103,94 +19267,105 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_Good3.Location = new System.Drawing.Point(340, 83);
+            this.CB_Good3.Location = new System.Drawing.Point(567, 135);
+            this.CB_Good3.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Good3.Name = "CB_Good3";
-            this.CB_Good3.Size = new System.Drawing.Size(121, 21);
+            this.CB_Good3.Size = new System.Drawing.Size(199, 29);
             this.CB_Good3.TabIndex = 317;
             // 
             // NUP_GoodForme3
             // 
-            this.NUP_GoodForme3.Location = new System.Drawing.Point(467, 84);
+            this.NUP_GoodForme3.Location = new System.Drawing.Point(778, 135);
+            this.NUP_GoodForme3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GoodForme3.Name = "NUP_GoodForme3";
-            this.NUP_GoodForme3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GoodForme3.Size = new System.Drawing.Size(68, 29);
             this.NUP_GoodForme3.TabIndex = 318;
             // 
             // NUP_GoodMin3
             // 
-            this.NUP_GoodMin3.Location = new System.Drawing.Point(514, 84);
+            this.NUP_GoodMin3.Location = new System.Drawing.Point(857, 135);
+            this.NUP_GoodMin3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GoodMin3.Name = "NUP_GoodMin3";
-            this.NUP_GoodMin3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GoodMin3.Size = new System.Drawing.Size(68, 29);
             this.NUP_GoodMin3.TabIndex = 319;
             // 
             // NUP_GoodMax3
             // 
-            this.NUP_GoodMax3.Location = new System.Drawing.Point(561, 84);
+            this.NUP_GoodMax3.Location = new System.Drawing.Point(935, 135);
+            this.NUP_GoodMax3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GoodMax3.Name = "NUP_GoodMax3";
-            this.NUP_GoodMax3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GoodMax3.Size = new System.Drawing.Size(68, 29);
             this.NUP_GoodMax3.TabIndex = 320;
             // 
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(313, 86);
+            this.label27.Location = new System.Drawing.Point(532, 138);
+            this.label27.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(21, 13);
+            this.label27.Size = new System.Drawing.Size(33, 21);
             this.label27.TabIndex = 327;
             this.label27.Text = "5%";
             // 
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(307, 59);
+            this.label28.Location = new System.Drawing.Point(522, 94);
+            this.label28.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(27, 13);
+            this.label28.Size = new System.Drawing.Size(42, 21);
             this.label28.TabIndex = 326;
             this.label28.Text = "35%";
             // 
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(307, 32);
+            this.label29.Location = new System.Drawing.Point(522, 52);
+            this.label29.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(27, 13);
+            this.label29.Size = new System.Drawing.Size(42, 21);
             this.label29.TabIndex = 325;
             this.label29.Text = "60%";
             // 
             // label30
             // 
             this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(464, 14);
+            this.label30.Location = new System.Drawing.Point(775, 23);
+            this.label30.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(36, 13);
+            this.label30.Size = new System.Drawing.Size(42, 21);
             this.label30.TabIndex = 322;
-            this.label30.Text = "Forme";
+            this.label30.Text = "形态";
             // 
             // label46
             // 
             this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(511, 14);
+            this.label46.Location = new System.Drawing.Point(854, 23);
+            this.label46.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(24, 13);
+            this.label46.Size = new System.Drawing.Size(42, 21);
             this.label46.TabIndex = 323;
-            this.label46.Text = "Min";
+            this.label46.Text = "最小";
             // 
             // label47
             // 
             this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(558, 14);
+            this.label47.Location = new System.Drawing.Point(932, 23);
+            this.label47.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(27, 13);
+            this.label47.Size = new System.Drawing.Size(42, 21);
             this.label47.TabIndex = 324;
-            this.label47.Text = "Max";
+            this.label47.Text = "最大";
             // 
             // L_Old
             // 
             this.L_Old.AutoSize = true;
-            this.L_Old.Location = new System.Drawing.Point(39, 13);
+            this.L_Old.Location = new System.Drawing.Point(65, 21);
+            this.L_Old.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Old.Name = "L_Old";
-            this.L_Old.Size = new System.Drawing.Size(46, 13);
+            this.L_Old.Size = new System.Drawing.Size(74, 21);
             this.L_Old.TabIndex = 302;
-            this.L_Old.Text = "Old Rod";
+            this.L_Old.Text = "破旧钓竿";
             // 
             // CB_Old1
             // 
@@ -19199,7 +19374,7 @@
             this.CB_Old1.FormattingEnabled = true;
             this.CB_Old1.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -19848,30 +20023,34 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_Old1.Location = new System.Drawing.Point(42, 29);
+            this.CB_Old1.Location = new System.Drawing.Point(70, 47);
+            this.CB_Old1.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Old1.Name = "CB_Old1";
-            this.CB_Old1.Size = new System.Drawing.Size(121, 21);
+            this.CB_Old1.Size = new System.Drawing.Size(199, 29);
             this.CB_Old1.TabIndex = 290;
             // 
             // NUP_OldForme1
             // 
-            this.NUP_OldForme1.Location = new System.Drawing.Point(169, 30);
+            this.NUP_OldForme1.Location = new System.Drawing.Point(282, 47);
+            this.NUP_OldForme1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_OldForme1.Name = "NUP_OldForme1";
-            this.NUP_OldForme1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_OldForme1.Size = new System.Drawing.Size(68, 29);
             this.NUP_OldForme1.TabIndex = 291;
             // 
             // NUP_OldMin1
             // 
-            this.NUP_OldMin1.Location = new System.Drawing.Point(216, 30);
+            this.NUP_OldMin1.Location = new System.Drawing.Point(360, 47);
+            this.NUP_OldMin1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_OldMin1.Name = "NUP_OldMin1";
-            this.NUP_OldMin1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_OldMin1.Size = new System.Drawing.Size(68, 29);
             this.NUP_OldMin1.TabIndex = 292;
             // 
             // NUP_OldMax1
             // 
-            this.NUP_OldMax1.Location = new System.Drawing.Point(263, 30);
+            this.NUP_OldMax1.Location = new System.Drawing.Point(438, 47);
+            this.NUP_OldMax1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_OldMax1.Name = "NUP_OldMax1";
-            this.NUP_OldMax1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_OldMax1.Size = new System.Drawing.Size(68, 29);
             this.NUP_OldMax1.TabIndex = 293;
             // 
             // CB_Old2
@@ -19881,7 +20060,7 @@
             this.CB_Old2.FormattingEnabled = true;
             this.CB_Old2.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -20530,30 +20709,34 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_Old2.Location = new System.Drawing.Point(42, 56);
+            this.CB_Old2.Location = new System.Drawing.Point(70, 91);
+            this.CB_Old2.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Old2.Name = "CB_Old2";
-            this.CB_Old2.Size = new System.Drawing.Size(121, 21);
+            this.CB_Old2.Size = new System.Drawing.Size(199, 29);
             this.CB_Old2.TabIndex = 294;
             // 
             // NUP_OldForme2
             // 
-            this.NUP_OldForme2.Location = new System.Drawing.Point(169, 57);
+            this.NUP_OldForme2.Location = new System.Drawing.Point(282, 91);
+            this.NUP_OldForme2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_OldForme2.Name = "NUP_OldForme2";
-            this.NUP_OldForme2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_OldForme2.Size = new System.Drawing.Size(68, 29);
             this.NUP_OldForme2.TabIndex = 295;
             // 
             // NUP_OldMin2
             // 
-            this.NUP_OldMin2.Location = new System.Drawing.Point(216, 57);
+            this.NUP_OldMin2.Location = new System.Drawing.Point(360, 91);
+            this.NUP_OldMin2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_OldMin2.Name = "NUP_OldMin2";
-            this.NUP_OldMin2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_OldMin2.Size = new System.Drawing.Size(68, 29);
             this.NUP_OldMin2.TabIndex = 296;
             // 
             // NUP_OldMax2
             // 
-            this.NUP_OldMax2.Location = new System.Drawing.Point(263, 57);
+            this.NUP_OldMax2.Location = new System.Drawing.Point(438, 91);
+            this.NUP_OldMax2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_OldMax2.Name = "NUP_OldMax2";
-            this.NUP_OldMax2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_OldMax2.Size = new System.Drawing.Size(68, 29);
             this.NUP_OldMax2.TabIndex = 297;
             // 
             // CB_Old3
@@ -20563,7 +20746,7 @@
             this.CB_Old3.FormattingEnabled = true;
             this.CB_Old3.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -21212,85 +21395,95 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_Old3.Location = new System.Drawing.Point(42, 83);
+            this.CB_Old3.Location = new System.Drawing.Point(70, 135);
+            this.CB_Old3.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Old3.Name = "CB_Old3";
-            this.CB_Old3.Size = new System.Drawing.Size(121, 21);
+            this.CB_Old3.Size = new System.Drawing.Size(199, 29);
             this.CB_Old3.TabIndex = 298;
             // 
             // NUP_OldForme3
             // 
-            this.NUP_OldForme3.Location = new System.Drawing.Point(169, 84);
+            this.NUP_OldForme3.Location = new System.Drawing.Point(282, 135);
+            this.NUP_OldForme3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_OldForme3.Name = "NUP_OldForme3";
-            this.NUP_OldForme3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_OldForme3.Size = new System.Drawing.Size(68, 29);
             this.NUP_OldForme3.TabIndex = 299;
             // 
             // NUP_OldMin3
             // 
-            this.NUP_OldMin3.Location = new System.Drawing.Point(216, 84);
+            this.NUP_OldMin3.Location = new System.Drawing.Point(360, 135);
+            this.NUP_OldMin3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_OldMin3.Name = "NUP_OldMin3";
-            this.NUP_OldMin3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_OldMin3.Size = new System.Drawing.Size(68, 29);
             this.NUP_OldMin3.TabIndex = 300;
             // 
             // NUP_OldMax3
             // 
-            this.NUP_OldMax3.Location = new System.Drawing.Point(263, 84);
+            this.NUP_OldMax3.Location = new System.Drawing.Point(438, 135);
+            this.NUP_OldMax3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_OldMax3.Name = "NUP_OldMax3";
-            this.NUP_OldMax3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_OldMax3.Size = new System.Drawing.Size(68, 29);
             this.NUP_OldMax3.TabIndex = 301;
             // 
             // label45
             // 
             this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(15, 86);
+            this.label45.Location = new System.Drawing.Point(34, 138);
+            this.label45.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(21, 13);
+            this.label45.Size = new System.Drawing.Size(33, 21);
             this.label45.TabIndex = 308;
             this.label45.Text = "5%";
             // 
             // label44
             // 
             this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(9, 59);
+            this.label44.Location = new System.Drawing.Point(25, 95);
+            this.label44.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(27, 13);
+            this.label44.Size = new System.Drawing.Size(42, 21);
             this.label44.TabIndex = 307;
             this.label44.Text = "35%";
             // 
             // label43
             // 
             this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(9, 32);
+            this.label43.Location = new System.Drawing.Point(25, 51);
+            this.label43.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(27, 13);
+            this.label43.Size = new System.Drawing.Size(42, 21);
             this.label43.TabIndex = 306;
             this.label43.Text = "60%";
             // 
             // label23
             // 
             this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(166, 14);
+            this.label23.Location = new System.Drawing.Point(279, 22);
+            this.label23.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(36, 13);
+            this.label23.Size = new System.Drawing.Size(42, 21);
             this.label23.TabIndex = 303;
-            this.label23.Text = "Forme";
+            this.label23.Text = "形态";
             // 
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(213, 14);
+            this.label24.Location = new System.Drawing.Point(355, 22);
+            this.label24.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(24, 13);
+            this.label24.Size = new System.Drawing.Size(42, 21);
             this.label24.TabIndex = 304;
-            this.label24.Text = "Min";
+            this.label24.Text = "最小";
             // 
             // label25
             // 
             this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(260, 14);
+            this.label25.Location = new System.Drawing.Point(433, 22);
+            this.label25.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(27, 13);
+            this.label25.Size = new System.Drawing.Size(42, 21);
             this.label25.TabIndex = 305;
-            this.label25.Text = "Max";
+            this.label25.Text = "最大";
             // 
             // TabPage_Land
             // 
@@ -21470,12 +21663,13 @@
             this.TabPage_Land.Controls.Add(this.NUP_GrassMin11);
             this.TabPage_Land.Controls.Add(this.NUP_GrassForme12);
             this.TabPage_Land.Controls.Add(this.NUP_GrassMax11);
-            this.TabPage_Land.Location = new System.Drawing.Point(4, 22);
+            this.TabPage_Land.Location = new System.Drawing.Point(4, 30);
+            this.TabPage_Land.Margin = new System.Windows.Forms.Padding(5);
             this.TabPage_Land.Name = "TabPage_Land";
-            this.TabPage_Land.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage_Land.Size = new System.Drawing.Size(918, 369);
+            this.TabPage_Land.Padding = new System.Windows.Forms.Padding(5);
+            this.TabPage_Land.Size = new System.Drawing.Size(1535, 575);
             this.TabPage_Land.TabIndex = 0;
-            this.TabPage_Land.Text = "Land";
+            this.TabPage_Land.Text = "陆上";
             this.TabPage_Land.UseVisualStyleBackColor = true;
             // 
             // CB_Swarm3
@@ -21483,9 +21677,10 @@
             this.CB_Swarm3.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_Swarm3.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_Swarm3.FormattingEnabled = true;
-            this.CB_Swarm3.Location = new System.Drawing.Point(644, 247);
+            this.CB_Swarm3.Location = new System.Drawing.Point(1077, 399);
+            this.CB_Swarm3.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Swarm3.Name = "CB_Swarm3";
-            this.CB_Swarm3.Size = new System.Drawing.Size(121, 21);
+            this.CB_Swarm3.Size = new System.Drawing.Size(199, 29);
             this.CB_Swarm3.TabIndex = 706;
             // 
             // CB_Swarm2
@@ -21493,9 +21688,10 @@
             this.CB_Swarm2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_Swarm2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_Swarm2.FormattingEnabled = true;
-            this.CB_Swarm2.Location = new System.Drawing.Point(644, 220);
+            this.CB_Swarm2.Location = new System.Drawing.Point(1077, 355);
+            this.CB_Swarm2.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Swarm2.Name = "CB_Swarm2";
-            this.CB_Swarm2.Size = new System.Drawing.Size(121, 21);
+            this.CB_Swarm2.Size = new System.Drawing.Size(199, 29);
             this.CB_Swarm2.TabIndex = 705;
             // 
             // CB_Swarm1
@@ -21503,219 +21699,248 @@
             this.CB_Swarm1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_Swarm1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_Swarm1.FormattingEnabled = true;
-            this.CB_Swarm1.Location = new System.Drawing.Point(644, 194);
+            this.CB_Swarm1.Location = new System.Drawing.Point(1077, 313);
+            this.CB_Swarm1.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Swarm1.Name = "CB_Swarm1";
-            this.CB_Swarm1.Size = new System.Drawing.Size(121, 21);
+            this.CB_Swarm1.Size = new System.Drawing.Size(199, 29);
             this.CB_Swarm1.TabIndex = 704;
             // 
             // NUP_SwarmForme1
             // 
-            this.NUP_SwarmForme1.Location = new System.Drawing.Point(772, 194);
+            this.NUP_SwarmForme1.Location = new System.Drawing.Point(1287, 313);
+            this.NUP_SwarmForme1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SwarmForme1.Name = "NUP_SwarmForme1";
-            this.NUP_SwarmForme1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SwarmForme1.Size = new System.Drawing.Size(68, 29);
             this.NUP_SwarmForme1.TabIndex = 688;
             // 
             // NUP_SwarmMin1
             // 
-            this.NUP_SwarmMin1.Location = new System.Drawing.Point(819, 194);
+            this.NUP_SwarmMin1.Location = new System.Drawing.Point(1365, 313);
+            this.NUP_SwarmMin1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SwarmMin1.Name = "NUP_SwarmMin1";
-            this.NUP_SwarmMin1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SwarmMin1.Size = new System.Drawing.Size(68, 29);
             this.NUP_SwarmMin1.TabIndex = 689;
             // 
             // label66
             // 
             this.label66.AutoSize = true;
-            this.label66.Location = new System.Drawing.Point(771, 178);
+            this.label66.Location = new System.Drawing.Point(1285, 287);
+            this.label66.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label66.Name = "label66";
-            this.label66.Size = new System.Drawing.Size(36, 13);
+            this.label66.Size = new System.Drawing.Size(42, 21);
             this.label66.TabIndex = 701;
-            this.label66.Text = "Forme";
+            this.label66.Text = "形态";
             // 
             // NUP_SwarmMax1
             // 
-            this.NUP_SwarmMax1.Location = new System.Drawing.Point(866, 194);
+            this.NUP_SwarmMax1.Location = new System.Drawing.Point(1443, 313);
+            this.NUP_SwarmMax1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SwarmMax1.Name = "NUP_SwarmMax1";
-            this.NUP_SwarmMax1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SwarmMax1.Size = new System.Drawing.Size(68, 29);
             this.NUP_SwarmMax1.TabIndex = 690;
             // 
             // label67
             // 
             this.label67.AutoSize = true;
-            this.label67.Location = new System.Drawing.Point(818, 178);
+            this.label67.Location = new System.Drawing.Point(1363, 287);
+            this.label67.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label67.Name = "label67";
-            this.label67.Size = new System.Drawing.Size(24, 13);
+            this.label67.Size = new System.Drawing.Size(42, 21);
             this.label67.TabIndex = 702;
-            this.label67.Text = "Min";
+            this.label67.Text = "最小";
             // 
             // NUP_SwarmForme2
             // 
-            this.NUP_SwarmForme2.Location = new System.Drawing.Point(772, 221);
+            this.NUP_SwarmForme2.Location = new System.Drawing.Point(1287, 355);
+            this.NUP_SwarmForme2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SwarmForme2.Name = "NUP_SwarmForme2";
-            this.NUP_SwarmForme2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SwarmForme2.Size = new System.Drawing.Size(68, 29);
             this.NUP_SwarmForme2.TabIndex = 691;
             // 
             // label68
             // 
             this.label68.AutoSize = true;
-            this.label68.Location = new System.Drawing.Point(865, 178);
+            this.label68.Location = new System.Drawing.Point(1442, 287);
+            this.label68.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label68.Name = "label68";
-            this.label68.Size = new System.Drawing.Size(27, 13);
+            this.label68.Size = new System.Drawing.Size(42, 21);
             this.label68.TabIndex = 703;
-            this.label68.Text = "Max";
+            this.label68.Text = "最大";
             // 
             // NUP_SwarmMin2
             // 
-            this.NUP_SwarmMin2.Location = new System.Drawing.Point(819, 221);
+            this.NUP_SwarmMin2.Location = new System.Drawing.Point(1365, 355);
+            this.NUP_SwarmMin2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SwarmMin2.Name = "NUP_SwarmMin2";
-            this.NUP_SwarmMin2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SwarmMin2.Size = new System.Drawing.Size(68, 29);
             this.NUP_SwarmMin2.TabIndex = 692;
             // 
             // L_DexNav
             // 
             this.L_DexNav.AutoSize = true;
-            this.L_DexNav.Location = new System.Drawing.Point(643, 177);
+            this.L_DexNav.Location = new System.Drawing.Point(1072, 285);
+            this.L_DexNav.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_DexNav.Name = "L_DexNav";
-            this.L_DexNav.Size = new System.Drawing.Size(89, 13);
+            this.L_DexNav.Size = new System.Drawing.Size(106, 21);
             this.L_DexNav.TabIndex = 700;
-            this.L_DexNav.Text = "DexNav Foreigns";
+            this.L_DexNav.Text = "异国图鉴导航";
             // 
             // NUP_SwarmMax2
             // 
-            this.NUP_SwarmMax2.Location = new System.Drawing.Point(866, 221);
+            this.NUP_SwarmMax2.Location = new System.Drawing.Point(1443, 355);
+            this.NUP_SwarmMax2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SwarmMax2.Name = "NUP_SwarmMax2";
-            this.NUP_SwarmMax2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SwarmMax2.Size = new System.Drawing.Size(68, 29);
             this.NUP_SwarmMax2.TabIndex = 693;
             // 
             // NUP_SwarmForme3
             // 
-            this.NUP_SwarmForme3.Location = new System.Drawing.Point(772, 248);
+            this.NUP_SwarmForme3.Location = new System.Drawing.Point(1287, 399);
+            this.NUP_SwarmForme3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SwarmForme3.Name = "NUP_SwarmForme3";
-            this.NUP_SwarmForme3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SwarmForme3.Size = new System.Drawing.Size(68, 29);
             this.NUP_SwarmForme3.TabIndex = 694;
             // 
             // NUP_SwarmMin3
             // 
-            this.NUP_SwarmMin3.Location = new System.Drawing.Point(819, 248);
+            this.NUP_SwarmMin3.Location = new System.Drawing.Point(1365, 399);
+            this.NUP_SwarmMin3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SwarmMin3.Name = "NUP_SwarmMin3";
-            this.NUP_SwarmMin3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SwarmMin3.Size = new System.Drawing.Size(68, 29);
             this.NUP_SwarmMin3.TabIndex = 695;
             // 
             // NUP_SwarmMax3
             // 
-            this.NUP_SwarmMax3.Location = new System.Drawing.Point(866, 248);
+            this.NUP_SwarmMax3.Location = new System.Drawing.Point(1443, 399);
+            this.NUP_SwarmMax3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_SwarmMax3.Name = "NUP_SwarmMax3";
-            this.NUP_SwarmMax3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_SwarmMax3.Size = new System.Drawing.Size(68, 29);
             this.NUP_SwarmMax3.TabIndex = 696;
             // 
             // label70
             // 
             this.label70.AutoSize = true;
-            this.label70.Location = new System.Drawing.Point(619, 197);
+            this.label70.Location = new System.Drawing.Point(1042, 317);
+            this.label70.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label70.Name = "label70";
-            this.label70.Size = new System.Drawing.Size(21, 13);
+            this.label70.Size = new System.Drawing.Size(32, 21);
             this.label70.TabIndex = 697;
             this.label70.Text = "?%";
             // 
             // label80
             // 
             this.label80.AutoSize = true;
-            this.label80.Location = new System.Drawing.Point(619, 251);
+            this.label80.Location = new System.Drawing.Point(1042, 403);
+            this.label80.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label80.Name = "label80";
-            this.label80.Size = new System.Drawing.Size(21, 13);
+            this.label80.Size = new System.Drawing.Size(32, 21);
             this.label80.TabIndex = 699;
             this.label80.Text = "?%";
             // 
             // label81
             // 
             this.label81.AutoSize = true;
-            this.label81.Location = new System.Drawing.Point(619, 224);
+            this.label81.Location = new System.Drawing.Point(1042, 359);
+            this.label81.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label81.Name = "label81";
-            this.label81.Size = new System.Drawing.Size(21, 13);
+            this.label81.Size = new System.Drawing.Size(32, 21);
             this.label81.TabIndex = 698;
             this.label81.Text = "?%";
             // 
             // NUP_TallGrassForme11
             // 
-            this.NUP_TallGrassForme11.Location = new System.Drawing.Point(470, 301);
+            this.NUP_TallGrassForme11.Location = new System.Drawing.Point(783, 486);
+            this.NUP_TallGrassForme11.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassForme11.Name = "NUP_TallGrassForme11";
-            this.NUP_TallGrassForme11.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassForme11.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassForme11.TabIndex = 682;
             // 
             // NUP_TallGrassMin11
             // 
-            this.NUP_TallGrassMin11.Location = new System.Drawing.Point(517, 301);
+            this.NUP_TallGrassMin11.Location = new System.Drawing.Point(862, 486);
+            this.NUP_TallGrassMin11.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMin11.Name = "NUP_TallGrassMin11";
-            this.NUP_TallGrassMin11.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMin11.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMin11.TabIndex = 683;
             // 
             // NUP_TallGrassMax11
             // 
-            this.NUP_TallGrassMax11.Location = new System.Drawing.Point(564, 301);
+            this.NUP_TallGrassMax11.Location = new System.Drawing.Point(940, 486);
+            this.NUP_TallGrassMax11.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMax11.Name = "NUP_TallGrassMax11";
-            this.NUP_TallGrassMax11.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMax11.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMax11.TabIndex = 684;
             // 
             // NUP_TallGrassForme12
             // 
-            this.NUP_TallGrassForme12.Location = new System.Drawing.Point(470, 327);
+            this.NUP_TallGrassForme12.Location = new System.Drawing.Point(783, 528);
+            this.NUP_TallGrassForme12.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassForme12.Name = "NUP_TallGrassForme12";
-            this.NUP_TallGrassForme12.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassForme12.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassForme12.TabIndex = 685;
             // 
             // NUP_TallGrassMin12
             // 
-            this.NUP_TallGrassMin12.Location = new System.Drawing.Point(517, 327);
+            this.NUP_TallGrassMin12.Location = new System.Drawing.Point(862, 528);
+            this.NUP_TallGrassMin12.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMin12.Name = "NUP_TallGrassMin12";
-            this.NUP_TallGrassMin12.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMin12.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMin12.TabIndex = 686;
             // 
             // NUP_TallGrassMax12
             // 
-            this.NUP_TallGrassMax12.Location = new System.Drawing.Point(564, 327);
+            this.NUP_TallGrassMax12.Location = new System.Drawing.Point(940, 528);
+            this.NUP_TallGrassMax12.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMax12.Name = "NUP_TallGrassMax12";
-            this.NUP_TallGrassMax12.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMax12.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMax12.TabIndex = 687;
             // 
             // NUP_TallGrassForme1
             // 
-            this.NUP_TallGrassForme1.Location = new System.Drawing.Point(470, 36);
+            this.NUP_TallGrassForme1.Location = new System.Drawing.Point(783, 58);
+            this.NUP_TallGrassForme1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassForme1.Name = "NUP_TallGrassForme1";
-            this.NUP_TallGrassForme1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassForme1.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassForme1.TabIndex = 641;
             // 
             // NUP_TallGrassMin1
             // 
-            this.NUP_TallGrassMin1.Location = new System.Drawing.Point(517, 36);
+            this.NUP_TallGrassMin1.Location = new System.Drawing.Point(862, 58);
+            this.NUP_TallGrassMin1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMin1.Name = "NUP_TallGrassMin1";
-            this.NUP_TallGrassMin1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMin1.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMin1.TabIndex = 642;
             // 
             // NUP_TallGrassMax1
             // 
-            this.NUP_TallGrassMax1.Location = new System.Drawing.Point(564, 36);
+            this.NUP_TallGrassMax1.Location = new System.Drawing.Point(940, 58);
+            this.NUP_TallGrassMax1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMax1.Name = "NUP_TallGrassMax1";
-            this.NUP_TallGrassMax1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMax1.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMax1.TabIndex = 643;
             // 
             // NUP_TallGrassForme2
             // 
-            this.NUP_TallGrassForme2.Location = new System.Drawing.Point(470, 63);
+            this.NUP_TallGrassForme2.Location = new System.Drawing.Point(783, 100);
+            this.NUP_TallGrassForme2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassForme2.Name = "NUP_TallGrassForme2";
-            this.NUP_TallGrassForme2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassForme2.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassForme2.TabIndex = 644;
             // 
             // NUP_TallGrassMin2
             // 
-            this.NUP_TallGrassMin2.Location = new System.Drawing.Point(517, 63);
+            this.NUP_TallGrassMin2.Location = new System.Drawing.Point(862, 100);
+            this.NUP_TallGrassMin2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMin2.Name = "NUP_TallGrassMin2";
-            this.NUP_TallGrassMin2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMin2.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMin2.TabIndex = 645;
             // 
             // NUP_TallGrassMax2
             // 
-            this.NUP_TallGrassMax2.Location = new System.Drawing.Point(564, 63);
+            this.NUP_TallGrassMax2.Location = new System.Drawing.Point(940, 100);
+            this.NUP_TallGrassMax2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMax2.Name = "NUP_TallGrassMax2";
-            this.NUP_TallGrassMax2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMax2.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMax2.TabIndex = 646;
             // 
             // CB_TallGrass12
@@ -21723,16 +21948,18 @@
             this.CB_TallGrass12.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_TallGrass12.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_TallGrass12.FormattingEnabled = true;
-            this.CB_TallGrass12.Location = new System.Drawing.Point(343, 327);
+            this.CB_TallGrass12.Location = new System.Drawing.Point(572, 528);
+            this.CB_TallGrass12.Margin = new System.Windows.Forms.Padding(5);
             this.CB_TallGrass12.Name = "CB_TallGrass12";
-            this.CB_TallGrass12.Size = new System.Drawing.Size(121, 21);
+            this.CB_TallGrass12.Size = new System.Drawing.Size(199, 29);
             this.CB_TallGrass12.TabIndex = 681;
             // 
             // NUP_TallGrassForme3
             // 
-            this.NUP_TallGrassForme3.Location = new System.Drawing.Point(470, 90);
+            this.NUP_TallGrassForme3.Location = new System.Drawing.Point(783, 144);
+            this.NUP_TallGrassForme3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassForme3.Name = "NUP_TallGrassForme3";
-            this.NUP_TallGrassForme3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassForme3.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassForme3.TabIndex = 647;
             // 
             // CB_TallGrass11
@@ -21740,16 +21967,18 @@
             this.CB_TallGrass11.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_TallGrass11.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_TallGrass11.FormattingEnabled = true;
-            this.CB_TallGrass11.Location = new System.Drawing.Point(343, 301);
+            this.CB_TallGrass11.Location = new System.Drawing.Point(572, 486);
+            this.CB_TallGrass11.Margin = new System.Windows.Forms.Padding(5);
             this.CB_TallGrass11.Name = "CB_TallGrass11";
-            this.CB_TallGrass11.Size = new System.Drawing.Size(121, 21);
+            this.CB_TallGrass11.Size = new System.Drawing.Size(199, 29);
             this.CB_TallGrass11.TabIndex = 680;
             // 
             // NUP_TallGrassMin3
             // 
-            this.NUP_TallGrassMin3.Location = new System.Drawing.Point(517, 90);
+            this.NUP_TallGrassMin3.Location = new System.Drawing.Point(862, 144);
+            this.NUP_TallGrassMin3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMin3.Name = "NUP_TallGrassMin3";
-            this.NUP_TallGrassMin3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMin3.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMin3.TabIndex = 648;
             // 
             // CB_TallGrass10
@@ -21757,16 +21986,18 @@
             this.CB_TallGrass10.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_TallGrass10.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_TallGrass10.FormattingEnabled = true;
-            this.CB_TallGrass10.Location = new System.Drawing.Point(343, 274);
+            this.CB_TallGrass10.Location = new System.Drawing.Point(572, 443);
+            this.CB_TallGrass10.Margin = new System.Windows.Forms.Padding(5);
             this.CB_TallGrass10.Name = "CB_TallGrass10";
-            this.CB_TallGrass10.Size = new System.Drawing.Size(121, 21);
+            this.CB_TallGrass10.Size = new System.Drawing.Size(199, 29);
             this.CB_TallGrass10.TabIndex = 679;
             // 
             // NUP_TallGrassMax3
             // 
-            this.NUP_TallGrassMax3.Location = new System.Drawing.Point(564, 90);
+            this.NUP_TallGrassMax3.Location = new System.Drawing.Point(940, 144);
+            this.NUP_TallGrassMax3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMax3.Name = "NUP_TallGrassMax3";
-            this.NUP_TallGrassMax3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMax3.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMax3.TabIndex = 649;
             // 
             // CB_TallGrass9
@@ -21774,16 +22005,18 @@
             this.CB_TallGrass9.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_TallGrass9.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_TallGrass9.FormattingEnabled = true;
-            this.CB_TallGrass9.Location = new System.Drawing.Point(343, 248);
+            this.CB_TallGrass9.Location = new System.Drawing.Point(572, 401);
+            this.CB_TallGrass9.Margin = new System.Windows.Forms.Padding(5);
             this.CB_TallGrass9.Name = "CB_TallGrass9";
-            this.CB_TallGrass9.Size = new System.Drawing.Size(121, 21);
+            this.CB_TallGrass9.Size = new System.Drawing.Size(199, 29);
             this.CB_TallGrass9.TabIndex = 678;
             // 
             // NUP_TallGrassForme4
             // 
-            this.NUP_TallGrassForme4.Location = new System.Drawing.Point(470, 116);
+            this.NUP_TallGrassForme4.Location = new System.Drawing.Point(783, 186);
+            this.NUP_TallGrassForme4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassForme4.Name = "NUP_TallGrassForme4";
-            this.NUP_TallGrassForme4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassForme4.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassForme4.TabIndex = 650;
             // 
             // CB_TallGrass8
@@ -21791,16 +22024,18 @@
             this.CB_TallGrass8.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_TallGrass8.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_TallGrass8.FormattingEnabled = true;
-            this.CB_TallGrass8.Location = new System.Drawing.Point(343, 221);
+            this.CB_TallGrass8.Location = new System.Drawing.Point(572, 357);
+            this.CB_TallGrass8.Margin = new System.Windows.Forms.Padding(5);
             this.CB_TallGrass8.Name = "CB_TallGrass8";
-            this.CB_TallGrass8.Size = new System.Drawing.Size(121, 21);
+            this.CB_TallGrass8.Size = new System.Drawing.Size(199, 29);
             this.CB_TallGrass8.TabIndex = 677;
             // 
             // NUP_TallGrassMin4
             // 
-            this.NUP_TallGrassMin4.Location = new System.Drawing.Point(517, 116);
+            this.NUP_TallGrassMin4.Location = new System.Drawing.Point(862, 186);
+            this.NUP_TallGrassMin4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMin4.Name = "NUP_TallGrassMin4";
-            this.NUP_TallGrassMin4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMin4.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMin4.TabIndex = 651;
             // 
             // CB_TallGrass7
@@ -21808,16 +22043,18 @@
             this.CB_TallGrass7.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_TallGrass7.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_TallGrass7.FormattingEnabled = true;
-            this.CB_TallGrass7.Location = new System.Drawing.Point(343, 195);
+            this.CB_TallGrass7.Location = new System.Drawing.Point(572, 315);
+            this.CB_TallGrass7.Margin = new System.Windows.Forms.Padding(5);
             this.CB_TallGrass7.Name = "CB_TallGrass7";
-            this.CB_TallGrass7.Size = new System.Drawing.Size(121, 21);
+            this.CB_TallGrass7.Size = new System.Drawing.Size(199, 29);
             this.CB_TallGrass7.TabIndex = 676;
             // 
             // NUP_TallGrassMax4
             // 
-            this.NUP_TallGrassMax4.Location = new System.Drawing.Point(564, 116);
+            this.NUP_TallGrassMax4.Location = new System.Drawing.Point(940, 186);
+            this.NUP_TallGrassMax4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMax4.Name = "NUP_TallGrassMax4";
-            this.NUP_TallGrassMax4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMax4.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMax4.TabIndex = 652;
             // 
             // CB_TallGrass6
@@ -21825,16 +22062,18 @@
             this.CB_TallGrass6.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_TallGrass6.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_TallGrass6.FormattingEnabled = true;
-            this.CB_TallGrass6.Location = new System.Drawing.Point(343, 168);
+            this.CB_TallGrass6.Location = new System.Drawing.Point(572, 271);
+            this.CB_TallGrass6.Margin = new System.Windows.Forms.Padding(5);
             this.CB_TallGrass6.Name = "CB_TallGrass6";
-            this.CB_TallGrass6.Size = new System.Drawing.Size(121, 21);
+            this.CB_TallGrass6.Size = new System.Drawing.Size(199, 29);
             this.CB_TallGrass6.TabIndex = 675;
             // 
             // NUP_TallGrassForme5
             // 
-            this.NUP_TallGrassForme5.Location = new System.Drawing.Point(470, 143);
+            this.NUP_TallGrassForme5.Location = new System.Drawing.Point(783, 229);
+            this.NUP_TallGrassForme5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassForme5.Name = "NUP_TallGrassForme5";
-            this.NUP_TallGrassForme5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassForme5.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassForme5.TabIndex = 653;
             // 
             // CB_TallGrass5
@@ -21842,16 +22081,18 @@
             this.CB_TallGrass5.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_TallGrass5.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_TallGrass5.FormattingEnabled = true;
-            this.CB_TallGrass5.Location = new System.Drawing.Point(343, 142);
+            this.CB_TallGrass5.Location = new System.Drawing.Point(572, 229);
+            this.CB_TallGrass5.Margin = new System.Windows.Forms.Padding(5);
             this.CB_TallGrass5.Name = "CB_TallGrass5";
-            this.CB_TallGrass5.Size = new System.Drawing.Size(121, 21);
+            this.CB_TallGrass5.Size = new System.Drawing.Size(199, 29);
             this.CB_TallGrass5.TabIndex = 674;
             // 
             // NUP_TallGrassMin5
             // 
-            this.NUP_TallGrassMin5.Location = new System.Drawing.Point(517, 143);
+            this.NUP_TallGrassMin5.Location = new System.Drawing.Point(862, 229);
+            this.NUP_TallGrassMin5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMin5.Name = "NUP_TallGrassMin5";
-            this.NUP_TallGrassMin5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMin5.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMin5.TabIndex = 654;
             // 
             // CB_TallGrass4
@@ -21859,16 +22100,18 @@
             this.CB_TallGrass4.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_TallGrass4.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_TallGrass4.FormattingEnabled = true;
-            this.CB_TallGrass4.Location = new System.Drawing.Point(343, 115);
+            this.CB_TallGrass4.Location = new System.Drawing.Point(572, 186);
+            this.CB_TallGrass4.Margin = new System.Windows.Forms.Padding(5);
             this.CB_TallGrass4.Name = "CB_TallGrass4";
-            this.CB_TallGrass4.Size = new System.Drawing.Size(121, 21);
+            this.CB_TallGrass4.Size = new System.Drawing.Size(199, 29);
             this.CB_TallGrass4.TabIndex = 673;
             // 
             // NUP_TallGrassMax5
             // 
-            this.NUP_TallGrassMax5.Location = new System.Drawing.Point(564, 143);
+            this.NUP_TallGrassMax5.Location = new System.Drawing.Point(940, 229);
+            this.NUP_TallGrassMax5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMax5.Name = "NUP_TallGrassMax5";
-            this.NUP_TallGrassMax5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMax5.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMax5.TabIndex = 655;
             // 
             // CB_TallGrass3
@@ -21876,16 +22119,18 @@
             this.CB_TallGrass3.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_TallGrass3.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_TallGrass3.FormattingEnabled = true;
-            this.CB_TallGrass3.Location = new System.Drawing.Point(343, 89);
+            this.CB_TallGrass3.Location = new System.Drawing.Point(572, 144);
+            this.CB_TallGrass3.Margin = new System.Windows.Forms.Padding(5);
             this.CB_TallGrass3.Name = "CB_TallGrass3";
-            this.CB_TallGrass3.Size = new System.Drawing.Size(121, 21);
+            this.CB_TallGrass3.Size = new System.Drawing.Size(199, 29);
             this.CB_TallGrass3.TabIndex = 672;
             // 
             // NUP_TallGrassForme6
             // 
-            this.NUP_TallGrassForme6.Location = new System.Drawing.Point(470, 170);
+            this.NUP_TallGrassForme6.Location = new System.Drawing.Point(783, 271);
+            this.NUP_TallGrassForme6.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassForme6.Name = "NUP_TallGrassForme6";
-            this.NUP_TallGrassForme6.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassForme6.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassForme6.TabIndex = 656;
             // 
             // CB_TallGrass2
@@ -21893,16 +22138,18 @@
             this.CB_TallGrass2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_TallGrass2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_TallGrass2.FormattingEnabled = true;
-            this.CB_TallGrass2.Location = new System.Drawing.Point(343, 62);
+            this.CB_TallGrass2.Location = new System.Drawing.Point(572, 100);
+            this.CB_TallGrass2.Margin = new System.Windows.Forms.Padding(5);
             this.CB_TallGrass2.Name = "CB_TallGrass2";
-            this.CB_TallGrass2.Size = new System.Drawing.Size(121, 21);
+            this.CB_TallGrass2.Size = new System.Drawing.Size(199, 29);
             this.CB_TallGrass2.TabIndex = 671;
             // 
             // NUP_TallGrassMin6
             // 
-            this.NUP_TallGrassMin6.Location = new System.Drawing.Point(517, 170);
+            this.NUP_TallGrassMin6.Location = new System.Drawing.Point(862, 271);
+            this.NUP_TallGrassMin6.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMin6.Name = "NUP_TallGrassMin6";
-            this.NUP_TallGrassMin6.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMin6.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMin6.TabIndex = 657;
             // 
             // CB_TallGrass1
@@ -21910,174 +22157,197 @@
             this.CB_TallGrass1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_TallGrass1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_TallGrass1.FormattingEnabled = true;
-            this.CB_TallGrass1.Location = new System.Drawing.Point(343, 36);
+            this.CB_TallGrass1.Location = new System.Drawing.Point(572, 58);
+            this.CB_TallGrass1.Margin = new System.Windows.Forms.Padding(5);
             this.CB_TallGrass1.Name = "CB_TallGrass1";
-            this.CB_TallGrass1.Size = new System.Drawing.Size(121, 21);
+            this.CB_TallGrass1.Size = new System.Drawing.Size(199, 29);
             this.CB_TallGrass1.TabIndex = 640;
             // 
             // NUP_TallGrassMax6
             // 
-            this.NUP_TallGrassMax6.Location = new System.Drawing.Point(564, 170);
+            this.NUP_TallGrassMax6.Location = new System.Drawing.Point(940, 271);
+            this.NUP_TallGrassMax6.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMax6.Name = "NUP_TallGrassMax6";
-            this.NUP_TallGrassMax6.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMax6.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMax6.TabIndex = 658;
             // 
             // NUP_TallGrassForme7
             // 
-            this.NUP_TallGrassForme7.Location = new System.Drawing.Point(470, 196);
+            this.NUP_TallGrassForme7.Location = new System.Drawing.Point(783, 315);
+            this.NUP_TallGrassForme7.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassForme7.Name = "NUP_TallGrassForme7";
-            this.NUP_TallGrassForme7.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassForme7.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassForme7.TabIndex = 659;
             // 
             // NUP_TallGrassMin7
             // 
-            this.NUP_TallGrassMin7.Location = new System.Drawing.Point(517, 196);
+            this.NUP_TallGrassMin7.Location = new System.Drawing.Point(862, 315);
+            this.NUP_TallGrassMin7.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMin7.Name = "NUP_TallGrassMin7";
-            this.NUP_TallGrassMin7.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMin7.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMin7.TabIndex = 660;
             // 
             // NUP_TallGrassMax7
             // 
-            this.NUP_TallGrassMax7.Location = new System.Drawing.Point(564, 196);
+            this.NUP_TallGrassMax7.Location = new System.Drawing.Point(940, 315);
+            this.NUP_TallGrassMax7.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMax7.Name = "NUP_TallGrassMax7";
-            this.NUP_TallGrassMax7.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMax7.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMax7.TabIndex = 661;
             // 
             // NUP_TallGrassForme8
             // 
-            this.NUP_TallGrassForme8.Location = new System.Drawing.Point(470, 223);
+            this.NUP_TallGrassForme8.Location = new System.Drawing.Point(783, 357);
+            this.NUP_TallGrassForme8.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassForme8.Name = "NUP_TallGrassForme8";
-            this.NUP_TallGrassForme8.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassForme8.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassForme8.TabIndex = 662;
             // 
             // NUP_TallGrassMin8
             // 
-            this.NUP_TallGrassMin8.Location = new System.Drawing.Point(517, 223);
+            this.NUP_TallGrassMin8.Location = new System.Drawing.Point(862, 357);
+            this.NUP_TallGrassMin8.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMin8.Name = "NUP_TallGrassMin8";
-            this.NUP_TallGrassMin8.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMin8.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMin8.TabIndex = 663;
             // 
             // NUP_TallGrassMax8
             // 
-            this.NUP_TallGrassMax8.Location = new System.Drawing.Point(564, 223);
+            this.NUP_TallGrassMax8.Location = new System.Drawing.Point(940, 357);
+            this.NUP_TallGrassMax8.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMax8.Name = "NUP_TallGrassMax8";
-            this.NUP_TallGrassMax8.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMax8.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMax8.TabIndex = 664;
             // 
             // NUP_TallGrassForme9
             // 
-            this.NUP_TallGrassForme9.Location = new System.Drawing.Point(470, 250);
+            this.NUP_TallGrassForme9.Location = new System.Drawing.Point(783, 401);
+            this.NUP_TallGrassForme9.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassForme9.Name = "NUP_TallGrassForme9";
-            this.NUP_TallGrassForme9.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassForme9.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassForme9.TabIndex = 665;
             // 
             // NUP_TallGrassMin9
             // 
-            this.NUP_TallGrassMin9.Location = new System.Drawing.Point(517, 250);
+            this.NUP_TallGrassMin9.Location = new System.Drawing.Point(862, 401);
+            this.NUP_TallGrassMin9.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMin9.Name = "NUP_TallGrassMin9";
-            this.NUP_TallGrassMin9.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMin9.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMin9.TabIndex = 666;
             // 
             // NUP_TallGrassMax9
             // 
-            this.NUP_TallGrassMax9.Location = new System.Drawing.Point(564, 250);
+            this.NUP_TallGrassMax9.Location = new System.Drawing.Point(940, 401);
+            this.NUP_TallGrassMax9.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMax9.Name = "NUP_TallGrassMax9";
-            this.NUP_TallGrassMax9.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMax9.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMax9.TabIndex = 667;
             // 
             // NUP_TallGrassForme10
             // 
-            this.NUP_TallGrassForme10.Location = new System.Drawing.Point(470, 276);
+            this.NUP_TallGrassForme10.Location = new System.Drawing.Point(783, 443);
+            this.NUP_TallGrassForme10.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassForme10.Name = "NUP_TallGrassForme10";
-            this.NUP_TallGrassForme10.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassForme10.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassForme10.TabIndex = 668;
             // 
             // NUP_TallGrassMin10
             // 
-            this.NUP_TallGrassMin10.Location = new System.Drawing.Point(517, 276);
+            this.NUP_TallGrassMin10.Location = new System.Drawing.Point(862, 443);
+            this.NUP_TallGrassMin10.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMin10.Name = "NUP_TallGrassMin10";
-            this.NUP_TallGrassMin10.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMin10.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMin10.TabIndex = 669;
             // 
             // NUP_TallGrassMax10
             // 
-            this.NUP_TallGrassMax10.Location = new System.Drawing.Point(564, 276);
+            this.NUP_TallGrassMax10.Location = new System.Drawing.Point(940, 443);
+            this.NUP_TallGrassMax10.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_TallGrassMax10.Name = "NUP_TallGrassMax10";
-            this.NUP_TallGrassMax10.Size = new System.Drawing.Size(41, 20);
+            this.NUP_TallGrassMax10.Size = new System.Drawing.Size(68, 29);
             this.NUP_TallGrassMax10.TabIndex = 670;
             // 
             // label107
             // 
             this.label107.AutoSize = true;
-            this.label107.Location = new System.Drawing.Point(619, 147);
+            this.label107.Location = new System.Drawing.Point(1042, 237);
+            this.label107.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label107.Name = "label107";
-            this.label107.Size = new System.Drawing.Size(21, 13);
+            this.label107.Size = new System.Drawing.Size(33, 21);
             this.label107.TabIndex = 406;
             this.label107.Text = "1%";
             // 
             // L_RockSmash
             // 
             this.L_RockSmash.AutoSize = true;
-            this.L_RockSmash.Location = new System.Drawing.Point(643, 20);
+            this.L_RockSmash.Location = new System.Drawing.Point(1072, 32);
+            this.L_RockSmash.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_RockSmash.Name = "L_RockSmash";
-            this.L_RockSmash.Size = new System.Drawing.Size(68, 13);
+            this.L_RockSmash.Size = new System.Drawing.Size(42, 21);
             this.L_RockSmash.TabIndex = 398;
-            this.L_RockSmash.Text = "Rock Smash";
+            this.L_RockSmash.Text = "碎岩";
             // 
             // label108
             // 
             this.label108.AutoSize = true;
-            this.label108.Location = new System.Drawing.Point(619, 120);
+            this.label108.Location = new System.Drawing.Point(1042, 193);
+            this.label108.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label108.Name = "label108";
-            this.label108.Size = new System.Drawing.Size(21, 13);
+            this.label108.Size = new System.Drawing.Size(33, 21);
             this.label108.TabIndex = 405;
             this.label108.Text = "4%";
             // 
             // NUP_RockSmashMax5
             // 
-            this.NUP_RockSmashMax5.Location = new System.Drawing.Point(867, 145);
+            this.NUP_RockSmashMax5.Location = new System.Drawing.Point(1445, 233);
+            this.NUP_RockSmashMax5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_RockSmashMax5.Name = "NUP_RockSmashMax5";
-            this.NUP_RockSmashMax5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_RockSmashMax5.Size = new System.Drawing.Size(68, 29);
             this.NUP_RockSmashMax5.TabIndex = 397;
             // 
             // label109
             // 
             this.label109.AutoSize = true;
-            this.label109.Location = new System.Drawing.Point(613, 93);
+            this.label109.Location = new System.Drawing.Point(1032, 149);
+            this.label109.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label109.Name = "label109";
-            this.label109.Size = new System.Drawing.Size(27, 13);
+            this.label109.Size = new System.Drawing.Size(42, 21);
             this.label109.TabIndex = 404;
             this.label109.Text = "15%";
             // 
             // NUP_RockSmashMin5
             // 
-            this.NUP_RockSmashMin5.Location = new System.Drawing.Point(820, 145);
+            this.NUP_RockSmashMin5.Location = new System.Drawing.Point(1367, 233);
+            this.NUP_RockSmashMin5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_RockSmashMin5.Name = "NUP_RockSmashMin5";
-            this.NUP_RockSmashMin5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_RockSmashMin5.Size = new System.Drawing.Size(68, 29);
             this.NUP_RockSmashMin5.TabIndex = 396;
             // 
             // label110
             // 
             this.label110.AutoSize = true;
-            this.label110.Location = new System.Drawing.Point(613, 66);
+            this.label110.Location = new System.Drawing.Point(1032, 106);
+            this.label110.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label110.Name = "label110";
-            this.label110.Size = new System.Drawing.Size(27, 13);
+            this.label110.Size = new System.Drawing.Size(42, 21);
             this.label110.TabIndex = 403;
             this.label110.Text = "30%";
             // 
             // NUP_RockSmashForme5
             // 
-            this.NUP_RockSmashForme5.Location = new System.Drawing.Point(773, 145);
+            this.NUP_RockSmashForme5.Location = new System.Drawing.Point(1288, 233);
+            this.NUP_RockSmashForme5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_RockSmashForme5.Name = "NUP_RockSmashForme5";
-            this.NUP_RockSmashForme5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_RockSmashForme5.Size = new System.Drawing.Size(68, 29);
             this.NUP_RockSmashForme5.TabIndex = 395;
             // 
             // label111
             // 
             this.label111.AutoSize = true;
-            this.label111.Location = new System.Drawing.Point(613, 39);
+            this.label111.Location = new System.Drawing.Point(1032, 62);
+            this.label111.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label111.Name = "label111";
-            this.label111.Size = new System.Drawing.Size(27, 13);
+            this.label111.Size = new System.Drawing.Size(42, 21);
             this.label111.TabIndex = 402;
             this.label111.Text = "50%";
             // 
@@ -22088,7 +22358,7 @@
             this.CB_RockSmash5.FormattingEnabled = true;
             this.CB_RockSmash5.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -22737,9 +23007,10 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_RockSmash5.Location = new System.Drawing.Point(646, 144);
+            this.CB_RockSmash5.Location = new System.Drawing.Point(1077, 233);
+            this.CB_RockSmash5.Margin = new System.Windows.Forms.Padding(5);
             this.CB_RockSmash5.Name = "CB_RockSmash5";
-            this.CB_RockSmash5.Size = new System.Drawing.Size(121, 21);
+            this.CB_RockSmash5.Size = new System.Drawing.Size(199, 29);
             this.CB_RockSmash5.TabIndex = 394;
             // 
             // CB_RockSmash1
@@ -22749,7 +23020,7 @@
             this.CB_RockSmash1.FormattingEnabled = true;
             this.CB_RockSmash1.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -23398,53 +23669,60 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_RockSmash1.Location = new System.Drawing.Point(646, 36);
+            this.CB_RockSmash1.Location = new System.Drawing.Point(1077, 58);
+            this.CB_RockSmash1.Margin = new System.Windows.Forms.Padding(5);
             this.CB_RockSmash1.Name = "CB_RockSmash1";
-            this.CB_RockSmash1.Size = new System.Drawing.Size(121, 21);
+            this.CB_RockSmash1.Size = new System.Drawing.Size(199, 29);
             this.CB_RockSmash1.TabIndex = 378;
             // 
             // NUP_RockSmashMax4
             // 
-            this.NUP_RockSmashMax4.Location = new System.Drawing.Point(867, 118);
+            this.NUP_RockSmashMax4.Location = new System.Drawing.Point(1445, 189);
+            this.NUP_RockSmashMax4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_RockSmashMax4.Name = "NUP_RockSmashMax4";
-            this.NUP_RockSmashMax4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_RockSmashMax4.Size = new System.Drawing.Size(68, 29);
             this.NUP_RockSmashMax4.TabIndex = 393;
             // 
             // NUP_RockSmashForme1
             // 
-            this.NUP_RockSmashForme1.Location = new System.Drawing.Point(773, 37);
+            this.NUP_RockSmashForme1.Location = new System.Drawing.Point(1288, 58);
+            this.NUP_RockSmashForme1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_RockSmashForme1.Name = "NUP_RockSmashForme1";
-            this.NUP_RockSmashForme1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_RockSmashForme1.Size = new System.Drawing.Size(68, 29);
             this.NUP_RockSmashForme1.TabIndex = 379;
             // 
             // NUP_RockSmashMin4
             // 
-            this.NUP_RockSmashMin4.Location = new System.Drawing.Point(820, 118);
+            this.NUP_RockSmashMin4.Location = new System.Drawing.Point(1367, 189);
+            this.NUP_RockSmashMin4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_RockSmashMin4.Name = "NUP_RockSmashMin4";
-            this.NUP_RockSmashMin4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_RockSmashMin4.Size = new System.Drawing.Size(68, 29);
             this.NUP_RockSmashMin4.TabIndex = 392;
             // 
             // label112
             // 
             this.label112.AutoSize = true;
-            this.label112.Location = new System.Drawing.Point(864, 20);
+            this.label112.Location = new System.Drawing.Point(1440, 32);
+            this.label112.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label112.Name = "label112";
-            this.label112.Size = new System.Drawing.Size(27, 13);
+            this.label112.Size = new System.Drawing.Size(42, 21);
             this.label112.TabIndex = 401;
-            this.label112.Text = "Max";
+            this.label112.Text = "最大";
             // 
             // NUP_RockSmashForme4
             // 
-            this.NUP_RockSmashForme4.Location = new System.Drawing.Point(773, 118);
+            this.NUP_RockSmashForme4.Location = new System.Drawing.Point(1288, 189);
+            this.NUP_RockSmashForme4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_RockSmashForme4.Name = "NUP_RockSmashForme4";
-            this.NUP_RockSmashForme4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_RockSmashForme4.Size = new System.Drawing.Size(68, 29);
             this.NUP_RockSmashForme4.TabIndex = 391;
             // 
             // NUP_RockSmashMin1
             // 
-            this.NUP_RockSmashMin1.Location = new System.Drawing.Point(820, 37);
+            this.NUP_RockSmashMin1.Location = new System.Drawing.Point(1367, 58);
+            this.NUP_RockSmashMin1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_RockSmashMin1.Name = "NUP_RockSmashMin1";
-            this.NUP_RockSmashMin1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_RockSmashMin1.Size = new System.Drawing.Size(68, 29);
             this.NUP_RockSmashMin1.TabIndex = 380;
             // 
             // CB_RockSmash4
@@ -23454,7 +23732,7 @@
             this.CB_RockSmash4.FormattingEnabled = true;
             this.CB_RockSmash4.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -24103,55 +24381,62 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_RockSmash4.Location = new System.Drawing.Point(646, 117);
+            this.CB_RockSmash4.Location = new System.Drawing.Point(1077, 189);
+            this.CB_RockSmash4.Margin = new System.Windows.Forms.Padding(5);
             this.CB_RockSmash4.Name = "CB_RockSmash4";
-            this.CB_RockSmash4.Size = new System.Drawing.Size(121, 21);
+            this.CB_RockSmash4.Size = new System.Drawing.Size(199, 29);
             this.CB_RockSmash4.TabIndex = 390;
             // 
             // label113
             // 
             this.label113.AutoSize = true;
-            this.label113.Location = new System.Drawing.Point(817, 21);
+            this.label113.Location = new System.Drawing.Point(1362, 33);
+            this.label113.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label113.Name = "label113";
-            this.label113.Size = new System.Drawing.Size(24, 13);
+            this.label113.Size = new System.Drawing.Size(42, 21);
             this.label113.TabIndex = 400;
-            this.label113.Text = "Min";
+            this.label113.Text = "最小";
             // 
             // NUP_RockSmashMax3
             // 
-            this.NUP_RockSmashMax3.Location = new System.Drawing.Point(867, 91);
+            this.NUP_RockSmashMax3.Location = new System.Drawing.Point(1445, 145);
+            this.NUP_RockSmashMax3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_RockSmashMax3.Name = "NUP_RockSmashMax3";
-            this.NUP_RockSmashMax3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_RockSmashMax3.Size = new System.Drawing.Size(68, 29);
             this.NUP_RockSmashMax3.TabIndex = 389;
             // 
             // NUP_RockSmashMax1
             // 
-            this.NUP_RockSmashMax1.Location = new System.Drawing.Point(867, 37);
+            this.NUP_RockSmashMax1.Location = new System.Drawing.Point(1445, 58);
+            this.NUP_RockSmashMax1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_RockSmashMax1.Name = "NUP_RockSmashMax1";
-            this.NUP_RockSmashMax1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_RockSmashMax1.Size = new System.Drawing.Size(68, 29);
             this.NUP_RockSmashMax1.TabIndex = 381;
             // 
             // NUP_RockSmashMin3
             // 
-            this.NUP_RockSmashMin3.Location = new System.Drawing.Point(820, 91);
+            this.NUP_RockSmashMin3.Location = new System.Drawing.Point(1367, 145);
+            this.NUP_RockSmashMin3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_RockSmashMin3.Name = "NUP_RockSmashMin3";
-            this.NUP_RockSmashMin3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_RockSmashMin3.Size = new System.Drawing.Size(68, 29);
             this.NUP_RockSmashMin3.TabIndex = 388;
             // 
             // label114
             // 
             this.label114.AutoSize = true;
-            this.label114.Location = new System.Drawing.Point(770, 21);
+            this.label114.Location = new System.Drawing.Point(1283, 33);
+            this.label114.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label114.Name = "label114";
-            this.label114.Size = new System.Drawing.Size(36, 13);
+            this.label114.Size = new System.Drawing.Size(42, 21);
             this.label114.TabIndex = 399;
-            this.label114.Text = "Forme";
+            this.label114.Text = "形态";
             // 
             // NUP_RockSmashForme3
             // 
-            this.NUP_RockSmashForme3.Location = new System.Drawing.Point(773, 91);
+            this.NUP_RockSmashForme3.Location = new System.Drawing.Point(1288, 145);
+            this.NUP_RockSmashForme3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_RockSmashForme3.Name = "NUP_RockSmashForme3";
-            this.NUP_RockSmashForme3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_RockSmashForme3.Size = new System.Drawing.Size(68, 29);
             this.NUP_RockSmashForme3.TabIndex = 387;
             // 
             // CB_RockSmash2
@@ -24161,7 +24446,7 @@
             this.CB_RockSmash2.FormattingEnabled = true;
             this.CB_RockSmash2.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -24810,9 +25095,10 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_RockSmash2.Location = new System.Drawing.Point(646, 63);
+            this.CB_RockSmash2.Location = new System.Drawing.Point(1077, 102);
+            this.CB_RockSmash2.Margin = new System.Windows.Forms.Padding(5);
             this.CB_RockSmash2.Name = "CB_RockSmash2";
-            this.CB_RockSmash2.Size = new System.Drawing.Size(121, 21);
+            this.CB_RockSmash2.Size = new System.Drawing.Size(199, 29);
             this.CB_RockSmash2.TabIndex = 382;
             // 
             // CB_RockSmash3
@@ -24822,7 +25108,7 @@
             this.CB_RockSmash3.FormattingEnabled = true;
             this.CB_RockSmash3.Items.AddRange(new object[] {
             "-----",
-            "Bulbasaur",
+            "妙蛙种子",
             "Ivysaur",
             "Venusaur",
             "Charmander",
@@ -25471,252 +25757,282 @@
             "Keldeo",
             "Meloetta",
             "Genesect"});
-            this.CB_RockSmash3.Location = new System.Drawing.Point(646, 90);
+            this.CB_RockSmash3.Location = new System.Drawing.Point(1077, 145);
+            this.CB_RockSmash3.Margin = new System.Windows.Forms.Padding(5);
             this.CB_RockSmash3.Name = "CB_RockSmash3";
-            this.CB_RockSmash3.Size = new System.Drawing.Size(121, 21);
+            this.CB_RockSmash3.Size = new System.Drawing.Size(199, 29);
             this.CB_RockSmash3.TabIndex = 386;
             // 
             // NUP_RockSmashMax2
             // 
-            this.NUP_RockSmashMax2.Location = new System.Drawing.Point(867, 64);
+            this.NUP_RockSmashMax2.Location = new System.Drawing.Point(1445, 102);
+            this.NUP_RockSmashMax2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_RockSmashMax2.Name = "NUP_RockSmashMax2";
-            this.NUP_RockSmashMax2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_RockSmashMax2.Size = new System.Drawing.Size(68, 29);
             this.NUP_RockSmashMax2.TabIndex = 385;
             // 
             // NUP_RockSmashForme2
             // 
-            this.NUP_RockSmashForme2.Location = new System.Drawing.Point(773, 64);
+            this.NUP_RockSmashForme2.Location = new System.Drawing.Point(1288, 102);
+            this.NUP_RockSmashForme2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_RockSmashForme2.Name = "NUP_RockSmashForme2";
-            this.NUP_RockSmashForme2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_RockSmashForme2.Size = new System.Drawing.Size(68, 29);
             this.NUP_RockSmashForme2.TabIndex = 383;
             // 
             // NUP_RockSmashMin2
             // 
-            this.NUP_RockSmashMin2.Location = new System.Drawing.Point(820, 64);
+            this.NUP_RockSmashMin2.Location = new System.Drawing.Point(1367, 102);
+            this.NUP_RockSmashMin2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_RockSmashMin2.Name = "NUP_RockSmashMin2";
-            this.NUP_RockSmashMin2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_RockSmashMin2.Size = new System.Drawing.Size(68, 29);
             this.NUP_RockSmashMin2.TabIndex = 384;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(469, 20);
+            this.label6.Location = new System.Drawing.Point(782, 32);
+            this.label6.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(36, 13);
+            this.label6.Size = new System.Drawing.Size(42, 21);
             this.label6.TabIndex = 375;
-            this.label6.Text = "Forme";
+            this.label6.Text = "形态";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(516, 20);
+            this.label7.Location = new System.Drawing.Point(860, 32);
+            this.label7.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(24, 13);
+            this.label7.Size = new System.Drawing.Size(42, 21);
             this.label7.TabIndex = 376;
-            this.label7.Text = "Min";
+            this.label7.Text = "最小";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(563, 20);
+            this.label8.Location = new System.Drawing.Point(938, 32);
+            this.label8.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(27, 13);
+            this.label8.Size = new System.Drawing.Size(42, 21);
             this.label8.TabIndex = 377;
-            this.label8.Text = "Max";
+            this.label8.Text = "最大";
             // 
             // L_TallGrass
             // 
             this.L_TallGrass.AutoSize = true;
-            this.L_TallGrass.Location = new System.Drawing.Point(343, 20);
+            this.L_TallGrass.Location = new System.Drawing.Point(572, 32);
+            this.L_TallGrass.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_TallGrass.Name = "L_TallGrass";
-            this.L_TallGrass.Size = new System.Drawing.Size(61, 13);
+            this.L_TallGrass.Size = new System.Drawing.Size(58, 21);
             this.L_TallGrass.TabIndex = 374;
-            this.L_TallGrass.Text = "Long Grass";
+            this.L_TallGrass.Text = "高草丛";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(310, 39);
+            this.label10.Location = new System.Drawing.Point(527, 62);
+            this.label10.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(27, 13);
+            this.label10.Size = new System.Drawing.Size(42, 21);
             this.label10.TabIndex = 351;
             this.label10.Text = "10%";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(316, 332);
+            this.label11.Location = new System.Drawing.Point(537, 532);
+            this.label11.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(21, 13);
+            this.label11.Size = new System.Drawing.Size(33, 21);
             this.label11.TabIndex = 362;
             this.label11.Text = "1%";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(316, 305);
+            this.label12.Location = new System.Drawing.Point(537, 490);
+            this.label12.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(21, 13);
+            this.label12.Size = new System.Drawing.Size(33, 21);
             this.label12.TabIndex = 361;
             this.label12.Text = "4%";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(316, 278);
+            this.label13.Location = new System.Drawing.Point(537, 447);
+            this.label13.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(21, 13);
+            this.label13.Size = new System.Drawing.Size(33, 21);
             this.label13.TabIndex = 360;
             this.label13.Text = "5%";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(310, 252);
+            this.label14.Location = new System.Drawing.Point(527, 405);
+            this.label14.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(27, 13);
+            this.label14.Size = new System.Drawing.Size(42, 21);
             this.label14.TabIndex = 359;
             this.label14.Text = "10%";
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(310, 228);
+            this.label15.Location = new System.Drawing.Point(527, 361);
+            this.label15.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(27, 13);
+            this.label15.Size = new System.Drawing.Size(42, 21);
             this.label15.TabIndex = 358;
             this.label15.Text = "10%";
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(310, 201);
+            this.label16.Location = new System.Drawing.Point(527, 320);
+            this.label16.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(27, 13);
+            this.label16.Size = new System.Drawing.Size(42, 21);
             this.label16.TabIndex = 357;
             this.label16.Text = "10%";
             // 
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(310, 174);
+            this.label17.Location = new System.Drawing.Point(527, 275);
+            this.label17.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(27, 13);
+            this.label17.Size = new System.Drawing.Size(42, 21);
             this.label17.TabIndex = 356;
             this.label17.Text = "10%";
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(310, 147);
+            this.label18.Location = new System.Drawing.Point(527, 233);
+            this.label18.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(27, 13);
+            this.label18.Size = new System.Drawing.Size(42, 21);
             this.label18.TabIndex = 355;
             this.label18.Text = "10%";
             // 
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(310, 120);
+            this.label19.Location = new System.Drawing.Point(527, 189);
+            this.label19.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(27, 13);
+            this.label19.Size = new System.Drawing.Size(42, 21);
             this.label19.TabIndex = 354;
             this.label19.Text = "10%";
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(310, 93);
+            this.label20.Location = new System.Drawing.Point(527, 148);
+            this.label20.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(27, 13);
+            this.label20.Size = new System.Drawing.Size(42, 21);
             this.label20.TabIndex = 353;
             this.label20.Text = "10%";
             // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(310, 66);
+            this.label21.Location = new System.Drawing.Point(527, 104);
+            this.label21.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(27, 13);
+            this.label21.Size = new System.Drawing.Size(42, 21);
             this.label21.TabIndex = 352;
             this.label21.Text = "10%";
             // 
             // NUP_GrassForme1
             // 
-            this.NUP_GrassForme1.Location = new System.Drawing.Point(171, 36);
+            this.NUP_GrassForme1.Location = new System.Drawing.Point(275, 58);
+            this.NUP_GrassForme1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassForme1.Name = "NUP_GrassForme1";
-            this.NUP_GrassForme1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassForme1.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassForme1.TabIndex = 48;
             // 
             // NUP_GrassMin1
             // 
-            this.NUP_GrassMin1.Location = new System.Drawing.Point(218, 36);
+            this.NUP_GrassMin1.Location = new System.Drawing.Point(353, 58);
+            this.NUP_GrassMin1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMin1.Name = "NUP_GrassMin1";
-            this.NUP_GrassMin1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMin1.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMin1.TabIndex = 49;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(170, 20);
+            this.label3.Location = new System.Drawing.Point(273, 32);
+            this.label3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(36, 13);
+            this.label3.Size = new System.Drawing.Size(42, 21);
             this.label3.TabIndex = 311;
-            this.label3.Text = "Forme";
+            this.label3.Text = "形态";
             // 
             // NUP_GrassMax1
             // 
-            this.NUP_GrassMax1.Location = new System.Drawing.Point(265, 36);
+            this.NUP_GrassMax1.Location = new System.Drawing.Point(432, 58);
+            this.NUP_GrassMax1.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMax1.Name = "NUP_GrassMax1";
-            this.NUP_GrassMax1.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMax1.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMax1.TabIndex = 50;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(217, 20);
+            this.label4.Location = new System.Drawing.Point(352, 32);
+            this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(24, 13);
+            this.label4.Size = new System.Drawing.Size(42, 21);
             this.label4.TabIndex = 312;
-            this.label4.Text = "Min";
+            this.label4.Text = "最小";
             // 
             // NUP_GrassForme2
             // 
-            this.NUP_GrassForme2.Location = new System.Drawing.Point(171, 63);
+            this.NUP_GrassForme2.Location = new System.Drawing.Point(275, 101);
+            this.NUP_GrassForme2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassForme2.Name = "NUP_GrassForme2";
-            this.NUP_GrassForme2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassForme2.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassForme2.TabIndex = 51;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(264, 20);
+            this.label5.Location = new System.Drawing.Point(430, 32);
+            this.label5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(27, 13);
+            this.label5.Size = new System.Drawing.Size(42, 21);
             this.label5.TabIndex = 313;
-            this.label5.Text = "Max";
+            this.label5.Text = "最大";
             // 
             // NUP_GrassMin2
             // 
-            this.NUP_GrassMin2.Location = new System.Drawing.Point(218, 63);
+            this.NUP_GrassMin2.Location = new System.Drawing.Point(353, 101);
+            this.NUP_GrassMin2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMin2.Name = "NUP_GrassMin2";
-            this.NUP_GrassMin2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMin2.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMin2.TabIndex = 52;
             // 
             // L_Grass
             // 
             this.L_Grass.AutoSize = true;
-            this.L_Grass.Location = new System.Drawing.Point(44, 20);
+            this.L_Grass.Location = new System.Drawing.Point(63, 32);
+            this.L_Grass.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.L_Grass.Name = "L_Grass";
-            this.L_Grass.Size = new System.Drawing.Size(54, 13);
+            this.L_Grass.Size = new System.Drawing.Size(58, 21);
             this.L_Grass.TabIndex = 310;
-            this.L_Grass.Text = "Tall Grass";
+            this.L_Grass.Text = "草丛";
             // 
             // NUP_GrassMax2
             // 
-            this.NUP_GrassMax2.Location = new System.Drawing.Point(265, 63);
+            this.NUP_GrassMax2.Location = new System.Drawing.Point(432, 101);
+            this.NUP_GrassMax2.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMax2.Name = "NUP_GrassMax2";
-            this.NUP_GrassMax2.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMax2.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMax2.TabIndex = 53;
             // 
             // CB_Grass12
@@ -25724,16 +26040,18 @@
             this.CB_Grass12.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_Grass12.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_Grass12.FormattingEnabled = true;
-            this.CB_Grass12.Location = new System.Drawing.Point(44, 327);
+            this.CB_Grass12.Location = new System.Drawing.Point(63, 528);
+            this.CB_Grass12.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Grass12.Name = "CB_Grass12";
-            this.CB_Grass12.Size = new System.Drawing.Size(121, 21);
+            this.CB_Grass12.Size = new System.Drawing.Size(199, 29);
             this.CB_Grass12.TabIndex = 309;
             // 
             // NUP_GrassForme3
             // 
-            this.NUP_GrassForme3.Location = new System.Drawing.Point(171, 90);
+            this.NUP_GrassForme3.Location = new System.Drawing.Point(275, 144);
+            this.NUP_GrassForme3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassForme3.Name = "NUP_GrassForme3";
-            this.NUP_GrassForme3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassForme3.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassForme3.TabIndex = 54;
             // 
             // CB_Grass11
@@ -25741,16 +26059,18 @@
             this.CB_Grass11.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_Grass11.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_Grass11.FormattingEnabled = true;
-            this.CB_Grass11.Location = new System.Drawing.Point(44, 301);
+            this.CB_Grass11.Location = new System.Drawing.Point(63, 486);
+            this.CB_Grass11.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Grass11.Name = "CB_Grass11";
-            this.CB_Grass11.Size = new System.Drawing.Size(121, 21);
+            this.CB_Grass11.Size = new System.Drawing.Size(199, 29);
             this.CB_Grass11.TabIndex = 308;
             // 
             // NUP_GrassMin3
             // 
-            this.NUP_GrassMin3.Location = new System.Drawing.Point(218, 90);
+            this.NUP_GrassMin3.Location = new System.Drawing.Point(353, 144);
+            this.NUP_GrassMin3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMin3.Name = "NUP_GrassMin3";
-            this.NUP_GrassMin3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMin3.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMin3.TabIndex = 55;
             // 
             // CB_Grass10
@@ -25758,16 +26078,18 @@
             this.CB_Grass10.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_Grass10.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_Grass10.FormattingEnabled = true;
-            this.CB_Grass10.Location = new System.Drawing.Point(44, 274);
+            this.CB_Grass10.Location = new System.Drawing.Point(63, 443);
+            this.CB_Grass10.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Grass10.Name = "CB_Grass10";
-            this.CB_Grass10.Size = new System.Drawing.Size(121, 21);
+            this.CB_Grass10.Size = new System.Drawing.Size(199, 29);
             this.CB_Grass10.TabIndex = 307;
             // 
             // NUP_GrassMax3
             // 
-            this.NUP_GrassMax3.Location = new System.Drawing.Point(265, 90);
+            this.NUP_GrassMax3.Location = new System.Drawing.Point(432, 144);
+            this.NUP_GrassMax3.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMax3.Name = "NUP_GrassMax3";
-            this.NUP_GrassMax3.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMax3.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMax3.TabIndex = 56;
             // 
             // CB_Grass9
@@ -25775,16 +26097,18 @@
             this.CB_Grass9.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_Grass9.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_Grass9.FormattingEnabled = true;
-            this.CB_Grass9.Location = new System.Drawing.Point(44, 248);
+            this.CB_Grass9.Location = new System.Drawing.Point(63, 401);
+            this.CB_Grass9.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Grass9.Name = "CB_Grass9";
-            this.CB_Grass9.Size = new System.Drawing.Size(121, 21);
+            this.CB_Grass9.Size = new System.Drawing.Size(199, 29);
             this.CB_Grass9.TabIndex = 306;
             // 
             // NUP_GrassForme4
             // 
-            this.NUP_GrassForme4.Location = new System.Drawing.Point(171, 116);
+            this.NUP_GrassForme4.Location = new System.Drawing.Point(275, 186);
+            this.NUP_GrassForme4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassForme4.Name = "NUP_GrassForme4";
-            this.NUP_GrassForme4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassForme4.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassForme4.TabIndex = 57;
             // 
             // CB_Grass8
@@ -25792,16 +26116,18 @@
             this.CB_Grass8.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_Grass8.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_Grass8.FormattingEnabled = true;
-            this.CB_Grass8.Location = new System.Drawing.Point(44, 221);
+            this.CB_Grass8.Location = new System.Drawing.Point(63, 357);
+            this.CB_Grass8.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Grass8.Name = "CB_Grass8";
-            this.CB_Grass8.Size = new System.Drawing.Size(121, 21);
+            this.CB_Grass8.Size = new System.Drawing.Size(199, 29);
             this.CB_Grass8.TabIndex = 305;
             // 
             // NUP_GrassMin4
             // 
-            this.NUP_GrassMin4.Location = new System.Drawing.Point(218, 116);
+            this.NUP_GrassMin4.Location = new System.Drawing.Point(353, 186);
+            this.NUP_GrassMin4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMin4.Name = "NUP_GrassMin4";
-            this.NUP_GrassMin4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMin4.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMin4.TabIndex = 58;
             // 
             // CB_Grass7
@@ -25809,16 +26135,18 @@
             this.CB_Grass7.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_Grass7.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_Grass7.FormattingEnabled = true;
-            this.CB_Grass7.Location = new System.Drawing.Point(44, 195);
+            this.CB_Grass7.Location = new System.Drawing.Point(63, 315);
+            this.CB_Grass7.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Grass7.Name = "CB_Grass7";
-            this.CB_Grass7.Size = new System.Drawing.Size(121, 21);
+            this.CB_Grass7.Size = new System.Drawing.Size(199, 29);
             this.CB_Grass7.TabIndex = 304;
             // 
             // NUP_GrassMax4
             // 
-            this.NUP_GrassMax4.Location = new System.Drawing.Point(265, 116);
+            this.NUP_GrassMax4.Location = new System.Drawing.Point(432, 186);
+            this.NUP_GrassMax4.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMax4.Name = "NUP_GrassMax4";
-            this.NUP_GrassMax4.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMax4.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMax4.TabIndex = 59;
             // 
             // CB_Grass6
@@ -25826,16 +26154,18 @@
             this.CB_Grass6.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_Grass6.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_Grass6.FormattingEnabled = true;
-            this.CB_Grass6.Location = new System.Drawing.Point(44, 168);
+            this.CB_Grass6.Location = new System.Drawing.Point(63, 271);
+            this.CB_Grass6.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Grass6.Name = "CB_Grass6";
-            this.CB_Grass6.Size = new System.Drawing.Size(121, 21);
+            this.CB_Grass6.Size = new System.Drawing.Size(199, 29);
             this.CB_Grass6.TabIndex = 303;
             // 
             // NUP_GrassForme5
             // 
-            this.NUP_GrassForme5.Location = new System.Drawing.Point(171, 143);
+            this.NUP_GrassForme5.Location = new System.Drawing.Point(275, 230);
+            this.NUP_GrassForme5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassForme5.Name = "NUP_GrassForme5";
-            this.NUP_GrassForme5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassForme5.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassForme5.TabIndex = 60;
             // 
             // CB_Grass5
@@ -25843,16 +26173,18 @@
             this.CB_Grass5.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_Grass5.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_Grass5.FormattingEnabled = true;
-            this.CB_Grass5.Location = new System.Drawing.Point(44, 142);
+            this.CB_Grass5.Location = new System.Drawing.Point(63, 229);
+            this.CB_Grass5.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Grass5.Name = "CB_Grass5";
-            this.CB_Grass5.Size = new System.Drawing.Size(121, 21);
+            this.CB_Grass5.Size = new System.Drawing.Size(199, 29);
             this.CB_Grass5.TabIndex = 302;
             // 
             // NUP_GrassMin5
             // 
-            this.NUP_GrassMin5.Location = new System.Drawing.Point(218, 143);
+            this.NUP_GrassMin5.Location = new System.Drawing.Point(353, 230);
+            this.NUP_GrassMin5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMin5.Name = "NUP_GrassMin5";
-            this.NUP_GrassMin5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMin5.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMin5.TabIndex = 61;
             // 
             // CB_Grass4
@@ -25860,16 +26192,18 @@
             this.CB_Grass4.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_Grass4.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_Grass4.FormattingEnabled = true;
-            this.CB_Grass4.Location = new System.Drawing.Point(44, 115);
+            this.CB_Grass4.Location = new System.Drawing.Point(63, 186);
+            this.CB_Grass4.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Grass4.Name = "CB_Grass4";
-            this.CB_Grass4.Size = new System.Drawing.Size(121, 21);
+            this.CB_Grass4.Size = new System.Drawing.Size(199, 29);
             this.CB_Grass4.TabIndex = 301;
             // 
             // NUP_GrassMax5
             // 
-            this.NUP_GrassMax5.Location = new System.Drawing.Point(265, 143);
+            this.NUP_GrassMax5.Location = new System.Drawing.Point(432, 230);
+            this.NUP_GrassMax5.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMax5.Name = "NUP_GrassMax5";
-            this.NUP_GrassMax5.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMax5.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMax5.TabIndex = 62;
             // 
             // CB_Grass3
@@ -25877,16 +26211,18 @@
             this.CB_Grass3.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_Grass3.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_Grass3.FormattingEnabled = true;
-            this.CB_Grass3.Location = new System.Drawing.Point(44, 89);
+            this.CB_Grass3.Location = new System.Drawing.Point(63, 144);
+            this.CB_Grass3.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Grass3.Name = "CB_Grass3";
-            this.CB_Grass3.Size = new System.Drawing.Size(121, 21);
+            this.CB_Grass3.Size = new System.Drawing.Size(199, 29);
             this.CB_Grass3.TabIndex = 300;
             // 
             // NUP_GrassForme6
             // 
-            this.NUP_GrassForme6.Location = new System.Drawing.Point(171, 170);
+            this.NUP_GrassForme6.Location = new System.Drawing.Point(275, 272);
+            this.NUP_GrassForme6.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassForme6.Name = "NUP_GrassForme6";
-            this.NUP_GrassForme6.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassForme6.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassForme6.TabIndex = 63;
             // 
             // CB_Grass2
@@ -25894,16 +26230,18 @@
             this.CB_Grass2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_Grass2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_Grass2.FormattingEnabled = true;
-            this.CB_Grass2.Location = new System.Drawing.Point(44, 62);
+            this.CB_Grass2.Location = new System.Drawing.Point(63, 100);
+            this.CB_Grass2.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Grass2.Name = "CB_Grass2";
-            this.CB_Grass2.Size = new System.Drawing.Size(121, 21);
+            this.CB_Grass2.Size = new System.Drawing.Size(199, 29);
             this.CB_Grass2.TabIndex = 299;
             // 
             // NUP_GrassMin6
             // 
-            this.NUP_GrassMin6.Location = new System.Drawing.Point(218, 170);
+            this.NUP_GrassMin6.Location = new System.Drawing.Point(353, 272);
+            this.NUP_GrassMin6.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMin6.Name = "NUP_GrassMin6";
-            this.NUP_GrassMin6.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMin6.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMin6.TabIndex = 64;
             // 
             // CB_Grass1
@@ -25911,250 +26249,282 @@
             this.CB_Grass1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.CB_Grass1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.CB_Grass1.FormattingEnabled = true;
-            this.CB_Grass1.Location = new System.Drawing.Point(44, 36);
+            this.CB_Grass1.Location = new System.Drawing.Point(63, 58);
+            this.CB_Grass1.Margin = new System.Windows.Forms.Padding(5);
             this.CB_Grass1.Name = "CB_Grass1";
-            this.CB_Grass1.Size = new System.Drawing.Size(121, 21);
+            this.CB_Grass1.Size = new System.Drawing.Size(199, 29);
             this.CB_Grass1.TabIndex = 3;
             // 
             // NUP_GrassMax6
             // 
-            this.NUP_GrassMax6.Location = new System.Drawing.Point(265, 170);
+            this.NUP_GrassMax6.Location = new System.Drawing.Point(432, 272);
+            this.NUP_GrassMax6.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMax6.Name = "NUP_GrassMax6";
-            this.NUP_GrassMax6.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMax6.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMax6.TabIndex = 65;
             // 
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(11, 39);
+            this.label31.Location = new System.Drawing.Point(18, 62);
+            this.label31.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(27, 13);
+            this.label31.Size = new System.Drawing.Size(42, 21);
             this.label31.TabIndex = 287;
             this.label31.Text = "10%";
             // 
             // NUP_GrassForme7
             // 
-            this.NUP_GrassForme7.Location = new System.Drawing.Point(171, 196);
+            this.NUP_GrassForme7.Location = new System.Drawing.Point(275, 314);
+            this.NUP_GrassForme7.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassForme7.Name = "NUP_GrassForme7";
-            this.NUP_GrassForme7.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassForme7.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassForme7.TabIndex = 66;
             // 
             // label41
             // 
             this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(17, 332);
+            this.label41.Location = new System.Drawing.Point(28, 532);
+            this.label41.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(21, 13);
+            this.label41.Size = new System.Drawing.Size(33, 21);
             this.label41.TabIndex = 298;
             this.label41.Text = "1%";
             // 
             // NUP_GrassMin7
             // 
-            this.NUP_GrassMin7.Location = new System.Drawing.Point(218, 196);
+            this.NUP_GrassMin7.Location = new System.Drawing.Point(353, 314);
+            this.NUP_GrassMin7.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMin7.Name = "NUP_GrassMin7";
-            this.NUP_GrassMin7.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMin7.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMin7.TabIndex = 67;
             // 
             // label42
             // 
             this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(17, 305);
+            this.label42.Location = new System.Drawing.Point(28, 490);
+            this.label42.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(21, 13);
+            this.label42.Size = new System.Drawing.Size(33, 21);
             this.label42.TabIndex = 297;
             this.label42.Text = "4%";
             // 
             // NUP_GrassMax7
             // 
-            this.NUP_GrassMax7.Location = new System.Drawing.Point(265, 196);
+            this.NUP_GrassMax7.Location = new System.Drawing.Point(432, 314);
+            this.NUP_GrassMax7.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMax7.Name = "NUP_GrassMax7";
-            this.NUP_GrassMax7.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMax7.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMax7.TabIndex = 68;
             // 
             // label40
             // 
             this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(17, 278);
+            this.label40.Location = new System.Drawing.Point(28, 447);
+            this.label40.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(21, 13);
+            this.label40.Size = new System.Drawing.Size(33, 21);
             this.label40.TabIndex = 296;
             this.label40.Text = "5%";
             // 
             // NUP_GrassForme8
             // 
-            this.NUP_GrassForme8.Location = new System.Drawing.Point(171, 223);
+            this.NUP_GrassForme8.Location = new System.Drawing.Point(275, 357);
+            this.NUP_GrassForme8.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassForme8.Name = "NUP_GrassForme8";
-            this.NUP_GrassForme8.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassForme8.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassForme8.TabIndex = 69;
             // 
             // label39
             // 
             this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(11, 252);
+            this.label39.Location = new System.Drawing.Point(18, 405);
+            this.label39.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(27, 13);
+            this.label39.Size = new System.Drawing.Size(42, 21);
             this.label39.TabIndex = 295;
             this.label39.Text = "10%";
             // 
             // NUP_GrassMin8
             // 
-            this.NUP_GrassMin8.Location = new System.Drawing.Point(218, 223);
+            this.NUP_GrassMin8.Location = new System.Drawing.Point(353, 357);
+            this.NUP_GrassMin8.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMin8.Name = "NUP_GrassMin8";
-            this.NUP_GrassMin8.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMin8.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMin8.TabIndex = 70;
             // 
             // label38
             // 
             this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(11, 228);
+            this.label38.Location = new System.Drawing.Point(18, 360);
+            this.label38.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(27, 13);
+            this.label38.Size = new System.Drawing.Size(42, 21);
             this.label38.TabIndex = 294;
             this.label38.Text = "10%";
             // 
             // NUP_GrassMax8
             // 
-            this.NUP_GrassMax8.Location = new System.Drawing.Point(265, 223);
+            this.NUP_GrassMax8.Location = new System.Drawing.Point(432, 357);
+            this.NUP_GrassMax8.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMax8.Name = "NUP_GrassMax8";
-            this.NUP_GrassMax8.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMax8.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMax8.TabIndex = 71;
             // 
             // label37
             // 
             this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(11, 201);
+            this.label37.Location = new System.Drawing.Point(18, 319);
+            this.label37.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(27, 13);
+            this.label37.Size = new System.Drawing.Size(42, 21);
             this.label37.TabIndex = 293;
             this.label37.Text = "10%";
             // 
             // NUP_GrassForme9
             // 
-            this.NUP_GrassForme9.Location = new System.Drawing.Point(171, 250);
+            this.NUP_GrassForme9.Location = new System.Drawing.Point(275, 401);
+            this.NUP_GrassForme9.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassForme9.Name = "NUP_GrassForme9";
-            this.NUP_GrassForme9.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassForme9.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassForme9.TabIndex = 72;
             // 
             // label36
             // 
             this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(11, 174);
+            this.label36.Location = new System.Drawing.Point(18, 275);
+            this.label36.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(27, 13);
+            this.label36.Size = new System.Drawing.Size(42, 21);
             this.label36.TabIndex = 292;
             this.label36.Text = "10%";
             // 
             // NUP_GrassMin9
             // 
-            this.NUP_GrassMin9.Location = new System.Drawing.Point(218, 250);
+            this.NUP_GrassMin9.Location = new System.Drawing.Point(353, 401);
+            this.NUP_GrassMin9.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMin9.Name = "NUP_GrassMin9";
-            this.NUP_GrassMin9.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMin9.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMin9.TabIndex = 73;
             // 
             // label35
             // 
             this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(11, 147);
+            this.label35.Location = new System.Drawing.Point(18, 233);
+            this.label35.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(27, 13);
+            this.label35.Size = new System.Drawing.Size(42, 21);
             this.label35.TabIndex = 291;
             this.label35.Text = "10%";
             // 
             // NUP_GrassMax9
             // 
-            this.NUP_GrassMax9.Location = new System.Drawing.Point(265, 250);
+            this.NUP_GrassMax9.Location = new System.Drawing.Point(432, 401);
+            this.NUP_GrassMax9.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMax9.Name = "NUP_GrassMax9";
-            this.NUP_GrassMax9.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMax9.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMax9.TabIndex = 74;
             // 
             // label34
             // 
             this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(11, 120);
+            this.label34.Location = new System.Drawing.Point(18, 190);
+            this.label34.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(27, 13);
+            this.label34.Size = new System.Drawing.Size(42, 21);
             this.label34.TabIndex = 290;
             this.label34.Text = "10%";
             // 
             // NUP_GrassForme10
             // 
-            this.NUP_GrassForme10.Location = new System.Drawing.Point(171, 276);
+            this.NUP_GrassForme10.Location = new System.Drawing.Point(275, 443);
+            this.NUP_GrassForme10.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassForme10.Name = "NUP_GrassForme10";
-            this.NUP_GrassForme10.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassForme10.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassForme10.TabIndex = 75;
             // 
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(11, 93);
+            this.label33.Location = new System.Drawing.Point(18, 148);
+            this.label33.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(27, 13);
+            this.label33.Size = new System.Drawing.Size(42, 21);
             this.label33.TabIndex = 289;
             this.label33.Text = "10%";
             // 
             // NUP_GrassMin10
             // 
-            this.NUP_GrassMin10.Location = new System.Drawing.Point(218, 276);
+            this.NUP_GrassMin10.Location = new System.Drawing.Point(353, 443);
+            this.NUP_GrassMin10.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMin10.Name = "NUP_GrassMin10";
-            this.NUP_GrassMin10.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMin10.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMin10.TabIndex = 76;
             // 
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(11, 66);
+            this.label32.Location = new System.Drawing.Point(18, 104);
+            this.label32.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(27, 13);
+            this.label32.Size = new System.Drawing.Size(42, 21);
             this.label32.TabIndex = 288;
             this.label32.Text = "10%";
             // 
             // NUP_GrassMax10
             // 
-            this.NUP_GrassMax10.Location = new System.Drawing.Point(265, 276);
+            this.NUP_GrassMax10.Location = new System.Drawing.Point(432, 443);
+            this.NUP_GrassMax10.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMax10.Name = "NUP_GrassMax10";
-            this.NUP_GrassMax10.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMax10.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMax10.TabIndex = 77;
             // 
             // NUP_GrassMax12
             // 
-            this.NUP_GrassMax12.Location = new System.Drawing.Point(265, 330);
+            this.NUP_GrassMax12.Location = new System.Drawing.Point(432, 529);
+            this.NUP_GrassMax12.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMax12.Name = "NUP_GrassMax12";
-            this.NUP_GrassMax12.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMax12.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMax12.TabIndex = 83;
             // 
             // NUP_GrassForme11
             // 
-            this.NUP_GrassForme11.Location = new System.Drawing.Point(171, 303);
+            this.NUP_GrassForme11.Location = new System.Drawing.Point(275, 487);
+            this.NUP_GrassForme11.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassForme11.Name = "NUP_GrassForme11";
-            this.NUP_GrassForme11.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassForme11.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassForme11.TabIndex = 78;
             // 
             // NUP_GrassMin12
             // 
-            this.NUP_GrassMin12.Location = new System.Drawing.Point(218, 330);
+            this.NUP_GrassMin12.Location = new System.Drawing.Point(353, 529);
+            this.NUP_GrassMin12.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMin12.Name = "NUP_GrassMin12";
-            this.NUP_GrassMin12.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMin12.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMin12.TabIndex = 82;
             // 
             // NUP_GrassMin11
             // 
-            this.NUP_GrassMin11.Location = new System.Drawing.Point(218, 303);
+            this.NUP_GrassMin11.Location = new System.Drawing.Point(353, 487);
+            this.NUP_GrassMin11.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMin11.Name = "NUP_GrassMin11";
-            this.NUP_GrassMin11.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMin11.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMin11.TabIndex = 79;
             // 
             // NUP_GrassForme12
             // 
-            this.NUP_GrassForme12.Location = new System.Drawing.Point(171, 330);
+            this.NUP_GrassForme12.Location = new System.Drawing.Point(275, 529);
+            this.NUP_GrassForme12.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassForme12.Name = "NUP_GrassForme12";
-            this.NUP_GrassForme12.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassForme12.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassForme12.TabIndex = 81;
             // 
             // NUP_GrassMax11
             // 
-            this.NUP_GrassMax11.Location = new System.Drawing.Point(265, 303);
+            this.NUP_GrassMax11.Location = new System.Drawing.Point(432, 487);
+            this.NUP_GrassMax11.Margin = new System.Windows.Forms.Padding(5);
             this.NUP_GrassMax11.Name = "NUP_GrassMax11";
-            this.NUP_GrassMax11.Size = new System.Drawing.Size(41, 20);
+            this.NUP_GrassMax11.Size = new System.Drawing.Size(68, 29);
             this.NUP_GrassMax11.TabIndex = 80;
             // 
             // TabControl_EncounterData
@@ -26162,49 +26532,42 @@
             this.TabControl_EncounterData.Controls.Add(this.TabPage_Land);
             this.TabControl_EncounterData.Controls.Add(this.TabPage_Water);
             this.TabControl_EncounterData.Controls.Add(this.TabPage_Horde);
-            this.TabControl_EncounterData.Location = new System.Drawing.Point(12, 12);
+            this.TabControl_EncounterData.Location = new System.Drawing.Point(20, 19);
+            this.TabControl_EncounterData.Margin = new System.Windows.Forms.Padding(5);
             this.TabControl_EncounterData.Name = "TabControl_EncounterData";
             this.TabControl_EncounterData.SelectedIndex = 0;
-            this.TabControl_EncounterData.Size = new System.Drawing.Size(926, 395);
+            this.TabControl_EncounterData.Size = new System.Drawing.Size(1543, 609);
             this.TabControl_EncounterData.TabIndex = 2;
             // 
             // B_Dump
             // 
             this.B_Dump.Enabled = false;
-            this.B_Dump.Location = new System.Drawing.Point(645, 7);
+            this.B_Dump.Location = new System.Drawing.Point(1075, 10);
+            this.B_Dump.Margin = new System.Windows.Forms.Padding(5);
             this.B_Dump.Name = "B_Dump";
-            this.B_Dump.Size = new System.Drawing.Size(95, 23);
+            this.B_Dump.Size = new System.Drawing.Size(158, 37);
             this.B_Dump.TabIndex = 415;
-            this.B_Dump.Text = "Dump Tables";
+            this.B_Dump.Text = "导出TXT";
             this.B_Dump.UseVisualStyleBackColor = true;
             this.B_Dump.Click += new System.EventHandler(this.B_Dump_Click);
             // 
             // B_Randomize
             // 
             this.B_Randomize.Enabled = false;
-            this.B_Randomize.Location = new System.Drawing.Point(544, 7);
+            this.B_Randomize.Location = new System.Drawing.Point(907, 10);
+            this.B_Randomize.Margin = new System.Windows.Forms.Padding(5);
             this.B_Randomize.Name = "B_Randomize";
-            this.B_Randomize.Size = new System.Drawing.Size(95, 23);
+            this.B_Randomize.Size = new System.Drawing.Size(158, 37);
             this.B_Randomize.TabIndex = 416;
-            this.B_Randomize.Text = "Randomize All";
+            this.B_Randomize.Text = "全部随机化";
             this.B_Randomize.UseVisualStyleBackColor = true;
             this.B_Randomize.Click += new System.EventHandler(this.B_Randomize_Click);
             // 
-            // CHK_HomogeneousHordes
-            // 
-            this.CHK_HomogeneousHordes.AutoSize = true;
-            this.CHK_HomogeneousHordes.Location = new System.Drawing.Point(18, 97);
-            this.CHK_HomogeneousHordes.Name = "CHK_HomogeneousHordes";
-            this.CHK_HomogeneousHordes.Size = new System.Drawing.Size(133, 17);
-            this.CHK_HomogeneousHordes.TabIndex = 296;
-            this.CHK_HomogeneousHordes.Text = "Single Species Hordes";
-            this.CHK_HomogeneousHordes.UseVisualStyleBackColor = true;
-            // 
             // RSWE
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(948, 415);
+            this.ClientSize = new System.Drawing.Size(1580, 651);
             this.Controls.Add(this.B_Randomize);
             this.Controls.Add(this.B_Dump);
             this.Controls.Add(this.L_FormList);
@@ -26213,11 +26576,15 @@
             this.Controls.Add(this.B_Save);
             this.Controls.Add(this.CB_LocationID);
             this.Controls.Add(this.TabControl_EncounterData);
+            this.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(964, 454);
-            this.MinimumSize = new System.Drawing.Size(964, 454);
+            this.MaximumSize = new System.Drawing.Size(1596, 712);
+            this.MinimumSize = new System.Drawing.Size(1596, 650);
             this.Name = "RSWE";
-            this.Text = "ORAS Wild Editor";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "ORAS 野外编辑器";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RSWE_FormClosing);
             this.TabPage_Horde.ResumeLayout(false);
             this.TabPage_Horde.PerformLayout();

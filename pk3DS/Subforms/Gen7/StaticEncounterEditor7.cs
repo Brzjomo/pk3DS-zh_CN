@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 using pk3DS.Core;
@@ -30,40 +31,40 @@ namespace pk3DS
 
         private readonly string[] gender =
         {
-            "- / Genderless/Random",
-            "♂ / Male",
-            "♀ / Female",
+            "无性别 / 随机",
+            "♂ 雄性",
+            "♀ 雌性",
         };
 
         private readonly string[] ability =
         {
-            "Any (1 or 2)",
-            "Ability 1",
-            "Ability 2",
-            "Hidden Ability",
+            "任意（1 或 2）",
+            "特性 1",
+            "特性 2",
+            "隐藏特性",
         };
 
         private readonly string[] aura =
         {
-            "(None)",
-            "Attack (+1)",
-            "Attack (+2)",
-            "Attack (+3)",
-            "Defense (+1)",
-            "Defense (+2)",
-            "Defense (+3)",
-            "Sp. Attack (+1)",
-            "Sp. Attack (+2)",
-            "Sp. Attack (+3)",
-            "Sp. Defense (+1)",
-            "Sp. Defense (+2)",
-            "Sp. Defense (+3)",
-            "Speed (+1)",
-            "Speed (+2)",
-            "Speed (+3)",
-            "All Stats (+1)",
-            "All Stats (+2)",
-            "All Stats (+3)",
+            "（无）",
+            "物攻 (+1)",
+            "物攻 (+2)",
+            "物攻 (+3)",
+            "防御 (+1)",
+            "防御 (+2)",
+            "防御 (+3)",
+            "特攻 (+1)",
+            "特攻 (+2)",
+            "特攻 (+3)",
+            "特防 (+1)",
+            "特防 (+2)",
+            "特防 (+3)",
+            "速度 (+1)",
+            "速度 (+2)",
+            "速度 (+3)",
+            "全属性 (+1)",
+            "全属性 (+2)",
+            "全属性 (+3)",
         };
 
         private static readonly int[] Totem = { 020, 105, 735, 738, 743, 746, 752, 754, 758, 777, 778, 784 }; // Totem battles
@@ -111,14 +112,26 @@ namespace pk3DS
                 }
             }
 
-            movelist[0] = itemlist[0] = specieslist[0] = "(None)";
-            foreach (var s in specieslist)
+            movelist[0] = itemlist[0] = specieslist[0] = "（无）";
+
+            for (int i = 0; i < specieslist.Length; i++)
             {
-                CB_GSpecies.Items.Add(s);
-                CB_ESpecies.Items.Add(s);
-                CB_TSpecies.Items.Add(s);
-                CB_TRequest.Items.Add(s);
+                if (Main.ifFixChineseDisplay && Main.Config.USUM && Main.Language > 7 && i != 0)
+                {
+                    CB_GSpecies.Items.Add(Main.pokemonNameUSSC_Sim[i - 1]);
+                    CB_ESpecies.Items.Add(Main.pokemonNameUSSC_Sim[i - 1]);
+                    CB_TSpecies.Items.Add(Main.pokemonNameUSSC_Sim[i - 1]);
+                    CB_TRequest.Items.Add(Main.pokemonNameUSSC_Sim[i - 1]);
+                }
+                else
+                {
+                    CB_GSpecies.Items.Add(specieslist[i]);
+                    CB_ESpecies.Items.Add(specieslist[i]);
+                    CB_TSpecies.Items.Add(specieslist[i]);
+                    CB_TRequest.Items.Add(specieslist[i]);
+                }
             }
+
             foreach (var s in ability)
             {
                 CB_GAbility.Items.Add(s);
@@ -146,9 +159,9 @@ namespace pk3DS
             }
             foreach (string s in aura) CB_Aura.Items.Add(s);
 
-            CB_GNature.Items.Add("Random");
+            CB_GNature.Items.Add("随机");
             CB_GNature.Items.AddRange(natures.Take(25).ToArray());
-            CB_ENature.Items.Add("Random");
+            CB_ENature.Items.Add("随机");
             CB_ENature.Items.AddRange(natures.Take(25).ToArray());
             CB_TNature.Items.AddRange(natures.Take(25).ToArray());
 
@@ -174,11 +187,20 @@ namespace pk3DS
             LB_Trade.Items.Clear();
 
             for (int i = 0; i < Gifts.Length; i++)
+            {
                 LB_Gift.Items.Add(GetEntryText(Gifts[i], i));
+            }
+
             for (int i = 0; i < Encounters.Length; i++)
+            {
                 LB_Encounter.Items.Add(GetEntryText(Encounters[i], i));
+            }
+
             for (int i = 0; i < Trades.Length; i++)
+            {
                 LB_Trade.Items.Add(GetEntryText(Trades[i], i));
+            }
+
             loading = false;
         }
 
@@ -210,14 +232,14 @@ namespace pk3DS
             if (Gifts.Take(3).Select(gift => gift.Species).SequenceEqual(oldStarters))
                 return;
 
-            var dr = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Starters have been changed. Update text references?", "Note that this only updates text references for the current language set in pk3DS.", "This can be changed from Options -> Language on the main window.");
+            var dr = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "初始宝可梦已更改，是否更新文本引用?", "注意这只更新pk3ds中，当前语言的文本引用。", "你也可以稍后在主窗口的选项-语言设置中更改。");
             if (dr == DialogResult.Yes)
                 UpdateStarterText();
         }
 
         private string GetEntryText(int species, int entry)
         {
-            return $"{entry:00} - {specieslist[species]}";
+            return $"{entry:00} - {Main.pokemonNameUSSC_Sim[species - 1]}";
         }
 
         private string GetEntryText(EncounterStatic enc, int entry)
@@ -508,7 +530,7 @@ namespace pk3DS
 
         private void B_Starters_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Randomize Starters? Cannot undo.", "Double check Randomization settings before continuing.") != DialogResult.Yes)
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机初始宝可梦？ 无法撤销。", "继续前，请先检查随机化选项。") != DialogResult.Yes)
                 return;
 
             SetGift();
@@ -564,12 +586,12 @@ namespace pk3DS
             GetListBoxEntries();
             GetGift();
 
-            WinFormsUtil.Alert("Randomized Starters according to specification!");
+            WinFormsUtil.Alert("已根据设置随机化初始宝可梦！");
         }
 
         private void B_RandAll_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Randomize Static Encounters? Cannot undo.", "Double check Randomization Settings before continuing.") != DialogResult.Yes)
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机固定遭遇？无法撤销。", "继续前，请先检查随机化选项。") != DialogResult.Yes)
                 return;
 
             SetGift();
@@ -711,7 +733,7 @@ namespace pk3DS
             GetEncounter();
             GetTrade();
 
-            WinFormsUtil.Alert("Randomized Static Encounters according to specification!");
+            WinFormsUtil.Alert("已根据选项随机化固定遭遇！");
         }
 
         // Mirror Changes
@@ -769,7 +791,7 @@ namespace pk3DS
 
         private void ModifyLevels(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Modify all current Levels?", "Cannot undo.") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否修改全部当前等级？", "无法撤销。") != DialogResult.Yes) return;
 
             for (int i = 0; i < LB_Encounter.Items.Count; i++)
             {
@@ -786,7 +808,7 @@ namespace pk3DS
                 LB_Trade.SelectedIndex = i;
                 NUD_TLevel.Value = Randomizer.GetModifiedLevel((int)NUD_TLevel.Value, NUD_LevelBoost.Value);
             }
-            WinFormsUtil.Alert("Modified all Levels according to specification!");
+            WinFormsUtil.Alert("已根据选项修改全部等级！");
         }
 
         private void B_CurrentAttackSE_Click(object sender, EventArgs e)

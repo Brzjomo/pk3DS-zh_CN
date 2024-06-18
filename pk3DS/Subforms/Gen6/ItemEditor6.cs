@@ -34,7 +34,7 @@ namespace pk3DS
         {
             SetEntry();
             entry = CB_Item.SelectedIndex;
-            L_Index.Text = "Index: " + entry.ToString("000");
+            L_Index.Text = "序号: " + entry.ToString("000");
             GetEntry();
         }
 
@@ -59,9 +59,9 @@ namespace pk3DS
 
         public static int GetItemMapOffset()
         {
-            if (Main.ExeFSPath == null) { WinFormsUtil.Alert("No exeFS code to load."); return -1; }
+            if (Main.ExeFSPath == null) { WinFormsUtil.Alert("未加载 exeFS 代码"); return -1; }
             string[] exefsFiles = Directory.GetFiles(Main.ExeFSPath);
-            if (!File.Exists(exefsFiles[0]) || !Path.GetFileNameWithoutExtension(exefsFiles[0]).Contains("code")) { WinFormsUtil.Alert("No .code.bin detected."); return -1; }
+            if (!File.Exists(exefsFiles[0]) || !Path.GetFileNameWithoutExtension(exefsFiles[0]).Contains("code")) { WinFormsUtil.Alert("未检测到 .code .bin 文件"); return -1; }
             byte[] data = File.ReadAllBytes(exefsFiles[0]);
 
             byte[] reference = Main.Config.ORAS

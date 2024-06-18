@@ -19,7 +19,7 @@ namespace pk3DS
         public TypeChart6()
         {
             if (!File.Exists(CROPath))
-            { WinFormsUtil.Error("CRO does not exist! Closing.", CROPath); Close(); }
+            { WinFormsUtil.Error("CRO 不存在！关闭中...", CROPath); Close(); }
 
             InitializeComponent();
 
@@ -72,18 +72,18 @@ namespace pk3DS
         {
             if (value >= effects.Length || X >= types.Length || Y >= types.Length)
                 return; // clicking and moving outside the box has invalid values
-            L_Hover.Text = $"[{X:00}x{Y:00}: {value:00}] {types[Y]} attacking {types[X]} {effects[value]}";
+            L_Hover.Text = $"[{X:00}x{Y:00}: {value:00}] <<{types[Y]}>> 攻击 <<{types[X]}>> {effects[value]}";
         }
 
         private readonly string[] effects =
         {
-            "has no effect!",
+            "没有效果",
             "",
-            "is not very effective.",
+            "不是很有效",
             "",
-            "does regular damage.",
+            "效果一般",
             "", "", "",
-            "is super effective!"
+            "效果绝佳！"
         };
 
         public static void GetCoordinate(Control sender, MouseEventArgs e, out int X, out int Y)

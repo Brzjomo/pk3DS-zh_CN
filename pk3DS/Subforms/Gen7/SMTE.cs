@@ -116,7 +116,7 @@ namespace pk3DS
         {
             int slot = GetSlot(sender);
             if (CB_Species.SelectedIndex == 0)
-            { WinFormsUtil.Alert("Can't set empty slot."); return; }
+            { WinFormsUtil.Alert("无法设置空槽位"); return; }
 
             var pk = PrepareTP7();
             var tr = Trainers[index];
@@ -198,7 +198,7 @@ namespace pk3DS
             species = Main.SpeciesStat[species].FormeIndex(species, formnum);
 
             CB_Ability.Items.Clear();
-            CB_Ability.Items.Add("Any (1 or 2)");
+            CB_Ability.Items.Add("任意（1 或 2）");
             CB_Ability.Items.Add(abilitylist[Main.SpeciesStat[species].Abilities[0]] + " (1)");
             CB_Ability.Items.Add(abilitylist[Main.SpeciesStat[species].Abilities[1]] + " (2)");
             CB_Ability.Items.Add(abilitylist[Main.SpeciesStat[species].Abilities[2]] + " (H)");
@@ -213,7 +213,7 @@ namespace pk3DS
             AltForms = forms.Select(_ => Enumerable.Range(0, 100).Select(i => i.ToString()).ToArray()).ToArray();
             CB_TrainerID.Items.Clear();
             for (int i = 0; i < trdata.Length; i++)
-                CB_TrainerID.Items.Add(GetEntryTitle(trName[i] ?? "UNKNOWN", i));
+                CB_TrainerID.Items.Add(GetEntryTitle(trName[i] ?? "未知", i));
 
             CB_Trainer_Class.Items.Clear();
             for (int i = 0; i < trClass.Length; i++)
@@ -231,13 +231,23 @@ namespace pk3DS
             }
 
             specieslist[0] = "---";
-            abilitylist[0] = itemlist[0] = movelist[0] = "(None)";
+            abilitylist[0] = itemlist[0] = movelist[0] = "-- 无 --";
             pba = new[] {PB_Team1, PB_Team2, PB_Team3, PB_Team4, PB_Team5, PB_Team6};
             AIBits = new[] {CHK_AI0, CHK_AI1, CHK_AI2, CHK_AI3, CHK_AI4, CHK_AI5, CHK_AI6, CHK_AI7};
 
             CB_Species.Items.Clear();
-            foreach (string s in specieslist)
-                CB_Species.Items.Add(s);
+
+            for (int i = 0; i < specieslist.Length; i++)
+            {
+                if (Main.ifFixChineseDisplay && Main.Config.USUM && Main.Language > 7 && i != 0)
+                {
+                    CB_Species.Items.Add(Main.pokemonNameUSSC_Sim[i - 1]);
+                }
+                else
+                {
+                    CB_Species.Items.Add(specieslist[i]);
+                }
+            }
 
             CB_Move1.Items.Clear();
             CB_Move2.Items.Clear();
@@ -262,9 +272,9 @@ namespace pk3DS
                 CB_Item.Items.Add(s);
 
             CB_Gender.Items.Clear();
-            CB_Gender.Items.Add("- / Genderless/Random");
-            CB_Gender.Items.Add("♂ / Male");
-            CB_Gender.Items.Add("♀ / Female");
+            CB_Gender.Items.Add("无性别 / 随机");
+            CB_Gender.Items.Add("♂ 雄性");
+            CB_Gender.Items.Add("♀ 雌性");
 
             CB_Forme.Items.Add("");
 
@@ -416,6 +426,7 @@ namespace pk3DS
             CB_Money.SelectedIndex = tr.Money;
             CB_Mode.SelectedIndex = (int)tr.Mode;
             LoadAIBits((uint)tr.AI);
+            AI_Level.Value = (uint)tr.AI;//test
             CHK_Flag.Checked = tr.Flag;
             PopulateTeam(tr);
         }
@@ -630,7 +641,7 @@ namespace pk3DS
 
         private void B_Randomize_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Randomize all? Cannot undo.", "Double check Randomization settings in the Randomizer Options tab.") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否全部随机化？无法撤销。") != DialogResult.Yes) return;
 
             CB_TrainerID.SelectedIndex = 0;
             var rnd = new SpeciesRandomizer(Main.Config)
@@ -769,10 +780,26 @@ namespace pk3DS
                         pk.Shiny = Util.Rand.Next(0, 100 + 1) < NUD_Shiny.Value;
                     if (CHK_RandomAbilities.Checked)
                         pk.Ability = (int)Util.Random32() % 4;
-                    if (CHK_MaxDiffPKM.Checked)
-                        pk.IVs = new[] {31, 31, 31, 31, 31, 31};
+                    if (CHK_MaxDiffPKM.Checked) {
+                        pk.IVs = new[] { 31, 31, 31, 31, 31, 31 };
+                    } else
+                    {
+                        byte[] buffer = Guid.NewGuid().ToByteArray();
+                        int iSeed = BitConverter.ToInt32(buffer, 0);
+                        Random random = new Random(iSeed);
+                        pk.IVs = new[] { random.Next(0, 32), random.Next(0, 32), random.Next(0, 32), random.Next(0, 32), random.Next(0, 32), random.Next(0, 32) };
+                    }
                     if (CHK_MaxAI.Checked)
-                        tr.AI |= (int)(TrainerAI.Basic | TrainerAI.Strong | TrainerAI.Expert | TrainerAI.PokeChange);
+                    {
+                        //tr.AI |= (int)(TrainerAI.Basic | TrainerAI.Strong | TrainerAI.Expert | TrainerAI.PokeChange);
+                        tr.AI = 255;
+                    } else
+                    {
+                        byte[] buffer = Guid.NewGuid().ToByteArray();
+                        int iSeed = BitConverter.ToInt32(buffer, 0);
+                        Random random = new Random(iSeed);
+                        tr.AI = (byte)random.Next(0, 256);
+                    }
 
                     if (CHK_ForceFullyEvolved.Checked && pk.Level >= NUD_ForceFullyEvolved.Value && !FinalEvo.Contains(pk.Species))
                     {
@@ -808,7 +835,7 @@ namespace pk3DS
                 }
                 SaveData(tr, i);
             }
-            WinFormsUtil.Alert("Randomized all Trainers according to specification!", "Press the Dump to .TXT button to view the new Trainer information!");
+            WinFormsUtil.Alert("已根据设置随机化全部训练家！");
         }
 
         private void B_HighAttack_Click(object sender, EventArgs e)
@@ -883,6 +910,10 @@ namespace pk3DS
         private void CHK_Level_CheckedChanged(object sender, EventArgs e)
         {
             NUD_LevelBoost.Enabled = CHK_Level.Checked;
+            if (CHK_Level.Checked)
+            {
+                NUD_LevelBoost.Value = 1.2M;
+            }
         }
 
         private int[] GetRandomMega(out int species)

@@ -363,21 +363,21 @@ namespace pk3DS
         {
             System.Media.SystemSounds.Exclamation.Play();
             string msg = string.Join(Environment.NewLine + Environment.NewLine, lines);
-            return MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return MessageBox.Show(msg, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public static DialogResult Alert(params string[] lines)
         {
             System.Media.SystemSounds.Asterisk.Play();
             string msg = string.Join(Environment.NewLine + Environment.NewLine, lines);
-            return MessageBox.Show(msg, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return MessageBox.Show(msg, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         public static DialogResult Prompt(MessageBoxButtons btn, params string[] lines)
         {
             System.Media.SystemSounds.Question.Play();
             string msg = string.Join(Environment.NewLine + Environment.NewLine, lines);
-            return MessageBox.Show(msg, "Prompt", btn, MessageBoxIcon.Asterisk);
+            return MessageBox.Show(msg, "提示", btn, MessageBoxIcon.Asterisk);
         }
 
         public static List<ComboItem> GetCBList(string textfile, string lang)

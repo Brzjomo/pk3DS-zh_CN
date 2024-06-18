@@ -22,68 +22,68 @@ namespace pk3DS
         private readonly string[] types = Main.Config.GetText(TextName.Types);
         private readonly string[] moveflavor = Main.Config.GetText(TextName.MoveFlavor);
         private readonly string[] movelist = Main.Config.GetText(TextName.MoveNames);
-        private readonly string[] MoveCategories = { "Status", "Physical", "Special", };
-        private readonly string[] StatCategories = { "None", "Attack", "Defense", "Special Attack", "Special Defense", "Speed", "Accuracy", "Evasion", "All", };
+        private readonly string[] MoveCategories = { "变化", "物理", "特殊", };
+        private readonly string[] StatCategories = { "无", "物攻", "物防", "特攻", "特防", "速度", "命中", "闪避", "全部", };
 
         private static readonly string[] TargetingTypes =
         {
-            "Single Adjacent Ally/Foe",
-            "Any Ally", "Any Adjacent Ally", "Single Adjacent Foe", "Everyone but User", "All Foes",
-            "All Allies", "Self", "All Pokémon on Field", "Single Adjacent Foe (2)", "Entire Field",
-            "Opponent's Field", "User's Field", "Self",
+            "单个相邻的同伴/敌人",
+            "任何同伴", "任何相邻的同伴", "单个相邻的敌人", "除玩家外的所有人", "所有敌人",
+            "所有同伴", "自身", "场上所有宝可梦", "单个相邻的敌人 (2)", "整个场地",
+            "对方的场地", "玩家的场地", "自身",
         };
 
         private static readonly string[] InflictionTypes =
         {
-            "None",
-            "Paralyze", "Sleep", "Freeze", "Burn", "Poison",
-            "Confusion", "Attract", "Capture", "Nightmare", "Curse",
-            "Taunt", "Torment", "Disable", "Yawn", "Heal Block",
-            "?", "Detect", "Leech Seed", "Embargo", "Perish Song",
-            "Ingrain", "??? 0x16", "??? 0x17", "Mute"
+            "无",
+            "麻痹", "睡眠", "冰冻", "灼伤", "中毒/剧毒",
+            "混乱", "着迷", "束缚", "恶梦", "诅咒",
+            "挑衅", "无理取闹", "定身法", "瞌睡", "回复封锁",
+            "?", "被识破", "寄生种子", "查封", "灭亡之歌",
+            "扎根", "??? 0x16", "??? 0x17", "Mute"
         };
 
         private static readonly string[] MoveQualities =
         {
-            "Only DMG",
-            "No DMG -> Inflict Status", "No DMG -> -Target/+User Stat", "No DMG | Heal User", "DMG | Inflict Status", "No DMG | STATUS | +Target Stat",
-            "DMG | -Target Stat", "DMG | +User Stat", "DMG | Absorbs DMG", "One-Hit KO", "Affects Whole Field",
-            "Affect One Side of the Field", "Forces Target to Switch", "Unique Effect",
+            "纯伤害",
+            "无伤害 -> 给予异常状态", "无伤害 -> 减益目标/增益玩家", "无伤害 | 治疗玩家", "伤害 | 给予异常状态", "无伤害 | 给予异常状态 | 增益目标",
+            "伤害 | 减益目标", "伤害 | 增益玩家", "伤害 | 吸收伤害", "一击必杀", "影响整个场地",
+            "影响一半场地", "强制目标交换宝可梦", "独特的效果",
         };
 
         private static readonly string[] ZMoveEffects =
         {
-            "None",
-            "+1 Attack",
-            "+2 Attack",
-            "+3 Attack",
-            "+1 Defense",
-            "+2 Defense",
-            "+3 Defense",
-            "+1 Special Attack",
-            "+2 Special Attack",
-            "+3 Special Attack",
-            "+1 Special Defense",
-            "+2 Special Defense",
-            "+3 Special Defense",
-            "+1 Speed",
-            "+2 Speed",
-            "+3 Speed",
-            "+1 Accuracy",
-            "+2 Accuracy",
-            "+3 Accuracy",
-            "+1 Evasiveness",
-            "+2 Evasiveness",
-            "+3 Evasiveness",
-            "+1 to all (except Accuracy or Evasiveness)",
-            "+2 to all (except Accuracy or Evasiveness)",
-            "+3 to all (except Accuracy or Evasiveness)",
-            "raises critical-hit ratio two stages",
-            "resets lowered stats of the user",
-            "recovers all of user's HP",
-            "recovers all Hp of the Pokémon switching-in (Memento and Parting Shot)",
-            "makes the user the center of attention",
-            "only on Curse: recovers all HP if the user's a Ghost type, +1 Attack otherwise"
+            "无",
+            "+1 物攻",
+            "+2 物攻",
+            "+3 物攻",
+            "+1 物防",
+            "+2 物防",
+            "+3 物防",
+            "+1 特攻",
+            "+2 特攻",
+            "+3 特攻",
+            "+1 特防",
+            "+2 特防",
+            "+3 特防",
+            "+1 速度",
+            "+2 速度",
+            "+3 速度",
+            "+1 命中",
+            "+2 命中",
+            "+3 命中",
+            "+1 闪避",
+            "+2 闪避",
+            "+3 闪避",
+            "+1 全部能力值 (除了命中或闪避)",
+            "+2 全部能力值 (除了命中或闪避)",
+            "+3 全部能力值 (除了命中或闪避)",
+            "击中要害提升2级",
+            "重置玩家被降低的能力值",
+            "回复玩家全部HP",
+            "回复玩家全部上场过的宝可梦 (临别礼物和抛下狠话)",
+            "使玩家万众瞩目",
+            "诅咒状态下: 幽灵属性宝可梦回复全部HP, 其他属性加1级物攻"
         };
 
         private void Setup()
@@ -104,7 +104,7 @@ namespace pk3DS
             var flagnames = Enum.GetNames(typeof(MoveFlag7)).Skip(1).ToArray();
             CLB_Flags.Items.AddRange(flagnames);
             CB_ZEffect.Items.AddRange(ZMoveEffects);
-            CB_Inflict.Items.Add("Special");
+            CB_Inflict.Items.Add("特殊");
             var refreshtypes = Enum.GetNames(typeof(RefreshType));
             CB_AfflictRefresh.Items.AddRange(refreshtypes);
 
@@ -242,11 +242,11 @@ namespace pk3DS
         {
             if (!CHK_Category.Checked && !CHK_Type.Checked)
             {
-                WinFormsUtil.Alert("Cannot randomize Moves.", "Please check any of the options on the right to randomize Moves.");
+                WinFormsUtil.Alert("无法随机化招式。", "请检查右侧的设置。");
                 return;
             }
 
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Randomize Moves? Cannot undo.", "Double check options on the right before continuing.") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机化招式？无法撤销。", "确认前，请先确认右侧的设置。") != DialogResult.Yes) return;
             Random rnd = Util.Rand;
             for (int i = 0; i < CB_Move.Items.Count; i++)
             {
@@ -261,12 +261,12 @@ namespace pk3DS
                 if (CHK_Type.Checked)
                     CB_Type.SelectedIndex = rnd.Next(0, 18);
             }
-            WinFormsUtil.Alert("All Moves have been randomized!");
+            WinFormsUtil.Alert("已随机化全部招式！");
         }
 
         private void B_Metronome_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Play using Metronome Mode?", "This will set the Base PP for every other Move to 0!") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否使用挥指模式？", "这将设置其他全部招式的基础pp值为0！") != DialogResult.Yes) return;
 
             for (int i = 0; i < CB_Move.Items.Count; i++)
             {
@@ -279,7 +279,7 @@ namespace pk3DS
                     NUD_PP.Value = 1;
             }
             CB_Move.SelectedIndex = 0;
-            WinFormsUtil.Alert("All Moves have had their Base PP values modified!");
+            WinFormsUtil.Alert("已随机化全部招式的基础pp值！");
         }
     }
 }

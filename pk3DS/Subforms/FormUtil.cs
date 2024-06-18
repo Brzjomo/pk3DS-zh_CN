@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections;
+using System.Windows.Forms;
 
 namespace pk3DS
 {
@@ -20,6 +21,32 @@ namespace pk3DS
                     cb.Items.Add(s);
                 cb.Enabled = true;
             }
+            cb.SelectedIndex = 0;
+        }
+
+        // test
+        internal static void SetForms(ComboBox cb, string[] specieslist, bool ifRemoveFirst)
+        {
+            cb.Items.Clear();
+            if (ifRemoveFirst)
+            {
+                ArrayList list = new ArrayList();
+                foreach (string s in specieslist)
+                {
+                    if (s != "")
+                    {
+                        list.Add(s);
+                    }
+                }
+                foreach (string s in list)
+                    cb.Items.Add(s);
+            } else
+            {
+                foreach (string s in specieslist)
+                    cb.Items.Add(s);
+            }
+            
+            cb.Enabled = true;
             cb.SelectedIndex = 0;
         }
     }
