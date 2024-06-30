@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using pk3DS.Core.Structures.PersonalInfo;
 using pk3DS.Core;
 using pk3DS.Core.Randomizers;
+using System.Data.SQLite;
 
 namespace pk3DS.WinForms
 {
@@ -39,6 +40,11 @@ namespace pk3DS.WinForms
             NUD_EXP.Enabled = CHK_EXP.Checked;
             NUD_CatchRateMod.Enabled = CHK_CatchRateMod.Checked;
             NUD_CallRate.Enabled = CHK_CallRate.Checked;
+
+            ReadDataFromDB(Main.DBPokeTable, Main.pokeList);
+            ReadDataFromDB(Main.DBMegaTable, Main.megaPokeList);
+
+            new ToolTip().SetToolTip(LB_TargetBST, "仅对非Mega形态、非传说宝可梦的最终形态宝可梦生效");
         }
         #region Global Variables
         private readonly byte[][] files;
@@ -79,7 +85,7 @@ namespace pk3DS.WinForms
         private readonly int[] baseForms, formVal;
         private readonly ushort[] TMs;
         private int entry = -1;
-        
+
         #endregion
         private void Setup()
         {
@@ -103,12 +109,13 @@ namespace pk3DS.WinForms
                 if (Main.ifFixChineseDisplay && Main.Config.USUM && Main.Language > 7 && i != 0)
                 {
                     CB_Species.Items.Add(Main.pokemonNameUSSC[i - 1]);
-                } else
+                }
+                else
                 {
                     CB_Species.Items.Add($"{entryNames[i]} - {i:000}");
                 }
             }
-                
+
 
             foreach (ComboBox cb in helditem_boxes)
             {
@@ -422,15 +429,15 @@ namespace pk3DS.WinForms
             pkm.CatchRate = Convert.ToByte(TB_CatchRate.Text);
             pkm.EvoStage = Convert.ToByte(TB_Stage.Text);
 
-            pkm.Types = new[] {CB_Type1.SelectedIndex, CB_Type2.SelectedIndex};
-            pkm.Items = new[] {CB_HeldItem1.SelectedIndex, CB_HeldItem2.SelectedIndex, CB_HeldItem3.SelectedIndex};
+            pkm.Types = new[] { CB_Type1.SelectedIndex, CB_Type2.SelectedIndex };
+            pkm.Items = new[] { CB_HeldItem1.SelectedIndex, CB_HeldItem2.SelectedIndex, CB_HeldItem3.SelectedIndex };
 
             pkm.Gender = Convert.ToByte(TB_Gender.Text);
             pkm.HatchCycles = Convert.ToByte(TB_HatchCycles.Text);
             pkm.BaseFriendship = Convert.ToByte(TB_Friendship.Text);
-            pkm.EXPGrowth = (byte) CB_EXPGroup.SelectedIndex;
-            pkm.EggGroups = new[] {CB_EggGroup1.SelectedIndex, CB_EggGroup2.SelectedIndex};
-            pkm.Abilities = new[] {CB_Ability1.SelectedIndex, CB_Ability2.SelectedIndex, CB_Ability3.SelectedIndex};
+            pkm.EXPGrowth = (byte)CB_EXPGroup.SelectedIndex;
+            pkm.EggGroups = new[] { CB_EggGroup1.SelectedIndex, CB_EggGroup2.SelectedIndex };
+            pkm.Abilities = new[] { CB_Ability1.SelectedIndex, CB_Ability2.SelectedIndex, CB_Ability3.SelectedIndex };
 
             pkm.FormeSprite = Convert.ToUInt16(TB_FormeSprite.Text);
             pkm.FormeCount = Convert.ToByte(TB_FormeCount.Text);
@@ -479,29 +486,116 @@ namespace pk3DS.WinForms
                 return;
             SaveEntry();
 
-            // input settings
-            var rnd = new PersonalRandomizer(Main.SpeciesStat, Main.Config)
-            {
-                TypeCount = CB_Type1.Items.Count,
-                ModifyCatchRate = CHK_CatchRate.Checked,
-                ModifyEggGroup = CHK_EggGroup.Checked,
-                ModifyStats = CHK_Stats.Checked,
-                ShuffleStats = CHK_Shuffle.Checked,
-                StatsToRandomize = rstat_boxes.Select(g => g.Checked).ToArray(),
-                ModifyAbilities = CHK_Ability.Checked,
-                ModifyLearnsetTM = CHK_TM.Checked,
-                ModifyLearnsetHM = false, // no HMs in Gen 7
-                ModifyLearnsetTypeTutors = CHK_Tutors.Checked,
-                ModifyLearnsetMoveTutors = Main.Config.USUM && CHK_BeachTutors.Checked,
-                ModifyTypes = CHK_Type.Checked,
-                ModifyHeldItems = CHK_Item.Checked,
-                SameTypeChance = NUD_TypePercent.Value,
-                SameEggGroupChance = NUD_Egg.Value,
-                StatDeviation = NUD_StatDev.Value,
-                AllowWonderGuard = CHK_WGuard.Checked
-            };
+            //// input settings
+            //var rnd = new PersonalRandomizer(Main.SpeciesStat, Main.Config)
+            //{
+            //    TypeCount = CB_Type1.Items.Count,
+            //    ModifyCatchRate = CHK_CatchRate.Checked,
+            //    ModifyEggGroup = CHK_EggGroup.Checked,
+            //    ModifyStats = CHK_Stats.Checked,
+            //    ShuffleStats = CHK_Shuffle.Checked,
+            //    StatsToRandomize = rstat_boxes.Select(g => g.Checked).ToArray(),
+            //    ModifyAbilities = CHK_Ability.Checked,
+            //    ModifyLearnsetTM = CHK_TM.Checked,
+            //    ModifyLearnsetHM = false, // no HMs in Gen 7
+            //    ModifyLearnsetTypeTutors = CHK_Tutors.Checked,
+            //    ModifyLearnsetMoveTutors = Main.Config.USUM && CHK_BeachTutors.Checked,
+            //    ModifyTypes = CHK_Type.Checked,
+            //    ModifyHeldItems = CHK_Item.Checked,
+            //    SameTypeChance = NUD_TypePercent.Value,
+            //    SameEggGroupChance = NUD_Egg.Value,
+            //    StatDeviation = NUD_StatDev.Value,
+            //    AllowWonderGuard = CHK_WGuard.Checked
+            //};
 
-            rnd.Execute();
+            // 获取名称列表
+            List<string> speciesList = [];
+            var _species = CB_Species.Items;
+            foreach (var item in _species)
+            {
+                speciesList.Add(item.ToString());
+            }
+            Clipboard.SetText(string.Join("\n", speciesList));
+
+            // 根据情况创建随机器
+            if (!CB_BalanceBST.Checked)
+            {
+                var rnd = new PersonalRandomizer(Main.SpeciesStat, Main.Config)
+                {
+                    TypeCount = CB_Type1.Items.Count,
+                    ModifyCatchRate = CHK_CatchRate.Checked,
+                    ModifyEggGroup = CHK_EggGroup.Checked,
+                    ModifyStats = CHK_Stats.Checked,
+                    ShuffleStats = CHK_Shuffle.Checked,
+                    StatsToRandomize = rstat_boxes.Select(g => g.Checked).ToArray(),
+                    ModifyAbilities = CHK_Ability.Checked,
+                    ModifyLearnsetTM = CHK_TM.Checked,
+                    ModifyLearnsetHM = false, // no HMs in Gen 7
+                    ModifyLearnsetTypeTutors = CHK_Tutors.Checked,
+                    ModifyLearnsetMoveTutors = Main.Config.USUM && CHK_BeachTutors.Checked,
+                    ModifyTypes = CHK_Type.Checked,
+                    ModifyHeldItems = CHK_Item.Checked,
+                    SameTypeChance = NUD_TypePercent.Value,
+                    SameEggGroupChance = NUD_Egg.Value,
+                    StatDeviation = NUD_StatDev.Value,
+                    AllowWonderGuard = CHK_WGuard.Checked
+                };
+
+                rnd.Execute();
+            } else
+            {
+                var targetBST = (int)NUD_TargetBST.Value;
+                var includeNonFinalStage = CB_IncludeNonFinalStage.Checked;
+                var includeMegaForm = CB_IncludeMegaForm.Checked;
+                var includeLegendary = CB_IncludeLegendary.Checked;
+
+                for (var i = 1; i < speciesList.Count; i++) {
+                    var temp_1 = speciesList[i].Split('-')[0].Trim();
+                    var name = temp_1.Split(' ')[0];
+                    var form = temp_1.Split(' ')[1];
+                    if (form == "1")
+                    {
+                        // 可能是mega，查询DB进行验证
+                        var ifMega = false;
+                        var _name = "超级" + name;
+
+                        // 如果是mega
+                        if (ifMega && includeMegaForm)
+                        {
+                            // 随机
+                        } else if (ifMega && !includeMegaForm)
+                        {
+                            // 普通随机
+                        }
+                    }
+
+
+                }
+
+                var rnd = new BalancedPersonalRandomizer(Main.SpeciesStat, Main.Config)
+                {
+                    TypeCount = CB_Type1.Items.Count,
+                    ModifyCatchRate = CHK_CatchRate.Checked,
+                    ModifyEggGroup = CHK_EggGroup.Checked,
+                    ModifyStats = CHK_Stats.Checked,
+                    ShuffleStats = CHK_Shuffle.Checked,
+                    StatsToRandomize = rstat_boxes.Select(g => g.Checked).ToArray(),
+                    ModifyAbilities = CHK_Ability.Checked,
+                    ModifyLearnsetTM = CHK_TM.Checked,
+                    ModifyLearnsetHM = false, // no HMs in Gen 7
+                    ModifyLearnsetTypeTutors = CHK_Tutors.Checked,
+                    ModifyLearnsetMoveTutors = Main.Config.USUM && CHK_BeachTutors.Checked,
+                    ModifyTypes = CHK_Type.Checked,
+                    ModifyHeldItems = CHK_Item.Checked,
+                    SameTypeChance = NUD_TypePercent.Value,
+                    SameEggGroupChance = NUD_Egg.Value,
+                    StatDeviation = NUD_StatDev.Value,
+                    AllowWonderGuard = CHK_WGuard.Checked
+                };
+
+                rnd.Execute();
+            }
+            
             Main.SpeciesStat.Select(z => z.Write()).ToArray().CopyTo(files, 0);
 
             ReadEntry();
@@ -619,7 +713,8 @@ namespace pk3DS.WinForms
                     if (CB_ZBaseMove.SelectedIndex > 0)
                         lines.Add($"{CB_ZBaseMove.Text} + {CB_ZItem.Text} => {CB_ZMove.Text}");
                     lines.Add("");
-                } else
+                }
+                else
                 {
                     string[] temp = CB_Species.Text.Split('-');
                     string pokemonName = temp[0].Trim();
@@ -716,6 +811,70 @@ namespace pk3DS.WinForms
         {
             if (entry > -1) SaveEntry();
             RandSettings.SetFormSettings(this, TP_Randomizer.Controls);
+        }
+
+        private void CB_BalanceBST_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CB_BalanceBST.Checked == true)
+            {
+                NUD_TargetBST.Enabled = true;
+                CB_IncludeNonFinalStage.Enabled = true;
+                CB_IncludeMegaForm.Enabled = true;
+                CB_IncludeLegendary.Enabled = true;
+            }
+            else
+            {
+                NUD_TargetBST.Enabled = false;
+                CB_IncludeNonFinalStage.Enabled = false;
+                CB_IncludeMegaForm.Enabled = false;
+                CB_IncludeLegendary.Enabled = false;
+            }
+        }
+
+        // Sqlite
+        private SQLiteConnection CreateSQLiteConnection()
+        {
+            string connectionString = $"Data Source={Main.pokeDBPath};Version=3;";
+            return new SQLiteConnection(connectionString);
+        }
+
+        private void ReadDataFromDB(string table, List<PokeData> list)
+        {
+            list.Clear();
+
+            var connection = CreateSQLiteConnection();
+            connection.Open();
+
+            string query = $"SELECT nationalNumber, name, type, abilities, BST, evolutionaryStage, ifFinalStage, ifMegaForm, ifLegendary FROM {table}";
+            using (SQLiteCommand command = new SQLiteCommand(query, connection))
+            {
+                using (SQLiteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var _nationalNumber = int.Parse(reader["nationalNumber"].ToString());
+
+                        if (_nationalNumber > 807)
+                        {
+                            continue;
+                        }
+
+                        var _name = reader["name"].ToString().Split(',').ToList();
+                        var _type = reader["type"].ToString().Split(',').ToList();
+                        var _abilities = reader["abilities"].ToString().Split(',').ToList();
+                        var _BST = reader["BST"].ToString().Split(',').Select(int.Parse).ToArray();
+                        var _evolutionaryStage = int.Parse(reader["evolutionaryStage"].ToString());
+                        var _ifFinalStage = bool.Parse(reader["ifFinalStage"].ToString());
+                        var _ifMegaForm = bool.Parse(reader["ifMegaForm"].ToString());
+                        var _ifLegendary = bool.Parse(reader["ifLegendary"].ToString());
+
+                        var poke = new PokeData(_nationalNumber, _name, _type, _abilities, _BST, _evolutionaryStage, _ifFinalStage, _ifMegaForm, _ifLegendary);
+                        list.Add(poke);
+                    }
+                }
+            }
+
+            connection.Close();
         }
     }
 }

@@ -27,6 +27,9 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using HtmlDocument = HtmlAgilityPack.HtmlDocument;
 using System.Diagnostics;
+using System.Reflection;
+using MethodInvoker = System.Windows.Forms.MethodInvoker;
+using System.Data.SQLite;
 
 namespace pk3DS.WinForms
 {
@@ -79,8 +82,12 @@ namespace pk3DS.WinForms
 
             ChangeLanguage();
 
+            ExtractSQLiteFile(pokeDB);
+
             // CheckForUpdate
             Load += async (sender, e) => await CheckForUpdate();
+
+            //MessageBox.Show(pokeDBPath, "Debug", MessageBoxButtons.OK, MessageBoxIcon.None);
         }
 
         internal static GameConfig Config;
@@ -88,11 +95,11 @@ namespace pk3DS.WinForms
         public static string ExeFSPath;
         public static string ExHeaderPath;
         private static string OfficialBuild = "1040";
-        private static string Version = "50"; //提交计数
+        private static string Version = "51"; //提交计数
         private static bool versionCheckFailed = false;
         private static bool ifVersionChecked = false;
         private static bool ifUpToDate = false;
-        public static int[] latestVersions = new int[] { 0, 0};
+        public static int[] latestVersions = [0, 0];
         private volatile int threads;
         internal static volatile int Language;
         internal static SMDH SMDH;
@@ -100,6 +107,28 @@ namespace pk3DS.WinForms
         private readonly bool skipBoth;
         public static PersonalInfo[] SpeciesStat => Config.Personal.Table;
         public static bool ifFixChineseDisplay = false;
+        public readonly static string pokeDB = "PokeDB.sqlite";
+        public static string pokeDBPath = string.Empty;
+        public readonly static string DBPokeTable = "pokedata";
+        public readonly static string DBMegaTable = "pokeMegadata";
+        public static List<PokeData> pokeList = [];
+        public static List<PokeData> megaPokeList = [];
+
+        public static void ExtractSQLiteFile(string fileName)
+        {
+            string currentNamespace = typeof(Main).Namespace;
+            string tempPath = Path.Combine(Path.GetTempPath(), fileName);
+
+            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(currentNamespace+ "." + fileName))
+            {
+                using (FileStream fileStream = new FileStream(tempPath, FileMode.Create))
+                {
+                    stream.CopyTo(fileStream);
+                }
+            }
+
+            pokeDBPath = tempPath;
+        }
 
         // 宝可梦中文名称
         public static readonly string[] pokemonNameUSSC =
@@ -336,7 +365,7 @@ namespace pk3DS.WinForms
             "刺龙王 - 230",
             "小小象 - 231",
             "顿甲 - 232",
-            "多边兽2 - 233",
+            "多边兽２型 - 233",
             "惊角鹿 - 234",
             "图图犬 - 235",
             "无畏小子 - 236",
@@ -577,7 +606,7 @@ namespace pk3DS.WinForms
             "冰伊布 - 471",
             "天蝎王 - 472",
             "象牙猪 - 473",
-            "多边兽-Z - 474",
+            "多边兽乙型 - 474",
             "艾路雷朵 - 475",
             "大朝北鼻 - 476",
             "黑夜魔灵 - 477",
@@ -1315,7 +1344,7 @@ namespace pk3DS.WinForms
             "刺龙王",
             "小小象",
             "顿甲",
-            "多边兽2",
+            "多边兽２型",
             "惊角鹿",
             "图图犬",
             "无畏小子",
@@ -1556,7 +1585,7 @@ namespace pk3DS.WinForms
             "冰伊布",
             "天蝎王",
             "象牙猪",
-            "多边兽-Z",
+            "多边兽乙型",
             "艾路雷朵",
             "大朝北鼻",
             "黑夜魔灵",

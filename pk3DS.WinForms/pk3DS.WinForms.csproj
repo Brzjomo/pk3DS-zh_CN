@@ -17,7 +17,15 @@
   </ItemGroup>
   
   <ItemGroup>
+    <None Remove="PokeDB.sqlite" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <Content Include="logo.ico" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="PokeDB.sqlite" />
   </ItemGroup>
   
   <ItemGroup>

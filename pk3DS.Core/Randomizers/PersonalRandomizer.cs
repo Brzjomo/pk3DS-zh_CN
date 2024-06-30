@@ -9,16 +9,16 @@ namespace pk3DS.Core.Randomizers
 {
     public class PersonalRandomizer : IRandomizer
     {
-        private readonly Random rnd = Util.Rand;
+        internal readonly Random rnd = Util.Rand;
 
-        private const decimal LearnTMPercent = 35; // Average Learnable TMs is 35.260.
-        private const decimal LearnTypeTutorPercent = 2; //136 special tutor moves learnable by species in Untouched ORAS.
-        private const decimal LearnMoveTutorPercent = 30; //10001 tutor moves learnable by 826 species in Untouched ORAS.
-        private const int tmcount = 100;
-        private const int eggGroupCount = 16;
+        internal const decimal LearnTMPercent = 35; // Average Learnable TMs is 35.260.
+        internal const decimal LearnTypeTutorPercent = 2; //136 special tutor moves learnable by species in Untouched ORAS.
+        internal const decimal LearnMoveTutorPercent = 30; //10001 tutor moves learnable by 826 species in Untouched ORAS.
+        internal const int tmcount = 100;
+        internal const int eggGroupCount = 16;
 
-        private readonly GameConfig Game;
-        private readonly PersonalInfo[] Table;
+        internal readonly GameConfig Game;
+        internal readonly PersonalInfo[] Table;
 
         // Randomization Settings
         public int TypeCount;
@@ -72,7 +72,7 @@ namespace pk3DS.Core.Randomizers
                 PropagateTMs(Table, Evos);
         }
 
-        private void PropagateTMs(PersonalInfo[] table, EvolutionSet[] evos)
+        internal void PropagateTMs(PersonalInfo[] table, EvolutionSet[] evos)
         {
             int specCount = Game.MaxSpeciesID;
             var HandledIndexes = new HashSet<int>();
@@ -151,7 +151,7 @@ namespace pk3DS.Core.Randomizers
                 z.CatchRate = rnd.Next(3, 251); // Random Catch Rate between 3 and 250.
         }
 
-        private void RandomizeTMHMAdvanced(PersonalInfo z)
+        internal void RandomizeTMHMAdvanced(PersonalInfo z)
         {
             var tms = z.TMHM;
             //var types = z.Types;
@@ -186,7 +186,7 @@ namespace pk3DS.Core.Randomizers
             z.TMHM = tms;
         }
 
-        private void RandomizeTMHMSimple(PersonalInfo z)
+        internal void RandomizeTMHMSimple(PersonalInfo z)
         {
             var tms = z.TMHM;
 
@@ -205,7 +205,7 @@ namespace pk3DS.Core.Randomizers
             z.TMHM = tms;
         }
 
-        private void RandomizeTypeTutors(PersonalInfo z, int index)
+        internal void RandomizeTypeTutors(PersonalInfo z, int index)
         {
             var t = z.TypeTutors;
             for (int i = 0; i < t.Length; i++)
@@ -218,7 +218,7 @@ namespace pk3DS.Core.Randomizers
             z.TypeTutors = t;
         }
 
-        private void RandomizeSpecialTutors(PersonalInfo z)
+        internal void RandomizeSpecialTutors(PersonalInfo z)
         {
             var tutors = z.SpecialTutors;
             foreach (bool[] tutor in tutors)
@@ -230,7 +230,7 @@ namespace pk3DS.Core.Randomizers
             z.SpecialTutors = tutors;
         }
 
-        private void RandomizeAbilities(PersonalInfo z)
+        internal void RandomizeAbilities(PersonalInfo z)
         {
             var abils = z.Abilities;
             for (int i = 0; i < abils.Length; i++)
@@ -238,7 +238,7 @@ namespace pk3DS.Core.Randomizers
             z.Abilities = abils;
         }
 
-        private void RandomizeEggGroups(PersonalInfo z)
+        internal void RandomizeEggGroups(PersonalInfo z)
         {
             var egg = z.EggGroups;
             egg[0] = GetRandomEggGroup();
@@ -246,7 +246,7 @@ namespace pk3DS.Core.Randomizers
             z.EggGroups = egg;
         }
 
-        private void RandomizeHeldItems(PersonalInfo z)
+        internal void RandomizeHeldItems(PersonalInfo z)
         {
             var item = z.Items;
             for (int j = 0; j < item.Length; j++)
@@ -254,7 +254,7 @@ namespace pk3DS.Core.Randomizers
             z.Items = item;
         }
 
-        private void RandomizeTypes(PersonalInfo z)
+        internal void RandomizeTypes(PersonalInfo z)
         {
             var t = z.Types;
             t[0] = GetRandomType();
@@ -262,7 +262,7 @@ namespace pk3DS.Core.Randomizers
             z.Types = t;
         }
 
-        private void RandomizeStats(PersonalInfo z)
+        internal void RandomizeStats(PersonalInfo z)
         {
             // Fiddle with Base Stats, don't muck with Shedinja.
             var stats = z.Stats;
@@ -279,7 +279,7 @@ namespace pk3DS.Core.Randomizers
             z.Stats = stats;
         }
 
-        private void RandomShuffledStats(PersonalInfo z)
+        internal void RandomShuffledStats(PersonalInfo z)
         {
             // Fiddle with Base Stats, don't muck with Shedinja.
             var stats = z.Stats;
@@ -290,12 +290,12 @@ namespace pk3DS.Core.Randomizers
             z.Stats = stats;
         }
 
-        private int GetRandomType() => rnd.Next(0, TypeCount);
-        private int GetRandomEggGroup() => rnd.Next(1, eggGroupCount);
-        private int GetRandomHeldItem() => Game.Info.HeldItems[rnd.Next(1, Game.Info.HeldItems.Length)];
-        private readonly IList<int> BannedAbilities = Array.Empty<int>();
+        internal int GetRandomType() => rnd.Next(0, TypeCount);
+        internal int GetRandomEggGroup() => rnd.Next(1, eggGroupCount);
+        internal int GetRandomHeldItem() => Game.Info.HeldItems[rnd.Next(1, Game.Info.HeldItems.Length)];
+        internal readonly IList<int> BannedAbilities = Array.Empty<int>();
 
-        private int GetRandomAbility()
+        internal int GetRandomAbility()
         {
             const int WonderGuard = 25;
             int newabil;
