@@ -10,6 +10,7 @@ using pk3DS.Core.Structures.PersonalInfo;
 using pk3DS.Core;
 using pk3DS.Core.Randomizers;
 using System.Data.SQLite;
+using System.Diagnostics;
 
 namespace pk3DS.WinForms
 {
@@ -44,6 +45,7 @@ namespace pk3DS.WinForms
             ReadDataFromDB(Main.DBPokeTable, Main.pokeList);
             ReadDataFromDB(Main.DBMegaTable, Main.megaPokeList);
 
+            NUD_TargetBST.Value = 520;
             new ToolTip().SetToolTip(LB_TargetBST, "仅对非Mega形态、非传说宝可梦的最终形态宝可梦生效");
         }
         #region Global Variables
@@ -486,28 +488,6 @@ namespace pk3DS.WinForms
                 return;
             SaveEntry();
 
-            //// input settings
-            //var rnd = new PersonalRandomizer(Main.SpeciesStat, Main.Config)
-            //{
-            //    TypeCount = CB_Type1.Items.Count,
-            //    ModifyCatchRate = CHK_CatchRate.Checked,
-            //    ModifyEggGroup = CHK_EggGroup.Checked,
-            //    ModifyStats = CHK_Stats.Checked,
-            //    ShuffleStats = CHK_Shuffle.Checked,
-            //    StatsToRandomize = rstat_boxes.Select(g => g.Checked).ToArray(),
-            //    ModifyAbilities = CHK_Ability.Checked,
-            //    ModifyLearnsetTM = CHK_TM.Checked,
-            //    ModifyLearnsetHM = false, // no HMs in Gen 7
-            //    ModifyLearnsetTypeTutors = CHK_Tutors.Checked,
-            //    ModifyLearnsetMoveTutors = Main.Config.USUM && CHK_BeachTutors.Checked,
-            //    ModifyTypes = CHK_Type.Checked,
-            //    ModifyHeldItems = CHK_Item.Checked,
-            //    SameTypeChance = NUD_TypePercent.Value,
-            //    SameEggGroupChance = NUD_Egg.Value,
-            //    StatDeviation = NUD_StatDev.Value,
-            //    AllowWonderGuard = CHK_WGuard.Checked
-            //};
-
             // 获取名称列表
             List<string> speciesList = [];
             var _species = CB_Species.Items;
@@ -517,32 +497,11 @@ namespace pk3DS.WinForms
             }
             Clipboard.SetText(string.Join("\n", speciesList));
 
-            // 根据情况创建随机器
-            if (!CB_BalanceBST.Checked)
-            {
-                var rnd = new PersonalRandomizer(Main.SpeciesStat, Main.Config)
-                {
-                    TypeCount = CB_Type1.Items.Count,
-                    ModifyCatchRate = CHK_CatchRate.Checked,
-                    ModifyEggGroup = CHK_EggGroup.Checked,
-                    ModifyStats = CHK_Stats.Checked,
-                    ShuffleStats = CHK_Shuffle.Checked,
-                    StatsToRandomize = rstat_boxes.Select(g => g.Checked).ToArray(),
-                    ModifyAbilities = CHK_Ability.Checked,
-                    ModifyLearnsetTM = CHK_TM.Checked,
-                    ModifyLearnsetHM = false, // no HMs in Gen 7
-                    ModifyLearnsetTypeTutors = CHK_Tutors.Checked,
-                    ModifyLearnsetMoveTutors = Main.Config.USUM && CHK_BeachTutors.Checked,
-                    ModifyTypes = CHK_Type.Checked,
-                    ModifyHeldItems = CHK_Item.Checked,
-                    SameTypeChance = NUD_TypePercent.Value,
-                    SameEggGroupChance = NUD_Egg.Value,
-                    StatDeviation = NUD_StatDev.Value,
-                    AllowWonderGuard = CHK_WGuard.Checked
-                };
+            // 适用条件
+            var ifSuitable = Main.ifFixChineseDisplay && Main.Config.USUM && Main.Language > 7;
 
-                rnd.Execute();
-            } else
+            // 根据情况创建随机器
+            if (ifSuitable && CB_BalanceBST.Checked)
             {
                 // 先随机其他项
                 var rnd = new BalancedPersonalRandomizer(Main.SpeciesStat, Main.Config)
@@ -574,44 +533,275 @@ namespace pk3DS.WinForms
                 var includeMegaForm = CB_IncludeMegaForm.Checked;
                 var includeLegendary = CB_IncludeLegendary.Checked;
 
-                for (var i = 1; i < speciesList.Count; i++) {
+                for (var i = 0; i < speciesList.Count; i++)
+                {
+                    if (i == 0)
+                    {
+                        continue;
+                    }
+
                     var ifFinalStage = false;
                     var ifMegaForm = false;
                     var ifLegendary = false;
 
                     var temp_1 = speciesList[i].Split('-')[0].Trim();
-                    var name = temp_1.Split(' ')[0];
-                    var form = temp_1.Split(' ')[1];
+                    var temp_2 = temp_1.Split(' ');
+                    var name = temp_2[0];
+                    var form = string.Empty;
+                    if (temp_2.Length > 1)
+                    {
+                        form = temp_2[1];
+                    }
                     if (form == "1")
                     {
                         // 可能是mega，查询DB进行验证
                         var _name = "超级" + name;
-                        foreach (var item in Main.megaPokeList) { 
+                        foreach (var item in Main.megaPokeList)
+                        {
                             if (item.name[7] == _name)
                             {
                                 ifMegaForm = true;
+                                ifFinalStage = item.ifFinalStage;
+                                ifLegendary = item.ifLegendary;
                             }
                         }
+                    }
 
-                        // 如果是mega
-                        if (ifMegaForm && includeMegaForm)
+                    // 不是mega
+                    if (!ifMegaForm)
+                    {
+                        foreach (var item in Main.pokeList)
                         {
-                            // 随机
-                        } else if (ifMegaForm && !includeMegaForm)
-                        {
-                            // 普通随机
-                        } else if (!ifMegaForm)
-                        {
+                            if (item.name[7] == name)
+                            {
+                                ifFinalStage = item.ifFinalStage;
+                                ifLegendary = item.ifLegendary;
+                            }
+                        }
+                    }
 
+                    // 根据设置随机
+                    if (includeMegaForm)
+                    {
+                        if (includeLegendary)
+                        {
+                            if (includeNonFinalStage)
+                            {
+                                RandPokeStats(ifFinalStage, ifMegaForm, ifLegendary, Main.SpeciesStat[i], targetBST);
+                            }
+                            else
+                            {
+
+                            }
+                        }
+                        else
+                        {
+                            if (includeNonFinalStage)
+                            {
+
+                            }
+                            else
+                            {
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (includeLegendary)
+                        {
+                            if (includeNonFinalStage)
+                            {
+
+                            }
+                            else
+                            {
+
+                            }
+                        }
+                        else
+                        {
+                            if (includeNonFinalStage)
+                            {
+
+                            }
+                            else
+                            {
+
+                            }
                         }
                     }
                 }
+            } else
+            {
+                var rnd = new PersonalRandomizer(Main.SpeciesStat, Main.Config)
+                {
+                    TypeCount = CB_Type1.Items.Count,
+                    ModifyCatchRate = CHK_CatchRate.Checked,
+                    ModifyEggGroup = CHK_EggGroup.Checked,
+                    ModifyStats = CHK_Stats.Checked,
+                    ShuffleStats = CHK_Shuffle.Checked,
+                    StatsToRandomize = rstat_boxes.Select(g => g.Checked).ToArray(),
+                    ModifyAbilities = CHK_Ability.Checked,
+                    ModifyLearnsetTM = CHK_TM.Checked,
+                    ModifyLearnsetHM = false, // no HMs in Gen 7
+                    ModifyLearnsetTypeTutors = CHK_Tutors.Checked,
+                    ModifyLearnsetMoveTutors = Main.Config.USUM && CHK_BeachTutors.Checked,
+                    ModifyTypes = CHK_Type.Checked,
+                    ModifyHeldItems = CHK_Item.Checked,
+                    SameTypeChance = NUD_TypePercent.Value,
+                    SameEggGroupChance = NUD_Egg.Value,
+                    StatDeviation = NUD_StatDev.Value,
+                    AllowWonderGuard = CHK_WGuard.Checked
+                };
+
+                rnd.Execute();
             }
-            
+
             Main.SpeciesStat.Select(z => z.Write()).ToArray().CopyTo(files, 0);
 
             ReadEntry();
             WinFormsUtil.Alert("已根据设置随机化全部宝可梦个体数据！");
+        }
+
+        private void RandPokeStats(bool ifFinalStage, bool ifMegaForm, bool ifLegendary, PersonalInfo info, int targetBST)
+        {
+            byte[] buffer = Guid.NewGuid().ToByteArray();
+            int iSeed = BitConverter.ToInt32(buffer, 0);
+            Random random = new Random(iSeed);
+
+            var maxValue = (int)NUD_TargetBST.Maximum;
+            var newBST = targetBST;
+
+            if (ifLegendary && ifMegaForm)
+            {
+                newBST = Math.Min(maxValue, targetBST + random.Next(200, 260));
+            } else if (ifLegendary) 
+            {
+                newBST = Math.Min(maxValue, targetBST + random.Next(100, 200));
+            } else if (ifMegaForm)
+            {
+                newBST = Math.Min(maxValue, targetBST + random.Next(80, 150));
+            } else if (ifFinalStage) 
+            {
+                newBST = targetBST;
+            } else
+            {
+                var StatDeviation = NUD_StatDev.Value;
+                var low = (int)(info.BST * (1 - (StatDeviation / 100)));
+                var high = (int)(info.BST * (1 + (StatDeviation / 100)));
+                newBST = Math.Min(maxValue, random.Next(low, high + 1));
+            }
+
+            // 随机
+            var r1 = (int)(newBST * 0.25);
+            var r2 = (int)(newBST * 0.2);
+            var r3 = (int)(newBST * 0.17);
+            var r4 = (int)(newBST * 0.17);
+            var r5 = (int)(newBST * 0.1);
+
+            var v1 = getRandomValue(r1, 0.15);
+            var v2 = getRandomValue(r2, 0.17);
+            var v3 = getRandomValue(r3, 0.18);
+            var v4 = getRandomValue(r4, 0.18);
+            var v5 = getRandomValue(r5, 0.22);
+            var BSTLeft = Math.Max(10, newBST - v1 - v2 - v3 - v4 - v5);
+            var v6 = getRandomValue(BSTLeft, 0.15);
+            Debug.WriteLine($"V: {v1}, {v2}, {v3}, {v4}, {v5}, {v6}");
+
+            int[] newStats = [v1, v2, v3, v4, v5, v6];
+            var d = random.NextDouble();
+            if (d < 0.25)
+            {
+                newStats = [v2, v1, v3, v4, v5, v6];
+                int[] exclude = [1];
+                newStats = ShuffleArrayExceptIndex(newStats, exclude);
+            } else if (d < 0.5)
+            {
+                newStats = [v2, v4, v3, v5, v1, v6];
+                int[] exclude = [4];
+                newStats = ShuffleArrayExceptIndex(newStats, exclude);
+            } else if (d < 0.75)
+            {
+                if (random.NextDouble() < 0.5)
+                {
+                    newStats = [v6, v4, v1, v5, v3, v2];
+                    int[] exclude = [2, 5];
+                    newStats = ShuffleArrayExceptIndex(newStats, exclude);
+                } else
+                {
+                    newStats = [v6, v4, v2, v5, v3, v1];
+                    int[] exclude = [2, 5];
+                    newStats = ShuffleArrayExceptIndex(newStats, exclude);
+                }
+            } else
+            {
+                if (random.NextDouble() < 0.5)
+                {
+                    newStats = [v6, v2, v4, v1, v3, v5];
+                    int[] exclude = [1, 3];
+                    newStats = ShuffleArrayExceptIndex(newStats, exclude);
+                }
+                else
+                {
+                    newStats = [v6, v3, v4, v1, v2, v5];
+                    int[] exclude = [3, 4];
+                    newStats = ShuffleArrayExceptIndex(newStats, exclude);
+                }
+            }
+
+            // 保存
+            info.Stats = newStats;
+        }
+
+        private static int getRandomValue(int value, double rate)
+        {
+            var low = (int)(value * (1 - rate));
+            var high = (int)(value * (1 + rate));
+
+            byte[] buffer = Guid.NewGuid().ToByteArray();
+            int iSeed = BitConverter.ToInt32(buffer, 0);
+            Random random = new Random(iSeed);
+
+            return random.Next(low, high);
+        }
+
+        private static int[] ShuffleArray(int[] array)
+        {
+            Random random = new Random();
+            for (int i = array.Length - 1; i > 0; i--)
+            {
+                int j = random.Next(i + 1);
+                int temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+            return array;
+        }
+
+        private static int[] ShuffleArrayExceptIndex(int[] array, int[] indexToExclude)
+        {
+            Random random = new Random();
+            int[] newArray = (int[])array.Clone();
+
+            for (int i = newArray.Length - 1; i > 0; i--)
+            {
+                foreach (var line in indexToExclude)
+                {
+                    if (i != line)
+                    {
+                        int j = random.Next(i + 1);
+                        if (j != line)
+                        {
+                            int temp = newArray[i];
+                            newArray[i] = newArray[j];
+                            newArray[j] = temp;
+                        }
+                    }
+                }
+            }
+
+            return newArray;
         }
 
         private void B_ModifyAll(object sender, EventArgs e)
