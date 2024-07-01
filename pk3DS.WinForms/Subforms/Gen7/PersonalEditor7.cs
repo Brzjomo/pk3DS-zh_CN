@@ -544,34 +544,7 @@ namespace pk3DS.WinForms
                 rnd.Execute();
             } else
             {
-                var targetBST = (int)NUD_TargetBST.Value;
-                var includeNonFinalStage = CB_IncludeNonFinalStage.Checked;
-                var includeMegaForm = CB_IncludeMegaForm.Checked;
-                var includeLegendary = CB_IncludeLegendary.Checked;
-
-                for (var i = 1; i < speciesList.Count; i++) {
-                    var temp_1 = speciesList[i].Split('-')[0].Trim();
-                    var name = temp_1.Split(' ')[0];
-                    var form = temp_1.Split(' ')[1];
-                    if (form == "1")
-                    {
-                        // 可能是mega，查询DB进行验证
-                        var ifMega = false;
-                        var _name = "超级" + name;
-
-                        // 如果是mega
-                        if (ifMega && includeMegaForm)
-                        {
-                            // 随机
-                        } else if (ifMega && !includeMegaForm)
-                        {
-                            // 普通随机
-                        }
-                    }
-
-
-                }
-
+                // 先随机其他项
                 var rnd = new BalancedPersonalRandomizer(Main.SpeciesStat, Main.Config)
                 {
                     TypeCount = CB_Type1.Items.Count,
@@ -594,6 +567,45 @@ namespace pk3DS.WinForms
                 };
 
                 rnd.Execute();
+
+                // 再逐个随机种族值
+                var targetBST = (int)NUD_TargetBST.Value;
+                var includeNonFinalStage = CB_IncludeNonFinalStage.Checked;
+                var includeMegaForm = CB_IncludeMegaForm.Checked;
+                var includeLegendary = CB_IncludeLegendary.Checked;
+
+                for (var i = 1; i < speciesList.Count; i++) {
+                    var ifFinalStage = false;
+                    var ifMegaForm = false;
+                    var ifLegendary = false;
+
+                    var temp_1 = speciesList[i].Split('-')[0].Trim();
+                    var name = temp_1.Split(' ')[0];
+                    var form = temp_1.Split(' ')[1];
+                    if (form == "1")
+                    {
+                        // 可能是mega，查询DB进行验证
+                        var _name = "超级" + name;
+                        foreach (var item in Main.megaPokeList) { 
+                            if (item.name[7] == _name)
+                            {
+                                ifMegaForm = true;
+                            }
+                        }
+
+                        // 如果是mega
+                        if (ifMegaForm && includeMegaForm)
+                        {
+                            // 随机
+                        } else if (ifMegaForm && !includeMegaForm)
+                        {
+                            // 普通随机
+                        } else if (!ifMegaForm)
+                        {
+
+                        }
+                    }
+                }
             }
             
             Main.SpeciesStat.Select(z => z.Write()).ToArray().CopyTo(files, 0);

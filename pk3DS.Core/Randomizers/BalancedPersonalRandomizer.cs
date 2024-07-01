@@ -38,8 +38,8 @@ namespace pk3DS.Core.Randomizers
                 RandomizeTypeTutors(z, index);
             if (ModifyLearnsetMoveTutors)
                 RandomizeSpecialTutors(z);
-            if (ModifyStats)
-                RandomizeStats(z);
+            //if (ModifyStats)
+            //    RandomizeStats(z);
             if (ModifyAbilities)
                 RandomizeAbilities(z);
             if (ModifyEggGroup)
