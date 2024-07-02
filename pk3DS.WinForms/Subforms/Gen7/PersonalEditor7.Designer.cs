@@ -138,12 +138,7 @@
             CHK_NoEV = new System.Windows.Forms.CheckBox();
             B_ModAll = new System.Windows.Forms.Button();
             GB_Randomizer = new System.Windows.Forms.GroupBox();
-            LB_TargetBST = new System.Windows.Forms.Label();
             NUD_TargetBST = new System.Windows.Forms.NumericUpDown();
-            GB_BalanceBST = new System.Windows.Forms.GroupBox();
-            CB_IncludeLegendary = new System.Windows.Forms.CheckBox();
-            CB_IncludeMegaForm = new System.Windows.Forms.CheckBox();
-            CB_IncludeNonFinalStage = new System.Windows.Forms.CheckBox();
             CB_BalanceBST = new System.Windows.Forms.CheckBox();
             CHK_Shuffle = new System.Windows.Forms.CheckBox();
             L_Same = new System.Windows.Forms.Label();
@@ -181,7 +176,6 @@
             ((System.ComponentModel.ISupportInitialize)NUD_EXP).BeginInit();
             GB_Randomizer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)NUD_TargetBST).BeginInit();
-            GB_BalanceBST.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)NUD_Egg).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NUD_TypePercent).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NUD_StatDev).BeginInit();
@@ -219,7 +213,7 @@
             TC_Pokemon.Margin = new System.Windows.Forms.Padding(5);
             TC_Pokemon.Name = "TC_Pokemon";
             TC_Pokemon.SelectedIndex = 0;
-            TC_Pokemon.Size = new System.Drawing.Size(742, 660);
+            TC_Pokemon.Size = new System.Drawing.Size(742, 596);
             TC_Pokemon.TabIndex = 416;
             // 
             // TP_General
@@ -1259,7 +1253,7 @@
             TP_Randomizer.Location = new System.Drawing.Point(4, 30);
             TP_Randomizer.Margin = new System.Windows.Forms.Padding(5);
             TP_Randomizer.Name = "TP_Randomizer";
-            TP_Randomizer.Size = new System.Drawing.Size(734, 626);
+            TP_Randomizer.Size = new System.Drawing.Size(734, 562);
             TP_Randomizer.TabIndex = 2;
             TP_Randomizer.Text = "随机化";
             TP_Randomizer.UseVisualStyleBackColor = true;
@@ -1282,7 +1276,7 @@
             GB_Modifier.Controls.Add(L_FinalXP);
             GB_Modifier.Controls.Add(NUD_EXP);
             GB_Modifier.Controls.Add(CHK_NoEV);
-            GB_Modifier.Location = new System.Drawing.Point(7, 333);
+            GB_Modifier.Location = new System.Drawing.Point(7, 267);
             GB_Modifier.Margin = new System.Windows.Forms.Padding(5);
             GB_Modifier.Name = "GB_Modifier";
             GB_Modifier.Padding = new System.Windows.Forms.Padding(5);
@@ -1469,7 +1463,7 @@
             // 
             // B_ModAll
             // 
-            B_ModAll.Location = new System.Drawing.Point(587, 344);
+            B_ModAll.Location = new System.Drawing.Point(587, 278);
             B_ModAll.Margin = new System.Windows.Forms.Padding(5);
             B_ModAll.Name = "B_ModAll";
             B_ModAll.Size = new System.Drawing.Size(142, 92);
@@ -1480,9 +1474,7 @@
             // 
             // GB_Randomizer
             // 
-            GB_Randomizer.Controls.Add(LB_TargetBST);
             GB_Randomizer.Controls.Add(NUD_TargetBST);
-            GB_Randomizer.Controls.Add(GB_BalanceBST);
             GB_Randomizer.Controls.Add(CB_BalanceBST);
             GB_Randomizer.Controls.Add(CHK_Shuffle);
             GB_Randomizer.Controls.Add(L_Same);
@@ -1511,24 +1503,14 @@
             GB_Randomizer.Margin = new System.Windows.Forms.Padding(5);
             GB_Randomizer.Name = "GB_Randomizer";
             GB_Randomizer.Padding = new System.Windows.Forms.Padding(5);
-            GB_Randomizer.Size = new System.Drawing.Size(575, 304);
+            GB_Randomizer.Size = new System.Drawing.Size(575, 239);
             GB_Randomizer.TabIndex = 418;
             GB_Randomizer.TabStop = false;
             GB_Randomizer.Text = "随机化选项";
             // 
-            // LB_TargetBST
-            // 
-            LB_TargetBST.AutoSize = true;
-            LB_TargetBST.Location = new System.Drawing.Point(37, 231);
-            LB_TargetBST.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            LB_TargetBST.Name = "LB_TargetBST";
-            LB_TargetBST.Size = new System.Drawing.Size(70, 21);
-            LB_TargetBST.TabIndex = 29;
-            LB_TargetBST.Text = "目标BST";
-            // 
             // NUD_TargetBST
             // 
-            NUD_TargetBST.Location = new System.Drawing.Point(34, 257);
+            NUD_TargetBST.Location = new System.Drawing.Point(131, 199);
             NUD_TargetBST.Margin = new System.Windows.Forms.Padding(5);
             NUD_TargetBST.Maximum = new decimal(new int[] { 1530, 0, 0, 0 });
             NUD_TargetBST.Minimum = new decimal(new int[] { 6, 0, 0, 0 });
@@ -1537,57 +1519,6 @@
             NUD_TargetBST.TabIndex = 28;
             NUD_TargetBST.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             NUD_TargetBST.Value = new decimal(new int[] { 520, 0, 0, 0 });
-            // 
-            // GB_BalanceBST
-            // 
-            GB_BalanceBST.Controls.Add(CB_IncludeLegendary);
-            GB_BalanceBST.Controls.Add(CB_IncludeMegaForm);
-            GB_BalanceBST.Controls.Add(CB_IncludeNonFinalStage);
-            GB_BalanceBST.Location = new System.Drawing.Point(137, 199);
-            GB_BalanceBST.Name = "GB_BalanceBST";
-            GB_BalanceBST.Size = new System.Drawing.Size(425, 97);
-            GB_BalanceBST.TabIndex = 27;
-            GB_BalanceBST.TabStop = false;
-            GB_BalanceBST.Text = "均衡选项";
-            // 
-            // CB_IncludeLegendary
-            // 
-            CB_IncludeLegendary.AutoSize = true;
-            CB_IncludeLegendary.Checked = true;
-            CB_IncludeLegendary.CheckState = System.Windows.Forms.CheckState.Checked;
-            CB_IncludeLegendary.Location = new System.Drawing.Point(220, 31);
-            CB_IncludeLegendary.Margin = new System.Windows.Forms.Padding(5);
-            CB_IncludeLegendary.Name = "CB_IncludeLegendary";
-            CB_IncludeLegendary.Size = new System.Drawing.Size(141, 25);
-            CB_IncludeLegendary.TabIndex = 32;
-            CB_IncludeLegendary.Text = "包含传说宝可梦";
-            CB_IncludeLegendary.UseVisualStyleBackColor = true;
-            // 
-            // CB_IncludeMegaForm
-            // 
-            CB_IncludeMegaForm.AutoSize = true;
-            CB_IncludeMegaForm.Checked = true;
-            CB_IncludeMegaForm.CheckState = System.Windows.Forms.CheckState.Checked;
-            CB_IncludeMegaForm.Location = new System.Drawing.Point(36, 61);
-            CB_IncludeMegaForm.Margin = new System.Windows.Forms.Padding(5);
-            CB_IncludeMegaForm.Name = "CB_IncludeMegaForm";
-            CB_IncludeMegaForm.Size = new System.Drawing.Size(137, 25);
-            CB_IncludeMegaForm.TabIndex = 31;
-            CB_IncludeMegaForm.Text = "包含Mega形态";
-            CB_IncludeMegaForm.UseVisualStyleBackColor = true;
-            // 
-            // CB_IncludeNonFinalStage
-            // 
-            CB_IncludeNonFinalStage.AutoSize = true;
-            CB_IncludeNonFinalStage.Checked = true;
-            CB_IncludeNonFinalStage.CheckState = System.Windows.Forms.CheckState.Checked;
-            CB_IncludeNonFinalStage.Location = new System.Drawing.Point(36, 30);
-            CB_IncludeNonFinalStage.Margin = new System.Windows.Forms.Padding(5);
-            CB_IncludeNonFinalStage.Name = "CB_IncludeNonFinalStage";
-            CB_IncludeNonFinalStage.Size = new System.Drawing.Size(141, 25);
-            CB_IncludeNonFinalStage.TabIndex = 30;
-            CB_IncludeNonFinalStage.Text = "包含非最终形态";
-            CB_IncludeNonFinalStage.UseVisualStyleBackColor = true;
             // 
             // CB_BalanceBST
             // 
@@ -1919,7 +1850,7 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(782, 739);
+            ClientSize = new System.Drawing.Size(782, 671);
             Controls.Add(B_Dump);
             Controls.Add(PB_MonSprite);
             Controls.Add(TC_Pokemon);
@@ -1948,8 +1879,6 @@
             GB_Randomizer.ResumeLayout(false);
             GB_Randomizer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)NUD_TargetBST).EndInit();
-            GB_BalanceBST.ResumeLayout(false);
-            GB_BalanceBST.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)NUD_Egg).EndInit();
             ((System.ComponentModel.ISupportInitialize)NUD_TypePercent).EndInit();
             ((System.ComponentModel.ISupportInitialize)NUD_StatDev).EndInit();
@@ -2095,12 +2024,7 @@
         private System.Windows.Forms.TextBox TB_RawColor;
         private System.Windows.Forms.CheckBox CHK_FullMoveTutorCompatibility;
         private System.Windows.Forms.CheckBox CHK_FullBeachTutorCompatibility;
-        private System.Windows.Forms.GroupBox GB_BalanceBST;
         private System.Windows.Forms.CheckBox CB_BalanceBST;
-        private System.Windows.Forms.Label LB_TargetBST;
         private System.Windows.Forms.NumericUpDown NUD_TargetBST;
-        private System.Windows.Forms.CheckBox CB_IncludeNonFinalStage;
-        private System.Windows.Forms.CheckBox CB_IncludeLegendary;
-        private System.Windows.Forms.CheckBox CB_IncludeMegaForm;
     }
 }

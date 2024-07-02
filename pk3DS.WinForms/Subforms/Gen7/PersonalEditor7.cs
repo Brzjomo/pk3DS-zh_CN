@@ -46,7 +46,14 @@ namespace pk3DS.WinForms
             ReadDataFromDB(Main.DBMegaTable, Main.megaPokeList);
 
             NUD_TargetBST.Value = 520;
-            new ToolTip().SetToolTip(LB_TargetBST, "仅对非Mega形态、非传说宝可梦的最终形态宝可梦生效");
+            var ifSuitable = Main.ifFixChineseDisplay && Main.Config.USUM && Main.Language > 7;
+            if (!ifSuitable)
+            {
+                CB_BalanceBST.Enabled = false;
+                NUD_TargetBST.Enabled = false;
+            }
+
+            new ToolTip().SetToolTip(CB_BalanceBST, "仅支持究极日月");
         }
         #region Global Variables
         private readonly byte[][] files;
@@ -529,9 +536,6 @@ namespace pk3DS.WinForms
 
                 // 再逐个随机种族值
                 var targetBST = (int)NUD_TargetBST.Value;
-                var includeNonFinalStage = CB_IncludeNonFinalStage.Checked;
-                var includeMegaForm = CB_IncludeMegaForm.Checked;
-                var includeLegendary = CB_IncludeLegendary.Checked;
 
                 for (var i = 0; i < speciesList.Count; i++)
                 {
@@ -580,57 +584,8 @@ namespace pk3DS.WinForms
                         }
                     }
 
-                    // 根据设置随机
-                    if (includeMegaForm)
-                    {
-                        if (includeLegendary)
-                        {
-                            if (includeNonFinalStage)
-                            {
-                                RandPokeStats(ifFinalStage, ifMegaForm, ifLegendary, Main.SpeciesStat[i], targetBST);
-                            }
-                            else
-                            {
-
-                            }
-                        }
-                        else
-                        {
-                            if (includeNonFinalStage)
-                            {
-
-                            }
-                            else
-                            {
-
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (includeLegendary)
-                        {
-                            if (includeNonFinalStage)
-                            {
-
-                            }
-                            else
-                            {
-
-                            }
-                        }
-                        else
-                        {
-                            if (includeNonFinalStage)
-                            {
-
-                            }
-                            else
-                            {
-
-                            }
-                        }
-                    }
+                    // 随机
+                    RandPokeStats(ifFinalStage, ifMegaForm, ifLegendary, Main.SpeciesStat[i], targetBST);
                 }
             } else
             {
@@ -1020,16 +975,10 @@ namespace pk3DS.WinForms
             if (CB_BalanceBST.Checked == true)
             {
                 NUD_TargetBST.Enabled = true;
-                CB_IncludeNonFinalStage.Enabled = true;
-                CB_IncludeMegaForm.Enabled = true;
-                CB_IncludeLegendary.Enabled = true;
             }
             else
             {
                 NUD_TargetBST.Enabled = false;
-                CB_IncludeNonFinalStage.Enabled = false;
-                CB_IncludeMegaForm.Enabled = false;
-                CB_IncludeLegendary.Enabled = false;
             }
         }
 
