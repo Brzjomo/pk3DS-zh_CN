@@ -213,7 +213,7 @@
             TC_Pokemon.Margin = new System.Windows.Forms.Padding(5);
             TC_Pokemon.Name = "TC_Pokemon";
             TC_Pokemon.SelectedIndex = 0;
-            TC_Pokemon.Size = new System.Drawing.Size(742, 596);
+            TC_Pokemon.Size = new System.Drawing.Size(742, 609);
             TC_Pokemon.TabIndex = 416;
             // 
             // TP_General
@@ -300,7 +300,7 @@
             TP_General.Margin = new System.Windows.Forms.Padding(5);
             TP_General.Name = "TP_General";
             TP_General.Padding = new System.Windows.Forms.Padding(5);
-            TP_General.Size = new System.Drawing.Size(734, 626);
+            TP_General.Size = new System.Drawing.Size(734, 575);
             TP_General.TabIndex = 0;
             TP_General.Text = "基本信息";
             TP_General.UseVisualStyleBackColor = true;
@@ -1172,11 +1172,11 @@
             TP_MoveTutors.Controls.Add(L_TM);
             TP_MoveTutors.Controls.Add(CLB_MoveTutors);
             TP_MoveTutors.Controls.Add(CLB_TM);
-            TP_MoveTutors.Location = new System.Drawing.Point(4, 26);
+            TP_MoveTutors.Location = new System.Drawing.Point(4, 30);
             TP_MoveTutors.Margin = new System.Windows.Forms.Padding(5);
             TP_MoveTutors.Name = "TP_MoveTutors";
             TP_MoveTutors.Padding = new System.Windows.Forms.Padding(5);
-            TP_MoveTutors.Size = new System.Drawing.Size(734, 630);
+            TP_MoveTutors.Size = new System.Drawing.Size(734, 575);
             TP_MoveTutors.TabIndex = 1;
             TP_MoveTutors.Text = "可教授招式";
             TP_MoveTutors.UseVisualStyleBackColor = true;
@@ -1253,7 +1253,7 @@
             TP_Randomizer.Location = new System.Drawing.Point(4, 30);
             TP_Randomizer.Margin = new System.Windows.Forms.Padding(5);
             TP_Randomizer.Name = "TP_Randomizer";
-            TP_Randomizer.Size = new System.Drawing.Size(734, 562);
+            TP_Randomizer.Size = new System.Drawing.Size(734, 575);
             TP_Randomizer.TabIndex = 2;
             TP_Randomizer.Text = "随机化";
             TP_Randomizer.UseVisualStyleBackColor = true;
@@ -1850,7 +1850,7 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(782, 671);
+            ClientSize = new System.Drawing.Size(782, 690);
             Controls.Add(B_Dump);
             Controls.Add(PB_MonSprite);
             Controls.Add(TC_Pokemon);
