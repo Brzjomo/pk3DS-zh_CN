@@ -26,6 +26,20 @@ namespace pk3DS.WinForms
             string[][] AltForms = Main.Config.Personal.GetFormList(specieslist, Main.Config.MaxSpeciesID);
             specieslist = Main.Config.Personal.GetPersonalEntryList(AltForms, specieslist, Main.Config.MaxSpeciesID, out baseForms, out formVal);
 
+            var pokeName588 = specieslist[588];
+            var pokeName616 = specieslist[616];
+            var pokeName291 = specieslist[291];
+            var pokeName292 = specieslist[292];
+            var ifSuitable = Main.ifFixChineseDisplay && Main.Config.USUM && Main.Language > 7;
+            if (ifSuitable)
+            {
+                pokeName588 = Main.pokemonNameUSSC_Sim[588 - 1];
+                pokeName616 = Main.pokemonNameUSSC_Sim[616 - 1];
+                pokeName291 = Main.pokemonNameUSSC_Sim[291 - 1];
+                pokeName292 = Main.pokemonNameUSSC_Sim[292 - 1];
+            }
+
+
             string[] evolutionMethods =
             {
                 "",
@@ -35,15 +49,15 @@ namespace pk3DS.WinForms
                 "升级",
                 "通讯进化",
                 "持有物品时通讯进化",
-                $"互换通讯进化 {specieslist[588]}/{specieslist[616]}", // Shelmet&Karrablast
+                $"互换通讯进化 {pokeName588}/{pokeName616}", // Shelmet&Karrablast
                 "使用物品",
                 "升级 (攻击 > 防御)",
                 "升级 (攻击 = 防御)",
                 "升级 (攻击 < 防御)",
                 "升级 (任意能力值 < 5)",
                 "升级 (任意能力值 > 5)",
-                $"升级 ({specieslist[291]})", // Ninjask
-                $"升级 ({specieslist[292]})", // Shedinja
+                $"升级 ({pokeName291})", // Ninjask
+                $"升级 ({pokeName292})", // Shedinja
                 "升级 (美丽度)",
                 "使用物品 (雄性)", // Kirlia->Gallade
                 "使用物品 (雌性)", // Snorunt->Froslass
@@ -238,47 +252,96 @@ namespace pk3DS.WinForms
             SystemSounds.Asterisk.Play();
         }
 
+        //private void B_Dump_Click(object sender, EventArgs e)
+        //{
+        //    if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否导出所有进化到TXT文本？"))
+        //        return;
+
+        //    dumping = true;
+        //    string result = "";
+        //    for (int i = 0; i < CB_Species.Items.Count; i++)
+        //    {
+        //        CB_Species.Text = specieslist[i]; // Get new Species
+        //        result += "======" + Environment.NewLine + entry + " " + CB_Species.Text + Environment.NewLine + "======" + Environment.NewLine;
+        //        for (int j = 0; j < 8; j++)
+        //        {
+        //            int methodval = mb[j].SelectedIndex;
+        //            // int param = pb[j].SelectedIndex;
+        //            int poke = rb[j].SelectedIndex;
+        //            if (poke > 0 && methodval > 0)
+        //            {
+        //                string species = rb[j].Text;
+        //                int bf = formVal[entry];
+        //                string param = pb[j].Visible ? " [" + pb[j].Text + "]" : "";
+        //                if (lb[j].Value > 0)
+        //                    param += $"@ 等级 {lb[j].Value}";
+        //                string method = mb[j].Text;
+        //                int f = fb[j].Value == -1 ? bf : (int)fb[j].Value;
+        //                string form = f == 0 ? "" : "-" + f;
+
+        //                result += $"{method} {param} 进化 {species}{form}".Replace("  ", " ") + Environment.NewLine;
+        //            }
+        //        }
+
+        //        result += Environment.NewLine;
+        //    }
+        //    SaveFileDialog sfd = new SaveFileDialog {FileName = "Evolutions.txt", Filter = "Text File|*.txt"};
+
+        //    SystemSounds.Asterisk.Play();
+        //    if (sfd.ShowDialog() == DialogResult.OK)
+        //    {
+        //        string path = sfd.FileName;
+        //        File.WriteAllText(path, result, Encoding.Unicode);
+        //    }
+        //    dumping = false;
+        //}
+
         private void B_Dump_Click(object sender, EventArgs e)
         {
             if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否导出所有进化到TXT文本？"))
                 return;
+            SaveFileDialog sfd = new SaveFileDialog { FileName = "进化.txt", Filter = "Text File|*.txt" };
+            SystemSounds.Asterisk.Play();
+            if (sfd.ShowDialog() != DialogResult.OK)
+                return;
 
             dumping = true;
-            string result = "";
-            for (int i = 0; i < CB_Species.Items.Count; i++)
+            List<string> lines = new List<string>();
+
+            for (int i = 1; i < CB_Species.Items.Count; i++)
             {
-                CB_Species.Text = specieslist[i]; // Get new Species
-                result += "======" + Environment.NewLine + entry + " " + CB_Species.Text + Environment.NewLine + "======" + Environment.NewLine;
+                CB_Species.SelectedIndex = i;
+
+                lines.Add("--------------------------------------------");
+                lines.Add($"{entry}");
+
+                string[] temp = CB_Species.Text.Split('-');
+                string pokemonName = temp[0].Trim();
+                lines.Add($"|{pokemonName}|");
+
                 for (int j = 0; j < 8; j++)
                 {
                     int methodval = mb[j].SelectedIndex;
-                    // int param = pb[j].SelectedIndex;
                     int poke = rb[j].SelectedIndex;
                     if (poke > 0 && methodval > 0)
                     {
                         string species = rb[j].Text;
                         int bf = formVal[entry];
-                        string param = pb[j].Visible ? " [" + pb[j].Text + "]" : "";
+                        string param = pb[j].Visible ? "[" + pb[j].Text + "]" : "";
                         if (lb[j].Value > 0)
-                            param += $"@ 等级 {lb[j].Value}";
+                            param += $"LV{lb[j].Value}";
                         string method = mb[j].Text;
                         int f = fb[j].Value == -1 ? bf : (int)fb[j].Value;
                         string form = f == 0 ? "" : "-" + f;
-
-                        result += $"{method} {param} 进化 {species}{form}".Replace("  ", " ") + Environment.NewLine;
+                        lines.Add($"<{method}> {param} 进化 |{species}{form}|".Replace("  ", " "));
                     }
                 }
 
-                result += Environment.NewLine;
+                lines.Add("");
             }
-            SaveFileDialog sfd = new SaveFileDialog {FileName = "Evolutions.txt", Filter = "Text File|*.txt"};
 
-            SystemSounds.Asterisk.Play();
-            if (sfd.ShowDialog() == DialogResult.OK)
-            {
-                string path = sfd.FileName;
-                File.WriteAllText(path, result, Encoding.Unicode);
-            }
+            string path = sfd.FileName;
+            File.WriteAllLines(path, lines, Encoding.Unicode);
             dumping = false;
         }
 
