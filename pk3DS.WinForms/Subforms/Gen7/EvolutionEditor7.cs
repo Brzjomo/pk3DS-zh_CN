@@ -329,7 +329,7 @@ namespace pk3DS.WinForms
                         int bf = formVal[entry];
                         string param = pb[j].Visible ? "[" + pb[j].Text + "]" : "";
                         if (lb[j].Value > 0)
-                            param += $"LV{lb[j].Value}";
+                            param += $" LV{lb[j].Value}";
                         string method = mb[j].Text;
                         int f = fb[j].Value == -1 ? bf : (int)fb[j].Value;
                         string form = f == 0 ? "" : "-" + f;
