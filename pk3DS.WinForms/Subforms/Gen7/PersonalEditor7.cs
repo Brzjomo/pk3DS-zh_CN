@@ -585,6 +585,7 @@ namespace pk3DS.WinForms
                     }
 
                     // 随机
+                    //ifFinalStage的数据来源要改。目前是从DB读取的，为了支持随机进化，需要从随机后的进化表里读取
                     RandPokeStats(ifFinalStage, ifMegaForm, ifLegendary, Main.SpeciesStat[i], targetBST);
                 }
             } else
@@ -643,8 +644,10 @@ namespace pk3DS.WinForms
             } else
             {
                 var StatDeviation = NUD_StatDev.Value;
-                var low = (int)(info.BST * (1 - (StatDeviation / 100)));
-                var high = (int)(info.BST * (1 + (StatDeviation / 100)));
+                //var low = (int)(info.BST * (1 - (StatDeviation / 100)));
+                //var high = (int)(info.BST * (1 + (StatDeviation / 100)));
+                var low = (int)(targetBST / 2 * (1 - (StatDeviation / 100)));
+                var high = (int)(targetBST / 2 * (1 + (StatDeviation / 100)));
                 newBST = Math.Min(maxValue, random.Next(low, high + 1));
             }
 
