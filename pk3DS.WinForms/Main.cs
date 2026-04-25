@@ -95,7 +95,7 @@ namespace pk3DS.WinForms
         public static string ExeFSPath;
         public static string ExHeaderPath;
         private static string OfficialBuild = "1040";
-        private static string Version = "57"; //提交计数
+        private static string Version = "59"; //提交计数
         private static bool versionCheckFailed = false;
         private static bool ifVersionChecked = false;
         private static bool ifUpToDate = false;
@@ -116,15 +116,37 @@ namespace pk3DS.WinForms
 
         public static void ExtractSQLiteFile(string fileName)
         {
-            string currentNamespace = typeof(Main).Namespace;
             string tempPath = Path.Combine(Path.GetTempPath(), fileName);
 
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(currentNamespace+ "." + fileName))
+            // 如果临时文件已存在且有效，直接使用
+            if (File.Exists(tempPath) && new FileInfo(tempPath).Length > 0)
             {
-                using (FileStream fileStream = new FileStream(tempPath, FileMode.Create))
+                pokeDBPath = tempPath;
+                return;
+            }
+
+            string ns = typeof(Main).Namespace; // "pk3DS.WinForms"
+
+            // 尝试多种可能的嵌入资源名称（发布版可能名称有差异）
+            Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(ns + "." + fileName)
+                            ?? Assembly.GetExecutingAssembly().GetManifestResourceStream(fileName);
+
+            if (stream == null)
+            {
+                // 兜底：从执行目录查找文件
+                string localPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+                if (File.Exists(localPath))
                 {
-                    stream.CopyTo(fileStream);
+                    pokeDBPath = localPath;
+                    return;
                 }
+                return; // 仍为 string.Empty
+            }
+
+            using (stream)
+            using (FileStream fileStream = new FileStream(tempPath, FileMode.Create))
+            {
+                stream.CopyTo(fileStream);
             }
 
             pokeDBPath = tempPath;

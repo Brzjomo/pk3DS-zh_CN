@@ -953,8 +953,23 @@ namespace pk3DS.WinForms
         // Sqlite
         private SQLiteConnection CreateSQLiteConnection()
         {
-            string connectionString = $"Data Source={Main.pokeDBPath};Version=3;";
-            return new SQLiteConnection(connectionString);
+            // 如果路径无效，尝试重新提取数据库文件
+            if (string.IsNullOrEmpty(Main.pokeDBPath) || !File.Exists(Main.pokeDBPath))
+                Main.ExtractSQLiteFile(Main.pokeDB);
+
+            if (string.IsNullOrEmpty(Main.pokeDBPath) || !File.Exists(Main.pokeDBPath))
+                return null; // 无法找到数据库文件，跳过 DB 加载
+
+            try
+            {
+                string connectionString = $"Data Source={Main.pokeDBPath};Version=3;";
+                return new SQLiteConnection(connectionString);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"SQLiteConnection 创建失败: {ex.Message}");
+                return null;
+            }
         }
 
         private void ReadDataFromDB(string table, List<PokeData> list)
@@ -962,11 +977,14 @@ namespace pk3DS.WinForms
             list.Clear();
 
             var connection = CreateSQLiteConnection();
-            connection.Open();
+            if (connection == null) return;
 
-            string query = $"SELECT nationalNumber, name, type, abilities, BST, evolutionaryStage, ifFinalStage, ifMegaForm, ifLegendary FROM {table}";
-            using (SQLiteCommand command = new SQLiteCommand(query, connection))
+            try
             {
+                connection.Open();
+
+                string query = $"SELECT nationalNumber, name, type, abilities, BST, evolutionaryStage, ifFinalStage, ifMegaForm, ifLegendary FROM {table}";
+                using (SQLiteCommand command = new SQLiteCommand(query, connection))
                 using (SQLiteDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -974,9 +992,7 @@ namespace pk3DS.WinForms
                         var _nationalNumber = int.Parse(reader["nationalNumber"].ToString());
 
                         if (_nationalNumber > 807)
-                        {
                             continue;
-                        }
 
                         var _name = reader["name"].ToString().Split(',').ToList();
                         var _type = reader["type"].ToString().Split(',').ToList();
@@ -991,9 +1007,14 @@ namespace pk3DS.WinForms
                         list.Add(poke);
                     }
                 }
-            }
 
-            connection.Close();
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"PokeDB 读取失败: {ex.Message}");
+                connection?.Close();
+            }
         }
     }
 }

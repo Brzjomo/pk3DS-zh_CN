@@ -52,7 +52,7 @@ namespace pk3DS.Core.Randomizers
         /// <param name="targetBST">目标种族值总和（普通最终形态的目标值）</param>
         /// <param name="chain">进化链关系</param>
         /// <param name="legendarySpecies">传说宝可梦 species ID 集合</param>
-        /// <param name="megaBaseSpecies">拥有 Mega 形态的 base species ID 集合</param>
+        /// <param name="megaBaseSpecies">拥有 Mega 形态的 base species ID 集合（仅用于形态条目判定）</param>
         public void ExecuteBalanced(
             int targetBST,
             EvoChainBuilder chain,
@@ -75,9 +75,10 @@ namespace pk3DS.Core.Randomizers
             {
                 if (i <= maxSpecies)
                 {
+                    // 基础 species — Mega 仅限形态条目，原种不是 Mega
                     isFinal[i] = chain.IsFinalForm[i];
                     isLegendary[i] = legendarySet.Contains(i);
-                    isMegaForm[i] = megaSet.Contains(i);
+                    isMegaForm[i] = false;
                 }
                 else
                 {
@@ -88,7 +89,6 @@ namespace pk3DS.Core.Randomizers
                         int baseSpecies = sf[0];
                         isLegendary[i] = legendarySet.Contains(baseSpecies);
                         isMegaForm[i] = megaSet.Contains(baseSpecies);
-                        // 形态条目跟随基础 species 的终态状态
                         isFinal[i] = chain.IsFinalForm[baseSpecies];
                     }
                 }
@@ -122,7 +122,7 @@ namespace pk3DS.Core.Randomizers
             // ====== Step 2: 按阶段从高到低分配非终态 ======
             int maxStage = chain.EvolutionStage.Max();
 
-            // 阶段 → 各阶段距离终态的步数（仅对进化链范围内的 species）
+            // 各阶段距离终态的步数（仅对进化链范围内的 species）
             var distToFinal = new int[tableLen];
             int chainLen = Math.Min(tableLen, chain.NextEvolutions.Length);
             for (int i = 0; i < chainLen; i++)
@@ -135,12 +135,11 @@ namespace pk3DS.Core.Randomizers
                     if (isFinal[i]) continue;
                     if (chain.EvolutionStage[i] != stage) continue;
                     if (i >= Table.Length || Table[i] == null) continue;
-                    if (Table[i].HP == 1) continue; // 保护脱壳忍者
+                    if (Table[i].HP == 1) continue;
 
                     var nextList = chain.NextEvolutions[i];
                     if (nextList == null || nextList.Count == 0) continue;
 
-                    // 取所有进化形态中最低的 BST
                     int minEvoBST = int.MaxValue;
                     foreach (int n in nextList)
                     {
@@ -170,13 +169,88 @@ namespace pk3DS.Core.Randomizers
                 }
             }
 
-            // ====== Step 3: 分配 6 维属性 ======
+            // ====== Step 3: 为每个进化家族生成排列模式 ======
+            // 线性链共用同一模式；分支点每个分支获得不同于父代的模式
+            var familyPattern = new int[tableLen];
+            for (int i = 0; i < tableLen; i++)
+                familyPattern[i] = -1;
+
+            // DFS 递归分配模式
+            void AssignPatternDFS(int species, int parentPattern, HashSet<int> visited)
+            {
+                if (species >= familyPattern.Length) return;
+                if (visited.Contains(species)) return;
+                visited.Add(species);
+
+                int pat;
+                if (parentPattern < 0)
+                    pat = rnd.Next(4);               // 根节点：随机
+                else
+                    pat = parentPattern;              // 默认继承父代
+
+                familyPattern[species] = pat;
+
+                if (species >= chain.NextEvolutions.Length) return;
+                var nextList = chain.NextEvolutions[species];
+                if (nextList.Count == 0) return;
+
+                if (nextList.Count == 1)
+                {
+                    // 线性进化：继承同一模式
+                    AssignPatternDFS(nextList[0], pat, visited);
+                }
+                else
+                {
+                    // 分支进化：每个分支获得不同于父代的新模式
+                    foreach (int next in nextList)
+                    {
+                        int branchPat;
+                        do { branchPat = rnd.Next(4); }
+                        while (branchPat == pat); // 必须与父代不同
+                        AssignPatternDFS(next, branchPat, visited);
+                    }
+                }
+            }
+
+            // 遍历每个根节点
+            for (int i = 1; i <= maxSpecies; i++)
+            {
+                if (familyPattern[i] >= 0) continue;
+
+                // 找到根（基础形态）
+                int root = i;
+                while (root < chain.PreEvolution.Length)
+                {
+                    int prev = chain.PreEvolution[root];
+                    if (prev < 0) break;
+                    root = prev;
+                }
+
+                AssignPatternDFS(root, -1, new HashSet<int>());
+            }
+
+            // 形态条目也用家族模式（跟随基础 species）
+            for (int i = maxSpecies + 1; i < tableLen; i++)
+            {
+                var sf = Game.Personal?.GetSpeciesForm(i, Game);
+                if (sf != null && sf[0] > 0 && sf[0] < familyPattern.Length)
+                    familyPattern[i] = familyPattern[sf[0]];
+            }
+
+            // 形态条目也用家族模式（跟随基础 species）
+            for (int i = maxSpecies + 1; i < tableLen; i++)
+            {
+                var sf = Game.Personal?.GetSpeciesForm(i, Game);
+                if (sf != null && sf[0] > 0 && sf[0] < familyPattern.Length)
+                    familyPattern[i] = familyPattern[sf[0]];
+            }
+
+            // ====== Step 4: 分配 6 维属性 ======
             for (int i = 1; i < tableLen; i++)
             {
                 if (assignedBST[i] == 0) continue;
                 if (i >= Table.Length || Table[i] == null) continue;
 
-                // 给还没被分配的非终态一个兜底
                 if (isFinal[i] && assignedBST[i] == 0)
                     assignedBST[i] = targetBST;
 
@@ -189,7 +263,8 @@ namespace pk3DS.Core.Randomizers
                     continue;
                 }
 
-                DistributeStats(Table[i], assignedBST[i]);
+                int pat = familyPattern[i] >= 0 ? familyPattern[i] : rnd.Next(4);
+                DistributeStats(Table[i], assignedBST[i], pat);
             }
         }
 
@@ -208,8 +283,8 @@ namespace pk3DS.Core.Randomizers
             return maxDist;
         }
 
-        /// <summary>将 totalBST 按比例分配到 6 维属性</summary>
-        private static void DistributeStats(PersonalInfo info, int totalBST)
+        /// <summary>将 totalBST 按比例分配到 6 维属性，使用指定的排列模式</summary>
+        private static void DistributeStats(PersonalInfo info, int totalBST, int patternIdx)
         {
             var r1 = Math.Max(1, (int)(totalBST * 0.25));
             var r2 = Math.Max(1, (int)(totalBST * 0.20));
@@ -226,7 +301,7 @@ namespace pk3DS.Core.Randomizers
             var v6 = Variate(r6, 0.15);
 
             int[] stats = [v1, v2, v3, v4, v5, v6];
-            ShuffleWithPattern(stats);
+            ApplyPattern(stats, patternIdx);
 
             stats = stats.Select(s => Math.Clamp(s, 1, 255)).ToArray();
             info.Stats = stats;
@@ -240,21 +315,19 @@ namespace pk3DS.Core.Randomizers
             return Util.Rand.Next(low, high);
         }
 
-        /// <summary>对 6 维进行不同模式的排列，增加多样性</summary>
-        private static void ShuffleWithPattern(int[] stats)
+        /// <summary>用指定模式索引排列 6 维属性</summary>
+        private static readonly int[][] Patterns =
+        [
+            [1, 0, 2, 3, 4, 5], // 模式 0
+            [1, 3, 2, 4, 0, 5], // 模式 1
+            [5, 3, 0, 4, 2, 1], // 模式 2
+            [5, 2, 3, 0, 1, 4], // 模式 3
+        ];
+
+        private static void ApplyPattern(int[] stats, int patternIdx)
         {
             if (stats.Length != 6) return;
-            var rnd = Util.Rand;
-            double d = rnd.NextDouble();
-
-            int[] indices = d switch
-            {
-                < 0.25 => [1, 0, 2, 3, 4, 5],
-                < 0.50 => [1, 3, 2, 4, 0, 5],
-                < 0.75 => [5, 3, 0, 4, 2, 1],
-                _      => [5, 2, 3, 0, 1, 4],
-            };
-
+            var indices = Patterns[patternIdx % Patterns.Length];
             int[] result = new int[6];
             for (int i = 0; i < 6; i++)
                 result[i] = stats[indices[i]];
