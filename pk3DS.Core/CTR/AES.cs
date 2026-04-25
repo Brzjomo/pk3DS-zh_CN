@@ -34,10 +34,15 @@ namespace pk3DS.Core.CTR
             for (int i = 0; i < inputCount; i += BlockLength)
             {
                 BlockLength = inputCount - i > AesCounter.BufferSize ? AesCounter.BufferSize : inputCount - i;
+                // Encrypt the counter buffer into outputBuffer at offset
                 Encryptor.TransformBlock(Counter.ManageBufferCounters(BlockLength), 0, BlockLength, outputBuffer, outputOffset + i);
                 for (int BlockWalker = i; BlockWalker < i + BlockLength; BlockWalker += 8)
                 {
-                    Array.Copy(BitConverter.GetBytes(BitConverter.ToInt64(outputBuffer, outputOffset + BlockWalker) ^ BitConverter.ToInt64(inputBuffer, inputOffset + BlockWalker)), 0, outputBuffer, outputOffset + BlockWalker, 8);
+                    // XOR 8-byte chunks (long) between encrypted counter (in outputBuffer) and inputBuffer, write back to outputBuffer
+                    long left = BitConverter.ToInt64(outputBuffer, outputOffset + BlockWalker);
+                    long right = BitConverter.ToInt64(inputBuffer, inputOffset + BlockWalker);
+                    byte[] xorBytes = BitConverter.GetBytes(left ^ right);
+                    Array.Copy(xorBytes, 0, outputBuffer, outputOffset + BlockWalker, 8);
                 }
             }
             return inputCount;
@@ -52,13 +57,33 @@ namespace pk3DS.Core.CTR
 
         public AesCounter(ulong high, ulong low)
         {
-            Array.Copy(BitConverter.GetBytes(high).Reverse().ToArray(), Counter, 0x8);
-            Array.Copy(BitConverter.GetBytes(low).Reverse().ToArray(), 0, Counter, 0x8, 0x8);
+            // Avoid using Enumerable.Reverse() or Array.Reverse() to prevent ambiguity with void-returning APIs.
+            var highBytes = BitConverter.GetBytes(high);
+            var lowBytes = BitConverter.GetBytes(low);
+            var highRev = new byte[8];
+            var lowRev = new byte[8];
+            for (int i = 0; i < 8; i++)
+            {
+                highRev[i] = highBytes[7 - i];
+                lowRev[i] = lowBytes[7 - i];
+            }
+            Array.Copy(highRev, 0, Counter, 0x0, 0x8);
+            Array.Copy(lowRev, 0, Counter, 0x8, 0x8);
         }
 
         public AesCounter(byte[] iv)
         {
-            Array.Copy(BitConverter.GetBytes(BitConverter.ToUInt64(iv, 0)).Reverse().ToArray(), Counter, 0x10);
+            if (iv == null) throw new ArgumentNullException(nameof(iv));
+            if (iv.Length != 16)
+                throw new ArgumentException("IV must be 16 bytes.", nameof(iv));
+
+            // Avoid calling methods that might resolve to void-returning APIs (e.g. Array.Reverse)
+            // Create a reversed copy explicitly
+            var rev = new byte[16];
+            for (int i = 0; i < 16; i++)
+                rev[i] = iv[15 - i];
+
+            Array.Copy(rev, 0, Counter, 0, 0x10);
         }
 
         public void Increment()

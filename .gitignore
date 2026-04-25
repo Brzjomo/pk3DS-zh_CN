@@ -230,3 +230,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 .vs
+
+# 额外目录
+临时文档
+

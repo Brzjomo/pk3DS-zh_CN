@@ -534,60 +534,25 @@ namespace pk3DS.WinForms
 
                 rnd.Execute();
 
-                // 再逐个随机种族值
+                // 再随机种族值（进化链约束版）
                 var targetBST = (int)NUD_TargetBST.Value;
 
-                for (var i = 0; i < speciesList.Count; i++)
-                {
-                    if (i == 0)
-                    {
-                        continue;
-                    }
+                // 从 ROM 进化数据构建进化链
+                var chain = new EvoChainBuilder(Main.Config.Evolutions, Main.Config.MaxSpeciesID);
+                chain.Build();
 
-                    var ifFinalStage = false;
-                    var ifMegaForm = false;
-                    var ifLegendary = false;
+                // 传说列表（合并 Legal 和 DB 双源）
+                var legendaryList = PokeData.getLegendaryList();
+                var legalLegendary = Main.Config.USUM ? Legal.Legendary_USUM
+                    : Main.Config.SM ? Legal.Legendary_SM
+                    : Legal.Legendary_6;
+                var fullLegendary = legendaryList.Concat(legalLegendary).Distinct().ToList();
 
-                    var temp_1 = speciesList[i].Split('-')[0].Trim();
-                    var temp_2 = temp_1.Split(' ');
-                    var name = temp_2[0];
-                    var form = string.Empty;
-                    if (temp_2.Length > 1)
-                    {
-                        form = temp_2[1];
-                    }
-                    if (form == "1")
-                    {
-                        // 可能是mega，查询DB进行验证
-                        var _name = "超级" + name;
-                        foreach (var item in Main.megaPokeList)
-                        {
-                            if (item.name[7] == _name)
-                            {
-                                ifMegaForm = true;
-                                ifFinalStage = item.ifFinalStage;
-                                ifLegendary = item.ifLegendary;
-                            }
-                        }
-                    }
+                // Mega 列表
+                var megaList = PokeData.getMegaList();
 
-                    // 不是mega
-                    if (!ifMegaForm)
-                    {
-                        foreach (var item in Main.pokeList)
-                        {
-                            if (item.name[7] == name)
-                            {
-                                ifFinalStage = item.ifFinalStage;
-                                ifLegendary = item.ifLegendary;
-                            }
-                        }
-                    }
-
-                    // 随机
-                    //ifFinalStage的数据来源要改。目前是从DB读取的，为了支持随机进化，需要从随机后的进化表里读取
-                    RandPokeStats(ifFinalStage, ifMegaForm, ifLegendary, Main.SpeciesStat[i], targetBST);
-                }
+                // 执行带进化链约束的种族值分配
+                rnd.ExecuteBalanced(targetBST, chain, fullLegendary, megaList);
             } else
             {
                 var rnd = new PersonalRandomizer(Main.SpeciesStat, Main.Config)
