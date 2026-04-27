@@ -44,6 +44,9 @@ namespace pk3DS.WinForms
             NUD_EXP.Enabled = CHK_EXP.Checked;
             NUD_CatchRateMod.Enabled = CHK_CatchRateMod.Checked;
 
+            NUD_TargetBST.Value = 520;
+            NUD_TargetBST.Enabled = CB_BalanceBST.Checked;
+
             CHK_CatchRate.CheckedChanged += (o, e) => CHK_CatchRateSmart.Enabled = CHK_CatchRate.Checked;
             CHK_CatchRateSmart.Enabled = CHK_CatchRate.Checked;
         }
@@ -476,55 +479,88 @@ namespace pk3DS.WinForms
             if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否全部随机化？无法撤销。", "请先确认随机化选项。") != DialogResult.Yes) return;
             SaveEntry();
 
-            // 构建进化链数据（智能捕获率需要）
+            // 构建进化链数据（均衡种族值 / 智能捕获率需要）
+            var targetBST = (int)NUD_TargetBST.Value;
             EvoChainBuilder chain = null;
             IReadOnlyCollection<int> fullLegendary = null;
             IReadOnlyCollection<int> megaList = null;
 
-            if (CHK_CatchRateSmart.Checked)
+            if (CHK_CatchRateSmart.Checked || CB_BalanceBST.Checked)
             {
                 chain = new EvoChainBuilder(Main.Config.Evolutions, Main.Config.MaxSpeciesID);
                 chain.Build();
 
                 var legendaryList = PokeData.getLegendaryList();
-                var legalLegendary = Main.Config.ORAS ? Legal.Legendary_6 : Legal.Legendary_6;
+                var legalLegendary = Legal.Legendary_6;
                 fullLegendary = legendaryList.Concat(legalLegendary).Distinct().ToList();
                 megaList = PokeData.getMegaList();
             }
 
-            // input settings
-            var rnd = new PersonalRandomizer(Main.SpeciesStat, Main.Config)
+            if (CB_BalanceBST.Checked)
             {
-                TypeCount = CB_Type1.Items.Count,
-                ModifyCatchRate = CHK_CatchRate.Checked,
-                ModifyCatchRateSmart = CHK_CatchRateSmart.Checked,
-                ModifyEggGroup = CHK_EggGroup.Checked,
-                ModifyStats = CHK_Stats.Checked,
-                ShuffleStats = CHK_Shuffle.Checked,
-                StatsToRandomize = rstat_boxes.Select(g => g.Checked).ToArray(),
-                ModifyAbilities = CHK_Ability.Checked,
-                ModifyLearnsetTM = CHK_TM.Checked,
-                ModifyLearnsetHM = CHK_HM.Checked,
-                ModifyLearnsetTypeTutors = CHK_Tutors.Checked,
-                ModifyLearnsetMoveTutors = Main.Config.ORAS && CHK_ORASTutors.Checked,
-                ModifyTypes = CHK_Type.Checked,
-                ModifyHeldItems = CHK_Item.Checked,
-                SameTypeChance = NUD_TypePercent.Value,
-                SameEggGroupChance = NUD_Egg.Value,
-                StatDeviation = NUD_StatDev.Value,
-                AllowWonderGuard = CHK_WGuard.Checked,
-                MoveIDsTMs = TMs,
-            };
+                // 均衡模式：先随机其他项，再均衡种族值
+                var rnd = new BalancedPersonalRandomizer(Main.SpeciesStat, Main.Config)
+                {
+                    TypeCount = CB_Type1.Items.Count,
+                    ModifyCatchRate = CHK_CatchRate.Checked,
+                    ModifyCatchRateSmart = CHK_CatchRateSmart.Checked,
+                    ModifyEggGroup = CHK_EggGroup.Checked,
+                    ModifyStats = CHK_Stats.Checked,
+                    ShuffleStats = CHK_Shuffle.Checked,
+                    StatsToRandomize = rstat_boxes.Select(g => g.Checked).ToArray(),
+                    ModifyAbilities = CHK_Ability.Checked,
+                    ModifyLearnsetTM = CHK_TM.Checked,
+                    ModifyLearnsetHM = CHK_HM.Checked,
+                    ModifyLearnsetTypeTutors = CHK_Tutors.Checked,
+                    ModifyLearnsetMoveTutors = Main.Config.ORAS && CHK_ORASTutors.Checked,
+                    ModifyTypes = CHK_Type.Checked,
+                    ModifyHeldItems = CHK_Item.Checked,
+                    SameTypeChance = NUD_TypePercent.Value,
+                    SameEggGroupChance = NUD_Egg.Value,
+                    StatDeviation = NUD_StatDev.Value,
+                    AllowWonderGuard = CHK_WGuard.Checked,
+                    MoveIDsTMs = TMs,
+                };
 
-            if (CHK_CatchRateSmart.Checked)
+                rnd.Execute();
+                rnd.ExecuteBalanced(targetBST, chain, fullLegendary, megaList);
+            }
+            else
             {
-                rnd.CatchRateChain = chain;
-                rnd.LegendarySpecies = fullLegendary;
-                rnd.MegaBaseSpecies = megaList;
-                rnd.CatchRateTargetBST = 520;
+                var rnd = new PersonalRandomizer(Main.SpeciesStat, Main.Config)
+                {
+                    TypeCount = CB_Type1.Items.Count,
+                    ModifyCatchRate = CHK_CatchRate.Checked,
+                    ModifyCatchRateSmart = CHK_CatchRateSmart.Checked,
+                    ModifyEggGroup = CHK_EggGroup.Checked,
+                    ModifyStats = CHK_Stats.Checked,
+                    ShuffleStats = CHK_Shuffle.Checked,
+                    StatsToRandomize = rstat_boxes.Select(g => g.Checked).ToArray(),
+                    ModifyAbilities = CHK_Ability.Checked,
+                    ModifyLearnsetTM = CHK_TM.Checked,
+                    ModifyLearnsetHM = CHK_HM.Checked,
+                    ModifyLearnsetTypeTutors = CHK_Tutors.Checked,
+                    ModifyLearnsetMoveTutors = Main.Config.ORAS && CHK_ORASTutors.Checked,
+                    ModifyTypes = CHK_Type.Checked,
+                    ModifyHeldItems = CHK_Item.Checked,
+                    SameTypeChance = NUD_TypePercent.Value,
+                    SameEggGroupChance = NUD_Egg.Value,
+                    StatDeviation = NUD_StatDev.Value,
+                    AllowWonderGuard = CHK_WGuard.Checked,
+                    MoveIDsTMs = TMs,
+                };
+
+                if (CHK_CatchRateSmart.Checked)
+                {
+                    rnd.CatchRateChain = chain;
+                    rnd.LegendarySpecies = fullLegendary;
+                    rnd.MegaBaseSpecies = megaList;
+                    rnd.CatchRateTargetBST = targetBST;
+                }
+
+                rnd.Execute();
             }
 
-            rnd.Execute();
             Main.SpeciesStat.Select(z => z.Write()).ToArray().CopyTo(files, 0);
 
             ReadEntry();
@@ -586,6 +622,11 @@ namespace pk3DS.WinForms
             }
             CB_Species.SelectedIndex = 1;
             WinFormsUtil.Alert("已根据设置修改全部宝可梦个体数据！");
+        }
+
+        private void CB_BalanceBST_CheckedChanged(object sender, EventArgs e)
+        {
+            NUD_TargetBST.Enabled = CB_BalanceBST.Checked;
         }
 
         private bool dumping;

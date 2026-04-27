@@ -46,14 +46,14 @@ namespace pk3DS.WinForms
             ReadDataFromDB(Main.DBMegaTable, Main.megaPokeList);
 
             NUD_TargetBST.Value = 520;
-            var ifSuitable = Main.ifFixChineseDisplay && Main.Config.USUM && Main.Language > 7;
+            var ifSuitable = Main.Config.USUM || Main.Config.SM;
             if (!ifSuitable)
             {
                 CB_BalanceBST.Enabled = false;
                 NUD_TargetBST.Enabled = false;
             }
 
-            new ToolTip().SetToolTip(CB_BalanceBST, "仅支持究极日月");
+            //new ToolTip().SetToolTip(CB_BalanceBST, "支持第七代游戏（日月/究极日月）");
         }
         #region Global Variables
         private readonly byte[][] files;
@@ -507,8 +507,8 @@ namespace pk3DS.WinForms
             }
             Clipboard.SetText(string.Join("\n", speciesList));
 
-            // 适用条件
-            var ifSuitable = Main.ifFixChineseDisplay && Main.Config.USUM && Main.Language > 7;
+            // 适用条件（第七代游戏 SM/USUM）
+            var ifSuitable = Main.Config.USUM || Main.Config.SM;
 
             // 构建进化链数据（智能捕获率 / 均衡种族值需要）
             var targetBST = (int)NUD_TargetBST.Value;
