@@ -95,7 +95,7 @@ namespace pk3DS.WinForms
         public static string ExeFSPath;
         public static string ExHeaderPath;
         private static string OfficialBuild = "1040";
-        private static string Version = "63"; //提交计数
+        private static string Version = "64"; //提交计数
         private static bool versionCheckFailed = false;
         private static bool ifVersionChecked = false;
         private static bool ifUpToDate = false;
@@ -2205,11 +2205,19 @@ namespace pk3DS.WinForms
                 if (RTB_Status.Text.Length > 0)
                     RTB_Status.Clear();
 
+                // 加载 6 代游戏时重置中文语言（6 代无中文支持）
+                if ((Config.XY || Config.ORAS) && Language > 7)
+                    Language = 0;
+
                 UpdateStatus("发现数据! 正在为子表单加载持久数据...", false);
                 try
                 {
                     Config.Initialize(RomFSPath, ExeFSPath, Language);
                     Config.BackupFiles();
+
+                    // 同步语言选择下拉框（初始化成功后才触发 ChangeLanguage 事件以避免操作未就绪的 Config）
+                    if (CB_Lang.SelectedIndex != Language)
+                        CB_Lang.SelectedIndex = Language;
                 }
                 catch (Exception ex)
                 {
