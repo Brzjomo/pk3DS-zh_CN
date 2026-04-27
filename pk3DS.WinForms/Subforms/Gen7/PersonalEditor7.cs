@@ -251,6 +251,9 @@ namespace pk3DS.WinForms
             // toggle usum content
             CHK_BeachTutors.Checked = CHK_BeachTutors.Visible =
                 CLB_BeachTutors.Visible = CLB_BeachTutors.Enabled = L_BeachTutors.Visible = Main.Config.USUM;
+
+            CHK_CatchRate.CheckedChanged += (o, e) => CHK_CatchRateSmart.Enabled = CHK_CatchRate.Checked;
+            CHK_CatchRateSmart.Enabled = CHK_CatchRate.Checked;
         }
 
         private void CB_Species_SelectedIndexChanged(object sender, EventArgs e)
@@ -507,6 +510,25 @@ namespace pk3DS.WinForms
             // 适用条件
             var ifSuitable = Main.ifFixChineseDisplay && Main.Config.USUM && Main.Language > 7;
 
+            // 构建进化链数据（智能捕获率 / 均衡种族值需要）
+            var targetBST = (int)NUD_TargetBST.Value;
+            EvoChainBuilder chain = null;
+            IReadOnlyCollection<int> fullLegendary = null;
+            IReadOnlyCollection<int> megaList = null;
+
+            if (CHK_CatchRateSmart.Checked || (ifSuitable && CB_BalanceBST.Checked))
+            {
+                chain = new EvoChainBuilder(Main.Config.Evolutions, Main.Config.MaxSpeciesID);
+                chain.Build();
+
+                var legendaryList = PokeData.getLegendaryList();
+                var legalLegendary = Main.Config.USUM ? Legal.Legendary_USUM
+                    : Main.Config.SM ? Legal.Legendary_SM
+                    : Legal.Legendary_6;
+                fullLegendary = legendaryList.Concat(legalLegendary).Distinct().ToList();
+                megaList = PokeData.getMegaList();
+            }
+
             // 根据情况创建随机器
             if (ifSuitable && CB_BalanceBST.Checked)
             {
@@ -515,6 +537,7 @@ namespace pk3DS.WinForms
                 {
                     TypeCount = CB_Type1.Items.Count,
                     ModifyCatchRate = CHK_CatchRate.Checked,
+                    ModifyCatchRateSmart = CHK_CatchRateSmart.Checked,
                     ModifyEggGroup = CHK_EggGroup.Checked,
                     ModifyStats = CHK_Stats.Checked,
                     ShuffleStats = CHK_Shuffle.Checked,
@@ -534,24 +557,7 @@ namespace pk3DS.WinForms
 
                 rnd.Execute();
 
-                // 再随机种族值（进化链约束版）
-                var targetBST = (int)NUD_TargetBST.Value;
-
-                // 从 ROM 进化数据构建进化链
-                var chain = new EvoChainBuilder(Main.Config.Evolutions, Main.Config.MaxSpeciesID);
-                chain.Build();
-
-                // 传说列表（合并 Legal 和 DB 双源）
-                var legendaryList = PokeData.getLegendaryList();
-                var legalLegendary = Main.Config.USUM ? Legal.Legendary_USUM
-                    : Main.Config.SM ? Legal.Legendary_SM
-                    : Legal.Legendary_6;
-                var fullLegendary = legendaryList.Concat(legalLegendary).Distinct().ToList();
-
-                // Mega 列表
-                var megaList = PokeData.getMegaList();
-
-                // 执行带进化链约束的种族值分配
+                // 执行带进化链约束的种族值分配（含智能捕获率）
                 rnd.ExecuteBalanced(targetBST, chain, fullLegendary, megaList);
             } else
             {
@@ -559,6 +565,7 @@ namespace pk3DS.WinForms
                 {
                     TypeCount = CB_Type1.Items.Count,
                     ModifyCatchRate = CHK_CatchRate.Checked,
+                    ModifyCatchRateSmart = CHK_CatchRateSmart.Checked,
                     ModifyEggGroup = CHK_EggGroup.Checked,
                     ModifyStats = CHK_Stats.Checked,
                     ShuffleStats = CHK_Shuffle.Checked,
@@ -575,6 +582,14 @@ namespace pk3DS.WinForms
                     StatDeviation = NUD_StatDev.Value,
                     AllowWonderGuard = CHK_WGuard.Checked
                 };
+
+                if (CHK_CatchRateSmart.Checked)
+                {
+                    rnd.CatchRateChain = chain;
+                    rnd.LegendarySpecies = fullLegendary;
+                    rnd.MegaBaseSpecies = megaList;
+                    rnd.CatchRateTargetBST = targetBST;
+                }
 
                 rnd.Execute();
             }

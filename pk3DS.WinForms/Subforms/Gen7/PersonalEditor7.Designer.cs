@@ -145,6 +145,7 @@
             NUD_Egg = new System.Windows.Forms.NumericUpDown();
             CHK_BeachTutors = new System.Windows.Forms.CheckBox();
             CHK_WGuard = new System.Windows.Forms.CheckBox();
+            CHK_CatchRateSmart = new System.Windows.Forms.CheckBox();
             CHK_Ability = new System.Windows.Forms.CheckBox();
             CHK_Tutors = new System.Windows.Forms.CheckBox();
             CHK_rSPE = new System.Windows.Forms.CheckBox();
@@ -1481,6 +1482,7 @@
             GB_Randomizer.Controls.Add(NUD_Egg);
             GB_Randomizer.Controls.Add(CHK_BeachTutors);
             GB_Randomizer.Controls.Add(CHK_WGuard);
+            GB_Randomizer.Controls.Add(CHK_CatchRateSmart);
             GB_Randomizer.Controls.Add(CHK_Ability);
             GB_Randomizer.Controls.Add(CHK_Tutors);
             GB_Randomizer.Controls.Add(CHK_rSPE);
@@ -1589,9 +1591,22 @@
             CHK_WGuard.TabIndex = 10;
             CHK_WGuard.Text = "神奇守护";
             CHK_WGuard.UseVisualStyleBackColor = true;
-            // 
+            //
+            // CHK_CatchRateSmart
+            //
+            CHK_CatchRateSmart.AutoSize = true;
+            CHK_CatchRateSmart.Checked = true;
+            CHK_CatchRateSmart.CheckState = System.Windows.Forms.CheckState.Checked;
+            CHK_CatchRateSmart.Location = new System.Drawing.Point(440, 108);
+            CHK_CatchRateSmart.Margin = new System.Windows.Forms.Padding(5);
+            CHK_CatchRateSmart.Name = "CHK_CatchRateSmart";
+            CHK_CatchRateSmart.Size = new System.Drawing.Size(109, 25);
+            CHK_CatchRateSmart.TabIndex = 29;
+            CHK_CatchRateSmart.Text = "智能捕获率";
+            CHK_CatchRateSmart.UseVisualStyleBackColor = true;
+            //
             // CHK_Ability
-            // 
+            //
             CHK_Ability.AutoSize = true;
             CHK_Ability.Checked = true;
             CHK_Ability.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -1970,6 +1985,7 @@
         private System.Windows.Forms.CheckBox CHK_Tutors;
         private System.Windows.Forms.CheckBox CHK_WGuard;
         private System.Windows.Forms.CheckBox CHK_CatchRate;
+        private System.Windows.Forms.CheckBox CHK_CatchRateSmart;
         private System.Windows.Forms.CheckBox CHK_rSPE;
         private System.Windows.Forms.CheckBox CHK_rSPD;
         private System.Windows.Forms.CheckBox CHK_rSPA;

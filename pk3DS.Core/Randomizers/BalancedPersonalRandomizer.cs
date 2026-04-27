@@ -41,8 +41,9 @@ namespace pk3DS.Core.Randomizers
                 RandomizeHeldItems(z);
             if (ModifyTypes)
                 RandomizeTypes(z);
-            if (ModifyCatchRate)
+            if (ModifyCatchRate && !ModifyCatchRateSmart)
                 z.CatchRate = rnd.Next(3, 251);
+            // ModifyCatchRateSmart 时跳过，由 ExecuteBalanced Step 5 统一处理
         }
 
         /// <summary>
@@ -265,6 +266,24 @@ namespace pk3DS.Core.Randomizers
 
                 int pat = familyPattern[i] >= 0 ? familyPattern[i] : rnd.Next(4);
                 DistributeStats(Table[i], assignedBST[i], pat);
+            }
+
+            // ====== Step 5: 智能捕获率 ======
+            if (ModifyCatchRateSmart)
+            {
+                for (int i = 1; i < tableLen; i++)
+                {
+                    if (Table[i] == null) continue;
+                    if (Table[i].HP == 1 && Table[i].BST < 50)
+                        continue; // 保护脱壳忍者
+
+                    // 使用新分配的种族值做 BST 修正
+                    int bst = assignedBST[i] > 0 ? assignedBST[i] : Table[i].BST;
+                    bool leg = i < isLegendary.Length && isLegendary[i];
+                    bool mega = i < isMegaForm.Length && isMegaForm[i];
+
+                    Table[i].CatchRate = GenerateCatchRate(i, bst, chain, targetBST, leg, mega);
+                }
             }
         }
 

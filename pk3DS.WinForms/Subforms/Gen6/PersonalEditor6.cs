@@ -43,6 +43,9 @@ namespace pk3DS.WinForms
 
             NUD_EXP.Enabled = CHK_EXP.Checked;
             NUD_CatchRateMod.Enabled = CHK_CatchRateMod.Checked;
+
+            CHK_CatchRate.CheckedChanged += (o, e) => CHK_CatchRateSmart.Enabled = CHK_CatchRate.Checked;
+            CHK_CatchRateSmart.Enabled = CHK_CatchRate.Checked;
         }
         #region Global Variables
         private readonly string mode = Main.Config.ORAS ? "ORAS" : "XY";
@@ -473,11 +476,28 @@ namespace pk3DS.WinForms
             if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否全部随机化？无法撤销。", "请先确认随机化选项。") != DialogResult.Yes) return;
             SaveEntry();
 
+            // 构建进化链数据（智能捕获率需要）
+            EvoChainBuilder chain = null;
+            IReadOnlyCollection<int> fullLegendary = null;
+            IReadOnlyCollection<int> megaList = null;
+
+            if (CHK_CatchRateSmart.Checked)
+            {
+                chain = new EvoChainBuilder(Main.Config.Evolutions, Main.Config.MaxSpeciesID);
+                chain.Build();
+
+                var legendaryList = PokeData.getLegendaryList();
+                var legalLegendary = Main.Config.ORAS ? Legal.Legendary_6 : Legal.Legendary_6;
+                fullLegendary = legendaryList.Concat(legalLegendary).Distinct().ToList();
+                megaList = PokeData.getMegaList();
+            }
+
             // input settings
             var rnd = new PersonalRandomizer(Main.SpeciesStat, Main.Config)
             {
                 TypeCount = CB_Type1.Items.Count,
                 ModifyCatchRate = CHK_CatchRate.Checked,
+                ModifyCatchRateSmart = CHK_CatchRateSmart.Checked,
                 ModifyEggGroup = CHK_EggGroup.Checked,
                 ModifyStats = CHK_Stats.Checked,
                 ShuffleStats = CHK_Shuffle.Checked,
@@ -495,6 +515,15 @@ namespace pk3DS.WinForms
                 AllowWonderGuard = CHK_WGuard.Checked,
                 MoveIDsTMs = TMs,
             };
+
+            if (CHK_CatchRateSmart.Checked)
+            {
+                rnd.CatchRateChain = chain;
+                rnd.LegendarySpecies = fullLegendary;
+                rnd.MegaBaseSpecies = megaList;
+                rnd.CatchRateTargetBST = 520;
+            }
+
             rnd.Execute();
             Main.SpeciesStat.Select(z => z.Write()).ToArray().CopyTo(files, 0);
 

@@ -32,6 +32,13 @@ namespace pk3DS.Core.Randomizers
         public bool ModifyAbilities = true;
         public bool AllowWonderGuard = true;
 
+        // 智能捕获率
+        public bool ModifyCatchRateSmart;
+        public EvoChainBuilder CatchRateChain;
+        public IReadOnlyCollection<int> LegendarySpecies;
+        public IReadOnlyCollection<int> MegaBaseSpecies;
+        public int CatchRateTargetBST = 520;
+
         public bool ModifyStats = true;
         public bool ShuffleStats = true;
         public decimal StatDeviation = 25;
@@ -148,7 +155,14 @@ namespace pk3DS.Core.Randomizers
             if (ModifyTypes)
                 RandomizeTypes(z);
             if (ModifyCatchRate)
-                z.CatchRate = rnd.Next(3, 251); // Random Catch Rate between 3 and 250.
+            {
+                if (ModifyCatchRateSmart && CatchRateChain != null)
+                    z.CatchRate = GenerateCatchRate(index, z.BST, CatchRateChain, CatchRateTargetBST,
+                        LegendarySpecies?.Contains(index) == true,
+                        MegaBaseSpecies?.Contains(index) == true);
+                else
+                    z.CatchRate = rnd.Next(3, 251);
+            }
         }
 
         internal void RandomizeTMHMAdvanced(PersonalInfo z)
@@ -302,6 +316,93 @@ namespace pk3DS.Core.Randomizers
             do newabil = rnd.Next(1, Game.Info.MaxAbilityID + 1);
             while ((newabil == WonderGuard && !AllowWonderGuard) || BannedAbilities.Contains(newabil));
             return newabil;
+        }
+
+        /// <summary>
+        /// 根据进化阶段、Mega 能力、传说状态和 BST 偏差生成智能捕获率。
+        /// </summary>
+        public static int GenerateCatchRate(
+            int species,
+            int bst,
+            EvoChainBuilder chain,
+            int targetBST,
+            bool isLegendary,
+            bool isMegaBase)
+        {
+            const int minCatchRate = 15;
+            const int maxCatchRate = 255;
+
+            // 传说/幻之宝可梦：直接给低值
+            if (isLegendary)
+            {
+                int legendaryValue = Util.Rand.Next(3, 26); // 3-25
+                return Math.Clamp(legendaryValue, minCatchRate, maxCatchRate);
+            }
+
+            // 确定进化阶段
+            int stage = -1;
+            bool isFinal = false;
+            bool hasPrevo = false;
+
+            if (species < chain.EvolutionStage.Length)
+            {
+                stage = chain.EvolutionStage[species];
+                isFinal = chain.IsFinalForm[species];
+                hasPrevo = chain.PreEvolution[species] != -1;
+            }
+
+            // 基础捕获率范围（降上限、扩跨度，避免扎堆 255）
+            int minRange, maxRange;
+
+            if (stage <= 0 && isFinal && !hasPrevo)
+            {
+                // 单形态宝可梦（无进化链）
+                minRange = 100; maxRange = 176;
+            }
+            else if (stage <= 0)
+            {
+                // 初始形态
+                minRange = 130; maxRange = 211;
+            }
+            else if (stage == 1)
+            {
+                // 中间形态
+                if (isMegaBase)
+                    { minRange = 50; maxRange = 106; }
+                else
+                    { minRange = 75; maxRange = 151; }
+            }
+            else
+            {
+                // 最终形态（stage >= 2）
+                if (isMegaBase)
+                    { minRange = 25; maxRange = 66; }
+                else
+                    { minRange = 40; maxRange = 96; }
+            }
+
+            int baseCatchRate = Util.Rand.Next(minRange, maxRange);
+
+            // BST 修正（仅非传说）
+            if (bst > 0)
+            {
+                double ratio = (double)(bst - targetBST) / targetBST;
+
+                if (ratio > 0)
+                {
+                    // 高于 Target BST → 更难抓
+                    double factor = Math.Min(ratio, 0.5);
+                    baseCatchRate = (int)(baseCatchRate * (1.0 - factor));
+                }
+                else if (ratio < 0)
+                {
+                    // 低于 Target BST → 更好抓
+                    double factor = Math.Min(-ratio, 0.4);
+                    baseCatchRate = (int)(baseCatchRate * (1.0 + factor));
+                }
+            }
+
+            return Math.Clamp(baseCatchRate, minCatchRate, maxCatchRate);
         }
     }
 }

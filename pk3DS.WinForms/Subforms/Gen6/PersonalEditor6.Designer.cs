@@ -130,6 +130,7 @@
             this.L_Same = new System.Windows.Forms.Label();
             this.NUD_Egg = new System.Windows.Forms.NumericUpDown();
             this.CHK_WGuard = new System.Windows.Forms.CheckBox();
+            this.CHK_CatchRateSmart = new System.Windows.Forms.CheckBox();
             this.CHK_Ability = new System.Windows.Forms.CheckBox();
             this.CHK_ORASTutors = new System.Windows.Forms.CheckBox();
             this.CHK_Tutors = new System.Windows.Forms.CheckBox();
@@ -1352,6 +1353,7 @@
             this.GB_Randomizer.Controls.Add(this.L_Same);
             this.GB_Randomizer.Controls.Add(this.NUD_Egg);
             this.GB_Randomizer.Controls.Add(this.CHK_WGuard);
+            this.GB_Randomizer.Controls.Add(this.CHK_CatchRateSmart);
             this.GB_Randomizer.Controls.Add(this.CHK_Ability);
             this.GB_Randomizer.Controls.Add(this.CHK_ORASTutors);
             this.GB_Randomizer.Controls.Add(this.CHK_Tutors);
@@ -1427,9 +1429,22 @@
             this.CHK_WGuard.TabIndex = 10;
             this.CHK_WGuard.Text = "神奇守护";
             this.CHK_WGuard.UseVisualStyleBackColor = true;
-            // 
+            //
+            // CHK_CatchRateSmart
+            //
+            this.CHK_CatchRateSmart.AutoSize = true;
+            this.CHK_CatchRateSmart.Checked = true;
+            this.CHK_CatchRateSmart.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CHK_CatchRateSmart.Location = new System.Drawing.Point(440, 108);
+            this.CHK_CatchRateSmart.Margin = new System.Windows.Forms.Padding(5);
+            this.CHK_CatchRateSmart.Name = "CHK_CatchRateSmart";
+            this.CHK_CatchRateSmart.Size = new System.Drawing.Size(109, 25);
+            this.CHK_CatchRateSmart.TabIndex = 29;
+            this.CHK_CatchRateSmart.Text = "智能捕获率";
+            this.CHK_CatchRateSmart.UseVisualStyleBackColor = true;
+            //
             // CHK_Ability
-            // 
+            //
             this.CHK_Ability.AutoSize = true;
             this.CHK_Ability.Checked = true;
             this.CHK_Ability.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -1852,6 +1867,7 @@
         private System.Windows.Forms.CheckBox CHK_Tutors;
         private System.Windows.Forms.CheckBox CHK_WGuard;
         private System.Windows.Forms.CheckBox CHK_CatchRate;
+        private System.Windows.Forms.CheckBox CHK_CatchRateSmart;
         private System.Windows.Forms.CheckBox CHK_rSPE;
         private System.Windows.Forms.CheckBox CHK_rSPD;
         private System.Windows.Forms.CheckBox CHK_rSPA;
