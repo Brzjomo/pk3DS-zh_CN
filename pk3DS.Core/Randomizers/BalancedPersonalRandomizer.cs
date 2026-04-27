@@ -230,20 +230,50 @@ namespace pk3DS.Core.Randomizers
                 AssignPatternDFS(root, -1, new HashSet<int>());
             }
 
-            // 形态条目也用家族模式（跟随基础 species）
+            // 形态条目分配模式
+            // Phase A: 统计各基础 species 的 Mega 形态数量
+            var megaFormCount = new Dictionary<int, int>();
             for (int i = maxSpecies + 1; i < tableLen; i++)
             {
+                if (i >= isMegaForm.Length || !isMegaForm[i])
+                    continue;
                 var sf = Game.Personal?.GetSpeciesForm(i, Game);
                 if (sf != null && sf[0] > 0 && sf[0] < familyPattern.Length)
-                    familyPattern[i] = familyPattern[sf[0]];
+                    megaFormCount[sf[0]] = megaFormCount.TryGetValue(sf[0], out int c) ? c + 1 : 1;
             }
 
-            // 形态条目也用家族模式（跟随基础 species）
+            // Phase B: 分配模式
+            //   非 Mega 形态：继承基础 species 的模式
+            //   单 Mega 形态：继承基础 species 的模式
+            //   多 Mega 形态：获取不同于基础 species 的模式，同 species 互不相同
+            var usedMegaPatterns = new Dictionary<int, HashSet<int>>();
             for (int i = maxSpecies + 1; i < tableLen; i++)
             {
                 var sf = Game.Personal?.GetSpeciesForm(i, Game);
-                if (sf != null && sf[0] > 0 && sf[0] < familyPattern.Length)
-                    familyPattern[i] = familyPattern[sf[0]];
+                if (sf == null || sf[0] <= 0 || sf[0] >= familyPattern.Length)
+                    continue;
+
+                int baseSpecies = sf[0];
+                bool isMega = i < isMegaForm.Length && isMegaForm[i];
+
+                if (!isMega || !megaFormCount.ContainsKey(baseSpecies) || megaFormCount[baseSpecies] <= 1)
+                {
+                    // 非 Mega 形态 或 单 Mega 形态：继承基础 species 的模式
+                    familyPattern[i] = familyPattern[baseSpecies];
+                }
+                else
+                {
+                    // 多 Mega 形态：排除基础 species 的模式
+                    if (!usedMegaPatterns.ContainsKey(baseSpecies))
+                        usedMegaPatterns[baseSpecies] = new HashSet<int> { familyPattern[baseSpecies] };
+
+                    var used = usedMegaPatterns[baseSpecies];
+                    int megaPat;
+                    do { megaPat = rnd.Next(4); }
+                    while (used.Contains(megaPat));
+                    used.Add(megaPat);
+                    familyPattern[i] = megaPat;
+                }
             }
 
             // ====== Step 4: 分配 6 维属性 ======
@@ -282,7 +312,16 @@ namespace pk3DS.Core.Randomizers
                     bool leg = i < isLegendary.Length && isLegendary[i];
                     bool mega = i < isMegaForm.Length && isMegaForm[i];
 
-                    Table[i].CatchRate = GenerateCatchRate(i, bst, chain, targetBST, leg, mega);
+                    // 形态条目需用基础 species 判定进化阶段，避免误入初始形态分支
+                    int speciesForEvo = i;
+                    if (i > maxSpecies)
+                    {
+                        var sf = Game.Personal?.GetSpeciesForm(i, Game);
+                        if (sf != null && sf[0] > 0 && sf[0] <= maxSpecies)
+                            speciesForEvo = sf[0];
+                    }
+
+                    Table[i].CatchRate = GenerateCatchRate(speciesForEvo, bst, chain, targetBST, leg, mega);
                 }
             }
         }

@@ -37,7 +37,7 @@ namespace pk3DS.Core.Randomizers
         public EvoChainBuilder CatchRateChain;
         public IReadOnlyCollection<int> LegendarySpecies;
         public IReadOnlyCollection<int> MegaBaseSpecies;
-        public int CatchRateTargetBST = 520;
+        public int CatchRateTargetBST;
 
         public bool ModifyStats = true;
         public bool ShuffleStats = true;
@@ -157,9 +157,19 @@ namespace pk3DS.Core.Randomizers
             if (ModifyCatchRate)
             {
                 if (ModifyCatchRateSmart && CatchRateChain != null)
-                    z.CatchRate = GenerateCatchRate(index, z.BST, CatchRateChain, CatchRateTargetBST,
+                {
+                    int speciesForEvo = index;
+                    if (index > CatchRateChain.MaxSpeciesId)
+                    {
+                        var sf = Game.Personal?.GetSpeciesForm(index, Game);
+                        if (sf != null && sf[0] > 0 && sf[0] <= CatchRateChain.MaxSpeciesId)
+                            speciesForEvo = sf[0];
+                    }
+
+                    z.CatchRate = GenerateCatchRate(speciesForEvo, z.BST, CatchRateChain, CatchRateTargetBST,
                         LegendarySpecies?.Contains(index) == true,
                         MegaBaseSpecies?.Contains(index) == true);
+                }
                 else
                     z.CatchRate = rnd.Next(3, 251);
             }
