@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -41,6 +42,9 @@ namespace pk3DS.WinForms
 
             LoadData();
             RandSettings.GetFormSettings(this, GB_Tweak.Controls);
+
+            CHK_LegendEnable.CheckedChanged += (_, _) => CHK_LegendWeather.Enabled = CHK_LegendEnable.Checked;
+            CHK_LegendWeather.Enabled = CHK_LegendEnable.Checked;
 
             var weather = string.Format("If weather is active, create a random number.{0}If 0, use slot 0.{0}If <= 10, use slot 1.{0}Else, pick an SOS table and a slot.", Environment.NewLine);
             new ToolTip().SetToolTip(L_AddSOS, weather);
@@ -132,6 +136,11 @@ namespace pk3DS.WinForms
         private bool loadingdata;
         private EncounterTable CurrentTable;
 
+        // 可视化增强缓存
+        private EvoChainBuilder _evoChain;
+        private HashSet<int> _legendarySet;
+        private bool _enhancerDataInitialized;
+
         private void LoadData()
         {
             loadingdata = true;
@@ -210,9 +219,48 @@ namespace pk3DS.WinForms
                         sl = table.AdditionalSOS;
                     rate_spec[i].Value = table.Rates[i];
                     cb_spec[slot][i].SelectedIndex = (int)sl[i].Species;
+                    UpdateSpeciesColor(cb_spec[slot][i], (int)sl[i].Species);
                     nup_spec[slot][i].Value = (int)sl[i].Forme;
                 }
             }
+        }
+
+        private void EnsureEnhancerData()
+        {
+            if (_enhancerDataInitialized)
+                return;
+            _enhancerDataInitialized = true;
+
+            _evoChain = new EvoChainBuilder(Main.Config.Evolutions, Main.Config.MaxSpeciesID);
+            _evoChain.Build();
+
+            _legendarySet = new HashSet<int>(
+                Main.Config.USUM ? Legal.Legendary_USUM : Legal.Legendary_SM
+            );
+            foreach (var m in Main.Config.USUM ? Legal.Mythical_USUM : Legal.Mythical_SM)
+                _legendarySet.Add(m);
+        }
+
+        private void UpdateSpeciesColor(ComboBox cb, int species)
+        {
+            if (species <= 0)
+            {
+                cb.BackColor = Color.White;
+                return;
+            }
+
+            EnsureEnhancerData();
+
+            if (_legendarySet.Contains(species))
+            {
+                cb.BackColor = Color.FromArgb(255, 248, 220); // 淡金
+                return;
+            }
+
+            if (species < _evoChain.EvolutionStage.Length && _evoChain.EvolutionStage[species] >= 2)
+                cb.BackColor = Color.FromArgb(210, 240, 255); // 淡蓝
+            else
+                cb.BackColor = Color.White;
         }
 
         private void UpdateMinMax(object sender, EventArgs e)
@@ -275,6 +323,9 @@ namespace pk3DS.WinForms
             }
 
             cur_pb.Image = cur_img;
+
+            if (sender is ComboBox cb)
+                UpdateSpeciesColor(cb, cb.SelectedIndex);
         }
 
         private void UpdateEncounterRate(object sender, EventArgs e)
@@ -441,6 +492,18 @@ namespace pk3DS.WinForms
                 ModifyLevel = CHK_Level.Checked,
             };
             wild7.Execute(Areas, encdata);
+
+            var enhancer = new Wild7Enhancer
+            {
+                EvoLevelAdjust = CHK_EvoLevel.Checked,
+                EvoMid = (int)NUD_EvoMid.Value,
+                EvoHigh = (int)NUD_EvoHigh.Value,
+                LegendEnable = CHK_LegendEnable.Checked,
+                LegendMinLevel = (int)NUD_LegendMinLevel.Value,
+                LegendRate = (int)NUD_LegendRate.Value,
+                LegendMoveWeather = CHK_LegendWeather.Checked,
+            };
+            enhancer.Execute(Areas, encdata);
         }
 
         private void CopySOS_Click(object sender, EventArgs e)

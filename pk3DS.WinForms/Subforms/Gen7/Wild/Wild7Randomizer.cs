@@ -21,9 +21,11 @@ namespace pk3DS.WinForms
             for (int s = slotStart; s < end; s++)
             {
                 var EncounterSet = Table.Encounter7s[s];
-                foreach (var enc in EncounterSet.Where(enc => enc.Species != 0))
+                foreach (var enc in EncounterSet)
                 {
-                    enc.Species = (uint)RandSpec.GetRandomSpecies((int)enc.Species);
+                    int species = (int)enc.Species;
+                    if (species == 0) species = 1;
+                    enc.Species = (uint)RandSpec.GetRandomSpecies(species);
                     enc.Forme = (uint)RandForm.GetRandomForme((int)enc.Species);
                 }
             }

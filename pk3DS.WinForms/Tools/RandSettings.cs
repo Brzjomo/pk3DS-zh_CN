@@ -80,10 +80,6 @@ namespace pk3DS.WinForms
             {
                 case NumericUpDown nud:
                     if (decimal.TryParse(s, NumberStyles.Any, CultureInfo.InvariantCulture, out var n))
-                        if (n > 25)
-                        {
-                            n = 25;
-                        }
                         nud.Value = n;
                     break;
                 case ComboBox cb:
