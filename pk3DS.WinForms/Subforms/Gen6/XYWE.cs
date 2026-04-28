@@ -1,5 +1,6 @@
 ﻿using pk3DS.Core;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -290,6 +291,38 @@ namespace pk3DS.WinForms
         private string[] encdatapaths;
         private string[] filepaths;
 
+        // 增强器相关
+        private EvoChainBuilder _evoChain;
+        private HashSet<int> _legendarySet;
+        private bool _enhancerDataInitialized;
+
+        // XY 概率表（94 槽）
+        private static readonly int[] XY_RATES =
+        {
+            // Grass (0-11)
+            10,10,10,10,10,10,10,10,10,5,4,1,
+            // Yellow (12-23)
+            10,10,10,10,10,10,10,10,10,5,4,1,
+            // Purple (24-35)
+            10,10,10,10,10,10,10,10,10,5,4,1,
+            // Red (36-47)
+            10,10,10,10,10,10,10,10,10,5,4,1,
+            // Rough Terrain (48-59)
+            10,10,10,10,10,10,10,10,10,5,4,1,
+            // Surf (60-64)
+            50,30,15,4,1,
+            // Rock Smash (65-69)
+            60,35,30,10,1,
+            // Old Rod (70-72)
+            60,35,5,
+            // Good Rod (73-75)
+            60,35,5,
+            // Super Rod (76-78)
+            60,35,5,
+            // Horde A (79-83), B (84-88), C (89-93)
+            20,20,20,20,20, 12,12,12,12,12, 5,5,5,5,5,
+        };
+
         private void Load_XYWE()
         {
             specieslist = Main.Config.GetText(TextName.SpeciesNames);
@@ -365,6 +398,11 @@ namespace pk3DS.WinForms
                 All_Min[i].Value = data[2];
                 All_Max[i].Value = data[3];
             }
+
+            // 更新下拉框颜色
+            EnsureEnhancerData();
+            for (int i = 0; i < All_Max.Length; i++)
+                UpdateSpeciesColor(All_Species[i], All_Species[i].SelectedIndex);
 
             #if DUMPER
             int r = CB_LocationID.SelectedIndex * 56 + 0x1C;
@@ -564,6 +602,28 @@ namespace pk3DS.WinForms
                     All_Species[slot].SelectedIndex = species;
                     SetRandomForm(slot, species);
                 }
+
+                // 增强器：进化链等级调整 + 传说宝可梦稀有化
+                bool enhancerActive = CHK_EvoLevel.Checked || CHK_LegendEnable.Checked;
+                if (enhancerActive)
+                {
+                    var enhancer = new Wild6Enhancer
+                    {
+                        AllSpecies = All_Species,
+                        AllMin = All_Min,
+                        AllMax = All_Max,
+                        SlotCount = 94,
+                        SlotRates = XY_RATES,
+                        EvoLevelAdjust = CHK_EvoLevel.Checked,
+                        EvoMid = (int)NUD_EvoMid.Value,
+                        EvoHigh = (int)NUD_EvoHigh.Value,
+                        LegendEnable = CHK_LegendEnable.Checked,
+                        LegendMinLevel = (int)NUD_LegendMinLevel.Value,
+                        LegendRate = (int)NUD_LegendRate.Value,
+                    };
+                    enhancer.Execute();
+                }
+
                 B_Save_Click(sender, e);
             }
             Enabled = true;
@@ -678,6 +738,39 @@ namespace pk3DS.WinForms
         private void XYWE_FormClosing(object sender, FormClosingEventArgs e)
         {
             RandSettings.SetFormSettings(this, GB_Tweak.Controls);
+        }
+
+        // === 增强器可视化辅助 ===
+
+        private void EnsureEnhancerData()
+        {
+            if (_enhancerDataInitialized)
+                return;
+            int maxSpeciesId = Main.Config.MaxSpeciesID;
+            _evoChain = new EvoChainBuilder(Main.Config.Evolutions, maxSpeciesId);
+            _evoChain.Build();
+
+            _legendarySet = new HashSet<int>(Legal.Legendary_6);
+            foreach (var m in Legal.Mythical_6)
+                _legendarySet.Add(m);
+
+            _enhancerDataInitialized = true;
+        }
+
+        private void UpdateSpeciesColor(ComboBox cb, int species)
+        {
+            if (species <= 0 || species >= _evoChain.EvolutionStage.Length)
+            {
+                cb.BackColor = System.Drawing.Color.White;
+                return;
+            }
+
+            if (_legendarySet.Contains(species))
+                cb.BackColor = System.Drawing.Color.FromArgb(255, 248, 220); // 淡金色
+            else if (_evoChain.EvolutionStage[species] >= 2)
+                cb.BackColor = System.Drawing.Color.FromArgb(210, 240, 255); // 淡蓝色
+            else
+                cb.BackColor = System.Drawing.Color.White;
         }
     }
 }
