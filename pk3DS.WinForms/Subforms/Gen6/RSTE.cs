@@ -674,19 +674,27 @@ namespace pk3DS.WinForms
 
         private static void SetMinMaxPKM(TrainerData6 t)
         {
+            // don't modify hordes
+            if (t.BattleType == 4)
+                return;
+
             int lastPKM = Math.Max(t.NumPokemon - 1, 0); // 0,1-6 => 0-5 (never is 0)
             var avgBST = (int)t.Team.Average(pk => Main.SpeciesStat[pk.Species].BST);
             int avgLevel = (int)t.Team.Average(pk => pk.Level);
             var pinfo = Main.SpeciesStat.OrderBy(pk => Math.Abs(avgBST - pk.BST)).First();
             int avgSpec = Array.IndexOf(Main.SpeciesStat, pinfo);
 
-            // set minimum pkm, don't modify hordes
-            if (t.NumPokemon < rMinPKM && t.BattleType != 4)
+            // 在 [rMinPKM, rMaxPKM] 范围内随机分配宝可梦数量
+            int min = (int)rMinPKM;
+            int max = (int)rMaxPKM;
+            int targetCount = min + (int)(Rand() % (max - min + 1));
+
+            if (targetCount > t.NumPokemon)
             {
-                t.NumPokemon = (byte)rMinPKM;
-                for (int f = lastPKM + 1; f < t.NumPokemon; f++)
+                int oldCount = t.NumPokemon;
+                Array.Resize(ref t.Team, targetCount);
+                for (int f = oldCount; f < targetCount; f++)
                 {
-                    Array.Resize(ref t.Team, (int)rMinPKM);
                     t.Team[f] = // clone last pkm, keeping an average level for all new pkm
                         new TrainerData6.Pokemon(t.Team[lastPKM].Write(t.Item, t.Moves), t.Item, t.Moves)
                         {
@@ -695,13 +703,11 @@ namespace pk3DS.WinForms
                         };
                 }
             }
-
-            // set maximum pkm, don't modify hordes
-            if (t.NumPokemon > rMaxPKM && t.BattleType != 4)
+            else if (targetCount < t.NumPokemon)
             {
-                Array.Resize(ref t.Team, (int)rMaxPKM);
-                t.NumPokemon = (byte)rMaxPKM;
+                Array.Resize(ref t.Team, targetCount);
             }
+            t.NumPokemon = (byte)targetCount;
         }
 
         private static void SetFullParties(TrainerData6 t, bool important)

@@ -729,6 +729,28 @@ namespace pk3DS.WinForms
                     tr.Pokemon.RemoveRange((int)NUD_RMax.Value, (int)(tr.NumPokemon - NUD_RMax.Value));
                     tr.NumPokemon = (int)NUD_RMax.Value;
                 }
+
+                // 在 [NUD_RMin, NUD_RMax] 范围内随机分配宝可梦数量
+                int minCnt = (int)NUD_RMin.Value;
+                int maxCnt = (int)NUD_RMax.Value;
+                int targetCnt = minCnt + (int)(Util.Random32() % (maxCnt - minCnt + 1));
+                if (targetCnt > tr.NumPokemon)
+                {
+                    for (int g = tr.NumPokemon; g < targetCnt; g++)
+                    {
+                        tr.Pokemon.Add(new TrainerPoke7
+                        {
+                            Species = rnd.GetRandomSpecies(avgSpec),
+                            Level = avgLevel,
+                        });
+                    }
+                }
+                else if (targetCnt < tr.NumPokemon)
+                {
+                    tr.Pokemon.RemoveRange(targetCnt, tr.NumPokemon - targetCnt);
+                }
+                tr.NumPokemon = targetCnt;
+
                 if (CHK_6PKM.Checked && ImportantTrainers.Contains(tr.ID))
                 {
                     for (int g = tr.NumPokemon; g < 6; g++)
