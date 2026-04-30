@@ -95,7 +95,7 @@ namespace pk3DS.WinForms
         public static string ExeFSPath;
         public static string ExHeaderPath;
         private static string OfficialBuild = "1040";
-        private static string Version = "66"; //提交计数
+        private static string Version = "67"; //提交计数
         private static bool versionCheckFailed = false;
         private static bool ifVersionChecked = false;
         private static bool ifUpToDate = false;
@@ -3429,8 +3429,10 @@ namespace pk3DS.WinForms
             {
                 Interlocked.Increment(ref threads);
                 Exheader exh = new Exheader(ExHeaderPath);
-                CTRUtil.BuildROM(true, "Nintendo", ExeFSPath, RomFSPath, ExHeaderPath, exh.GetSerial(), path,
+                bool success = CTRUtil.BuildROM(true, "Nintendo", ExeFSPath, RomFSPath, ExHeaderPath, exh.GetSerial(), path,
                     false, pBar1, RTB_Status);
+                if (!success)
+                    WinFormsUtil.Error("重建失败", "磁盘空间不足，或文件写入出错。请检查磁盘剩余空间后重试。");
                 Interlocked.Decrement(ref threads);
             }).Start();
         }

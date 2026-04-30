@@ -596,6 +596,13 @@ namespace pk3DS.WinForms
 
             Main.SpeciesStat.Select(z => z.Write()).ToArray().CopyTo(files, 0);
 
+            if (CHK_RandGrowth.Checked)
+            {
+                for (int i = 1; i <= Main.Config.MaxSpeciesID; i++)
+                    Main.SpeciesStat[i].EXPGrowth = Random.Shared.Next(6);
+                Main.SpeciesStat.Select(z => z.Write()).ToArray().CopyTo(files, 0);
+            }
+
             ReadEntry();
             WinFormsUtil.Alert("已根据设置随机化全部宝可梦个体数据！");
         }

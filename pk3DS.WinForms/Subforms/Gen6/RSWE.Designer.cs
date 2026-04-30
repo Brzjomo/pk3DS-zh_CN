@@ -39,10 +39,6 @@
             CHK_HomogeneousHordes = new System.Windows.Forms.CheckBox();
             CHK_MegaForm = new System.Windows.Forms.CheckBox();
             CHK_EvoLevel = new System.Windows.Forms.CheckBox();
-            L_EvoMid = new System.Windows.Forms.Label();
-            NUD_EvoMid = new System.Windows.Forms.NumericUpDown();
-            L_EvoHigh = new System.Windows.Forms.Label();
-            NUD_EvoHigh = new System.Windows.Forms.NumericUpDown();
             CHK_LegendEnable = new System.Windows.Forms.CheckBox();
             L_LegendMinLevel = new System.Windows.Forms.Label();
             NUD_LegendMinLevel = new System.Windows.Forms.NumericUpDown();
@@ -402,8 +398,6 @@
             B_Randomize = new System.Windows.Forms.Button();
             TabPage_Horde.SuspendLayout();
             GB_Tweak.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)NUD_EvoMid).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)NUD_EvoHigh).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NUD_LegendMinLevel).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NUD_LegendRate).BeginInit();
             ((System.ComponentModel.ISupportInitialize)NUD_LevelAmp).BeginInit();
@@ -732,7 +726,7 @@
             TabPage_Horde.Margin = new System.Windows.Forms.Padding(5);
             TabPage_Horde.Name = "TabPage_Horde";
             TabPage_Horde.Padding = new System.Windows.Forms.Padding(5);
-            TabPage_Horde.Size = new System.Drawing.Size(1535, 606);
+            TabPage_Horde.Size = new System.Drawing.Size(1535, 574);
             TabPage_Horde.TabIndex = 2;
             TabPage_Horde.Text = "群聚";
             TabPage_Horde.UseVisualStyleBackColor = true;
@@ -742,10 +736,6 @@
             GB_Tweak.Controls.Add(CHK_HomogeneousHordes);
             GB_Tweak.Controls.Add(CHK_MegaForm);
             GB_Tweak.Controls.Add(CHK_EvoLevel);
-            GB_Tweak.Controls.Add(L_EvoMid);
-            GB_Tweak.Controls.Add(NUD_EvoMid);
-            GB_Tweak.Controls.Add(L_EvoHigh);
-            GB_Tweak.Controls.Add(NUD_EvoHigh);
             GB_Tweak.Controls.Add(CHK_LegendEnable);
             GB_Tweak.Controls.Add(L_LegendMinLevel);
             GB_Tweak.Controls.Add(NUD_LegendMinLevel);
@@ -768,7 +758,7 @@
             GB_Tweak.Margin = new System.Windows.Forms.Padding(5);
             GB_Tweak.Name = "GB_Tweak";
             GB_Tweak.Padding = new System.Windows.Forms.Padding(5);
-            GB_Tweak.Size = new System.Drawing.Size(470, 335);
+            GB_Tweak.Size = new System.Drawing.Size(470, 288);
             GB_Tweak.TabIndex = 322;
             GB_Tweak.TabStop = false;
             GB_Tweak.Text = "额外调整";
@@ -806,50 +796,10 @@
             CHK_EvoLevel.Text = "进化链等级调整";
             CHK_EvoLevel.UseVisualStyleBackColor = true;
             // 
-            // L_EvoMid
-            // 
-            L_EvoMid.AutoSize = true;
-            L_EvoMid.Location = new System.Drawing.Point(50, 217);
-            L_EvoMid.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            L_EvoMid.Name = "L_EvoMid";
-            L_EvoMid.Size = new System.Drawing.Size(122, 21);
-            L_EvoMid.TabIndex = 298;
-            L_EvoMid.Text = "中间等级阈值：";
-            // 
-            // NUD_EvoMid
-            // 
-            NUD_EvoMid.Location = new System.Drawing.Point(175, 214);
-            NUD_EvoMid.Margin = new System.Windows.Forms.Padding(5);
-            NUD_EvoMid.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            NUD_EvoMid.Name = "NUD_EvoMid";
-            NUD_EvoMid.Size = new System.Drawing.Size(65, 29);
-            NUD_EvoMid.TabIndex = 299;
-            NUD_EvoMid.Value = new decimal(new int[] { 10, 0, 0, 0 });
-            // 
-            // L_EvoHigh
-            // 
-            L_EvoHigh.AutoSize = true;
-            L_EvoHigh.Location = new System.Drawing.Point(270, 217);
-            L_EvoHigh.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            L_EvoHigh.Name = "L_EvoHigh";
-            L_EvoHigh.Size = new System.Drawing.Size(90, 21);
-            L_EvoHigh.TabIndex = 300;
-            L_EvoHigh.Text = "高级阈值：";
-            // 
-            // NUD_EvoHigh
-            // 
-            NUD_EvoHigh.Location = new System.Drawing.Point(363, 214);
-            NUD_EvoHigh.Margin = new System.Windows.Forms.Padding(5);
-            NUD_EvoHigh.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            NUD_EvoHigh.Name = "NUD_EvoHigh";
-            NUD_EvoHigh.Size = new System.Drawing.Size(65, 29);
-            NUD_EvoHigh.TabIndex = 301;
-            NUD_EvoHigh.Value = new decimal(new int[] { 45, 0, 0, 0 });
-            // 
             // CHK_LegendEnable
             // 
             CHK_LegendEnable.AutoSize = true;
-            CHK_LegendEnable.Location = new System.Drawing.Point(30, 252);
+            CHK_LegendEnable.Location = new System.Drawing.Point(30, 217);
             CHK_LegendEnable.Margin = new System.Windows.Forms.Padding(5);
             CHK_LegendEnable.Name = "CHK_LegendEnable";
             CHK_LegendEnable.Size = new System.Drawing.Size(141, 25);
@@ -860,7 +810,7 @@
             // L_LegendMinLevel
             // 
             L_LegendMinLevel.AutoSize = true;
-            L_LegendMinLevel.Location = new System.Drawing.Point(50, 282);
+            L_LegendMinLevel.Location = new System.Drawing.Point(50, 247);
             L_LegendMinLevel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             L_LegendMinLevel.Name = "L_LegendMinLevel";
             L_LegendMinLevel.Size = new System.Drawing.Size(90, 21);
@@ -869,7 +819,7 @@
             // 
             // NUD_LegendMinLevel
             // 
-            NUD_LegendMinLevel.Location = new System.Drawing.Point(175, 280);
+            NUD_LegendMinLevel.Location = new System.Drawing.Point(175, 245);
             NUD_LegendMinLevel.Margin = new System.Windows.Forms.Padding(5);
             NUD_LegendMinLevel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             NUD_LegendMinLevel.Name = "NUD_LegendMinLevel";
@@ -880,7 +830,7 @@
             // L_LegendRate
             // 
             L_LegendRate.AutoSize = true;
-            L_LegendRate.Location = new System.Drawing.Point(270, 282);
+            L_LegendRate.Location = new System.Drawing.Point(270, 247);
             L_LegendRate.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             L_LegendRate.Name = "L_LegendRate";
             L_LegendRate.Size = new System.Drawing.Size(90, 21);
@@ -889,7 +839,7 @@
             // 
             // NUD_LegendRate
             // 
-            NUD_LegendRate.Location = new System.Drawing.Point(363, 279);
+            NUD_LegendRate.Location = new System.Drawing.Point(363, 244);
             NUD_LegendRate.Margin = new System.Windows.Forms.Padding(5);
             NUD_LegendRate.Name = "NUD_LegendRate";
             NUD_LegendRate.Size = new System.Drawing.Size(65, 29);
@@ -1808,7 +1758,7 @@
             TabPage_Water.Margin = new System.Windows.Forms.Padding(5);
             TabPage_Water.Name = "TabPage_Water";
             TabPage_Water.Padding = new System.Windows.Forms.Padding(5);
-            TabPage_Water.Size = new System.Drawing.Size(1535, 575);
+            TabPage_Water.Size = new System.Drawing.Size(1535, 574);
             TabPage_Water.TabIndex = 1;
             TabPage_Water.Text = "水中";
             TabPage_Water.UseVisualStyleBackColor = true;
@@ -2799,7 +2749,7 @@
             TabPage_Land.Margin = new System.Windows.Forms.Padding(5);
             TabPage_Land.Name = "TabPage_Land";
             TabPage_Land.Padding = new System.Windows.Forms.Padding(5);
-            TabPage_Land.Size = new System.Drawing.Size(1535, 575);
+            TabPage_Land.Size = new System.Drawing.Size(1535, 574);
             TabPage_Land.TabIndex = 0;
             TabPage_Land.Text = "陆上";
             TabPage_Land.UseVisualStyleBackColor = true;
@@ -4418,7 +4368,7 @@
             TabControl_EncounterData.Margin = new System.Windows.Forms.Padding(5);
             TabControl_EncounterData.Name = "TabControl_EncounterData";
             TabControl_EncounterData.SelectedIndex = 0;
-            TabControl_EncounterData.Size = new System.Drawing.Size(1543, 640);
+            TabControl_EncounterData.Size = new System.Drawing.Size(1543, 608);
             TabControl_EncounterData.TabIndex = 2;
             // 
             // B_Dump
@@ -4449,7 +4399,7 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1580, 668);
+            ClientSize = new System.Drawing.Size(1580, 648);
             Controls.Add(B_Randomize);
             Controls.Add(B_Dump);
             Controls.Add(L_FormList);
@@ -4472,8 +4422,6 @@
             TabPage_Horde.PerformLayout();
             GB_Tweak.ResumeLayout(false);
             GB_Tweak.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)NUD_EvoMid).EndInit();
-            ((System.ComponentModel.ISupportInitialize)NUD_EvoHigh).EndInit();
             ((System.ComponentModel.ISupportInitialize)NUD_LegendMinLevel).EndInit();
             ((System.ComponentModel.ISupportInitialize)NUD_LegendRate).EndInit();
             ((System.ComponentModel.ISupportInitialize)NUD_LevelAmp).EndInit();
@@ -5034,10 +4982,6 @@
         private System.Windows.Forms.CheckBox CHK_MegaForm;
         private System.Windows.Forms.CheckBox CHK_HomogeneousHordes;
         private System.Windows.Forms.CheckBox CHK_EvoLevel;
-        private System.Windows.Forms.Label L_EvoMid;
-        private System.Windows.Forms.NumericUpDown NUD_EvoMid;
-        private System.Windows.Forms.Label L_EvoHigh;
-        private System.Windows.Forms.NumericUpDown NUD_EvoHigh;
         private System.Windows.Forms.CheckBox CHK_LegendEnable;
         private System.Windows.Forms.Label L_LegendMinLevel;
         private System.Windows.Forms.NumericUpDown NUD_LegendMinLevel;

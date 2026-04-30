@@ -8,8 +8,6 @@ namespace pk3DS.WinForms
     public class Wild7Enhancer
     {
         public bool EvoLevelAdjust { get; set; }
-        public int EvoMid { get; set; } = 10;
-        public int EvoHigh { get; set; } = 45;
 
         public bool LegendEnable { get; set; }
         public int LegendMinLevel { get; set; } = 40;
@@ -62,30 +60,7 @@ namespace pk3DS.WinForms
 
         private void AdjustByEvolution(EncounterTable table)
         {
-            int minLevel = table.MinLevel;
-            int maxLevel = table.MaxLevel;
-            int totalRange = maxLevel - minLevel;
-
-            // Calculate stage weights from the full level range
-            double s0w, s1w, s2w;
-
-            if (totalRange <= 0)
-            {
-                if (minLevel < EvoMid)      { s0w = 1; s1w = 0; s2w = 0; }
-                else if (minLevel >= EvoHigh) { s0w = 0; s1w = 0; s2w = 1; }
-                else                         { s0w = 1; s1w = 1; s2w = 1; }
-            }
-            else
-            {
-                double low  = Math.Max(0, Math.Min(EvoMid,  maxLevel) - minLevel);
-                double mid  = Math.Max(0, Math.Min(EvoHigh, maxLevel) - Math.Max(EvoMid,  minLevel));
-                double high = Math.Max(0, maxLevel - Math.Max(EvoHigh, minLevel));
-
-                s0w = low  + mid / 3.0;
-                s1w = mid  / 3.0;
-                s2w = high + mid / 3.0;
-            }
-
+            GetStageWeights(table.MinLevel, table.MaxLevel, out double s0w, out double s1w, out double s2w);
             double totalWeight = s0w + s1w + s2w;
             if (totalWeight <= 0)
                 return;
@@ -138,6 +113,29 @@ namespace pk3DS.WinForms
             }
         }
 
+        private static readonly (int Min, int Max, double S0, double S1, double S2)[] _stageDistributions =
+        {
+            (1, 15,  0.80, 0.20, 0.00),
+            (16, 30, 0.15, 0.80, 0.05),
+            (31, 55, 0.00, 0.20, 0.80),
+            (56, 100, 0.00, 0.00, 1.00),
+        };
+
+        private static void GetStageWeights(int minLevel, int maxLevel, out double s0w, out double s1w, out double s2w)
+        {
+            s0w = s1w = s2w = 0;
+            foreach (var band in _stageDistributions)
+            {
+                int overlapStart = Math.Max(minLevel, band.Min);
+                int overlapEnd = Math.Min(maxLevel, band.Max);
+                int overlap = Math.Max(0, overlapEnd - overlapStart + 1);
+                if (overlap <= 0) continue;
+                s0w += overlap * band.S0;
+                s1w += overlap * band.S1;
+                s2w += overlap * band.S2;
+            }
+        }
+
         private static int RollStage(double s0w, double s1w, double s2w, double total)
         {
             double roll = Random.Shared.NextDouble() * total;
@@ -153,10 +151,17 @@ namespace pk3DS.WinForms
             {
                 if (i >= _evoChain.EvolutionStage.Length)
                     continue;
-                if (_evoChain.EvolutionStage[i] != targetStage)
-                    continue;
                 if (_legendarySet != null && _legendarySet.Contains(i))
                     continue;
+
+                bool match = targetStage switch
+                {
+                    0 => _evoChain.EvolutionStage[i] == 0,
+                    1 => _evoChain.EvolutionStage[i] > 0 && !_evoChain.IsFinalForm[i],
+                    2 => _evoChain.IsFinalForm[i] && _evoChain.EvolutionStage[i] > 0,
+                    _ => false,
+                };
+                if (!match) continue;
                 candidates.Add(i);
             }
             return candidates.Count > 0 ? candidates[Random.Shared.Next(candidates.Count)] : 0;
@@ -255,25 +260,7 @@ namespace pk3DS.WinForms
         /// </summary>
         private int PickStageForLevel(int minLevel, int maxLevel)
         {
-            int totalRange = maxLevel - minLevel;
-            double s0w, s1w, s2w;
-
-            if (totalRange <= 0)
-            {
-                if (minLevel < EvoMid)      { s0w = 1; s1w = 0; s2w = 0; }
-                else if (minLevel >= EvoHigh) { s0w = 0; s1w = 0; s2w = 1; }
-                else                         { s0w = 1; s1w = 1; s2w = 1; }
-            }
-            else
-            {
-                double low  = Math.Max(0, Math.Min(EvoMid,  maxLevel) - minLevel);
-                double mid  = Math.Max(0, Math.Min(EvoHigh, maxLevel) - Math.Max(EvoMid,  minLevel));
-                double high = Math.Max(0, maxLevel - Math.Max(EvoHigh, minLevel));
-                s0w = low  + mid / 3.0;
-                s1w = mid  / 3.0;
-                s2w = high + mid / 3.0;
-            }
-
+            GetStageWeights(minLevel, maxLevel, out double s0w, out double s1w, out double s2w);
             double total = s0w + s1w + s2w;
             if (total <= 0) return 0;
             return RollStage(s0w, s1w, s2w, total);

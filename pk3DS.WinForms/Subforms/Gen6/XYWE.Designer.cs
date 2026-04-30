@@ -280,10 +280,6 @@
             this.CHK_HomogeneousHordes = new System.Windows.Forms.CheckBox();
             this.CHK_MegaForm = new System.Windows.Forms.CheckBox();
             this.CHK_EvoLevel = new System.Windows.Forms.CheckBox();
-            this.L_EvoMid = new System.Windows.Forms.Label();
-            this.NUD_EvoMid = new System.Windows.Forms.NumericUpDown();
-            this.L_EvoHigh = new System.Windows.Forms.Label();
-            this.NUD_EvoHigh = new System.Windows.Forms.NumericUpDown();
             this.CHK_LegendEnable = new System.Windows.Forms.CheckBox();
             this.L_LegendMinLevel = new System.Windows.Forms.Label();
             this.NUD_LegendMinLevel = new System.Windows.Forms.NumericUpDown();
@@ -708,8 +704,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.NUP_OldMax3)).BeginInit();
             this.TabPage_Horde.SuspendLayout();
             this.GB_Tweak.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NUD_EvoMid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUD_EvoHigh)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_LegendMinLevel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_LegendRate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_LevelAmp)).BeginInit();
@@ -15772,10 +15766,6 @@
             this.GB_Tweak.Controls.Add(this.CHK_HomogeneousHordes);
             this.GB_Tweak.Controls.Add(this.CHK_MegaForm);
             this.GB_Tweak.Controls.Add(this.CHK_EvoLevel);
-            this.GB_Tweak.Controls.Add(this.L_EvoMid);
-            this.GB_Tweak.Controls.Add(this.NUD_EvoMid);
-            this.GB_Tweak.Controls.Add(this.L_EvoHigh);
-            this.GB_Tweak.Controls.Add(this.NUD_EvoHigh);
             this.GB_Tweak.Controls.Add(this.CHK_LegendEnable);
             this.GB_Tweak.Controls.Add(this.L_LegendMinLevel);
             this.GB_Tweak.Controls.Add(this.NUD_LegendMinLevel);
@@ -15835,48 +15825,6 @@
             this.CHK_EvoLevel.TabIndex = 298;
             this.CHK_EvoLevel.Text = "进化链等级调整";
             this.CHK_EvoLevel.UseVisualStyleBackColor = true;
-            //
-            // L_EvoMid
-            //
-            this.L_EvoMid.AutoSize = true;
-            this.L_EvoMid.Location = new System.Drawing.Point(50, 215);
-            this.L_EvoMid.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.L_EvoMid.Name = "L_EvoMid";
-            this.L_EvoMid.Size = new System.Drawing.Size(126, 21);
-            this.L_EvoMid.TabIndex = 299;
-            this.L_EvoMid.Text = "中间等级阈值：";
-            //
-            // NUD_EvoMid
-            //
-            this.NUD_EvoMid.Location = new System.Drawing.Point(180, 213);
-            this.NUD_EvoMid.Margin = new System.Windows.Forms.Padding(5);
-            this.NUD_EvoMid.Maximum = new decimal(new int[] { 100, 0, 0, 0 });
-            this.NUD_EvoMid.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            this.NUD_EvoMid.Name = "NUD_EvoMid";
-            this.NUD_EvoMid.Size = new System.Drawing.Size(65, 28);
-            this.NUD_EvoMid.TabIndex = 300;
-            this.NUD_EvoMid.Value = new decimal(new int[] { 10, 0, 0, 0 });
-            //
-            // L_EvoHigh
-            //
-            this.L_EvoHigh.AutoSize = true;
-            this.L_EvoHigh.Location = new System.Drawing.Point(270, 215);
-            this.L_EvoHigh.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.L_EvoHigh.Name = "L_EvoHigh";
-            this.L_EvoHigh.Size = new System.Drawing.Size(106, 21);
-            this.L_EvoHigh.TabIndex = 301;
-            this.L_EvoHigh.Text = "高级阈值：";
-            //
-            // NUD_EvoHigh
-            //
-            this.NUD_EvoHigh.Location = new System.Drawing.Point(370, 213);
-            this.NUD_EvoHigh.Margin = new System.Windows.Forms.Padding(5);
-            this.NUD_EvoHigh.Maximum = new decimal(new int[] { 100, 0, 0, 0 });
-            this.NUD_EvoHigh.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            this.NUD_EvoHigh.Name = "NUD_EvoHigh";
-            this.NUD_EvoHigh.Size = new System.Drawing.Size(65, 28);
-            this.NUD_EvoHigh.TabIndex = 302;
-            this.NUD_EvoHigh.Value = new decimal(new int[] { 45, 0, 0, 0 });
             //
             // CHK_LegendEnable
             //
@@ -28755,8 +28703,6 @@
             this.TabPage_Horde.PerformLayout();
             this.GB_Tweak.ResumeLayout(false);
             this.GB_Tweak.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NUD_EvoMid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.NUD_EvoHigh)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_LegendMinLevel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_LegendRate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.NUD_LevelAmp)).EndInit();
@@ -29458,10 +29404,6 @@
         private System.Windows.Forms.CheckBox CHK_MegaForm;
         private System.Windows.Forms.CheckBox CHK_HomogeneousHordes;
         private System.Windows.Forms.CheckBox CHK_EvoLevel;
-        private System.Windows.Forms.Label L_EvoMid;
-        private System.Windows.Forms.NumericUpDown NUD_EvoMid;
-        private System.Windows.Forms.Label L_EvoHigh;
-        private System.Windows.Forms.NumericUpDown NUD_EvoHigh;
         private System.Windows.Forms.CheckBox CHK_LegendEnable;
         private System.Windows.Forms.Label L_LegendMinLevel;
         private System.Windows.Forms.NumericUpDown NUD_LegendMinLevel;

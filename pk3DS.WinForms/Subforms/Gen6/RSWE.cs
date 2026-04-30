@@ -746,8 +746,6 @@ namespace pk3DS.WinForms
                         SlotCount = 61,
                         SlotRates = ORAS_RATES,
                         EvoLevelAdjust = CHK_EvoLevel.Checked,
-                        EvoMid = (int)NUD_EvoMid.Value,
-                        EvoHigh = (int)NUD_EvoHigh.Value,
                         LegendEnable = CHK_LegendEnable.Checked,
                         LegendMinLevel = (int)NUD_LegendMinLevel.Value,
                         LegendRate = (int)NUD_LegendRate.Value,
@@ -922,7 +920,7 @@ namespace pk3DS.WinForms
 
             if (_legendarySet.Contains(species))
                 cb.BackColor = System.Drawing.Color.FromArgb(255, 248, 220); // 淡金色
-            else if (_evoChain.EvolutionStage[species] >= 2)
+            else if (_evoChain.IsFinalForm[species] && _evoChain.EvolutionStage[species] > 0)
                 cb.BackColor = System.Drawing.Color.FromArgb(210, 240, 255); // 淡蓝色
             else
                 cb.BackColor = System.Drawing.Color.White;

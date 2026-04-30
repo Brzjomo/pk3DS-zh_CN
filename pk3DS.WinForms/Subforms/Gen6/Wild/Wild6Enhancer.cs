@@ -10,8 +10,6 @@ namespace pk3DS.WinForms
     {
         // === 配置属性 ===
         public bool EvoLevelAdjust { get; set; }
-        public int EvoMid { get; set; } = 10;
-        public int EvoHigh { get; set; } = 45;
 
         public bool LegendEnable { get; set; }
         public int LegendMinLevel { get; set; } = 40;
@@ -191,7 +189,7 @@ namespace pk3DS.WinForms
             if (minLevel <= 0) minLevel = maxLevel;
             if (maxLevel <= 0) maxLevel = minLevel;
 
-            CalculateStageWeights(minLevel, maxLevel, out double s0w, out double s1w, out double s2w);
+            GetStageWeights(minLevel, maxLevel, out double s0w, out double s1w, out double s2w);
             double totalWeight = s0w + s1w + s2w;
             if (totalWeight <= 0)
                 return;
@@ -286,29 +284,27 @@ namespace pk3DS.WinForms
             }
         }
 
-        /// <summary>
-        /// 根据等级范围计算三阶段权重（与 Gen7 算法一致）。
-        /// </summary>
-        private void CalculateStageWeights(int minLevel, int maxLevel,
+        private static readonly (int Min, int Max, double S0, double S1, double S2)[] _stageDistributions =
+        {
+            (1, 15,  0.80, 0.20, 0.00),
+            (16, 30, 0.15, 0.80, 0.05),
+            (31, 55, 0.00, 0.20, 0.80),
+            (56, 100, 0.00, 0.00, 1.00),
+        };
+
+        private static void GetStageWeights(int minLevel, int maxLevel,
             out double s0w, out double s1w, out double s2w)
         {
-            int totalRange = maxLevel - minLevel;
-
-            if (totalRange <= 0)
+            s0w = s1w = s2w = 0;
+            foreach (var band in _stageDistributions)
             {
-                if (minLevel < EvoMid)      { s0w = 1; s1w = 0; s2w = 0; }
-                else if (minLevel >= EvoHigh) { s0w = 0; s1w = 0; s2w = 1; }
-                else                         { s0w = 1; s1w = 1; s2w = 1; }
-            }
-            else
-            {
-                double low  = Math.Max(0, Math.Min(EvoMid,  maxLevel) - minLevel);
-                double mid  = Math.Max(0, Math.Min(EvoHigh, maxLevel) - Math.Max(EvoMid,  minLevel));
-                double high = Math.Max(0, maxLevel - Math.Max(EvoHigh, minLevel));
-
-                s0w = low  + mid / 3.0;
-                s1w = mid  / 3.0;
-                s2w = high + mid / 3.0;
+                int overlapStart = Math.Max(minLevel, band.Min);
+                int overlapEnd = Math.Min(maxLevel, band.Max);
+                int overlap = Math.Max(0, overlapEnd - overlapStart + 1);
+                if (overlap <= 0) continue;
+                s0w += overlap * band.S0;
+                s1w += overlap * band.S1;
+                s2w += overlap * band.S2;
             }
         }
 
@@ -323,7 +319,7 @@ namespace pk3DS.WinForms
             if (minLevel <= 0) minLevel = maxLevel;
             if (maxLevel <= 0) maxLevel = minLevel;
 
-            CalculateStageWeights(minLevel, maxLevel, out double s0w, out double s1w, out double s2w);
+            GetStageWeights(minLevel, maxLevel, out double s0w, out double s1w, out double s2w);
             double total = s0w + s1w + s2w;
             if (total <= 0) return 0;
             return RollStage(s0w, s1w, s2w, total);
@@ -373,10 +369,17 @@ namespace pk3DS.WinForms
             {
                 if (i >= _evoChain.EvolutionStage.Length)
                     continue;
-                if (_evoChain.EvolutionStage[i] != targetStage)
-                    continue;
                 if (_legendarySet != null && _legendarySet.Contains(i))
                     continue;
+
+                bool match = targetStage switch
+                {
+                    0 => _evoChain.EvolutionStage[i] == 0,
+                    1 => _evoChain.EvolutionStage[i] > 0 && !_evoChain.IsFinalForm[i],
+                    2 => _evoChain.IsFinalForm[i] && _evoChain.EvolutionStage[i] > 0,
+                    _ => false,
+                };
+                if (!match) continue;
                 candidates.Add(i);
             }
 

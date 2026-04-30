@@ -257,7 +257,7 @@ namespace pk3DS.WinForms
                 return;
             }
 
-            if (species < _evoChain.EvolutionStage.Length && _evoChain.EvolutionStage[species] >= 2)
+            if (species < _evoChain.EvolutionStage.Length && _evoChain.IsFinalForm[species] && _evoChain.EvolutionStage[species] > 0)
                 cb.BackColor = Color.FromArgb(210, 240, 255); // 淡蓝
             else
                 cb.BackColor = Color.White;
@@ -496,8 +496,6 @@ namespace pk3DS.WinForms
             var enhancer = new Wild7Enhancer
             {
                 EvoLevelAdjust = CHK_EvoLevel.Checked,
-                EvoMid = (int)NUD_EvoMid.Value,
-                EvoHigh = (int)NUD_EvoHigh.Value,
                 LegendEnable = CHK_LegendEnable.Checked,
                 LegendMinLevel = (int)NUD_LegendMinLevel.Value,
                 LegendRate = (int)NUD_LegendRate.Value,

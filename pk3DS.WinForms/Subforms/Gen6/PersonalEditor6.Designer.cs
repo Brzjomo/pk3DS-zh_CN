@@ -150,6 +150,7 @@
             CHK_Stats = new System.Windows.Forms.CheckBox();
             NUD_TargetBST = new System.Windows.Forms.NumericUpDown();
             CB_BalanceBST = new System.Windows.Forms.CheckBox();
+            CHK_RandGrowth = new System.Windows.Forms.CheckBox();
             CHK_EggGroup = new System.Windows.Forms.CheckBox();
             CHK_CatchRate = new System.Windows.Forms.CheckBox();
             CHK_Item = new System.Windows.Forms.CheckBox();
@@ -1061,11 +1062,11 @@
             TP_MoveTutors.Controls.Add(CLB_ORASTutors);
             TP_MoveTutors.Controls.Add(CLB_MoveTutors);
             TP_MoveTutors.Controls.Add(CLB_TMHM);
-            TP_MoveTutors.Location = new System.Drawing.Point(4, 30);
+            TP_MoveTutors.Location = new System.Drawing.Point(4, 26);
             TP_MoveTutors.Margin = new System.Windows.Forms.Padding(5);
             TP_MoveTutors.Name = "TP_MoveTutors";
             TP_MoveTutors.Padding = new System.Windows.Forms.Padding(5);
-            TP_MoveTutors.Size = new System.Drawing.Size(734, 572);
+            TP_MoveTutors.Size = new System.Drawing.Size(734, 576);
             TP_MoveTutors.TabIndex = 1;
             TP_MoveTutors.Text = "可教授招式";
             TP_MoveTutors.UseVisualStyleBackColor = true;
@@ -1352,6 +1353,7 @@
             GB_Randomizer.Controls.Add(CHK_Stats);
             GB_Randomizer.Controls.Add(NUD_TargetBST);
             GB_Randomizer.Controls.Add(CB_BalanceBST);
+            GB_Randomizer.Controls.Add(CHK_RandGrowth);
             GB_Randomizer.Controls.Add(CHK_EggGroup);
             GB_Randomizer.Controls.Add(CHK_CatchRate);
             GB_Randomizer.Controls.Add(CHK_Item);
@@ -1656,6 +1658,19 @@
             CB_BalanceBST.UseVisualStyleBackColor = true;
             CB_BalanceBST.CheckedChanged += CB_BalanceBST_CheckedChanged;
             // 
+            // CHK_RandGrowth
+            // 
+            CHK_RandGrowth.AutoSize = true;
+            CHK_RandGrowth.Checked = true;
+            CHK_RandGrowth.CheckState = System.Windows.Forms.CheckState.Checked;
+            CHK_RandGrowth.Location = new System.Drawing.Point(218, 201);
+            CHK_RandGrowth.Margin = new System.Windows.Forms.Padding(5);
+            CHK_RandGrowth.Name = "CHK_RandGrowth";
+            CHK_RandGrowth.Size = new System.Drawing.Size(173, 25);
+            CHK_RandGrowth.TabIndex = 27;
+            CHK_RandGrowth.Text = "随机经验值累积速度";
+            CHK_RandGrowth.UseVisualStyleBackColor = true;
+            // 
             // CHK_EggGroup
             // 
             CHK_EggGroup.AutoSize = true;
@@ -1884,6 +1899,7 @@
         private System.Windows.Forms.Label L_FinalXP;
         private System.Windows.Forms.NumericUpDown NUD_EXP;
         private System.Windows.Forms.CheckBox CHK_Growth;
+        private System.Windows.Forms.CheckBox CHK_RandGrowth;
         private System.Windows.Forms.CheckBox CHK_QuickHatch;
         private System.Windows.Forms.Label L_Same;
         private System.Windows.Forms.NumericUpDown NUD_Egg;

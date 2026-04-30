@@ -39,8 +39,15 @@ namespace pk3DS.Core.CTR
 
             NCCH NCCH = SetNCCH(EXEFS_PATH, ROMFS_PATH, EXHEADER_PATH, SERIAL_TEXT, LOGO_NAME, TB_Progress);
             NCSD NCSD = SetNCSD(NCCH, Card2, TB_Progress);
-            bool success = WriteROM(NCSD, SAVE_PATH, trimmed, PB_Show, TB_Progress);
-            return success;
+            try
+            {
+                return WriteROM(NCSD, SAVE_PATH, trimmed, PB_Show, TB_Progress);
+            }
+            catch (IOException ex)
+            {
+                UpdateTB(TB_Progress, "错误: " + ex.Message);
+                return false;
+            }
         }
 
         // Sub methods that drive the operation
