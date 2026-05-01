@@ -1,4 +1,5 @@
-﻿using System;
+﻿using pk3DS.WinForms.Text;
+using System;
 using System.Windows.Forms;
 
 #if !DEBUG
@@ -15,6 +16,9 @@ namespace pk3DS.WinForms
         [STAThread]
         private static void Main()
         {
+            // Initialize centralized string resources
+            StringManager.Instance.Initialize("zh-CN");
+
 #if !DEBUG
             // Add the event handler for handling UI thread exceptions to the event.
             Application.ThreadException += UIThreadException;
@@ -22,7 +26,7 @@ namespace pk3DS.WinForms
             // Set the unhandled exception mode to force all Windows Forms errors to go through our handler.
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
 
-            // Add the event handler for handling non-UI thread exceptions to the event. 
+            // Add the event handler for handling non-UI thread exceptions to the event.
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 #endif
 
@@ -39,15 +43,13 @@ namespace pk3DS.WinForms
             DialogResult result = DialogResult.Cancel;
             try
             {
-                // Todo: make this translatable
-                ErrorWindow.ShowErrorDialog("An unhandled exception has occurred." + Environment.NewLine + "You can continue running the program (albeit with potential side-effects), but please report this error.", t.Exception, true);
+                ErrorWindow.ShowErrorDialog(Strings.Program_UnhandledException, t.Exception, true);
             }
             catch
             {
                 try
                 {
-                    // Todo: make this translatable
-                    MessageBox.Show("A fatal error has occurred in pk3DS.WinForms, and the details could not be displayed.  Please report this to the author.", "pk3DS.WinForms Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show(Strings.Program_FatalWinFormsError, Strings.Common_Error, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
                 finally
                 {
@@ -60,24 +62,18 @@ namespace pk3DS.WinForms
                 Application.Exit();
         }
 
-        // Handle the UI exceptions by showing a dialog box, and asking the user whether
-        // or not they wish to abort execution.
-        // NOTE: This exception cannot be kept from terminating the application - it can only 
-        // log the event, and inform the user about it. 
         private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             try
             {
                 var ex = (Exception)e.ExceptionObject;
-                // Todo: make this translatable
-                ErrorWindow.ShowErrorDialog("An unhandled exception has occurred." + Environment.NewLine + "The program must now close.", ex, false);
+                ErrorWindow.ShowErrorDialog(Strings.Program_FatalError, ex, false);
             }
             catch
             {
                 try
                 {
-                    // Todo: make this translatable
-                    MessageBox.Show("A fatal non-UI error has occurred in PKHeX, and the details could not be displayed.  Please report this to the author.", "PKHeX Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    MessageBox.Show(Strings.Program_FatalNonUIError, Strings.Common_Error, MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
                 finally
                 {

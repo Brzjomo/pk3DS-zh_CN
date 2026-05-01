@@ -7,6 +7,7 @@ using System.Media;
 using System.Text;
 using System.Windows.Forms;
 
+using pk3DS.WinForms.Text;
 using pk3DS.Core;
 using pk3DS.Core.Randomizers;
 using pk3DS.Core.Structures;
@@ -493,8 +494,8 @@ namespace pk3DS.WinForms
             {
                 if (mEvoTypes.Length < 13 && rTypeTheme)
                 {
-                    WinFormsUtil.Alert("There are insufficient Types with at least one mega evolution to Guarantee story Mega Evos while keeping Type theming.",
-                    "重新随机化个体值或不要同时选择。"); return; }
+                    WinFormsUtil.Alert(Strings.RSTE_InsufficientMegaTypes,
+                    Strings.RSTE_RerandomizeSuggest); return; }
                 GymE4Types.AddRange(mEvoTypes);
             }
             else
@@ -570,7 +571,7 @@ namespace pk3DS.WinForms
                 trpoke[i] = t.WriteTeam();
             }
             CB_TrainerID.SelectedIndex = 1;
-            WinFormsUtil.Alert("已根据设置随机化全部训练家！");
+            WinFormsUtil.Alert(Strings.SMTE_Randomized);
         }
 
         private static void RandomizeTeam(TrainerData6 t, MoveRandomizer move, LearnsetRandomizer learn, ushort[] itemvals, int type, bool mevo, bool typerand)

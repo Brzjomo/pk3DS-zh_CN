@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using pk3DS.Core.CTR;
 using pk3DS.Core.Randomizers;
 
@@ -362,14 +363,14 @@ namespace pk3DS.WinForms
             var Map = Areas[CB_LocationID.SelectedIndex];
             if (!Map.HasTables)
             {
-                WinFormsUtil.Alert("没有要复制的表格");
+                WinFormsUtil.Alert(Strings.SMWE_NoTableToCopy);
                 return;
             }
             CurrentTable.Write();
             CopyTable = (byte[])CurrentTable.Data.Clone();
             CopyCount = CurrentTable.Encounter7s[0].Count(z => z.Species != 0);
             B_Paste.Enabled = B_PasteAll.Enabled = true;
-            WinFormsUtil.Alert("已复制表格数据");
+            WinFormsUtil.Alert(Strings.SMWE_TableDataCopied);
         }
 
         private void B_Paste_Click(object sender, EventArgs e)
@@ -377,7 +378,7 @@ namespace pk3DS.WinForms
             var Map = Areas[CB_LocationID.SelectedIndex];
             if (!Map.HasTables)
             {
-                WinFormsUtil.Alert("没有要粘贴的表格");
+                WinFormsUtil.Alert(Strings.SMWE_NoTableToPaste);
                 return;
             }
             CurrentTable.Reset(CopyTable);
@@ -395,7 +396,7 @@ namespace pk3DS.WinForms
             var Map = Areas[CB_LocationID.SelectedIndex];
             if (!Map.HasTables)
             {
-                WinFormsUtil.Alert("没有要粘贴的表格");
+                WinFormsUtil.Alert(Strings.SMWE_NoTableToPaste);
                 return;
             }
             B_Paste_Click(sender, e);
@@ -408,7 +409,7 @@ namespace pk3DS.WinForms
             var sum = TotalEncounterRate;
             if (sum != 100 && sum != 0)
             {
-                WinFormsUtil.Error("遭遇机率加起来必须为 0% 或 100%");
+                WinFormsUtil.Error(Strings.SMWE_EncounterRateInvalid);
                 return;
             }
 
@@ -424,7 +425,7 @@ namespace pk3DS.WinForms
         {
             B_Save_Click(sender, e);
 
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "此操作将在pk3DS目录下创建encdata目录，并保存Map数据，是否继续?") != DialogResult.Yes)
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.SMWE_ExportMapConfirm) != DialogResult.Yes)
                 return;
 
             Directory.CreateDirectory("encdata");
@@ -433,7 +434,7 @@ namespace pk3DS.WinForms
                 var packed = Area7.GetDayNightTableBinary(Map.Tables);
                 File.WriteAllBytes(Path.Combine("encdata", Map.FileNumber.ToString()), packed);
             }
-            WinFormsUtil.Alert("已导出全部表格");
+            WinFormsUtil.Alert(Strings.SMWE_AllTablesExported);
         }
 
         private void DumpTables(object sender, EventArgs e)
@@ -450,7 +451,7 @@ namespace pk3DS.WinForms
         // Randomization & Bulk Modification
         private void B_Randomize_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否全部随机化？无法撤消。", "请先核对左下角的随机化设置。"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.SMWE_RandomAll, Strings.SMWE_CheckRandomSettings))
                 return;
 
             Enabled = false;
@@ -458,7 +459,7 @@ namespace pk3DS.WinForms
             UpdatePanel(null, null);
             Enabled = true;
 
-            WinFormsUtil.Alert("已根据设置，随机化全部野外遭遇！", "按下“导出表格”按钮来查看新的野外遭遇信息。");
+            WinFormsUtil.Alert(Strings.SMWE_Randomized, Strings.SMWE_ExportToView);
         }
 
         private void ExecuteRandomization()
@@ -506,7 +507,7 @@ namespace pk3DS.WinForms
 
         private void CopySOS_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否将常规遭遇的宝可梦，复制到SOS闯入对战?", "无法撤销") != DialogResult.Yes)
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.SMWE_CopyToSOS, Strings.SMWE_CantUndo) != DialogResult.Yes)
                 return;
 
             // first table is copied to all other tables except weather (last)
@@ -518,12 +519,12 @@ namespace pk3DS.WinForms
                     cb_spec[i][s].SelectedIndex = cb_spec[0][s].SelectedIndex;
                 }
             }
-            WinFormsUtil.Alert("已将常规遭遇的宝可梦，复制到SOS闯入对战");
+            WinFormsUtil.Alert(Strings.SMWE_CopiedToSOS);
         }
 
         private void ModifyAllLevelRanges(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否修改全部遭遇宝可梦的等级", "无法撤销"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.SMWE_ModAllLevels, Strings.SMWE_CantUndo))
                 return;
 
             // Disable Interface while modifying
@@ -545,7 +546,7 @@ namespace pk3DS.WinForms
 
             // Enable Interface... modification complete.
             Enabled = true;
-            WinFormsUtil.Alert("已根据设置，修改全部遭遇宝可梦的等级", "按下“导出表格”按钮来查看新的宝可梦等级");
+            WinFormsUtil.Alert(Strings.SMWE_LevelsModified, Strings.SMWE_ExportToView);
 
             UpdatePanel(sender, e);
         }

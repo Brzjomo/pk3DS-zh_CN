@@ -1,4 +1,5 @@
 ﻿using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using System;
 using System.Linq;
 using System.Windows.Forms;
@@ -184,11 +185,11 @@ namespace pk3DS.WinForms
         {
             if (!CHK_Category.Checked && !CHK_Type.Checked)
             {
-                WinFormsUtil.Alert("无法随机化招式。", "请检查右侧的设置。");
+                WinFormsUtil.Alert(Strings.Move_CantRandomize, Strings.Move_CheckRightSettings);
                 return;
             }
 
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机化招式？无法撤销。", "确认前，请先确认右侧的设置。") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Move_RandomConfirm, Strings.Move_ConfirmRight) != DialogResult.Yes) return;
             Random rnd = Util.Rand;
             for (int i = 0; i < CB_Move.Items.Count; i++)
             {
@@ -203,12 +204,12 @@ namespace pk3DS.WinForms
                 if (CHK_Type.Checked)
                     CB_Type.SelectedIndex = rnd.Next(0, 18);
             }
-            WinFormsUtil.Alert("已随机化全部招式！");
+            WinFormsUtil.Alert(Strings.Move_Randomized);
         }
 
         private void B_Metronome_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否使用挥指模式？", "这将设置其他全部招式的基础pp值为0！") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Move_MetronomeMode, Strings.Move_MetronomeDetail) != DialogResult.Yes) return;
 
             for (int i = 0; i < CB_Move.Items.Count; i++)
             {
@@ -221,7 +222,7 @@ namespace pk3DS.WinForms
                     NUD_PP.Value = 1;
             }
             CB_Move.SelectedIndex = 0;
-            WinFormsUtil.Alert("已随机化全部招式的基础pp值！");
+            WinFormsUtil.Alert(Strings.Move_PPRandomized);
         }
     }
 }

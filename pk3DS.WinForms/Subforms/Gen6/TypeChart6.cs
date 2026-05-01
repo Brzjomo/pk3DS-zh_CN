@@ -1,5 +1,6 @@
 ﻿using pk3DS.Core;
 using pk3DS.Core.Structures;
+using pk3DS.WinForms.Text;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -19,7 +20,7 @@ namespace pk3DS.WinForms
         public TypeChart6()
         {
             if (!File.Exists(CROPath))
-            { WinFormsUtil.Error("CRO 不存在！关闭中...", CROPath); Close(); }
+            { WinFormsUtil.Error(Strings.TypeChart_CroNotExists, CROPath); Close(); }
 
             InitializeComponent();
 

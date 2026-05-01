@@ -1,4 +1,5 @@
 ﻿using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using System;
 using System.IO;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace pk3DS.WinForms
         {
             if (!File.Exists(CROPath))
             {
-                WinFormsUtil.Error("CRO does not exist! Closing.", CROPath);
+                WinFormsUtil.Error(Strings.Gift_CRONotExists, CROPath);
                 Close();
             }
             InitializeComponent();
@@ -95,7 +96,7 @@ namespace pk3DS.WinForms
 
         private void B_Randomize_Click(object sender, EventArgs e)
         {
-            WinFormsUtil.Alert("目前尚未实现");
+            WinFormsUtil.Alert(Strings.Tutor_NotYetImplemented);
         }
     }
 }

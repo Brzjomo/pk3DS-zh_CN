@@ -1,4 +1,5 @@
 ﻿using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,12 +13,12 @@ namespace pk3DS.WinForms
         public ShinyRate()
         {
             InitializeComponent();
-            if (Main.ExeFSPath == null) { WinFormsUtil.Alert("No exeFS code to load."); Close(); }
+            if (Main.ExeFSPath == null) { WinFormsUtil.Alert(Strings.Item_NoExeFS); Close(); }
             string[] files = Directory.GetFiles(Main.ExeFSPath);
-            if (!File.Exists(files[0]) || !Path.GetFileNameWithoutExtension(files[0]).Contains("code")) { WinFormsUtil.Alert("No .code.bin detected."); Close(); }
+            if (!File.Exists(files[0]) || !Path.GetFileNameWithoutExtension(files[0]).Contains("code")) { WinFormsUtil.Alert(Strings.Common_NoCodeBin); Close(); }
             codebin = files[0];
             exefsData = File.ReadAllBytes(codebin);
-            if (exefsData.Length % 0x200 != 0) { WinFormsUtil.Alert(".code.bin not decompressed. Aborting."); Close(); }
+            if (exefsData.Length % 0x200 != 0) { WinFormsUtil.Alert(Strings.Common_CodeBinNotDecompressed); Close(); }
 
             // Load instruction set
             byte[] raw = Core.Properties.Resources.asm_mov;
@@ -33,7 +34,7 @@ namespace pk3DS.WinForms
             offset = Util.IndexOfBytes(exefsData, pattern, 0, 0) - 4;
             if (offset < 0)
             {
-                WinFormsUtil.Alert("Unable to find PID Generation routine.", "Closing.");
+                WinFormsUtil.Alert(Strings.Shiny_CannotFindPID, Strings.Shiny_Closing);
                 Close();
             }
             if (exefsData[offset] != 0x23) // already patched
@@ -42,11 +43,11 @@ namespace pk3DS.WinForms
                 var instruction = InstructionList.Find(z => z.ArgVal == val);
                 if (instruction == null)
                 {
-                    WinFormsUtil.Alert(".code.bin已被外部修改", "现有数值将不会加载。");
+                    WinFormsUtil.Alert(Strings.Shiny_ExternallyModified, Strings.Shiny_WontLoad);
                 }
                 else
                 {
-                    WinFormsUtil.Alert("已修改过闪光率", "将加载已修改的数值。");
+                    WinFormsUtil.Alert(Strings.Shiny_AlreadyModified, Strings.Shiny_LoadModified);
                     NUD_Rerolls.Value = instruction.Value;
                 }
                 modified = true;
@@ -145,7 +146,7 @@ namespace pk3DS.WinForms
             data.CopyTo(exefsData, offset);
 
             if (instruction.Value != rerolls)
-                WinFormsUtil.Alert("Specified reroll count increased to the next highest supported value.", $"{rerolls} -> {instruction.Value}");
+                WinFormsUtil.Alert(Strings.Shiny_RerollIncreased, $"{rerolls} -> {instruction.Value}");
         }
 
         private void B_RestoreOriginal_Click(object sender, EventArgs e)

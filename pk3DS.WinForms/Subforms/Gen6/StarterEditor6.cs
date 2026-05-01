@@ -1,4 +1,5 @@
 ﻿using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -15,12 +16,12 @@ namespace pk3DS.WinForms
 
             if (!File.Exists(CROPath))
             {
-                WinFormsUtil.Error("CRO does not exist! Closing.", CROPath);
+                WinFormsUtil.Error(Strings.Gift_CRONotExists, CROPath);
                 Close();
             }
             if (!File.Exists(FieldPath))
             {
-                WinFormsUtil.Error("CRO does not exist! Closing.", FieldPath);
+                WinFormsUtil.Error(Strings.Gift_CRONotExists, FieldPath);
                 Close();
             }
             InitializeComponent();
@@ -155,7 +156,7 @@ namespace pk3DS.WinForms
         private void B_Randomize_Click(object sender, EventArgs e)
         {
             bool blind = DialogResult.Yes ==
-                         WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "随机化后是否直接关闭？",
+                         WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Starter_RandomClose,
                              "留给你一点惊喜(*/ω＼*)");
             if (blind)
                 Hide();

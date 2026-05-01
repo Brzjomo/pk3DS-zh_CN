@@ -1,4 +1,5 @@
-﻿using pk3DS.Core;
+﻿using pk3DS.WinForms.Text;
+using pk3DS.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace pk3DS.WinForms
 
         private void B_Save_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否全部随机化？无法撤销") != DialogResult.Yes)
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.TrainerRand_RandomizeAll) != DialogResult.Yes)
                 return;
 
             RSTE.rPKM = CHK_RandomPKM.Checked;

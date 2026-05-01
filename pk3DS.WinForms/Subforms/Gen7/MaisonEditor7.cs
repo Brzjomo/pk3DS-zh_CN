@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using pk3DS.Core.Structures;
 
 namespace pk3DS.WinForms
@@ -272,7 +273,7 @@ namespace pk3DS.WinForms
 
         private void DumpTRs_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否确认导出训练家信息至TXT文件？") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Maison_ExportTrainers) != DialogResult.Yes) return;
 
             dumping = true;
             string result = "";
@@ -304,7 +305,7 @@ namespace pk3DS.WinForms
 
         private void B_DumpPKs_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否确认导出宝可梦信息至TXT文件？") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Maison_ExportPKM) != DialogResult.Yes) return;
 
             //File.WriteAllBytes("maiz", pkFiles.SelectMany(t => t).ToArray());
             string[] stats = {"HP", "ATK", "DEF", "Spe", "SpA", "SpD"};
@@ -358,7 +359,7 @@ namespace pk3DS.WinForms
 
         private void B_Randomize_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否确认随机化所有宝可梦？") != DialogResult.Yes)
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Maison_RandomAll) != DialogResult.Yes)
                 return;
 
             bool smart = CHK_Smart.Checked;
@@ -531,7 +532,7 @@ namespace pk3DS.WinForms
             if (pkEntry >= 0) GetPokemon();
             if (trEntry >= 0) GetTrainer();
 
-            WinFormsUtil.Alert("随机化完成！");
+            WinFormsUtil.Alert(Strings.Maison_Randomized);
         }
 
         #region Smart Randomization Helpers

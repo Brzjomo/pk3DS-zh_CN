@@ -1,4 +1,5 @@
-﻿using System;
+﻿using pk3DS.WinForms.Text;
+using System;
 using System.Text;
 using System.Windows.Forms;
 
@@ -8,8 +9,7 @@ namespace pk3DS.WinForms
     {
         public static DialogResult ShowErrorDialog(string friendlyMessage, Exception ex, bool allowContinue)
         {
-            var lang = System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
-            var dialog = new ErrorWindow(lang)
+            var dialog = new ErrorWindow
             {
                 ShowContinue = allowContinue,
                 Message = friendlyMessage,
@@ -26,11 +26,6 @@ namespace pk3DS.WinForms
         public ErrorWindow()
         {
             InitializeComponent();
-        }
-
-        public ErrorWindow(string lang) : this()
-        {
-            WinFormsUtil.TranslateInterface(this, lang);
         }
 
         /// <summary>
@@ -70,11 +65,11 @@ namespace pk3DS.WinForms
         private void UpdateExceptionDetailsMessage()
         {
             var details = new StringBuilder();
-            details.AppendLine("Exception Details:");
+            details.AppendLine(Strings.ErrorWindow_ExceptionDetails);
             details.AppendLine(Error.ToString());
             details.AppendLine();
 
-            details.AppendLine("Loaded Assemblies:");
+            details.AppendLine(Strings.ErrorWindow_LoadedAssemblies);
             details.AppendLine("--------------------");
             try
             {
@@ -87,13 +82,13 @@ namespace pk3DS.WinForms
             }
             catch (Exception ex)
             {
-                details.AppendLine("An error occurred while listing the Loaded Assemblies:");
+                details.AppendLine(Strings.ErrorWindow_LoadedAssembliesError);
                 details.AppendLine(ex.ToString());
             }
             details.AppendLine("--------------------");
 
             // Include message in case it contains important information, like a file path.
-            details.AppendLine("User Message:");
+            details.AppendLine(Strings.ErrorWindow_UserMessage);
             details.AppendLine(Message);
 
             T_ExceptionDetails.Text = details.ToString();

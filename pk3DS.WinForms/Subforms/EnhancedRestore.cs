@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 
 using pk3DS.Core;
+using pk3DS.WinForms.Text;
 
 namespace pk3DS.WinForms
 {
@@ -155,7 +156,7 @@ namespace pk3DS.WinForms
                 }
             }
 
-            WinFormsUtil.Alert($"已恢复 {count} 个文件。");
+            WinFormsUtil.Alert(string.Format(Strings.Restore_Complete, count));
             // do not call closing events that repackage personal/gametext
             // Environment.Exit(-1);
         }

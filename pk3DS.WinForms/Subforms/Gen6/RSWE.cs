@@ -1,4 +1,5 @@
 ﻿using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -756,7 +757,7 @@ namespace pk3DS.WinForms
                 B_Save_Click(sender, e);
             }
             Enabled = true;
-            WinFormsUtil.Alert("已根据设置，随机化全部野外遭遇!", "按下“导出表格”按钮来查看新的野外遭遇信息。");
+            WinFormsUtil.Alert(Strings.RSWE_Randomized, Strings.RSWE_ExportToView);
         }
 
         private static int CountUnique(int[] list)
@@ -885,7 +886,7 @@ namespace pk3DS.WinForms
             }
             // Enable Interface... modification complete.
             Enabled = true;
-            WinFormsUtil.Alert("Modified all Level ranges according to specification!", "Press the Dump Tables button to view the new Level ranges!");
+            WinFormsUtil.Alert(Strings.XYWE_LevelsModified, Strings.XYWE_LevelsExportTip);
         }
 
         private void RSWE_FormClosing(object sender, FormClosingEventArgs e)

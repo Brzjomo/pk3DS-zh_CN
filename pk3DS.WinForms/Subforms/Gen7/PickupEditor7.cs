@@ -1,4 +1,5 @@
 ﻿using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using System;
 using System.IO;
 using System.Linq;
@@ -130,7 +131,7 @@ namespace pk3DS.WinForms
                 if (sum == 100) // good
                     continue;
 
-                WinFormsUtil.Alert($"{i+1}列的总列数必须等于100。", $"现有{sum}。");
+                WinFormsUtil.Alert(string.Format(Strings.Pickup_TotalMustEqual100, i + 1), string.Format(Strings.Pickup_CurrentSum, sum));
                 return null;
             }
 
@@ -168,7 +169,7 @@ namespace pk3DS.WinForms
 
         private void B_Randomize_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机化捡拾列表？"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Pickup_Randomize))
                 return;
 
             int[] validItems = Randomizer.GetRandomItemList();
@@ -186,7 +187,7 @@ namespace pk3DS.WinForms
 
         private void B_AddRow_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否在末尾新增1行？"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Pickup_AddRow))
                 return;
 
             int row = dgvCommon.RowCount;
@@ -198,7 +199,7 @@ namespace pk3DS.WinForms
 
         private void B_DeleteRow_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否删除最后1行？"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Pickup_DeleteRow))
                 return;
 
             dgvCommon.Rows.RemoveAt(dgvCommon.RowCount - 1);

@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using pk3DS.WinForms.Subforms;
 using pk3DS.Core;
 using pk3DS.Core.CTR;
+using pk3DS.WinForms.Text;
 
 namespace pk3DS.WinForms
 {
@@ -729,10 +730,10 @@ namespace pk3DS.WinForms
                 string l = mm.EntryList.Where(t => t != 0xFFFF).Aggregate("", (current, t) => current + t.ToString("000 "));
                 result[i] = $"{i:000}\t{CB_LocationID.Items[i]}\t{l}";
             }
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, "Write Map parse output?") == DialogResult.Yes)
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, Strings.OWSE_WriteMapParse) == DialogResult.Yes)
                 File.WriteAllLines("MapLocations.txt", result);
             CB_LocationID.SelectedIndex = 0;
-            WinFormsUtil.Alert("All Map images have been dumped to " + folder + ".");
+            WinFormsUtil.Alert(Strings.OWSE_MapImagesDumped + folder + ".");
             debugToolDumping = false;
         }
 

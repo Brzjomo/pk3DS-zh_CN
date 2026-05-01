@@ -1,4 +1,5 @@
 ﻿using System;
+using pk3DS.WinForms.Text;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -20,7 +21,7 @@ namespace pk3DS.WinForms
             Array.Resize(ref specieslist, Main.Config.MaxSpeciesID + 1);
             if (!File.Exists(FieldPath))
             {
-                WinFormsUtil.Error("CRO文件不存在！关闭中...", FieldPath);
+                WinFormsUtil.Error(Strings.Gift_CRONotExists, FieldPath);
                 Close();
             }
             InitializeComponent();
@@ -138,7 +139,7 @@ namespace pk3DS.WinForms
             }
 
             if (starters) // are modified
-                WinFormsUtil.Alert("Starters 已经被修改。", "Be sure to update the Starters in DllPoke3Select.cro by updating via the Starter Editor.");
+                WinFormsUtil.Alert(Strings.Gift_StartersModified, "Be sure to update the Starters in DllPoke3Select.cro by updating via the Starter Editor.");
 
             File.WriteAllBytes(FieldPath, FieldData);
         }
@@ -206,7 +207,7 @@ namespace pk3DS.WinForms
 
         private void B_RandAll_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否全部随机化？无法撤销。", "请先检查随机化选项页的设置。") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Gift_RandomAll, Strings.Gift_CheckOptions) != DialogResult.Yes) return;
 
             var formrand = new FormRandomizer(Main.Config) { AllowMega = false, AllowAlolanForm = false };
             var specrand = new SpeciesRandomizer(Main.Config)
@@ -278,7 +279,7 @@ namespace pk3DS.WinForms
                 if (MegaDictionary.Values.Any(z => z.Contains(CB_HeldItem.SelectedIndex)) && NUD_Form.Value != 0)
                     NUD_Form.Value = 0; // don't allow mega gifts to be form 1
             }
-            WinFormsUtil.Alert("已根据设置随机化全部礼物宝可梦！");
+            WinFormsUtil.Alert(Strings.Gift_Randomized);
         }
 
         private int[] GetRandomMega(out int species)
@@ -365,14 +366,14 @@ namespace pk3DS.WinForms
 
         private void ModifyLevels(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否修改当前所有宝可梦等级？", "无法撤销。") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Gift_ModLevels, Strings.LevelUp_CantUndo) != DialogResult.Yes) return;
 
             for (int i = 0; i < LB_Gifts.Items.Count; i++)
             {
                 LB_Gifts.SelectedIndex = i;
                 NUD_Level.Value = Randomizer.GetModifiedLevel((int)NUD_Level.Value, NUD_LevelBoost.Value);
             }
-            WinFormsUtil.Alert("已根据设置修改全部宝可梦等级！");
+            WinFormsUtil.Alert(Strings.Gift_LevelsModified);
         }
     }
 }

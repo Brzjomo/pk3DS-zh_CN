@@ -1,4 +1,5 @@
 ﻿using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -10,11 +11,11 @@ namespace pk3DS.WinForms
         public MartEditor6()
         {
             InitializeComponent();
-            if (Main.ExeFSPath == null) { WinFormsUtil.Alert("No exeFS code to load."); Close(); }
+            if (Main.ExeFSPath == null) { WinFormsUtil.Alert(Strings.Item_NoExeFS); Close(); }
             string[] files = Directory.GetFiles(Main.ExeFSPath);
-            if (!File.Exists(files[0]) || !Path.GetFileNameWithoutExtension(files[0]).Contains("code")) { WinFormsUtil.Alert("No .code.bin detected."); Close(); }
+            if (!File.Exists(files[0]) || !Path.GetFileNameWithoutExtension(files[0]).Contains("code")) { WinFormsUtil.Alert(Strings.Common_NoCodeBin); Close(); }
             data = File.ReadAllBytes(files[0]);
-            if (data.Length % 0x200 != 0) { WinFormsUtil.Alert(".code.bin not decompressed. Aborting."); Close(); }
+            if (data.Length % 0x200 != 0) { WinFormsUtil.Alert(Strings.Common_CodeBinNotDecompressed); Close(); }
             offset = GetDataOffset(data);
             codebin = files[0];
             itemlist[0] = "";
@@ -177,7 +178,7 @@ namespace pk3DS.WinForms
 
         private void B_Randomize_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, "Randomize mart inventories?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, Strings.Mart_RandomizeInventories))
                 return;
 
             int[] validItems = Randomizer.GetRandomItemList();
@@ -185,7 +186,7 @@ namespace pk3DS.WinForms
             int ctr = 0;
             Util.Shuffle(validItems);
 
-            bool specialOnly = DialogResult.Yes == WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Randomize only special marts?", "Will leave regular necessities intact.");
+            bool specialOnly = DialogResult.Yes == WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Mart_RandomizeSpecialMarts, Strings.Mart_KeepEssentials);
             int start = specialOnly ? 10 : 0;
             for (int i = start; i < CB_Location.Items.Count; i++)
             {
@@ -202,7 +203,7 @@ namespace pk3DS.WinForms
                     Util.Shuffle(validItems); ctr = 0;
                 }
             }
-            WinFormsUtil.Alert("Randomized!");
+            WinFormsUtil.Alert(Strings.Mart_Randomized);
         }
     }
 }

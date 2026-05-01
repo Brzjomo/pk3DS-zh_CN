@@ -1,4 +1,5 @@
 ﻿using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -10,18 +11,18 @@ namespace pk3DS.WinForms
         public TutorEditor6()
         {
             InitializeComponent();
-            if (Main.ExeFSPath == null) { WinFormsUtil.Alert("No exeFS code to load."); Close(); }
+            if (Main.ExeFSPath == null) { WinFormsUtil.Alert(Strings.Item_NoExeFS); Close(); }
             string[] files = Directory.GetFiles(Main.ExeFSPath);
-            if (!File.Exists(files[0]) || !Path.GetFileNameWithoutExtension(files[0]).Contains("code")) { WinFormsUtil.Alert("No .code.bin detected."); Close(); }
+            if (!File.Exists(files[0]) || !Path.GetFileNameWithoutExtension(files[0]).Contains("code")) { WinFormsUtil.Alert(Strings.Common_NoCodeBin); Close(); }
             data = File.ReadAllBytes(files[0]);
-            if (data.Length % 0x200 != 0) { WinFormsUtil.Alert(".code.bin not decompressed. Aborting."); Close(); }
+            if (data.Length % 0x200 != 0) { WinFormsUtil.Alert(Strings.Common_CodeBinNotDecompressed); Close(); }
             offset = GetDataOffset(data);
             codebin = files[0];
             movelist[0] = "";
             SetupDGV();
             foreach (string s in locations) CB_Location.Items.Add(s);
             CB_Location.SelectedIndex = 0;
-            WinFormsUtil.Alert("Changes made do not reflect ingame.", "Still needs more research.");
+            WinFormsUtil.Alert(Strings.Tutor6_SaveNotReflected, Strings.Tutor6_NeedsResearch);
         }
 
         private static int GetDataOffset(byte[] data)

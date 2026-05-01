@@ -1,4 +1,5 @@
-﻿using pk3DS.Core;
+﻿using pk3DS.WinForms.Text;
+using pk3DS.Core;
 using System;
 using System.IO;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace pk3DS.WinForms
             Array.Resize(ref specieslist, Main.Config.MaxSpeciesID + 1);
             if (!File.Exists(FieldPath))
             {
-                WinFormsUtil.Error("CRO does not exist! Closing.", FieldPath);
+                WinFormsUtil.Error(Strings.Gift_CRONotExists, FieldPath);
                 Close();
             }
             InitializeComponent();
@@ -150,7 +151,7 @@ namespace pk3DS.WinForms
 
         private void B_RandAll_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否全部随机化？无法撤销。", "继续前，请先检查随机化选项。") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Gift_RandomAll, Strings.Static_CheckOptions) != DialogResult.Yes) return;
 
             var formrand = new FormRandomizer(Main.Config) { AllowMega = false, AllowAlolanForm = false };
             var specrand = new SpeciesRandomizer(Main.Config)
@@ -218,7 +219,7 @@ namespace pk3DS.WinForms
                 NUD_Form.Value = formrand.GetRandomForme(species);
                 CB_Gender.SelectedIndex = 0; // random
             }
-            WinFormsUtil.Alert("已根据选项随机化固定遭遇！");
+            WinFormsUtil.Alert(Strings.Static_Randomized);
         }
 
         private void ChangeSpecies(object sender, EventArgs e)
@@ -229,14 +230,14 @@ namespace pk3DS.WinForms
 
         private void ModifyLevels(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否修改全部当前等级？", "无法撤销。") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Static_ModLevels, Strings.LevelUp_CantUndo) != DialogResult.Yes) return;
 
             for (int i = 0; i < LB_Encounters.Items.Count; i++)
             {
                 LB_Encounters.SelectedIndex = i;
                 NUD_Level.Value = Randomizer.GetModifiedLevel((int)NUD_Level.Value, NUD_LevelBoost.Value);
             }
-            WinFormsUtil.Alert("已根据选项修改全部等级！");
+            WinFormsUtil.Alert(Strings.Static_LevelsModified);
         }
     }
 }

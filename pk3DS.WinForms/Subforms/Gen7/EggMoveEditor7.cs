@@ -1,4 +1,5 @@
 ﻿using System;
+using pk3DS.WinForms.Text;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -180,7 +181,7 @@ namespace pk3DS.WinForms
 
         private void B_RandAll_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否确认随机化蛋招式？", "无法撤销！") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.EggMove_RandomConfirm, Strings.EggMove_CantUndo) != DialogResult.Yes) return;
             var sets = entries;
             var rand = new EggMoveRandomizer(Main.Config, sets)
             {
@@ -199,7 +200,7 @@ namespace pk3DS.WinForms
 
         private void B_Dump_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否导出全部蛋招式至TXT文件？"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.EggMove_ExportAll))
                 return;
 
             dumping = true;
@@ -258,7 +259,7 @@ namespace pk3DS.WinForms
                         stab++;
                 }
             }
-            WinFormsUtil.Alert($"共指定蛋招式: {movectr}\r\n同属性增益计数: {stab}");
+            WinFormsUtil.Alert(string.Format(Strings.EggMove_StatsSummary, movectr, stab));
         }
     }
 }

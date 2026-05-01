@@ -1,4 +1,5 @@
 ﻿using System;
+using pk3DS.WinForms.Text;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -520,7 +521,7 @@ namespace pk3DS.WinForms.ARCUtil
                 //if (dr != DialogResult.Yes) 
                 return;
             }
-            WinFormsUtil.Alert("未完成！");
+            WinFormsUtil.Alert(Strings.Misc_NotCompleted);
         }
 
         // Generic Utility

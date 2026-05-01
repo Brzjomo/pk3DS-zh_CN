@@ -1,4 +1,5 @@
 ﻿using System;
+using pk3DS.WinForms.Text;
 using System.Collections.Generic;
 using System.IO;
 using System.Media;
@@ -156,7 +157,7 @@ namespace pk3DS.WinForms
         {
             if (!loaded) return;
             if (Main.Config.ORAS && entry == 384 && !dumping) // Current Mon is Rayquaza
-                WinFormsUtil.Alert("Rayquaza is special and uses a different activator for its evolution. If it knows Dragon Ascent, it can Mega Evolve", "Don't edit its evolution table if you want to keep this functionality.");
+                WinFormsUtil.Alert(Strings.Mega_RayquazaWarning, Strings.Mega_RayquazaWarningDetail);
 
             byte[] data = files[entry];
 
@@ -238,7 +239,7 @@ namespace pk3DS.WinForms
 
         private void B_Dump_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否导出全部Mega进化至TXT文档？"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Mega_ExportAll))
                 return;
             dumping = true;
             string result = "";

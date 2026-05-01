@@ -1,4 +1,5 @@
 ﻿using pk3DS.Core.CTR;
+using pk3DS.WinForms.Text;
 using System;
 using System.IO;
 using System.Media;
@@ -70,7 +71,7 @@ namespace pk3DS.WinForms
                 {
                     // We're done.
                     SystemSounds.Exclamation.Play();
-                    if (!supress) WinFormsUtil.Alert("Pack Successful!", filectr + " files packed to the GARC!");
+                    if (!supress) WinFormsUtil.Alert(Strings.Garc_PackSuccessful, string.Format(Strings.Garc_PackSuccessfulDetail, filectr));
                 }
                 if (label != null)
                 {
@@ -84,11 +85,11 @@ namespace pk3DS.WinForms
             }
             catch (DirectoryNotFoundException)
             {
-                if (!supress) WinFormsUtil.Error("Folder does not exist.");
+                if (!supress) WinFormsUtil.Error(Strings.Garc_FolderNotExist);
             }
             catch (Exception e)
             {
-                WinFormsUtil.Error("Packing failed", e.ToString());
+                WinFormsUtil.Error(Strings.Garc_PackFailed, e.ToString());
             }
             finally
             {
@@ -110,7 +111,7 @@ namespace pk3DS.WinForms
                 if (fileCount > 0)
                 {
                     SystemSounds.Exclamation.Play();
-                    if (!supress) WinFormsUtil.Alert("Unpack Successful!", fileCount + " files unpacked from the GARC!");
+                    if (!supress) WinFormsUtil.Alert(Strings.Garc_UnpackSuccessful, string.Format(Strings.Garc_UnpackSuccessfulDetail, fileCount));
                 }
 
                 if (label == null)
@@ -123,7 +124,7 @@ namespace pk3DS.WinForms
             }
             catch (FileNotFoundException)
             {
-                WinFormsUtil.Alert("File does not exist");
+                WinFormsUtil.Alert(Strings.Garc_FileNotExist);
             }
             finally
             {

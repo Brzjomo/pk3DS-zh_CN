@@ -1,4 +1,5 @@
 ﻿using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -49,7 +50,7 @@ namespace pk3DS.WinForms
 
             // Reload the form with the new data.
             ChangeEntry(null, null);
-            WinFormsUtil.Alert("Imported Text from Input Path:", path);
+            WinFormsUtil.Alert(Strings.TextEditor_Imported, path);
         }
 
         public static void ExportTextFile(string fileName, bool newline, string[][] fileData)
@@ -98,10 +99,10 @@ namespace pk3DS.WinForms
                     continue;
                 string[] brokenLine = fileText[i++ + 1].Split(new[] { " : " }, StringSplitOptions.None);
                 if (brokenLine.Length != 2)
-                { WinFormsUtil.Error($"Invalid Line @ {i}, expected Text File : {ctr}"); return false; }
+                { WinFormsUtil.Error(string.Format(Strings.TextEditor_InvalidLine, i, ctr)); return false; }
                 int file = Util.ToInt32(brokenLine[1]);
                 if (file != ctr)
-                { WinFormsUtil.Error($"Invalid Line @ {i}, expected Text File : {ctr}"); return false; }
+                { WinFormsUtil.Error(string.Format(Strings.TextEditor_InvalidLine, i, ctr)); return false; }
                 i += 2; // Skip over the other header line
                 List<string> Lines = new List<string>();
                 while (i < fileText.Length && fileText[i] != "~~~~~~~~~~~~~~~")
@@ -117,18 +118,18 @@ namespace pk3DS.WinForms
             // Error Check
             if (ctr != files.Length)
             {
-                WinFormsUtil.Error("The amount of Text Files in the input file does not match the required for the text file.",
+                WinFormsUtil.Error(Strings.TextEditor_CountMismatch,
                 $"Received: {ctr}, Expected: {files.Length}"); return false; }
             if (!newlineFormatting)
             {
-                WinFormsUtil.Error("The input Text Files do not have the ingame newline formatting codes (\\n,\\r,\\c).",
+                WinFormsUtil.Error(Strings.TextEditor_NewlineFormatMismatch,
                       "When exporting text, do not remove newline formatting."); return false; }
 
             // All Text Lines received. Store all back.
             for (int i = 0; i < files.Length; i++)
             {
                 try { files[i] = textLines[i]; }
-                catch (Exception e) { WinFormsUtil.Error($"The input Text File (# {i}) failed to convert:", e.ToString()); return false; }
+                catch (Exception e) { WinFormsUtil.Error(string.Format(Strings.TextEditor_ConvertFailed, i), e.ToString()); return false; }
             }
 
             return true;
@@ -306,7 +307,7 @@ namespace pk3DS.WinForms
             // Load current text file
             SetStringsDataGridView(files[entry]);
 
-            WinFormsUtil.Alert("Strings randomized!");
+            WinFormsUtil.Alert(Strings.TextEditor_Randomized);
         }
     }
 }

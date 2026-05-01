@@ -13,6 +13,7 @@
 /*--  along with this program. If not, see <http://www.gnu.org/licenses/>.  --*/
 /*----------------------------------------------------------------------------*/
 
+using pk3DS.WinForms.Text;
 using pk3DS.Core;
 using pk3DS.Core.CTR;
 using pk3DS.Core.Structures.PersonalInfo;
@@ -67,7 +68,7 @@ namespace pk3DS.WinForms
                 }
                 catch (Exception ex)
                 {
-                    WinFormsUtil.Error($"无法自动加载先前打开的ROM转储，位于 -- {path}.", ex.Message);
+                    WinFormsUtil.Error(string.Format(Strings.Main_AutoLoadError, path), ex.Message);
                     ResetStatus();
                 }
             }
@@ -95,7 +96,7 @@ namespace pk3DS.WinForms
         public static string ExeFSPath;
         public static string ExHeaderPath;
         private static string OfficialBuild = "1040";
-        private static string Version = "69"; //提交计数
+        private static string Version = "70"; //提交计数
         private static bool versionCheckFailed = false;
         private static bool ifVersionChecked = false;
         private static bool ifUpToDate = false;
@@ -1953,19 +1954,19 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
 
-            string s = "游戏版本: " + Config.Version + Environment.NewLine;
+            string s = Strings.Main_GameVersion + Config.Version + Environment.NewLine;
             s = Config.Files.Select(file => file.Name).Aggregate(s, (current, t) => current + string.Format(Environment.NewLine + "{0} - {1}", t, Config.GetGARCFileName(t)));
 
-            var copyPrompt = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, s, "复制到剪切板?");
+            var copyPrompt = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, s, Strings.Main_CopyToClipboard);
             if (copyPrompt != DialogResult.Yes)
                 return;
 
             try { Clipboard.SetText(s); }
-            catch { WinFormsUtil.Alert("无法复制到剪切板"); }
+            catch { WinFormsUtil.Alert(Strings.Alert_CannotCopyClipboard); }
         }
 
         private void L_Game_Click(object sender, EventArgs e) => new EnhancedRestore(Config).ShowDialog();
@@ -1984,7 +1985,7 @@ namespace pk3DS.WinForms
                 return;
             if ((Config.XY || Config.ORAS) && Language > 7)
             {
-                WinFormsUtil.Alert("游戏语言不可用，已设置为日语-片假名。");
+                WinFormsUtil.Alert(Strings.Alert_LanguageNotAvailable);
                 if (InvokeRequired)
                     Invoke((MethodInvoker)delegate { CB_Lang.SelectedIndex = 0; });
                 else CB_Lang.SelectedIndex = 0;
@@ -2010,7 +2011,7 @@ namespace pk3DS.WinForms
 
             if ((Config.XY || Config.ORAS) && Language > 7)
             {
-                WinFormsUtil.Alert("游戏语言不可用，已设置为日语-片假名。");
+                WinFormsUtil.Alert(Strings.Alert_LanguageNotAvailable);
                 if (InvokeRequired)
                     Invoke((MethodInvoker)delegate { CB_Lang.SelectedIndex = 0; });
                 else CB_Lang.SelectedIndex = 0;
@@ -2068,7 +2069,7 @@ namespace pk3DS.WinForms
             }
             catch (Exception ex)
             {
-                WinFormsUtil.Error($"无法打开 -- {path}", ex.Message);
+                WinFormsUtil.Error(string.Format(Strings.Main_CannotOpenPath, path), ex.Message);
                 ResetStatus();
             }
         }
@@ -2089,11 +2090,11 @@ namespace pk3DS.WinForms
             }
             else if (fi.Name.IndexOf("rom", StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                WinFormsUtil.Alert("RomFS解包未执行。");
+                WinFormsUtil.Alert(Strings.Alert_RomFSNotExtracted);
             }
             else
             {
-                var dr = WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, "是否解包子文件?", "取消: 中止");
+                var dr = WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, Strings.Editor_ExtractSubfiles, Strings.Main_ExtractSubfilesCancel);
                 if (dr == DialogResult.Cancel)
                     return;
                 bool recurse = dr == DialogResult.Yes;
@@ -2106,7 +2107,7 @@ namespace pk3DS.WinForms
             if (fi.Length % 0x200 != 0)
                 return;
 
-            var prompt = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "检测到ExeFS.bin文件", "是否解包?");
+            var prompt = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Editor_DetectExeFS, Strings.Editor_Unpack);
             if (prompt != DialogResult.Yes)
                 return;
 
@@ -2115,7 +2116,7 @@ namespace pk3DS.WinForms
                 Interlocked.Increment(ref threads);
                 ExeFS.UnpackExeFS(path, Path.GetDirectoryName(path));
                 Interlocked.Decrement(ref threads);
-                WinFormsUtil.Alert("已解包!");
+                WinFormsUtil.Alert(Strings.Alert_Extracted);
             }).Start();
         }
 
@@ -2123,7 +2124,7 @@ namespace pk3DS.WinForms
         {
             if (fi.Length % 0x200 == 0)
             {
-                var prompt = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "检测到未压缩的code.bin文件", "是否压缩? 文件将会被替换。");
+                var prompt = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Main_DetectUncompressedCode, Strings.Editor_Compress);
                 if (prompt != DialogResult.Yes)
                     return;
                 new Thread(() =>
@@ -2131,12 +2132,12 @@ namespace pk3DS.WinForms
                     Interlocked.Increment(ref threads);
                     new BLZCoder(new[] {"-en", path}, pBar1);
                     Interlocked.Decrement(ref threads);
-                    WinFormsUtil.Alert("已压缩!");
+                    WinFormsUtil.Alert(Strings.Alert_Compressed);
                 }).Start();
             }
             else
             {
-                var prompt = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "检测到压缩的code.bin文件", "是否解压? 文件将会被替换。");
+                var prompt = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Main_DetectCompressedCode, Strings.Editor_Decompress);
                 if (prompt != DialogResult.Yes)
                     return;
                 new Thread(() =>
@@ -2144,7 +2145,7 @@ namespace pk3DS.WinForms
                     Interlocked.Increment(ref threads);
                     new BLZCoder(new[] { "-d", path }, pBar1);
                     Interlocked.Decrement(ref threads);
-                    WinFormsUtil.Alert("已解压!");
+                    WinFormsUtil.Alert(Strings.Alert_Decompressed);
                 }).Start();
             }
         }
@@ -2171,7 +2172,7 @@ namespace pk3DS.WinForms
                 CheckIfExeFS(f);
 
             if (count > 4)
-                WinFormsUtil.Alert("游戏文件夹中最好只包含必要文件。");
+                WinFormsUtil.Alert(Strings.Alert_OnlyNeededFiles);
 
             // Enable buttons if applicable
             Tab_RomFS.Enabled = Menu_Restore.Enabled = Tab_CRO.Enabled = Menu_CRO.Enabled = Menu_Shuffler.Enabled = RomFSPath != null;
@@ -2179,7 +2180,7 @@ namespace pk3DS.WinForms
             if (RomFSPath != null && Config != null)
             {
                 ToggleSubEditors();
-                string newtext = $"游戏已加载: {Config.Version}";
+                string newtext = string.Format(Strings.Main_GameLoaded, Config.Version);
                 if (L_Game.Text != newtext && Directory.Exists("personal"))
                 {
                     Directory.Delete("personal", true);
@@ -2190,12 +2191,12 @@ namespace pk3DS.WinForms
             }
             else if (ExeFSPath != null)
             {
-                L_Game.Text = "ExeFS 已加载 - 无RomFS";
+                L_Game.Text = Strings.Main_Status_ExeFSNoRomFS;
                 TB_Path.Text = path;
             }
             else
             {
-                L_Game.Text = "未加载游戏";
+                L_Game.Text = Strings.Main_Status_NoGame;
                 TB_Path.Text = "";
             }
 
@@ -2209,7 +2210,7 @@ namespace pk3DS.WinForms
                 if ((Config.XY || Config.ORAS) && Language > 7)
                     Language = 0;
 
-                UpdateStatus("发现数据! 正在为子表单加载持久数据...", false);
+                UpdateStatus(Strings.Main_LoadingSubData, false);
                 try
                 {
                     Config.Initialize(RomFSPath, ExeFSPath, Language);
@@ -2221,7 +2222,7 @@ namespace pk3DS.WinForms
                 }
                 catch (Exception ex)
                 {
-                    WinFormsUtil.Error("无法从 romfs 加载游戏数据。请仔细检查你的 ROM 转储是否正确。", ex.Message);
+                    WinFormsUtil.Error(Strings.Main_CannotLoadRomFS, ex.Message);
                     ResetStatus();
                     return;
                 }
@@ -2253,13 +2254,11 @@ namespace pk3DS.WinForms
 
         private void B_ExtractCXI_Click(object sender, EventArgs e)
         {
-            const string l1 = "提取 CXI 文件需要数 GB 的磁盘空间，并且需要一些时间才能完成。";
-            const string l2 = "如果你想继续，请按“确定”选择你的CXI文件，然后再选择输出目录。为获得最佳效果，请确保输出目录为空。";
-            var prompt = WinFormsUtil.Prompt(MessageBoxButtons.OKCancel, l1, l2);
+            var prompt = WinFormsUtil.Prompt(MessageBoxButtons.OKCancel, Strings.Main_ExtractCXI_Desc, Strings.Main_ExtractCXI_Desc2);
             if (prompt != DialogResult.OK)
                 return;
 
-            using var ofd = new OpenFileDialog {Title = "选择CXI文件", Filter = "CXI files (*.cxi)|*.cxi"};
+            using var ofd = new OpenFileDialog {Title = Strings.Main_ExtractCXI_Title, Filter = "CXI files (*.cxi)|*.cxi"};
             if (ofd.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -2274,13 +2273,11 @@ namespace pk3DS.WinForms
 
         private void B_Extract3DS_Click(object sender, EventArgs e)
         {
-            const string l1 = "提取 3DS 文件需要数 GB 的磁盘空间，并且需要一些时间才能完成。";
-            const string l2 = "如果你想继续，请按“确定”选择你的3DS文件，然后再选择输出目录。为获得最佳效果，请确保输出目录为空。";
-            var prompt = WinFormsUtil.Prompt(MessageBoxButtons.OKCancel, l1, l2);
+            var prompt = WinFormsUtil.Prompt(MessageBoxButtons.OKCancel, Strings.Main_Extract3DS_Desc, Strings.Main_Extract3DS_Desc2);
             if (prompt != DialogResult.OK)
                 return;
 
-            using var ofd = new OpenFileDialog {Title = "选择3DS文件", Filter = "3DS files (*.3ds)|*.3ds"};
+            using var ofd = new OpenFileDialog {Title = Strings.Main_Extract3DS_Title, Filter = "3DS files (*.3ds)|*.3ds"};
             if (ofd.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -2305,7 +2302,7 @@ namespace pk3DS.WinForms
                 Interlocked.Increment(ref threads);
                 ncch.ExtractNCCHFromFile(ncchPath, outputDirectory, RTB_Status, pBar1);
                 Interlocked.Decrement(ref threads);
-                WinFormsUtil.Alert("提取完成!");
+                WinFormsUtil.Alert(Strings.Main_ExtractionComplete);
             }).Start();
         }
 
@@ -2320,7 +2317,7 @@ namespace pk3DS.WinForms
                 Interlocked.Increment(ref threads);
                 ncsd.ExtractFilesFromNCSD(ncsdPath, outputDirectory, RTB_Status, pBar1);
                 Interlocked.Decrement(ref threads);
-                WinFormsUtil.Alert("提取完成!");
+                WinFormsUtil.Alert(Strings.Main_ExtractionComplete);
             }).Start();
         }
 
@@ -2355,7 +2352,7 @@ namespace pk3DS.WinForms
                         romfs = romfs.Concat(new[] {B_Static}).ToArray();
                     break;
                 default:
-                    romfs = exefs = cro = new Control[] {new Label {Text = "无可用编辑器."}};
+                    romfs = exefs = cro = new Control[] {new Label {Text = Strings.Editor_NoEditorAvailable}};
                     break;
             }
 
@@ -2368,58 +2365,39 @@ namespace pk3DS.WinForms
 
         private static string GetProgramTitle()
         {
+            var buildStr = OfficialBuild + "." + Version;
             if (versionCheckFailed)
             {
                 if (SMDH?.AppSettings == null)
-                {
-                    return "pk3DS中文版" + "_" + OfficialBuild + "." + Version + "（检查更新失败）";
-                }
+                    return string.Format(Strings.Main_Title_CheckFailed, OfficialBuild, Version);
 
                 int[] AILang = { 0, 0, 1, 2, 4, 3, 5, 7, 8, 9, 6, 11 };
-                return "pk3DS中文版" + "_" + OfficialBuild + "." + Version + ": " + SMDH.AppInfo[AILang[Language]].ShortDescription + "（检查更新失败）";
-            } else if (ifVersionChecked)
+                return string.Format(Strings.Main_Title_CheckFailedDesc, OfficialBuild, Version, SMDH.AppInfo[AILang[Language]].ShortDescription);
+            }
+            if (ifVersionChecked)
             {
                 if (ifUpToDate)
                 {
                     if (SMDH?.AppSettings == null)
-                    {
-                        return "pk3DS中文版" + "_" + OfficialBuild + "." + Version + "（已是最新版）";
-                    }
+                        return string.Format(Strings.Main_Title_UpToDate, OfficialBuild, Version);
 
                     int[] AILang = { 0, 0, 1, 2, 4, 3, 5, 7, 8, 9, 6, 11 };
-                    return "pk3DS中文版" + "_" + OfficialBuild + "." + Version + ": " + SMDH.AppInfo[AILang[Language]].ShortDescription + "（已是最新版）";
+                    return string.Format(Strings.Main_Title_UpToDateDesc, OfficialBuild, Version, SMDH.AppInfo[AILang[Language]].ShortDescription);
                 }
-                else
-                {
-                    if (SMDH?.AppSettings == null)
-                    {
-                        return "pk3DS中文版" + "_" + OfficialBuild + "." + Version + "（有新版本可用: " + latestVersions[0] + "." + latestVersions[1] + "）";
-                    }
 
-                    int[] AILang = { 0, 0, 1, 2, 4, 3, 5, 7, 8, 9, 6, 11 };
-                    return "pk3DS中文版" + "_" + OfficialBuild + "." + Version + ": " + SMDH.AppInfo[AILang[Language]].ShortDescription
-                        + "（有新版本可用: " + latestVersions[0] + "." + latestVersions[1] + "）";
-                }
-            } else
-            {
-                // 0 - JP
-                // 1 - EN
-                // 2 - FR
-                // 3 - DE
-                // 4 - IT
-                // 5 - ES
-                // 6 - CHS
-                // 7 - KO
-                // 8 -
-                // 11 - CHT
                 if (SMDH?.AppSettings == null)
-                {
-                    return "pk3DS中文版" + "_" + OfficialBuild + "." + Version;
-                }
+                    return string.Format(Strings.Main_Title_NewVersion, OfficialBuild, Version, latestVersions[0], latestVersions[1]);
 
-                int[] AILang = { 0, 0, 1, 2, 4, 3, 5, 7, 8, 9, 6, 11 };
-                return "pk3DS中文版" + "_" + OfficialBuild + "." + Version + ": " + SMDH.AppInfo[AILang[Language]].ShortDescription;
+                int[] aiLang2 = { 0, 0, 1, 2, 4, 3, 5, 7, 8, 9, 6, 11 };
+                return string.Format(Strings.Main_Title_NewVersionDesc, OfficialBuild, Version, SMDH.AppInfo[aiLang2[Language]].ShortDescription, latestVersions[0], latestVersions[1]);
             }
+
+            // 0 - JP; 1 - EN; 2 - FR; 3 - DE; 4 - IT; 5 - ES; 6 - CHS; 7 - KO; 8 - ; 11 - CHT
+            if (SMDH?.AppSettings == null)
+                return string.Format(Strings.Main_Title_BuildOnly, OfficialBuild, Version);
+
+            int[] aiLang = { 0, 0, 1, 2, 4, 3, 5, 7, 8, 9, 6, 11 };
+            return string.Format(Strings.Main_Title_BuildDesc, OfficialBuild, Version, SMDH.AppInfo[aiLang[Language]].ShortDescription);
         }
 
         private static GameConfig CheckGameType(string[] files)
@@ -2450,7 +2428,7 @@ namespace pk3DS.WinForms
                 {
                     RomFSPath = null;
                     Config = null;
-                    WinFormsUtil.Error("文件数与预期的数目不匹配.", "文件: " + files.Length);
+                    WinFormsUtil.Error(Strings.Editor_FileCountMismatch, Strings.Main_FileCount + files.Length);
                     return false;
                 }
 
@@ -2458,7 +2436,7 @@ namespace pk3DS.WinForms
                 Config = cfg;
                 return true;
             }
-            WinFormsUtil.Error("父级目录未包含 'a' 文件夹.");
+            WinFormsUtil.Error(Strings.Editor_MissingAFolder);
             RomFSPath = null;
             return false;
         }
@@ -2469,7 +2447,7 @@ namespace pk3DS.WinForms
             if (files.Length == 1 && string.Equals(Path.GetFileName(files[0]), "exefs.bin", StringComparison.OrdinalIgnoreCase))
             {
                 // Prompt if the user wants to unpack the ExeFS.
-                if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "检测到ExeFS bin文件.", "是否解包?"))
+                if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Editor_DetectExeFS, Strings.Editor_Unpack))
                     return false;
 
                 // User wanted to unpack. Unpack.
@@ -2496,8 +2474,8 @@ namespace pk3DS.WinForms
                 files = Directory.GetFiles(path);
                 fi = new FileInfo(files[0]);
             }
-            if (fi.Length % 0x200 != 0 && WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "检测到压缩的bin文件.", "是否解压缩? 文件将会被替换.") == DialogResult.Yes)
-                new Thread(() => { Interlocked.Increment(ref threads); new BLZCoder(new[] { "-d", files[0] }, pBar1); Interlocked.Decrement(ref threads); WinFormsUtil.Alert("已解压!"); }).Start();
+            if (fi.Length % 0x200 != 0 && WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Editor_DetectCompressed, Strings.Main_DecompressAndReplace) == DialogResult.Yes)
+                new Thread(() => { Interlocked.Increment(ref threads); new BLZCoder(new[] { "-d", files[0] }, pBar1); Interlocked.Decrement(ref threads); WinFormsUtil.Alert(Strings.Alert_Decompressed); }).Start();
 
             ExeFSPath = path;
             return true;
@@ -2518,7 +2496,7 @@ namespace pk3DS.WinForms
         {
             if (threads <= 0)
                 return false;
-            WinFormsUtil.Alert("请先等待所有操作完成."); return true;
+            WinFormsUtil.Alert(Strings.Main_WaitForOperations); return true;
         }
 
         private void TabMain_DragEnter(object sender, DragEventArgs e)
@@ -2540,7 +2518,7 @@ namespace pk3DS.WinForms
                 return;
             if (RomFSPath == null)
                 return;
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否重建 RomFS?") != DialogResult.Yes)
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Main_RebuildRomFS) != DialogResult.Yes)
                 return;
 
             SaveFileDialog sfd = new SaveFileDialog
@@ -2554,14 +2532,14 @@ namespace pk3DS.WinForms
             {
                 new Thread(() =>
                 {
-                    UpdateStatus(Environment.NewLine + "正在构建 RomFS bin文件. 请等待程序运行结束.");
+                    UpdateStatus(Environment.NewLine + Strings.Main_Status_Building);
 
                     Interlocked.Increment(ref threads);
                     RomFS.BuildRomFS(RomFSPath, sfd.FileName, RTB_Status, pBar1);
                     Interlocked.Decrement(ref threads);
 
-                    UpdateStatus("RomFS bin文件已保存." + Environment.NewLine);
-                    WinFormsUtil.Alert("已写入 RomFS bin文件:", sfd.FileName);
+                    UpdateStatus(Strings.Main_Status_Saved + Environment.NewLine);
+                    WinFormsUtil.Alert(Strings.Main_WrittenRomFS, sfd.FileName);
                 }).Start();
             }
         }
@@ -2570,7 +2548,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -2589,7 +2567,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -2626,12 +2604,12 @@ namespace pk3DS.WinForms
 
             string[] options =
             {
-                "取消: 丢弃所有更改",
-                "是: 保存更改, 导出错误信息",
-                "否: 保存更改, 不导出错误信息"
+                Strings.Editor_CancelDiscardChanges,
+                Strings.Editor_SaveAndExport,
+                Strings.Editor_SaveNoExport
             };
-            var dr = WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, "试图保存文本时出错."
-                + Environment.NewLine + "示例: " + errata[0],
+            var dr = WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, Strings.Editor_SaveTextError
+                + Environment.NewLine + Strings.Main_FileCount + errata[0],
                 string.Join(Environment.NewLine, options));
             if (dr == DialogResult.Cancel)
                 return g.Files; // discard
@@ -2643,7 +2621,7 @@ namespace pk3DS.WinForms
             File.WriteAllLines(txt_errata, errata);
             TextEditor.ExportTextFile(txt_failed, true, files);
 
-            WinFormsUtil.Alert("已保存TXT文件至: " + Application.StartupPath,
+            WinFormsUtil.Alert(Strings.Editor_SavedTxt,
                 txt_errata + Environment.NewLine + txt_failed);
 
             return data;
@@ -2653,7 +2631,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -2662,10 +2640,10 @@ namespace pk3DS.WinForms
             switch (Config.Generation)
             {
                 case 6:
-                    dr = WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, "编辑【超级对战屋】还是【普通对战屋】？", "是 = 超级对战屋, 否 = 普通对战屋, 取消 = 中止");
+                    dr = WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, Strings.Main_EditSuperBattle, Strings.Main_EditSuperBattleDetail);
                     break;
                 case 7:
-                    dr = WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, "编辑【皇家对战】还是【对战树】？", "是 = 皇家对战, 否 = 对战树, 取消 = 中止");
+                    dr = WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, Strings.Main_EditRoyalBattle, Strings.Main_EditRoyalBattleDetail);
                     break;
                 default:
                     return;
@@ -2701,7 +2679,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -2732,7 +2710,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -2768,7 +2746,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -2798,17 +2776,17 @@ namespace pk3DS.WinForms
                         Interlocked.Increment(ref threads);
 
                         files = new [] { "encdata", "zonedata", "worlddata" };
-                        UpdateStatus($"GARC 已取得: {files[0]}... ");
+                        UpdateStatus(string.Format(Strings.Main_GARC_Get, files[0]));
                         var ed = Config.GetlzGARCData(files[0]);
-                        UpdateStatus($"GARC 已取得: {files[1]}... ");
+                        UpdateStatus(string.Format(Strings.Main_GARC_Get, files[1]));
                         var zd = Config.GetlzGARCData(files[1]);
-                        UpdateStatus($"GARC 已取得: {files[2]}... ");
+                        UpdateStatus(string.Format(Strings.Main_GARC_Get, files[2]));
                         var wd = Config.GetlzGARCData(files[2]);
-                        UpdateStatus("运行SMWE中... ");
+                        UpdateStatus(Strings.Main_RunningSMWE);
                         action = () => new SMWE(ed, zd, wd).ShowDialog();
                         Invoke(action);
 
-                        UpdateStatus($"GARC 已修改: {files[0]}... ");
+                        UpdateStatus(string.Format(Strings.Main_GARC_Mod, files[0]));
                         ed.Save();
                         ResetStatus();
                         Interlocked.Decrement(ref threads);
@@ -2824,12 +2802,12 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
                 return;
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "不推荐绝大部分玩家使用世界脚本编辑器，它仍然未完成。", "是否继续?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Main_ScriptEditorWarning, Strings.Main_ContinuePrompt))
                 return;
             switch (Config.Generation)
             {
@@ -2846,7 +2824,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             Enabled = false;
@@ -2875,18 +2853,18 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             Enabled = false;
             new Thread(() =>
             {
                 var files = new[] { "encdata", "zonedata", "worlddata" };
-                UpdateStatus($"GARC 已取得: {files[0]}... ");
+                UpdateStatus(string.Format(Strings.Main_GARC_Get, files[0]));
                 var ed = Config.GetlzGARCData(files[0]);
-                UpdateStatus($"GARC 已取得: {files[1]}... ");
+                UpdateStatus(string.Format(Strings.Main_GARC_Get, files[1]));
                 var zd = Config.GetlzGARCData(files[1]);
-                UpdateStatus($"GARC 已取得: {files[2]}... ");
+                UpdateStatus(string.Format(Strings.Main_GARC_Get, files[2]));
                 //var wd = Config.GetlzGARCData(files[2]);
 
                 var g = Config.GetGARCData("storytext");
@@ -2903,7 +2881,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -2931,7 +2909,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -2958,7 +2936,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -2985,7 +2963,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -3017,7 +2995,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -3044,7 +3022,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -3071,7 +3049,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -3092,7 +3070,7 @@ namespace pk3DS.WinForms
             foreach (string toEdit in files)
             {
                 string GARC = Config.GetGARCFileName(toEdit);
-                UpdateStatus($"GARC 已取得: {toEdit} @ {GARC}... ");
+                UpdateStatus(string.Format(Strings.Main_GARC_GetDetail, toEdit, GARC));
                 ThreadGet(Path.Combine(RomFSPath, GARC), toEdit, true, skipDecompression);
                 while (threads > 0) Thread.Sleep(50);
                 ResetStatus();
@@ -3106,7 +3084,7 @@ namespace pk3DS.WinForms
             foreach (string toEdit in files)
             {
                 string GARC = Config.GetGARCFileName(toEdit);
-                UpdateStatus($"GARC 已修改: {toEdit} @ {GARC}... ");
+                UpdateStatus(string.Format(Strings.Main_GARC_ModDetail, toEdit, GARC));
                 ThreadSet(Path.Combine(RomFSPath, GARC), toEdit, 4); // 4 bytes for Gen6
                 while (threads > 0) Thread.Sleep(50);
                 if (!keep && Directory.Exists(toEdit)) Directory.Delete(toEdit, true);
@@ -3119,7 +3097,7 @@ namespace pk3DS.WinForms
         {
             if (ExeFSPath == null)
                 return;
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否重建 ExeFS?") != DialogResult.Yes)
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Main_RebuildExeFS) != DialogResult.Yes)
                 return;
 
             string[] files = Directory.GetFiles(ExeFSPath);
@@ -3138,7 +3116,7 @@ namespace pk3DS.WinForms
                 {
                     Interlocked.Increment(ref threads);
                     new BLZCoder(new[] { "-en", files[file] }, pBar1);
-                    WinFormsUtil.Alert("已压缩!");
+                    WinFormsUtil.Alert(Strings.Alert_Compressed);
                     ExeFS.PackExeFS(Directory.GetFiles(ExeFSPath), sfd.FileName);
                     Interlocked.Decrement(ref threads);
                 }).Start();
@@ -3149,7 +3127,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -3170,7 +3148,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -3188,7 +3166,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -3202,7 +3180,7 @@ namespace pk3DS.WinForms
                 case 7:
                     if (ThreadActive())
                         return;
-                    if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "如果3DS没有打上RO补丁，编辑CRO文件可能导致崩溃", "Luma版本大于6，就无须担心", "是否仍要继续?"))
+                    if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.CRO_NoPatchWarning, Strings.CRO_LumaSafe, Strings.CRO_Continue))
                         return;
                     if (RomFSPath != null) (Config.USUM ? new MartEditor7UU() : (Form)new MartEditor7()).Show();
                     break;
@@ -3213,7 +3191,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -3224,7 +3202,7 @@ namespace pk3DS.WinForms
                     if (ExeFSPath != null) new TutorEditor6().Show();
                     break;
                 case 7:
-                    if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "如果3DS没有打上RO补丁，编辑CRO文件可能导致崩溃", "Luma版本大于6，就无须担心", "是否仍要继续?"))
+                    if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.CRO_NoPatchWarning, Strings.CRO_LumaSafe, Strings.CRO_Continue))
                         return;
                     if (RomFSPath != null) new TutorEditor7().Show();
                     break;
@@ -3235,7 +3213,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -3247,7 +3225,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -3262,7 +3240,7 @@ namespace pk3DS.WinForms
                 return;
             if (RomFSPath == null)
                 return;
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "如果你的3DS打了RO补丁，重建 CRO/CRR 不是必须的。", "是否继续?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Main_CROWarning, Strings.Main_ContinuePrompt))
                 return;
             new Thread(() =>
             {
@@ -3270,8 +3248,7 @@ namespace pk3DS.WinForms
                 CRO.E_HashCRR(Path.Combine(RomFSPath, ".crr", "static.crr"), RomFSPath, true, /* true // don't patch crr for now */ false, RTB_Status, pBar1);
                 Interlocked.Decrement(ref threads);
 
-                WinFormsUtil.Alert("CRO's 与 CRR 已更新。",
-                        "If you have made any modifications, it is required that the RSA Verification check be patched on the system in order for the modified CROs to load (ie, no file redirection like NTR's layeredFS).");
+                WinFormsUtil.Alert(Strings.Main_CROUpdated, Strings.Main_CRO_RSADetail);
             }).Start();
         }
 
@@ -3279,23 +3256,23 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
                 return;
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "如果3DS没有打上RO补丁，编辑CRO文件可能导致崩溃", "Luma版本大于6，就无须担心", "是否仍要继续?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.CRO_NoPatchWarning, Strings.CRO_LumaSafe, Strings.CRO_Continue))
                 return;
             string CRO = Path.Combine(RomFSPath, "DllPoke3Select.cro");
             string CRO2 = Path.Combine(RomFSPath, "DllField.cro");
             if (!File.Exists(CRO))
             {
-                WinFormsUtil.Error("文件未找到!", "RomFS文件夹中未找到 DllPoke3Select.cro!");
+                WinFormsUtil.Error(Strings.CRO_FileNotFound, Strings.CRO_DllPoke3SelectNotFound);
                 return;
             }
             if (!File.Exists(CRO2))
             {
-                WinFormsUtil.Error("文件未找到!", "RomFS文件夹中未找到 DllField.cro!");
+                WinFormsUtil.Error(Strings.CRO_FileNotFound, Strings.CRO_DllFieldNotFound);
                 return;
             }
             new StarterEditor6().ShowDialog();
@@ -3305,7 +3282,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -3314,12 +3291,12 @@ namespace pk3DS.WinForms
             switch (Config.Generation)
             {
                 case 6:
-                    if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "如果3DS没有打上RO补丁，编辑CRO文件可能导致崩溃", "Luma版本大于6，就无须担心", "是否仍要继续?"))
+                    if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.CRO_NoPatchWarning, Strings.CRO_LumaSafe, Strings.CRO_Continue))
                         return;
                     string CRO = Path.Combine(RomFSPath, "DllBattle.cro");
                     if (!File.Exists(CRO))
                     {
-                        WinFormsUtil.Error("文件未找到!", "RomFS文件夹中未找到 DllBattle.cro!");
+                        WinFormsUtil.Error(Strings.CRO_FileNotFound, Strings.CRO_DllBattleNotFound);
                         return;
                     }
                     new TypeChart6().ShowDialog();
@@ -3334,17 +3311,17 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
                 return;
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "如果3DS没有打上RO补丁，编辑CRO文件可能导致崩溃", "Luma版本大于6，就无须担心", "是否仍要继续?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.CRO_NoPatchWarning, Strings.CRO_LumaSafe, Strings.CRO_Continue))
                 return;
             string CRO = Path.Combine(RomFSPath, "DllField.cro");
             if (!File.Exists(CRO))
             {
-                WinFormsUtil.Error("文件未找到!", "RomFS文件夹中未找到 DllField.cro!");
+                WinFormsUtil.Error(Strings.CRO_FileNotFound, Strings.CRO_DllFieldNotFound);
                 return;
             }
             new GiftEditor6().ShowDialog();
@@ -3354,7 +3331,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             if (ThreadActive())
@@ -3374,12 +3351,12 @@ namespace pk3DS.WinForms
                 return;
             }
 
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "如果3DS没有打上RO补丁，编辑CRO文件可能导致崩溃", "Luma版本大于6，就无须担心", "是否仍要继续?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.CRO_NoPatchWarning, Strings.CRO_LumaSafe, Strings.CRO_Continue))
                 return;
             string CRO = Path.Combine(RomFSPath, "DllField.cro");
             if (!File.Exists(CRO))
             {
-                WinFormsUtil.Error("文件未找到!", "RomFS文件夹中未找到 DllField.cro!");
+                WinFormsUtil.Error(Strings.CRO_FileNotFound, Strings.CRO_DllFieldNotFound);
                 return;
             }
             new StaticEncounterEditor6().ShowDialog();
@@ -3432,7 +3409,7 @@ namespace pk3DS.WinForms
                 bool success = CTRUtil.BuildROM(true, "Nintendo", ExeFSPath, RomFSPath, ExHeaderPath, exh.GetSerial(), path,
                     false, pBar1, RTB_Status);
                 if (!success)
-                    WinFormsUtil.Error("重建失败", "磁盘空间不足，或文件写入出错。请检查磁盘剩余空间后重试。");
+                    WinFormsUtil.Error(Strings.Editor_RebuildFailed, Strings.Editor_RebuildFailedDetail);
                 Interlocked.Decrement(ref threads);
             }).Start();
         }
@@ -3457,12 +3434,12 @@ namespace pk3DS.WinForms
             string path = ofd.FileName;
             FileInfo fi = new FileInfo(path);
             if (fi.Length > 15 * 1024 * 1024) // 15MB
-            { WinFormsUtil.Error("文件过大!", fi.Length + " 字节."); return; }
+            { WinFormsUtil.Error(Strings.Main_FileTooLarge, fi.Length + Strings.Main_Bytes); return; }
 
-            if (ModifierKeys != Keys.Control && fi.Length % 0x200 == 0 && WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "检测到已解压的bin文件.", "是否压缩? 文件将会被替换.") == DialogResult.Yes)
-                new Thread(() => { Interlocked.Increment(ref threads); new BLZCoder(new[] { "-en", path }, pBar1); Interlocked.Decrement(ref threads); WinFormsUtil.Alert("已压缩!"); }).Start();
-            else if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "检测到已压缩的bin文件", "是否解压? 文件将会被替换.") == DialogResult.Yes)
-                new Thread(() => { Interlocked.Increment(ref threads); new BLZCoder(new[] { "-d", path }, pBar1); Interlocked.Decrement(ref threads); WinFormsUtil.Alert("已解压!"); }).Start();
+            if (ModifierKeys != Keys.Control && fi.Length % 0x200 == 0 && WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Editor_DetectDecompressed, Strings.Editor_Compress) == DialogResult.Yes)
+                new Thread(() => { Interlocked.Increment(ref threads); new BLZCoder(new[] { "-en", path }, pBar1); Interlocked.Decrement(ref threads); WinFormsUtil.Alert(Strings.Alert_Compressed); }).Start();
+            else if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Main_DetectCompressedBin, Strings.Editor_Decompress) == DialogResult.Yes)
+                new Thread(() => { Interlocked.Increment(ref threads); new BLZCoder(new[] { "-d", path }, pBar1); Interlocked.Decrement(ref threads); WinFormsUtil.Alert(Strings.Alert_Decompressed); }).Start();
         }
 
         private void Menu_LZ11_Click(object sender, EventArgs e)
@@ -3474,12 +3451,12 @@ namespace pk3DS.WinForms
             string path = ofd.FileName;
             FileInfo fi = new FileInfo(path);
             if (fi.Length > 15*1024*1024) // 15MB
-            { WinFormsUtil.Error("文件过大!", fi.Length + " 字节."); return; }
+            { WinFormsUtil.Error(Strings.Main_FileTooLarge, fi.Length + Strings.Main_Bytes); return; }
 
             byte[] data = File.ReadAllBytes(path);
-            string predict = data[0] == 0x11 ? "已压缩" : "已解压";
-            var dr = WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, $"检测到 {predict} 文件，请选择执行的动作。",
-                "是 = 解压\n否 = 压缩\n取消 = 中止");
+            string predict = data[0] == 0x11 ? Strings.Alert_Compressed : Strings.Alert_Decompressed;
+            var dr = WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, string.Format(Strings.Main_DetectedAction, predict),
+                Strings.Main_ActionChoices);
             new Thread(() =>
             {
                 Interlocked.Increment(ref threads);
@@ -3488,13 +3465,13 @@ namespace pk3DS.WinForms
                     try
                     {
                         LZSS.Decompress(path, Path.Combine(Directory.GetParent(path).FullName, "dec_" + Path.GetFileNameWithoutExtension(path) + ".bin"));
-                    } catch (Exception err) { WinFormsUtil.Alert("以尝试解压, 可能成功:", err.ToString()); }
-                    WinFormsUtil.Alert("文件已解压缩!", path);
+                    } catch (Exception err) { WinFormsUtil.Alert(Strings.Main_AttemptDecompress, err.ToString()); }
+                    WinFormsUtil.Alert(Strings.Main_FileDecompressed, path);
                 }
                 if (dr == DialogResult.No)
                 {
                     LZSS.Compress(path, Path.Combine(Directory.GetParent(path).FullName, Path.GetFileNameWithoutExtension(path).Replace("_dec", "") + ".lz"));
-                    WinFormsUtil.Alert("文件已压缩!", path);
+                    WinFormsUtil.Alert(Strings.Main_FileCompressed, path);
                 }
                 Interlocked.Decrement(ref threads);
             }).Start();
@@ -3504,7 +3481,7 @@ namespace pk3DS.WinForms
         {
             if (RomFSPath == null)
             {
-                WinFormsUtil.Alert("请先打开一个游戏目录！");
+                WinFormsUtil.Alert(Strings.Main_OpenROMFirst);
                 return;
             }
             new Icon().ShowDialog();
@@ -3529,33 +3506,33 @@ namespace pk3DS.WinForms
         {
             if (skipBoth && Directory.Exists(outfolder))
             {
-                UpdateStatus("跳过 - 文件已存在!", false);
+                UpdateStatus(Strings.Editor_SkipAlreadyExists, false);
                 Interlocked.Decrement(ref threads);
                 return true;
             }
             try
             {
                 bool success = GarcUtil.UnpackGARC(infile, outfolder, bypassExt, PB ? pBar1 : null, L_Status, true);
-                UpdateStatus(string.Format(success ? "成功!" : "失败!"), false);
+                UpdateStatus(string.Format(success ? Strings.Main_Success : Strings.Main_Failure), false);
                 Interlocked.Decrement(ref threads);
                 return success;
             }
-            catch (Exception e) { WinFormsUtil.Error("无法获取 GARC:", e.ToString()); Interlocked.Decrement(ref threads); return false; }
+            catch (Exception e) { WinFormsUtil.Error(Strings.Main_CannotGetGARC, e.ToString()); Interlocked.Decrement(ref threads); return false; }
         }
 
         private bool SetGARC(string outfile, string infolder, int padBytes, bool PB)
         {
-            if (skipBoth || (ModifierKeys == Keys.Control && WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否取消回写数据至 GARC?") == DialogResult.Yes))
-            { Interlocked.Decrement(ref threads); UpdateStatus("中止!", false); return false; }
+            if (skipBoth || (ModifierKeys == Keys.Control && WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Editor_CancelWriteBack) == DialogResult.Yes))
+            { Interlocked.Decrement(ref threads); UpdateStatus(Strings.Main_Aborted, false); return false; }
 
             try
             {
                 bool success = GarcUtil.PackGARC(infolder, outfile, Config.GARCVersion, padBytes, PB ? pBar1 : null, L_Status, true);
                 Interlocked.Decrement(ref threads);
-                UpdateStatus(string.Format(success ? "成功!" : "失败!"), false);
+                UpdateStatus(string.Format(success ? Strings.Main_Success : Strings.Main_Failure), false);
                 return success;
             }
-            catch (Exception e) { WinFormsUtil.Error("无法写入 GARC:", e.ToString()); Interlocked.Decrement(ref threads); return false; }
+            catch (Exception e) { WinFormsUtil.Error(Strings.Main_CannotWriteGARC, e.ToString()); Interlocked.Decrement(ref threads); return false; }
         }
 
         private void ThreadGet(string infile, string outfolder, bool PB = true, bool bypassExt = false)
@@ -3621,7 +3598,7 @@ namespace pk3DS.WinForms
 
         private void SetInt32SeedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "重置 RNG?", "如果是, 在点击确定前复制 32位 (非16进制) 整数种子至剪切板"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Main_ResetRNG, Strings.Main_ResetRNGDetail))
                 return;
 
             string val = string.Empty;
@@ -3630,10 +3607,10 @@ namespace pk3DS.WinForms
             if (int.TryParse(val, out int seed))
             {
                 Util.ReseedRand(seed);
-                WinFormsUtil.Alert($"重置 RNG 为种子: {seed}");
+                WinFormsUtil.Alert(string.Format(Strings.Main_RNGSetToSeed, seed));
                 return;
             }
-            WinFormsUtil.Alert("无法设置种子");
+            WinFormsUtil.Alert(Strings.Main_CannotSetSeed);
         }
 
         static string extraSettingsPath = "extraSettings.txt";
@@ -3743,7 +3720,7 @@ namespace pk3DS.WinForms
             {
                 ifFixChineseDisplay = true;
                 TSMIFixChineseDisplay.Checked = true;
-                MessageBox.Show("目前仅支持\"究极日月\"。", "注意", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Strings.Main_OnlyUSUMSupported, Strings.Main_NoteTitle, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -3770,7 +3747,7 @@ namespace pk3DS.WinForms
             {
                 if (latestBuild > currentBuild || (latestBuild == currentBuild) && (latestVersion > currentVersion))
                 {
-                    if (DialogResult.Yes == WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "发现新版本: " + latestBuild + "." + latestVersion, "有新版本可用，是否打开下载地址？"))
+                    if (DialogResult.Yes == WinFormsUtil.Prompt(MessageBoxButtons.YesNo, string.Format(Strings.Main_NewVersionFound, latestBuild, latestVersion), Strings.Alert_NewVersionAvailable))
                     {
                         // Open Url
                         OpenUrlInDefaultBrowser(url);
@@ -3816,12 +3793,12 @@ namespace pk3DS.WinForms
                     }
                     catch
                     {
-                        WinFormsUtil.Alert("版本获取错误，请手动确认。");
+                        WinFormsUtil.Alert(Strings.Alert_VersionCheckFailed);
                     }
                 }
             } catch
             {
-                WinFormsUtil.Alert("无法检查更新，请确认网络连接。");
+                WinFormsUtil.Alert(Strings.Main_CannotCheckUpdate);
             }
 
             return new int[] { build, version };
@@ -3835,7 +3812,7 @@ namespace pk3DS.WinForms
             }
             catch (Exception ex)
             {
-                WinFormsUtil.Alert("无法打开浏览器: " + ex.Message);
+                WinFormsUtil.Alert(string.Format(Strings.Alert_BrowserFailed, ex.Message));
             }
         }
     }

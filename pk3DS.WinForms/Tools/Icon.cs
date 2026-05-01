@@ -1,4 +1,5 @@
 ﻿using pk3DS.Core.CTR;
+using pk3DS.WinForms.Text;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -74,7 +75,7 @@ namespace pk3DS.WinForms
         private void B_Save_Click(object sender, EventArgs e)
         {
             CB_AppInfo_SelectedIndexChanged(null, null); // Force re-save
-            if (DialogResult.Yes == WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否保存更改?"))
+            if (DialogResult.Yes == WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Misc_SaveChanges))
             {
                 SaveSMDH();
                 Close();
@@ -168,7 +169,7 @@ namespace pk3DS.WinForms
 
         private void ImportSMDH(byte[] data, bool prompt = false)
         {
-            if (prompt && DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否替换SMDH?"))
+            if (prompt && DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Icon_ReplaceSMDH))
                 return;
 
             SMDH newSMDH = new SMDH(data);
@@ -191,8 +192,8 @@ namespace pk3DS.WinForms
                 bool large = img.Width == 48 && img.Height == 48;
 
                 if (!small && !large)
-                    WinFormsUtil.Alert("Image size is not correct.", $"Width: {img.Width}\nHeight: {img.Height}", "Expected Dimensions (24x24 or 48x48)");
-                if (prompt && DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否导入图片?", small ? "Small Icon" : "Large Icon"))
+                    WinFormsUtil.Alert(Strings.Icon_ImageSizeIncorrect, $"Width: {img.Width}\nHeight: {img.Height}", Strings.Icon_ExpectedDimensions);
+                if (prompt && DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Icon_ImportImage, small ? "Small Icon" : "Large Icon"))
                     return;
                 if (small)
                     SMDH.SmallIcon.ChangeIcon(mBitmap);
@@ -200,7 +201,7 @@ namespace pk3DS.WinForms
                     SMDH.LargeIcon.ChangeIcon(mBitmap);
             }
             catch
-            { WinFormsUtil.Error("非法的图片格式！"); }
+            { WinFormsUtil.Error(Strings.Icon_InvalidImageFormat); }
         }
 
         private int entry = -1;

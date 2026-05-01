@@ -1,4 +1,5 @@
 ﻿using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -269,115 +270,27 @@ namespace pk3DS.WinForms
             return s;
         }
 
-        // Form Translation
-        public static void TranslateInterface(Control form, string lang)
-        {
-            // Check to see if a the translation file exists in the same folder as the executable
-            string externalLangPath = "lang_" + lang + ".txt";
-            string[] rawlist;
-            if (File.Exists(externalLangPath))
-            {
-                rawlist = File.ReadAllLines(externalLangPath);
-            }
-            else
-            {
-                object txt = Resources.ResourceManager.GetObject("lang_" + lang);
-                if (txt == null) return; // Translation file does not exist as a resource; abort this function and don't translate UI.
-                rawlist = ((string)txt).Split(new[] { "\n" }, StringSplitOptions.None);
-                rawlist = rawlist.Select(i => i.Trim()).ToArray(); // Remove trailing spaces
-            }
-
-            string[] stringdata = new string[rawlist.Length];
-            int itemsToRename = 0;
-            for (int i = 0; i < rawlist.Length; i++)
-            {
-                // Find our starting point
-                if (!rawlist[i].Contains("! " + form.Name)) continue;
-
-                // Allow renaming of the Window Title
-                string[] WindowName = rawlist[i].Split(new[] { " = " }, StringSplitOptions.None);
-                if (WindowName.Length > 1) form.Text = WindowName[1];
-                // Copy our Control Names and Text to a new array for later processing.
-                for (int j = i + 1; j < rawlist.Length; j++)
-                {
-                    if (rawlist[j].Length == 0) continue; // Skip Over Empty Lines, errhandled
-                    if (rawlist[j][0].ToString() == "-") continue; // Keep translating if line is a comment line
-                    if (rawlist[j][0].ToString() == "!") // Stop if we have reached the end of translation
-                        goto rename;
-                    stringdata[itemsToRename] = rawlist[j]; // Add the entry to process later.
-                    itemsToRename++;
-                }
-            }
-            return; // Not Found
-
-            // Now that we have our items to rename in: Control = Text format, let's execute the changes!
-            rename:
-            for (int i = 0; i < itemsToRename; i++)
-            {
-                string[] SplitString = stringdata[i].Split(new[] { " = " }, StringSplitOptions.None);
-                if (SplitString.Length < 2)
-                    continue; // Error in Input, errhandled
-                string ctrl = SplitString[0]; // Control to change the text of...
-                string text = SplitString[1]; // Text to set Control.Text to...
-                Control[] controllist = form.Controls.Find(ctrl, true);
-                if (controllist.Length != 0) // If Control is found
-                { controllist[0].Text = text; goto next; }
-
-                // Check MenuStrips
-                foreach (MenuStrip menu in form.Controls.OfType<MenuStrip>())
-                {
-                    // Menu Items aren't in the Form's Control array. Find within the menu's Control array.
-                    ToolStripItem[] TSI = menu.Items.Find(ctrl, true);
-                    if (TSI.Length == 0) continue;
-
-                    TSI[0].Text = text; goto next;
-                }
-                // Check ContextMenuStrips
-                foreach (ContextMenuStrip cs in FindContextMenuStrips(form.Controls.OfType<Control>()).Distinct())
-                {
-                    ToolStripItem[] TSI = cs.Items.Find(ctrl, true);
-                    if (TSI.Length == 0) continue;
-
-                    TSI[0].Text = text; goto next;
-                }
-
-                next:;
-            }
-        }
-
-        public static List<ContextMenuStrip> FindContextMenuStrips(IEnumerable<Control> c)
-        {
-            List<ContextMenuStrip> cs = new List<ContextMenuStrip>();
-            foreach (Control control in c)
-            {
-                if (control.ContextMenuStrip != null)
-                    cs.Add(control.ContextMenuStrip);
-                else if (control.Controls.Count > 0)
-                    cs.AddRange(FindContextMenuStrips(control.Controls.OfType<Control>()));
-            }
-            return cs;
-        }
 
         // Message Displays
         public static DialogResult Error(params string[] lines)
         {
             System.Media.SystemSounds.Exclamation.Play();
             string msg = string.Join(Environment.NewLine + Environment.NewLine, lines);
-            return MessageBox.Show(msg, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return MessageBox.Show(msg, Strings.Common_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public static DialogResult Alert(params string[] lines)
         {
             System.Media.SystemSounds.Asterisk.Play();
             string msg = string.Join(Environment.NewLine + Environment.NewLine, lines);
-            return MessageBox.Show(msg, "警告", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return MessageBox.Show(msg, Strings.Common_Warning, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         public static DialogResult Prompt(MessageBoxButtons btn, params string[] lines)
         {
             System.Media.SystemSounds.Question.Play();
             string msg = string.Join(Environment.NewLine + Environment.NewLine, lines);
-            return MessageBox.Show(msg, "提示", btn, MessageBoxIcon.Asterisk);
+            return MessageBox.Show(msg, Strings.Common_Prompt, btn, MessageBoxIcon.Asterisk);
         }
 
         public static List<ComboItem> GetCBList(string textfile, string lang)

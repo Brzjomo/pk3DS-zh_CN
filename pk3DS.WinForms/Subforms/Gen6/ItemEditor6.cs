@@ -1,4 +1,5 @@
 ﻿using System;
+using pk3DS.WinForms.Text;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -59,9 +60,9 @@ namespace pk3DS.WinForms
 
         public static int GetItemMapOffset()
         {
-            if (Main.ExeFSPath == null) { WinFormsUtil.Alert("未加载 exeFS 代码"); return -1; }
+            if (Main.ExeFSPath == null) { WinFormsUtil.Alert(Strings.Item_NoExeFS); return -1; }
             string[] exefsFiles = Directory.GetFiles(Main.ExeFSPath);
-            if (!File.Exists(exefsFiles[0]) || !Path.GetFileNameWithoutExtension(exefsFiles[0]).Contains("code")) { WinFormsUtil.Alert("未检测到 .code .bin 文件"); return -1; }
+            if (!File.Exists(exefsFiles[0]) || !Path.GetFileNameWithoutExtension(exefsFiles[0]).Contains("code")) { WinFormsUtil.Alert(Strings.Item_NoCodeBin); return -1; }
             byte[] data = File.ReadAllBytes(exefsFiles[0]);
 
             byte[] reference = Main.Config.ORAS

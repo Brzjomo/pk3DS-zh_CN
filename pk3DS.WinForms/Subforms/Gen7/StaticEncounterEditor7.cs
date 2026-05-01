@@ -1,4 +1,5 @@
-﻿using System;
+﻿using pk3DS.WinForms.Text;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -232,7 +233,7 @@ namespace pk3DS.WinForms
             if (Gifts.Take(3).Select(gift => gift.Species).SequenceEqual(oldStarters))
                 return;
 
-            var dr = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "初始宝可梦已更改，是否更新文本引用?", "注意这只更新pk3ds中，当前语言的文本引用。", "你也可以稍后在主窗口的选项-语言设置中更改。");
+            var dr = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Static_StarterTextUpdate, Strings.Static_UpdateNote, Strings.Static_UpdateTip);
             if (dr == DialogResult.Yes)
                 UpdateStarterText();
         }
@@ -530,7 +531,7 @@ namespace pk3DS.WinForms
 
         private void B_Starters_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机初始宝可梦？ 无法撤销。", "继续前，请先检查随机化选项。") != DialogResult.Yes)
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Static_RandomStarter, Strings.Static_CheckOptions) != DialogResult.Yes)
                 return;
 
             SetGift();
@@ -586,12 +587,12 @@ namespace pk3DS.WinForms
             GetListBoxEntries();
             GetGift();
 
-            WinFormsUtil.Alert("已根据设置随机化初始宝可梦！");
+            WinFormsUtil.Alert(Strings.Static_StarterRandomized);
         }
 
         private void B_RandAll_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机固定遭遇？无法撤销。", "继续前，请先检查随机化选项。") != DialogResult.Yes)
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Static_RandomStatic, Strings.Static_CheckOptions) != DialogResult.Yes)
                 return;
 
             SetGift();
@@ -733,7 +734,7 @@ namespace pk3DS.WinForms
             GetEncounter();
             GetTrade();
 
-            WinFormsUtil.Alert("已根据选项随机化固定遭遇！");
+            WinFormsUtil.Alert(Strings.Static_Randomized);
         }
 
         // Mirror Changes
@@ -791,7 +792,7 @@ namespace pk3DS.WinForms
 
         private void ModifyLevels(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否修改全部当前等级？", "无法撤销。") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Static_ModLevels, Strings.LevelUp_CantUndo) != DialogResult.Yes) return;
 
             for (int i = 0; i < LB_Encounter.Items.Count; i++)
             {
@@ -808,7 +809,7 @@ namespace pk3DS.WinForms
                 LB_Trade.SelectedIndex = i;
                 NUD_TLevel.Value = Randomizer.GetModifiedLevel((int)NUD_TLevel.Value, NUD_LevelBoost.Value);
             }
-            WinFormsUtil.Alert("已根据选项修改全部等级！");
+            WinFormsUtil.Alert(Strings.Static_LevelsModified);
         }
 
         private void B_CurrentAttackSE_Click(object sender, EventArgs e)

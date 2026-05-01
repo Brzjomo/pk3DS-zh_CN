@@ -1,4 +1,5 @@
 ﻿using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +15,7 @@ namespace pk3DS.WinForms
         {
             if (!File.Exists(CROPath))
             {
-                WinFormsUtil.Error("CRO does not exist! Closing.", CROPath);
+                WinFormsUtil.Error(Strings.Gift_CRONotExists, CROPath);
                 Close();
             }
             InitializeComponent();
@@ -194,7 +195,7 @@ namespace pk3DS.WinForms
 
         private void B_Randomize_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机商店物品?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Mart_RandomItems))
                 return;
 
             int[] validItems = Randomizer.GetRandomItemList();
@@ -202,7 +203,7 @@ namespace pk3DS.WinForms
             int ctr = 0;
             Util.Shuffle(validItems);
 
-            bool specialOnly = DialogResult.Yes == WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否仅随机特殊商店?", "不会修改常规必需品。");
+            bool specialOnly = DialogResult.Yes == WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Mart_RandomSpecial, Strings.Mart_KeepEssentials);
             int start = specialOnly ? 8 : 0;
             for (int i = start; i < CB_Location.Items.Count; i++)
             {
@@ -219,7 +220,7 @@ namespace pk3DS.WinForms
                     Util.Shuffle(validItems); ctr = 0;
                 }
             }
-            WinFormsUtil.Alert("已随机化!");
+            WinFormsUtil.Alert(Strings.Mart_Randomized);
         }
 
         private void GetDataOffsetBP(int index)
@@ -269,7 +270,7 @@ namespace pk3DS.WinForms
 
         private void B_RandomizeBP_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机化对战点数物品?"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Mart_RandomBP))
                 return;
 
             int[] validItems = Randomizer.GetRandomItemList();
@@ -287,7 +288,7 @@ namespace pk3DS.WinForms
                     Util.Shuffle(validItems); ctr = 0;
                 }
             }
-            WinFormsUtil.Alert("已随机化!");
+            WinFormsUtil.Alert(Strings.Mart_Randomized);
         }
     }
 }

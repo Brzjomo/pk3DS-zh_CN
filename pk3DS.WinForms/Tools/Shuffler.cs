@@ -1,5 +1,6 @@
 ﻿using pk3DS.Core;
 using pk3DS.Core.CTR;
+using pk3DS.WinForms.Text;
 using System;
 using System.IO;
 using System.Linq;
@@ -57,7 +58,7 @@ namespace pk3DS.WinForms
 
             string garcID = L_File.Text.Split(':')[1].Replace("\\", "").Replace(" ","");
             if (banlist.Contains(garcID))
-            { WinFormsUtil.Alert("GARC is prevented from being shuffled."); return; }
+            { WinFormsUtil.Alert(Strings.Shuffler_GarcPrevented); return; }
 
             var g = GARC.UnpackGARC(garc);
 
@@ -73,7 +74,7 @@ namespace pk3DS.WinForms
             Array.Resize(ref randFiles, ctr);
 
             if (ctr == 0)
-            { WinFormsUtil.Alert("No files to shuffle...?"); return; }
+            { WinFormsUtil.Alert(Strings.Shuffler_NoFiles); return; }
 
             // Create backup
             string dest = "backup" + Path.DirectorySeparatorChar + $"PreShuffle {garcID}";
@@ -127,7 +128,7 @@ namespace pk3DS.WinForms
             }
             #endregion
 
-            WinFormsUtil.Alert("GARC Shuffled!");
+            WinFormsUtil.Alert(Strings.Shuffler_Shuffled);
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using pk3DS.Core.Randomizers;
 using pk3DS.Core.Structures;
 
@@ -116,7 +117,7 @@ namespace pk3DS.WinForms
         {
             int slot = GetSlot(sender);
             if (CB_Species.SelectedIndex == 0)
-            { WinFormsUtil.Alert("无法设置空槽位"); return; }
+            { WinFormsUtil.Alert(Strings.SMTE_CantSetEmpty); return; }
 
             var pk = PrepareTP7();
             var tr = Trainers[index];
@@ -641,7 +642,7 @@ namespace pk3DS.WinForms
 
         private void B_Randomize_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否全部随机化？无法撤销。") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.SMTE_RandomAll) != DialogResult.Yes) return;
 
             CB_TrainerID.SelectedIndex = 0;
             var rnd = new SpeciesRandomizer(Main.Config)
@@ -857,7 +858,7 @@ namespace pk3DS.WinForms
                 }
                 SaveData(tr, i);
             }
-            WinFormsUtil.Alert("已根据设置随机化全部训练家！");
+            WinFormsUtil.Alert(Strings.SMTE_Randomized);
         }
 
         private void B_HighAttack_Click(object sender, EventArgs e)

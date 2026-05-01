@@ -1,4 +1,5 @@
 ﻿using pk3DS.WinForms.ARCUtil;
+using pk3DS.WinForms.Text;
 using pk3DS.Core.CTR;
 using System;
 using System.Drawing;
@@ -69,9 +70,9 @@ namespace pk3DS.WinForms
                 try
                 {
                     if (threads < 1)
-                        new Thread(() => { Interlocked.Increment(ref threads); new BLZCoder(new[] { "-d", path }, pBar1); Interlocked.Decrement(ref threads); WinFormsUtil.Alert("Decompressed!"); }).Start();
+                        new Thread(() => { Interlocked.Increment(ref threads); new BLZCoder(new[] { "-d", path }, pBar1); Interlocked.Decrement(ref threads); WinFormsUtil.Alert(Strings.Alert_Decompressed); }).Start();
                 }
-                catch { WinFormsUtil.Error("Unable to process file."); threads = 0; }
+                catch { WinFormsUtil.Error(Strings.ToolsUI_UnableToProcessFile); threads = 0; }
             }
         }
 
@@ -124,7 +125,7 @@ namespace pk3DS.WinForms
             {
                 // Pre-check file length to see if it is at least valid.
                 FileInfo fi = new FileInfo(path);
-                if (fi.Length > (long)2 * (1<<30)) { WinFormsUtil.Error("File is too big!"); return; } // 2 GB
+                if (fi.Length > (long)2 * (1<<30)) { WinFormsUtil.Error(Strings.Main_FileTooLarge); return; } // 2 GB
                 string folderPath = Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path));
 
                 byte[] first4 = new byte[4];
@@ -136,7 +137,7 @@ namespace pk3DS.WinForms
                 }
                 catch (Exception e)
                 {
-                    WinFormsUtil.Error("Cannot open file!", e.ToString());
+                    WinFormsUtil.Error(Strings.ToolsUI_CannotOpenFile, e.ToString());
                 }
 
                 // Determine if it is a DARC or a Mini
@@ -157,7 +158,7 @@ namespace pk3DS.WinForms
                 }
                 else if (first4.SequenceEqual(BitConverter.GetBytes(0x54594C41))) // ALYT
                 {
-                    if (threads > 0) { WinFormsUtil.Alert("Please wait for all operations to finish first."); return; }
+                    if (threads > 0) { WinFormsUtil.Alert(Strings.Main_WaitForOperations); return; }
                     new Thread(() =>
                     {
                         Interlocked.Increment(ref threads);
@@ -179,7 +180,7 @@ namespace pk3DS.WinForms
                 }
                 else if (first4.SequenceEqual(BitConverter.GetBytes(0x47415243))) // GARC
                 {
-                    if (threads > 0) { WinFormsUtil.Alert("Please wait for all operations to finish first."); return; }
+                    if (threads > 0) { WinFormsUtil.Alert(Strings.Main_WaitForOperations); return; }
                     bool SkipDecompression = ModifierKeys == Keys.Control;
                     new Thread(() =>
                     {
@@ -191,7 +192,7 @@ namespace pk3DS.WinForms
                             BatchRenameExtension(newFolder);
                         }
                         else
-                        { WinFormsUtil.Alert("Unpacking failed."); return; }
+                        { WinFormsUtil.Alert(Strings.ToolsUI_UnpackingFailed); return; }
                         System.Media.SystemSounds.Asterisk.Play();
                     }).Start();
                 }
@@ -208,7 +209,7 @@ namespace pk3DS.WinForms
                     newFolder = folderPath + "_d";
                     bool r = Core.CTR.DARC.Darc2files(darcData, newFolder);
                     if (!r)
-                    { WinFormsUtil.Alert("Unpacking failed.");  }
+                    { WinFormsUtil.Alert(Strings.ToolsUI_UnpackingFailed); }
                 }
                 else if (ARC.AnalyzeSARC(path).Valid)
                 {
@@ -219,19 +220,19 @@ namespace pk3DS.WinForms
                     }
                 }
                 else if (!recursing)
-                { WinFormsUtil.Alert("File is not a darc or a mini packed file:" + Environment.NewLine + path); }
+                { WinFormsUtil.Alert(Strings.ToolsUI_NotDarcOrMini + Environment.NewLine + path); }
             }
             catch (Exception e)
             {
                 if (!recursing)
-                    WinFormsUtil.Error("File error:" + Environment.NewLine + path, e.ToString());
+                    WinFormsUtil.Error(Strings.ToolsUI_FileError + Environment.NewLine + path, e.ToString());
                 threads = 0;
             }
         }
 
         private void SaveARC(string path)
         {
-            if (!Directory.Exists(path)) { WinFormsUtil.Error("Input path is not a Folder", path); return; }
+            if (!Directory.Exists(path)) { WinFormsUtil.Error(Strings.ToolsUI_InputPathNotFolder, path); return; }
             string folderName = Path.GetFileName(path);
             string parentName = Directory.GetParent(path).FullName;
             int type = CB_Repack.SelectedIndex;
@@ -240,7 +241,7 @@ namespace pk3DS.WinForms
                 case 0: // AutoDetect
                 {
                     if (!folderName.Contains("_"))
-                    { WinFormsUtil.Alert("Unable to autodetect pack type."); return; }
+                    { WinFormsUtil.Alert(Strings.ToolsUI_CannotAutodetect); return; }
 
                     if (folderName.Contains("_g"))
                         goto case 1;
@@ -251,9 +252,9 @@ namespace pk3DS.WinForms
                 }
                 case 1: // GARC Pack
                 {
-                    if (threads > 0) { WinFormsUtil.Alert("Please wait for all operations to finish first."); return; }
-                    DialogResult dr = WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, "Format Selection:",
-                        "Yes: Sun/Moon (Version 6)\nNo: XY/ORAS (Version 4)");
+                    if (threads > 0) { WinFormsUtil.Alert(Strings.Main_WaitForOperations); return; }
+                    DialogResult dr = WinFormsUtil.Prompt(MessageBoxButtons.YesNoCancel, Strings.ToolsUI_FormatSelection,
+                        Strings.ToolsUI_FormatSelectionDetail);
                     if (dr == DialogResult.Cancel)
                         return;
 
@@ -266,7 +267,7 @@ namespace pk3DS.WinForms
                     new Thread(() =>
                     {
                         bool r = GarcUtil.PackGARC(path, Path.Combine(outfolder, folderName + ".garc"), version, padding, pBar1);
-                        if (!r) { WinFormsUtil.Alert("Packing failed."); return; }
+                        if (!r) { WinFormsUtil.Alert(Strings.ToolsUI_PackingFailed); return; }
                         // Delete path after repacking
                         if (CHK_Delete.Checked && Directory.Exists(path))
                             Directory.Delete(path, true);
@@ -287,14 +288,14 @@ namespace pk3DS.WinForms
                     else oldFile = null;
 
                     bool r = Core.CTR.DARC.Files2darc(path, false, oldFile);
-                    if (!r) WinFormsUtil.Alert("Packing failed.");
+                    if (!r) WinFormsUtil.Alert(Strings.ToolsUI_PackingFailed);
                     break;
                 }
                 case 3: // Mini Pack
                 {
                     // Get Folder Name
                     string fileName = Path.GetFileName(path);
-                    if (fileName.Length < 3) { WinFormsUtil.Error("Mini Folder name not valid:", path); return; }
+                    if (fileName.Length < 3) { WinFormsUtil.Error(Strings.ToolsUI_MiniFolderNameNotValid, path); return; }
 
                     int index = fileName.LastIndexOf('_');
                     string fileNum = fileName.Substring(0, index);
@@ -313,7 +314,7 @@ namespace pk3DS.WinForms
                     bool r = Mini.PackMini2(path, fileExt, Path.Combine(parentName, fileNum + "." + fileExt));
                     if (!r)
                     {
-                            WinFormsUtil.Alert("Packing failed.");
+                            WinFormsUtil.Alert(Strings.ToolsUI_PackingFailed);
                         break;
                     }
 
@@ -328,7 +329,7 @@ namespace pk3DS.WinForms
                         int oldPtr = BitConverter.ToInt32(oldData, 4);
                         if (newPtr != oldPtr) // Header size is different. Prompt repointing.
                         {
-                            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "Header size of existing file is nonstandard.", "Adjust newly packed file to have the same header size as old file? Data pointers will be updated accordingly."))
+                            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.ToolsUI_HeaderSizeNonstandard, Strings.ToolsUI_AdjustHeaderSize))
                                 break;
 
                             // Fix pointers
@@ -340,7 +341,7 @@ namespace pk3DS.WinForms
                     break;
                 }
                 default:
-                    WinFormsUtil.Alert("Repacking not implemented." + Environment.NewLine + path);
+                    WinFormsUtil.Alert(Strings.ToolsUI_RepackingNotImplemented + Environment.NewLine + path);
                     return;
             }
             // Delete path after repacking

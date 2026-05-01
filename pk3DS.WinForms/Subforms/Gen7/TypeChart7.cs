@@ -1,5 +1,6 @@
 ﻿using pk3DS.Core;
 using pk3DS.Core.Structures;
+using pk3DS.WinForms.Text;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -19,17 +20,17 @@ namespace pk3DS.WinForms
         public TypeChart7()
         {
             if (Main.ExeFSPath == null)
-            { WinFormsUtil.Alert("No exeFS code to load."); Close(); }
+            { WinFormsUtil.Alert(Strings.Item_NoExeFS); Close(); }
 
             string[] files = Directory.GetFiles(Main.ExeFSPath);
             if (!File.Exists(files[0]) || !Path.GetFileNameWithoutExtension(files[0]).Contains("code"))
-            { WinFormsUtil.Alert("No .code.bin detected."); Close(); }
+            { WinFormsUtil.Alert(Strings.Common_NoCodeBin); Close(); }
 
             InitializeComponent();
 
             codebin = files[0];
             exefs = File.ReadAllBytes(codebin);
-            if (exefs.Length % 0x200 != 0) { WinFormsUtil.Alert(".code.bin not decompressed. Aborting."); Close(); }
+            if (exefs.Length % 0x200 != 0) { WinFormsUtil.Alert(Strings.Common_CodeBinNotDecompressed); Close(); }
             offset = Util.IndexOfBytes(exefs, Signature, 0x400000, 0) + Signature.Length;
 
             Array.Copy(exefs, offset, chart, 0, chart.Length);

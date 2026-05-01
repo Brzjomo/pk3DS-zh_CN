@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using pk3DS.Core.Structures.PersonalInfo;
 using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using pk3DS.Core.Randomizers;
 using System.Data.SQLite;
 using System.Diagnostics;
@@ -494,7 +495,7 @@ namespace pk3DS.WinForms
 
         private void B_Randomize_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否全部随机化？无法撤销。", "请先确认随机化选项。") != DialogResult.Yes)
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Personal_RandomAll, Strings.Personal_ConfirmOptions) != DialogResult.Yes)
                 return;
             SaveEntry();
 
@@ -604,7 +605,7 @@ namespace pk3DS.WinForms
             }
 
             ReadEntry();
-            WinFormsUtil.Alert("已根据设置随机化全部宝可梦个体数据！");
+            WinFormsUtil.Alert(Strings.Personal_Randomized);
         }
 
         private void RandPokeStats(bool ifFinalStage, bool ifMegaForm, bool ifLegendary, PersonalInfo info, int targetBST)
@@ -751,7 +752,7 @@ namespace pk3DS.WinForms
 
         private void B_ModifyAll(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否全部修改？无法撤销。", "请先确认修改器选项。") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Personal_ModAll, Strings.Personal_ConfirmModOpts) != DialogResult.Yes) return;
 
             for (int i = 1; i < CB_Species.Items.Count; i++)
             {
@@ -804,14 +805,14 @@ namespace pk3DS.WinForms
                     TB_CatchRate.Text = ((int)NUD_CatchRateMod.Value).ToString();
             }
             CB_Species.SelectedIndex = 1;
-            WinFormsUtil.Alert("已根据设置修改全部宝可梦个体数据！");
+            WinFormsUtil.Alert(Strings.Personal_Modified);
         }
 
         private bool dumping;
 
         private void B_Dump_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否导出全部个体数据至TXT文件？"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Personal_ExportAll))
                 return;
             SaveFileDialog sfd = new SaveFileDialog { FileName = "宝可梦个体数据.txt", Filter = "Text File|*.txt" };
             SystemSounds.Asterisk.Play();

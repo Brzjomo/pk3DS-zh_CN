@@ -1,4 +1,5 @@
 ﻿using pk3DS.Core.CTR;
+using pk3DS.WinForms.Text;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -152,7 +153,7 @@ namespace pk3DS.WinForms
 
         private void InsertFile(string path)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否覆盖？"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.TitleScreen_Overwrite))
                 return;
             byte[] bclim;
 
@@ -163,7 +164,7 @@ namespace pk3DS.WinForms
                 UpdateImgSize();
                 if (img.Width != imgWidth || img.Height != imgHeight)
                 {
-                    WinFormsUtil.Alert("尺寸不匹配！",
+                    WinFormsUtil.Alert(Strings.TitleScreen_SizeMismatch,
                         $"原始尺寸: {imgWidth}px X {imgHeight}px\n导入尺寸: {img.Width}px X {img.Height}px");
                     return;
                 }
@@ -175,7 +176,7 @@ namespace pk3DS.WinForms
                 UpdateImgSize();
                 if (img.Width != imgWidth || img.Height != imgHeight)
                 {
-                    WinFormsUtil.Alert("尺寸不匹配！",
+                    WinFormsUtil.Alert(Strings.TitleScreen_SizeMismatch,
                         $"原始尺寸: {imgWidth}px X {imgHeight}px\n导入尺寸: {img.Width}px X {img.Height}px");
                     return;
                 }
@@ -219,7 +220,7 @@ namespace pk3DS.WinForms
         private void Form_Closing(object sender, FormClosingEventArgs e)
         {
             if (compressed)
-                WinFormsUtil.Alert("重新压缩可能需要一些时间...", "如果进度条不动，不要慌！");
+                WinFormsUtil.Alert(Strings.TitleScreen_RecompressWait, Strings.TitleScreen_DontPanic);
             // Write darcs
             for (int i = 0; i < darcs.Length; i++)
             {
@@ -287,7 +288,7 @@ namespace pk3DS.WinForms
 
         private void PB_Image_Click(object sender, EventArgs e)
         {
-            if (ModifierKeys == Keys.Control && WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否复制图片到剪贴板？") == DialogResult.Yes)
+            if (ModifierKeys == Keys.Control && WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.TitleScreen_CopyToClipboard) == DialogResult.Yes)
             {
                 PB_Image.BackgroundImage = PB_Image.Image;
                 Clipboard.SetImage(PB_Image.BackgroundImage);

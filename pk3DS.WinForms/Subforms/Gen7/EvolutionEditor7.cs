@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
+using pk3DS.WinForms.Text;
 using pk3DS.Core;
 using pk3DS.Core.Randomizers;
 using pk3DS.Core.Structures;
@@ -195,7 +196,7 @@ namespace pk3DS.WinForms
 
         private void B_RandAll_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机全部宝可梦？", "进化方式和进化条件将保持不变。"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Evo_RandomAll, Strings.Evo_KeepMethod))
                 return;
 
             SetList();
@@ -212,12 +213,12 @@ namespace pk3DS.WinForms
             evos.Select(z => z.Write()).ToArray().CopyTo(files, 0);
             GetList();
 
-            WinFormsUtil.Alert("宝可梦进化已全部随机！");
+            WinFormsUtil.Alert(Strings.Evo_Randomized);
         }
 
         private void B_Trade_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否移除全部通讯进化？", "通讯进化方式将会被替代，以便单人游戏也可进化。"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Evo_RemoveTrade, Strings.Evo_TradeReplace))
                 return;
 
             SetList();
@@ -228,12 +229,12 @@ namespace pk3DS.WinForms
             evos.Select(z => z.Write()).ToArray().CopyTo(files, 0);
             GetList();
 
-            WinFormsUtil.Alert("已移除全部通讯进化！", "通讯进化将在到达指定等级，或持有相关道具并升级时进行。");
+            WinFormsUtil.Alert(Strings.Evo_TradeRemoved, Strings.Evo_TradeReplaceDetail);
         }
 
         private void B_EveryLevel_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否确认修改？", "你的宝可梦每次升级都会进化为随机的宝可梦。"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Evo_ConfirmMod, Strings.Evo_RandomEvoDetail))
                 return;
 
             SetList();
@@ -298,7 +299,7 @@ namespace pk3DS.WinForms
 
         private void B_Dump_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否导出所有进化到TXT文本？"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Evo_ExportAll))
                 return;
             SaveFileDialog sfd = new SaveFileDialog { FileName = "进化.txt", Filter = "Text File|*.txt" };
             SystemSounds.Asterisk.Play();

@@ -1,4 +1,5 @@
 ﻿using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -625,7 +626,7 @@ namespace pk3DS.WinForms
                 B_Save_Click(sender, e);
             }
             Enabled = true;
-            WinFormsUtil.Alert("Randomized all Wild Encounters according to specification!", "Press the Dump Tables button to view the new Wild Encounter information!");
+            WinFormsUtil.Alert(Strings.XYWE_Randomized, Strings.XYWE_ExportToView);
         }
 
         private void SetRandomForm(int slot, int species)
@@ -730,7 +731,7 @@ namespace pk3DS.WinForms
             }
             // Enable Interface... modification complete.
             Enabled = true;
-            WinFormsUtil.Alert("Modified all Level ranges according to specification!", "Press the Dump Tables button to view the new Level ranges!");
+            WinFormsUtil.Alert(Strings.XYWE_LevelsModified, Strings.XYWE_LevelsExportTip);
         }
 
         private void XYWE_FormClosing(object sender, FormClosingEventArgs e)

@@ -1,4 +1,5 @@
 ﻿using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,11 +12,11 @@ namespace pk3DS.WinForms
         public PickupEditor6()
         {
             InitializeComponent();
-            if (Main.ExeFSPath == null) { WinFormsUtil.Alert("未加载exeFS代码"); Close(); }
+            if (Main.ExeFSPath == null) { WinFormsUtil.Alert(Strings.Item_NoExeFS); Close(); }
             string[] files = Directory.GetFiles(Main.ExeFSPath);
-            if (!File.Exists(files[0]) || !Path.GetFileNameWithoutExtension(files[0]).Contains("code")) { WinFormsUtil.Alert("No .code.bin detected."); Close(); }
+            if (!File.Exists(files[0]) || !Path.GetFileNameWithoutExtension(files[0]).Contains("code")) { WinFormsUtil.Alert(Strings.Common_NoCodeBin); Close(); }
             data = File.ReadAllBytes(files[0]);
-            if (data.Length % 0x200 != 0) { WinFormsUtil.Alert(".code.bin未解压，程序已终止"); Close(); }
+            if (data.Length % 0x200 != 0) { WinFormsUtil.Alert(Strings.Pickup_CodeNotDecompressed); Close(); }
             offset = Util.IndexOfBytes(data, new byte[] { 0x1E, 0x28, 0x32, 0x3C, 0x46, 0x50, 0x5A, 0x5E, 0x62, 0x05, 0x0A, 0x0F, 0x14, 0x19, 0x1E, 0x23, 0x28, 0x2D, 0x32 }, 0x400000, 0) - 0x3A;
             codebin = files[0];
             itemlist[0] = "";
@@ -117,7 +118,7 @@ namespace pk3DS.WinForms
 
         private void B_Randomize_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机化捡拾列表？"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Pickup_Randomize))
                 return;
 
             int[] validItems = Randomizer.GetRandomItemList();

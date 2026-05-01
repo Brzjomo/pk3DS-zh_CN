@@ -1,4 +1,5 @@
-﻿using System;
+﻿using pk3DS.WinForms.Text;
+using System;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
@@ -26,14 +27,14 @@ namespace pk3DS.WinForms
             int ctr = 0;
             if (oldstr.Length != newstr.Length)
             {
-                result = "Input replacements do not match output replacements.";
+                result = Strings.Patch_InputMismatch;
                 return false;
             }
 
             string text = File.ReadAllText(path, Encoding.Unicode);
             if (!text.Contains(newROM))
             {
-                result = "ExeFS\\.code.bin is not a patchable ExeFS (no rom2: found).";
+                result = Strings.Patch_ExeFSNotPatchable;
                 return false;
             }
             for (int i = 0; i < oldstr.Length; i++)
@@ -45,7 +46,7 @@ namespace pk3DS.WinForms
                 bool old = text.Contains(oldString);
                 bool patched = text.Contains(patchedStr);
                 if (!old && !patched)
-                    result += "Does not contain " + oldstr + Environment.NewLine;
+                    result += string.Format(Strings.Patch_DoesNotContain, oldstr) + Environment.NewLine;
                 else
                     ctr++;
 
@@ -56,8 +57,8 @@ namespace pk3DS.WinForms
             }
 
             if (ctr == 0)
-            { result = "Did not find the old path strings to replace."; return false; }
-            result += $"Redirected {ctr} file paths.";
+            { result = Strings.Patch_NotFound; return false; }
+            result += string.Format(Strings.Patch_Redirected, ctr);
             Directory.CreateDirectory(Directory.GetParent(outPath).Name);
             File.WriteAllText(outPath ?? path, text, Encoding.Unicode);
             return true;
@@ -101,15 +102,15 @@ namespace pk3DS.WinForms
                 }
                 string result = "";
                 string ExeFS = Directory.GetFiles(Main.ExeFSPath)[0];
-                if (!File.Exists(ExeFS) || !Path.GetFileNameWithoutExtension(ExeFS).Contains("code")) { throw new Exception("No .code.bin detected."); }
+                if (!File.Exists(ExeFS) || !Path.GetFileNameWithoutExtension(ExeFS).Contains("code")) { throw new Exception(Strings.Common_NoCodeBin); }
                 if (!PatchExeFS(ExeFS, garcPaths, newPaths, oldROM, newROM, ref result, Path.Combine(patchFolder, ".code.bin")))
                     throw new Exception(result);
 
-                WinFormsUtil.Alert("Patch contents saved to:" + Environment.NewLine + ExportGARCs(garcPaths, newPaths, Main.RomFSPath, patchFolder), result);
+                WinFormsUtil.Alert(Strings.Patch_ContentsSaved + Environment.NewLine + ExportGARCs(garcPaths, newPaths, Main.RomFSPath, patchFolder), result);
             }
             catch (Exception ex)
             {
-                WinFormsUtil.Error("Could not create patch:", ex.ToString());
+                WinFormsUtil.Error(Strings.Patch_CouldNotCreate, ex.ToString());
                 if (Directory.Exists(patchFolder)) Directory.Delete(patchFolder, true);
             }
         }

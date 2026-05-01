@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using pk3DS.WinForms.Properties;
 using pk3DS.Core.Structures;
 using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using pk3DS.Core.Randomizers;
 
 namespace pk3DS.WinForms
@@ -161,7 +162,7 @@ namespace pk3DS.WinForms
 
         private void B_RandAll_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否确认随机化升级招式？", "无法撤销。") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.LevelUp_RandomConfirm, Strings.LevelUp_CantUndo) != DialogResult.Yes) return;
 
             ushort[] HMs = { 15, 19, 57, 70, 127, 249, 291 };
             if (CHK_HMs.Checked && Main.ExeFSPath != null)
@@ -196,7 +197,7 @@ namespace pk3DS.WinForms
 
         private void B_Metronome_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否使用挥指模式？", "这将导致宝可梦只能学习挥指。") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.LevelUp_MetronomeMode, Strings.LevelUp_MetronomeDetail) != DialogResult.Yes) return;
 
             CHK_Expand.Checked = false;
 
@@ -210,12 +211,12 @@ namespace pk3DS.WinForms
                 dgv.Rows[0].Cells[1].Value = movelist[118];
             }
             CB_Species.SelectedIndex = 0;
-            WinFormsUtil.Alert("现在所有宝可梦都只会挥指！");
+            WinFormsUtil.Alert(Strings.LevelUp_AllMetronome);
         }
 
         private void B_Dump_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否导出所有升级招式至TXT文件？"))
+            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.LevelUp_ExportAll))
                 return;
 
             dumping = true;
@@ -280,7 +281,7 @@ namespace pk3DS.WinForms
                         stab++;
                 }
             }
-            WinFormsUtil.Alert($"共习得招式: {movectr}\r\n单个宝可梦最大招式习得数: {max}\r\n同属性增益计数: {stab}");
+            WinFormsUtil.Alert(string.Format(Strings.LevelUp_StatsSummary, movectr, max, stab));
         }
     }
 }

@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Linq;
 using pk3DS.Core;
+using pk3DS.WinForms.Text;
 
 namespace pk3DS.WinForms
 {
@@ -12,11 +13,11 @@ namespace pk3DS.WinForms
         public TMHMEditor6()
         {
             InitializeComponent();
-            if (Main.ExeFSPath == null) { WinFormsUtil.Alert("No exeFS code to load."); Close(); }
+            if (Main.ExeFSPath == null) { WinFormsUtil.Alert(Strings.Item_NoExeFS); Close(); }
             string[] files = Directory.GetFiles(Main.ExeFSPath);
-            if (!File.Exists(files[0]) || !Path.GetFileNameWithoutExtension(files[0]).Contains("code")) { WinFormsUtil.Alert("No .code.bin detected."); Close(); }
+            if (!File.Exists(files[0]) || !Path.GetFileNameWithoutExtension(files[0]).Contains("code")) { WinFormsUtil.Alert(Strings.Common_NoCodeBin); Close(); }
             data = File.ReadAllBytes(files[0]);
-            if (data.Length % 0x200 != 0) { WinFormsUtil.Alert(".code.bin not decompressed. Aborting."); Close(); }
+            if (data.Length % 0x200 != 0) { WinFormsUtil.Alert(Strings.Common_CodeBinNotDecompressed); Close(); }
             offset = Util.IndexOfBytes(data, Signature, 0x400000, 0) + 8;
             codebin = files[0];
             movelist[0] = "";
@@ -161,8 +162,8 @@ namespace pk3DS.WinForms
 
         private void B_RandomTM_Click(object sender, EventArgs e)
         {
-            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "是否随机化招式？", "招式兼容性将与先前一致。") != DialogResult.Yes) return;
-            if (CHK_RandomizeHM.Checked && WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "随机化秘传机可能会导致游戏卡关！", "是否继续？") != DialogResult.Yes) return;
+            if (WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.TM_RandomMoves, Strings.TM_SameCompatibility) != DialogResult.Yes) return;
+            if (CHK_RandomizeHM.Checked && WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.TMHM_MayCauseStuck, Strings.TMHM_ContinuePrompt) != DialogResult.Yes) return;
 
             int[] randomMoves = Enumerable.Range(1, movelist.Length - 1).Select(i => i).ToArray();
             Util.Shuffle(randomMoves);
