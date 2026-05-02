@@ -100,7 +100,7 @@ namespace pk3DS.WinForms
         public static string ExeFSPath;
         public static string ExHeaderPath;
         private static string OfficialBuild = "1040";
-        private static string Version = "72"; //提交计数
+        private static string Version = "73"; //提交计数
         private static bool versionCheckFailed = false;
         private static bool ifVersionChecked = false;
         private static bool ifUpToDate = false;
@@ -3221,8 +3221,6 @@ namespace pk3DS.WinForms
                 case 7:
                     if (ThreadActive())
                         return;
-                    if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.CRO_NoPatchWarning, Strings.CRO_LumaSafe, Strings.CRO_Continue))
-                        return;
                     if (RomFSPath != null) (Config.USUM ? new MartEditor7UU() : (Form)new MartEditor7()).Show();
                     break;
             }
@@ -3243,8 +3241,6 @@ namespace pk3DS.WinForms
                     if (ExeFSPath != null) new TutorEditor6().Show();
                     break;
                 case 7:
-                    if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.CRO_NoPatchWarning, Strings.CRO_LumaSafe, Strings.CRO_Continue))
-                        return;
                     if (RomFSPath != null) new TutorEditor7().Show();
                     break;
             }
@@ -3302,8 +3298,6 @@ namespace pk3DS.WinForms
             }
             if (ThreadActive())
                 return;
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.CRO_NoPatchWarning, Strings.CRO_LumaSafe, Strings.CRO_Continue))
-                return;
             string CRO = Path.Combine(RomFSPath, "DllPoke3Select.cro");
             string CRO2 = Path.Combine(RomFSPath, "DllField.cro");
             if (!File.Exists(CRO))
@@ -3332,8 +3326,6 @@ namespace pk3DS.WinForms
             switch (Config.Generation)
             {
                 case 6:
-                    if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.CRO_NoPatchWarning, Strings.CRO_LumaSafe, Strings.CRO_Continue))
-                        return;
                     string CRO = Path.Combine(RomFSPath, "DllBattle.cro");
                     if (!File.Exists(CRO))
                     {
@@ -3356,8 +3348,6 @@ namespace pk3DS.WinForms
                 return;
             }
             if (ThreadActive())
-                return;
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.CRO_NoPatchWarning, Strings.CRO_LumaSafe, Strings.CRO_Continue))
                 return;
             string CRO = Path.Combine(RomFSPath, "DllField.cro");
             if (!File.Exists(CRO))
@@ -3392,8 +3382,6 @@ namespace pk3DS.WinForms
                 return;
             }
 
-            if (DialogResult.Yes != WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.CRO_NoPatchWarning, Strings.CRO_LumaSafe, Strings.CRO_Continue))
-                return;
             string CRO = Path.Combine(RomFSPath, "DllField.cro");
             if (!File.Exists(CRO))
             {

@@ -250,11 +250,6 @@ public static class Strings
     public static string Alert_Extracted             => Get("Alert.Extracted", "已解包!");
     public static string Alert_Compressed            => Get("Alert.Compressed", "已压缩!");
     public static string Alert_Decompressed          => Get("Alert.Decompressed", "已解压!");
-
-    // ===== CRO Editor warnings =====
-    public static string CRO_NoPatchWarning          => Get("CRO.NoPatchWarning", "如果3DS没有打上RO补丁，编辑CRO文件可能导致崩溃");
-    public static string CRO_LumaSafe                => Get("CRO.LumaSafe", "Luma版本大于6，就无须担心");
-    public static string CRO_Continue                => Get("CRO.Continue", "是否仍要继续?");
     public static string CRO_FileNotFound            => Get("CRO.FileNotFound", "文件未找到!");
     public static string CRO_DllFieldNotFound        => Get("CRO.DllFieldNotFound", "RomFS文件夹中未找到 DllField.cro!");
     public static string CRO_DllBattleNotFound       => Get("CRO.DllBattleNotFound", "RomFS文件夹中未找到 DllBattle.cro!");
@@ -418,7 +413,7 @@ public static class Strings
     public static string Starter_RandomClose    => Get("Starter.RandomClose", "随机化后是否直接关闭？");
 
     // ===== Tutor =====
-    public static string Tutor_NotYetImplemented => Get("Tutor.NotYetImplemented", "目前尚未实现");
+    public static string Tutor_RandomizeComplete       => Get("Tutor.RandomizeComplete", "随机完成！已修改 {0} 个招式导师的招式和 Price。\n招式范围: 1-{1}\nPrice 范围: 1-8\n\n注意：此功能仍需测试，随机结果可能存在问题，请保存后到游戏中验证。");
 
     // ===== TitleScreen =====
     public static string TitleScreen_Overwrite         => Get("TitleScreen.Overwrite", "是否覆盖？");

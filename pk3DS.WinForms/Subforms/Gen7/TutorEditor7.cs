@@ -96,7 +96,30 @@ namespace pk3DS.WinForms
 
         private void B_Randomize_Click(object sender, EventArgs e)
         {
-            WinFormsUtil.Alert(Strings.Tutor_NotYetImplemented);
+            // Save current editing first
+            if (entryBPMove > -1) SetListBPMove();
+
+            var rnd = new Random();
+            int maxMove = Main.Config.Info.MaxMoveID;
+            int total = 0;
+            for (int loc = 0; loc < len_BPTutor.Length; loc++)
+            {
+                int count = len_BPTutor[loc];
+                var ofs = ofs_BPTutor + (len_BPTutor.Take(loc).Sum(z => z) * 4);
+                for (int i = 0; i < count; i++)
+                {
+                    int move = rnd.Next(1, maxMove);
+                    int price = rnd.Next(1, 9); // 1-8
+                    Array.Copy(BitConverter.GetBytes((ushort)move), 0, data, ofs + (4 * i), 2);
+                    Array.Copy(BitConverter.GetBytes((ushort)price), 0, data, ofs + (4 * i) + 2, 2);
+                    total++;
+                }
+            }
+
+            // Refresh current view
+            if (entryBPMove > -1) GetListBPMove();
+
+            WinFormsUtil.Alert(string.Format(Strings.Tutor_RandomizeComplete, total, maxMove));
         }
     }
 }

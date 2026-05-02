@@ -209,9 +209,6 @@
   "Alert.Compressed": "已压缩!",
   "Alert.Decompressed": "已解压!",
 
-  "CRO.NoPatchWarning": "如果3DS没有打上RO补丁，编辑CRO文件可能导致崩溃",
-  "CRO.LumaSafe": "Luma版本大于6，就无须担心",
-  "CRO.Continue": "是否仍要继续?",
   "CRO.FileNotFound": "文件未找到!",
   "CRO.DllFieldNotFound": "RomFS文件夹中未找到 DllField.cro!",
   "CRO.DllBattleNotFound": "RomFS文件夹中未找到 DllBattle.cro!",
@@ -287,7 +284,7 @@
 
   "Starter.RandomClose": "随机化后是否直接关闭？",
 
-  "Tutor.NotYetImplemented": "目前尚未实现",
+
 
   "TitleScreen.Overwrite": "是否覆盖？",
   "TitleScreen.SizeMismatch": "尺寸不匹配！",
@@ -371,5 +368,7 @@
   "RSTE.RerandomizeSuggest": "重新随机化个体值或不要同时选择。",
 
   "Tutor6.SaveNotReflected": "更改不会在游戏中反映。",
-  "Tutor6.NeedsResearch": "仍需要更多研究。"
+  "Tutor6.NeedsResearch": "仍需要更多研究。",
+
+  "Tutor.RandomizeComplete": "随机完成！已修改 {0} 个招式导师的招式和 Price。\n招式范围: 1-{1}\nPrice 范围: 1-8\n\n注意：此功能仍需测试，随机结果可能存在问题，请保存后到游戏中验证。"
 }

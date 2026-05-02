@@ -29,72 +29,69 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TutorEditor6));
-            this.CB_Location = new System.Windows.Forms.ComboBox();
-            this.dgv = new System.Windows.Forms.DataGridView();
-            this.L_Mart = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
-            this.SuspendLayout();
+            CB_Location = new System.Windows.Forms.ComboBox();
+            dgv = new System.Windows.Forms.DataGridView();
+            L_Mart = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)dgv).BeginInit();
+            SuspendLayout();
             // 
             // CB_Location
             // 
-            this.CB_Location.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CB_Location.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CB_Location.FormattingEnabled = true;
-            this.CB_Location.Location = new System.Drawing.Point(115, 10);
-            this.CB_Location.Margin = new System.Windows.Forms.Padding(5);
-            this.CB_Location.Name = "CB_Location";
-            this.CB_Location.Size = new System.Drawing.Size(402, 29);
-            this.CB_Location.TabIndex = 0;
-            this.CB_Location.SelectedIndexChanged += new System.EventHandler(this.ChangeIndex);
+            CB_Location.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            CB_Location.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            CB_Location.FormattingEnabled = true;
+            CB_Location.Location = new System.Drawing.Point(76, 10);
+            CB_Location.Margin = new System.Windows.Forms.Padding(5);
+            CB_Location.Name = "CB_Location";
+            CB_Location.Size = new System.Drawing.Size(441, 29);
+            CB_Location.TabIndex = 0;
+            CB_Location.SelectedIndexChanged += ChangeIndex;
             // 
             // dgv
             // 
-            this.dgv.AllowUserToAddRows = false;
-            this.dgv.AllowUserToDeleteRows = false;
-            this.dgv.AllowUserToResizeColumns = false;
-            this.dgv.AllowUserToResizeRows = false;
-            this.dgv.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv.Location = new System.Drawing.Point(20, 52);
-            this.dgv.Margin = new System.Windows.Forms.Padding(5);
-            this.dgv.Name = "dgv";
-            this.dgv.Size = new System.Drawing.Size(500, 513);
-            this.dgv.TabIndex = 1;
+            dgv.AllowUserToAddRows = false;
+            dgv.AllowUserToDeleteRows = false;
+            dgv.AllowUserToResizeColumns = false;
+            dgv.AllowUserToResizeRows = false;
+            dgv.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+            dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgv.Location = new System.Drawing.Point(20, 52);
+            dgv.Margin = new System.Windows.Forms.Padding(5);
+            dgv.Name = "dgv";
+            dgv.Size = new System.Drawing.Size(500, 513);
+            dgv.TabIndex = 1;
             // 
             // L_Mart
             // 
-            this.L_Mart.AutoSize = true;
-            this.L_Mart.Location = new System.Drawing.Point(20, 14);
-            this.L_Mart.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.L_Mart.Name = "L_Mart";
-            this.L_Mart.Size = new System.Drawing.Size(79, 21);
-            this.L_Mart.TabIndex = 2;
-            this.L_Mart.Text = "Location:";
+            L_Mart.AutoSize = true;
+            L_Mart.Location = new System.Drawing.Point(20, 14);
+            L_Mart.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            L_Mart.Name = "L_Mart";
+            L_Mart.Size = new System.Drawing.Size(46, 21);
+            L_Mart.TabIndex = 2;
+            L_Mart.Text = "地点:";
             // 
             // TutorEditor6
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(540, 584);
-            this.Controls.Add(this.L_Mart);
-            this.Controls.Add(this.dgv);
-            this.Controls.Add(this.CB_Location);
-            this.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(5);
-            this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(556, 945);
-            this.MinimumSize = new System.Drawing.Size(556, 622);
-            this.Name = "TutorEditor6";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Move Tutor Editor";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_Closing);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(540, 584);
+            Controls.Add(L_Mart);
+            Controls.Add(dgv);
+            Controls.Add(CB_Location);
+            Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 134);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
+            Margin = new System.Windows.Forms.Padding(5);
+            MaximizeBox = false;
+            MaximumSize = new System.Drawing.Size(556, 945);
+            MinimumSize = new System.Drawing.Size(556, 622);
+            Name = "TutorEditor6";
+            StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            Text = "Move Tutor Editor";
+            FormClosing += Form_Closing;
+            ((System.ComponentModel.ISupportInitialize)dgv).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 
