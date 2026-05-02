@@ -10,6 +10,14 @@ namespace pk3DS.Core
 {
     public class GameConfig
     {
+        /// <summary>
+        /// Delegate for formatting GARC file corruption error messages.
+        /// Set by the UI layer (WinForms) to provide localized messages.
+        /// Args: (name, reference, innerMessage) → formatted message string.
+        /// </summary>
+        public static Func<string, string, string, string> FormatCorruptMessage { get; set; }
+            = (name, reference, inner) => $"{name} ({reference}) is corrupt.\n" + inner;
+
         private const int FILECOUNT_XY = 271;
         private const int FILECOUNT_ORASDEMO = 301;
         private const int FILECOUNT_ORAS = 299;
@@ -213,7 +221,7 @@ namespace pk3DS.Core
             }
             catch (FormatException f)
             {
-                var message = $"{gr.Name} - ({gr.Reference}) is apparently corrupt. Please restore the backup for this file." + f.Message;
+                var message = FormatCorruptMessage?.Invoke(gr.Name, gr.Reference, f.Message) ?? f.Message;
                 throw new FormatException(message, f);
             }
         }

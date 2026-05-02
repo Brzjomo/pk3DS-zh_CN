@@ -43,7 +43,8 @@
             this.Menu_Open = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Exit = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Tools = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_Restore = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_BackupCreate = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_RestoreBackup = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Misc = new System.Windows.Forms.ToolStripMenuItem();
             this.unPackBCLIMToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_BLZ = new System.Windows.Forms.ToolStripMenuItem();
@@ -250,7 +251,8 @@
             // Menu_Tools
             // 
             this.Menu_Tools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Menu_Restore,
+            this.Menu_BackupCreate,
+            this.Menu_RestoreBackup,
             this.Menu_Misc,
             this.Menu_Extract,
             this.Menu_Rebuild,
@@ -261,13 +263,21 @@
             this.Menu_Tools.Size = new System.Drawing.Size(54, 25);
             this.Menu_Tools.Text = "工具";
             // 
-            // Menu_Restore
-            // 
-            this.Menu_Restore.Enabled = false;
-            this.Menu_Restore.Name = "Menu_Restore";
-            this.Menu_Restore.Size = new System.Drawing.Size(229, 26);
-            this.Menu_Restore.Text = "恢复原始文件";
-            this.Menu_Restore.Click += new System.EventHandler(this.L_Game_Click);
+            // Menu_BackupCreate
+            //
+            this.Menu_BackupCreate.Enabled = false;
+            this.Menu_BackupCreate.Name = "Menu_BackupCreate";
+            this.Menu_BackupCreate.Size = new System.Drawing.Size(229, 26);
+            this.Menu_BackupCreate.Text = "创建备份";
+            this.Menu_BackupCreate.Click += new System.EventHandler(this.Menu_BackupCreate_Click);
+            //
+            // Menu_RestoreBackup
+            //
+            this.Menu_RestoreBackup.Enabled = false;
+            this.Menu_RestoreBackup.Name = "Menu_RestoreBackup";
+            this.Menu_RestoreBackup.Size = new System.Drawing.Size(229, 26);
+            this.Menu_RestoreBackup.Text = "恢复备份";
+            this.Menu_RestoreBackup.Click += new System.EventHandler(this.Menu_RestoreBackup_Click);
             // 
             // Menu_Misc
             // 
@@ -891,7 +901,8 @@
         private System.Windows.Forms.ToolStripMenuItem Menu_Open;
         private System.Windows.Forms.ToolStripMenuItem Menu_Exit;
         private System.Windows.Forms.ToolStripMenuItem Menu_Tools;
-        private System.Windows.Forms.ToolStripMenuItem Menu_Restore;
+        private System.Windows.Forms.ToolStripMenuItem Menu_BackupCreate;
+        private System.Windows.Forms.ToolStripMenuItem Menu_RestoreBackup;
         private System.Windows.Forms.ToolStripMenuItem Menu_Misc;
         private System.Windows.Forms.ToolStripMenuItem unPackBCLIMToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem Menu_BLZ;

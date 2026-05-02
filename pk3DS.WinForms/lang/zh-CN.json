@@ -19,6 +19,7 @@
   "Main.Aborted": "中止!",
   "Main.FileCount": "文件: ",
   "Main.Sample": "示例: ",
+  "Main.GARCFileCorrupt": "{0} ({1}) 文件损坏，请使用「恢复备份」功能还原。",
   "Main.GARC_Get": "GARC 已取得: {0}... ",
   "Main.GARC_GetDetail": "GARC 已取得: {0} @ {1}... ",
   "Main.GARC_Mod": "GARC 已修改: {0}... ",
@@ -207,7 +208,6 @@
   "Alert.Extracted": "已解包!",
   "Alert.Compressed": "已压缩!",
   "Alert.Decompressed": "已解压!",
-  "Alert.OnlyNeededFiles": "游戏文件夹中最好只包含必要文件。",
 
   "CRO.NoPatchWarning": "如果3DS没有打上RO补丁，编辑CRO文件可能导致崩溃",
   "CRO.LumaSafe": "Luma版本大于6，就无须担心",
@@ -236,8 +236,6 @@
   "Editor.SkipAlreadyExists": "跳过 - 文件已存在!",
   "Editor.CancelWriteBack": "是否取消回写数据至 GARC?",
   "Editor.NoGameLoaded": "请先打开一个游戏目录！",
-
-  "Restore.Complete": "已恢复 {0} 个文件。",
 
   "Misc.NotCompleted": "未完成！",
   "Misc.SaveChanges": "是否保存更改?",

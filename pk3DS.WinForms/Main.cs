@@ -56,6 +56,10 @@ namespace pk3DS.WinForms
                 t.DragDrop += TabMain_DragDrop;
             }
 
+            // Wire localized error message for GameConfig corruption errors
+            GameConfig.FormatCorruptMessage = (name, reference, inner) =>
+                string.Format(Strings.Main_GARCFileCorrupt, name, reference) + "\n" + inner;
+
             // Reload Previous Editing Files if the file exists
             var settings = Properties.Settings.Default;
             CB_Lang.SelectedIndex = settings.Language;
@@ -96,7 +100,7 @@ namespace pk3DS.WinForms
         public static string ExeFSPath;
         public static string ExHeaderPath;
         private static string OfficialBuild = "1040";
-        private static string Version = "70"; //提交计数
+        private static string Version = "71"; //提交计数
         private static bool versionCheckFailed = false;
         private static bool ifVersionChecked = false;
         private static bool ifUpToDate = false;
@@ -1969,7 +1973,45 @@ namespace pk3DS.WinForms
             catch { WinFormsUtil.Alert(Strings.Alert_CannotCopyClipboard); }
         }
 
-        private void L_Game_Click(object sender, EventArgs e) => new EnhancedRestore(Config).ShowDialog();
+        private void Menu_BackupCreate_Click(object sender, EventArgs e)
+        {
+            if (Config == null)
+            { WinFormsUtil.Alert(Strings.Main_OpenROMFirst); return; }
+
+            try
+            {
+                int count = GameBackup.CreateBackup(Config);
+                WinFormsUtil.Alert("备份完成！已备份 " + count + " 个文件到游戏目录下的 backup 文件夹。");
+            }
+            catch (Exception ex)
+            {
+                WinFormsUtil.Error("备份失败：" + ex.Message);
+            }
+        }
+
+        private void Menu_RestoreBackup_Click(object sender, EventArgs e)
+        {
+            if (Config == null)
+            { WinFormsUtil.Alert(Strings.Main_OpenROMFirst); return; }
+
+            if (!GameBackup.BackupExists(Config))
+            { WinFormsUtil.Alert("未找到备份文件夹。请先使用「创建备份」功能。"); return; }
+
+            var confirm = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "确定要恢复备份吗？所有当前修改将被覆盖。");
+            if (confirm != DialogResult.Yes) return;
+
+            try
+            {
+                string result = GameBackup.RestoreBackup(Config);
+                var restart = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, result + "\n\n是否立即重启程序？");
+                if (restart == DialogResult.Yes)
+                    Application.Restart();
+            }
+            catch (Exception ex)
+            {
+                WinFormsUtil.Error("还原失败：" + ex.Message);
+            }
+        }
 
         private void B_Open_Click(object sender, EventArgs e)
         {
@@ -2162,7 +2204,6 @@ namespace pk3DS.WinForms
             Config = null;
 
             string[] folders = Directory.GetDirectories(path);
-            int count = folders.Length;
 
             // Find RomFS folder
             foreach (string f in folders.Where(f => new DirectoryInfo(f).Name.IndexOf("rom", StringComparison.OrdinalIgnoreCase) >= 0 && Directory.Exists(f)))
@@ -2171,11 +2212,8 @@ namespace pk3DS.WinForms
             foreach (string f in folders.Where(f => new DirectoryInfo(f).Name.IndexOf("exe", StringComparison.OrdinalIgnoreCase) >= 0 && Directory.Exists(f)))
                 CheckIfExeFS(f);
 
-            if (count > 4)
-                WinFormsUtil.Alert(Strings.Alert_OnlyNeededFiles);
-
             // Enable buttons if applicable
-            Tab_RomFS.Enabled = Menu_Restore.Enabled = Tab_CRO.Enabled = Menu_CRO.Enabled = Menu_Shuffler.Enabled = RomFSPath != null;
+            Tab_RomFS.Enabled = Menu_BackupCreate.Enabled = Menu_RestoreBackup.Enabled = Tab_CRO.Enabled = Menu_CRO.Enabled = Menu_Shuffler.Enabled = RomFSPath != null;
             Tab_ExeFS.Enabled = RomFSPath != null && ExeFSPath != null;
             if (RomFSPath != null && Config != null)
             {
@@ -2214,7 +2252,6 @@ namespace pk3DS.WinForms
                 try
                 {
                     Config.Initialize(RomFSPath, ExeFSPath, Language);
-                    Config.BackupFiles();
 
                     // 同步语言选择下拉框（初始化成功后才触发 ChangeLanguage 事件以避免操作未就绪的 Config）
                     if (CB_Lang.SelectedIndex != Language)
@@ -2233,7 +2270,7 @@ namespace pk3DS.WinForms
             // Enable Rebuilding options if all files have been found
             CheckIfExHeader(path);
             Menu_ExeFS.Enabled =                                                                  ExeFSPath != null;
-            Menu_RomFS.Enabled = Menu_Restore.Enabled = Menu_GARCs.Enabled = RomFSPath != null;
+            Menu_RomFS.Enabled = Menu_BackupCreate.Enabled = Menu_RestoreBackup.Enabled = Menu_GARCs.Enabled = RomFSPath != null;
             Menu_Patch.Enabled =                                             RomFSPath != null && ExeFSPath != null;
             Menu_3DS.Enabled   =                                             RomFSPath != null && ExeFSPath != null && ExHeaderPath != null;
             Menu_Trimmed3DS.Enabled =                                        RomFSPath != null && ExeFSPath != null && ExHeaderPath != null;

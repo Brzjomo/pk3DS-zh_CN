@@ -41,6 +41,7 @@ public static class Strings
     public static string Main_CRO_RSADetail             => Get("Main.CRO_RSADetail", "If you have made any modifications, it is required that the RSA Verification check be patched on the system in order for the modified CROs to load (ie, no file redirection like NTR's layeredFS).");
     public static string Main_Exit                   => Get("Main.Exit", "退出");
     public static string Main_OpenROMFirst           => Get("Main.OpenROMFirst", "请先打开一个游戏目录！");
+    public static string Main_GARCFileCorrupt         => Get("Main.GARCFileCorrupt", "{0} ({1}) 文件损坏，请使用「恢复备份」功能还原。");
     public static string Main_Status_Ready           => Get("Main.Status_Ready", "就绪");
     public static string Main_Status_Saving          => Get("Main.Status_Saving", "正在保存...");
     public static string Main_Status_Loading         => Get("Main.Status_Loading", "正在加载 ROM...");
@@ -249,7 +250,6 @@ public static class Strings
     public static string Alert_Extracted             => Get("Alert.Extracted", "已解包!");
     public static string Alert_Compressed            => Get("Alert.Compressed", "已压缩!");
     public static string Alert_Decompressed          => Get("Alert.Decompressed", "已解压!");
-    public static string Alert_OnlyNeededFiles       => Get("Alert.OnlyNeededFiles", "游戏文件夹中最好只包含必要文件。");
 
     // ===== CRO Editor warnings =====
     public static string CRO_NoPatchWarning          => Get("CRO.NoPatchWarning", "如果3DS没有打上RO补丁，编辑CRO文件可能导致崩溃");
@@ -281,8 +281,6 @@ public static class Strings
     public static string Editor_CancelWriteBack      => Get("Editor.CancelWriteBack", "是否取消回写数据至 GARC?");
     public static string Editor_NoGameLoaded         => Get("Editor.NoGameLoaded", "请先打开一个游戏目录！");
 
-    // ===== EnhancedRestore =====
-    public static string Restore_Complete => Get("Restore.Complete", "已恢复 {0} 个文件。");
 
     // ===== Misc =====
     public static string Misc_NotCompleted => Get("Misc.NotCompleted", "未完成！");
