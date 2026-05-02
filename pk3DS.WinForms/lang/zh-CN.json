@@ -237,6 +237,14 @@
   "Editor.CancelWriteBack": "是否取消回写数据至 GARC?",
   "Editor.NoGameLoaded": "请先打开一个游戏目录！",
 
+  "Backup.CreateSuccess": "备份完成！已备份 {0} 个文件到游戏目录下的 backup 文件夹。",
+  "Backup.CreateFailed": "备份失败：",
+  "Backup.NotFound": "未找到备份文件夹。请先使用「创建备份」功能。",
+  "Backup.ConfirmRestore": "确定要恢复备份吗？所有当前修改将被覆盖。",
+  "Backup.ConfirmRestart": "\n\n是否立即重启程序？",
+  "Backup.RestoreFailed": "还原失败：",
+  "Backup.RestoreComplete": "还原完成！共恢复 {0} 个文件。\nExeFS: {1}，GARC: {2}",
+
   "Misc.NotCompleted": "未完成！",
   "Misc.SaveChanges": "是否保存更改?",
 
@@ -304,13 +312,11 @@
   "Garc.UnpackSuccessfulDetail": "{0} 个文件已从 GARC 解包!",
   "Garc.FileNotExist": "文件不存在",
 
-  "Patch.ContentsSaved": "补丁内容已保存到:",
-  "Patch.CouldNotCreate": "无法创建补丁:",
-  "Patch.InputMismatch": "输入的替换项与输出的替换项不匹配。",
-  "Patch.ExeFSNotPatchable": "ExeFS\\.code.bin 不是可修补的 ExeFS（未找到 rom2:）。",
-  "Patch.DoesNotContain": "不包含 {0}",
-  "Patch.NotFound": "未找到要替换的旧路径字符串。",
-  "Patch.Redirected": "已重定向 {0} 个文件路径。",
+  "Patch.SelectGarcs": "请至少选择一个 GARC 文件。",
+  "Patch.SelectDir": "选择补丁输出目录",
+  "Patch.ExportFailed": "补丁导出失败：",
+  "Patch.ExportComplete": "补丁导出完成！共导出 {0} 个文件。\n输出目录:\n{1}",
+  "Patch.BadVersion": "无法识别的游戏版本。",
 
   "Shuffler.GarcPrevented": "GARC 被禁止洗牌。",
   "Shuffler.NoFiles": "没有可洗牌的文件...?",

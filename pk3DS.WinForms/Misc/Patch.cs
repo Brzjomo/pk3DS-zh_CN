@@ -1,9 +1,8 @@
-﻿using pk3DS.WinForms.Text;
+using pk3DS.Core;
+using pk3DS.WinForms.Text;
 using System;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace pk3DS.WinForms
@@ -13,143 +12,86 @@ namespace pk3DS.WinForms
         public Patch()
         {
             InitializeComponent();
-            RTB_GARCs.Clear();
             CHKLB_GARCs.Items.Clear();
             foreach (string s in Main.Config.Files.Select(file => file.Name))
                 CHKLB_GARCs.Items.Add(s);
-
-            if (File.Exists("patch.ini"))
-                RTB_GARCs.Lines = File.ReadAllLines("patch.txt", Encoding.Unicode);
-        }
-
-        internal static bool PatchExeFS(string path, string[] oldstr, string[] newstr, string oldROM, string newROM, ref string result, string outPath = null)
-        {
-            int ctr = 0;
-            if (oldstr.Length != newstr.Length)
-            {
-                result = Strings.Patch_InputMismatch;
-                return false;
-            }
-
-            string text = File.ReadAllText(path, Encoding.Unicode);
-            if (!text.Contains(newROM))
-            {
-                result = Strings.Patch_ExeFSNotPatchable;
-                return false;
-            }
-            for (int i = 0; i < oldstr.Length; i++)
-            {
-                string oldString = (oldROM + oldstr[i]).Replace(Path.DirectorySeparatorChar, '/');
-                string patchedStr = (newROM + oldstr[i]).Replace(Path.DirectorySeparatorChar, '/');
-                string newString = (newROM + newstr[i]).Replace(Path.DirectorySeparatorChar, '/');
-
-                bool old = text.Contains(oldString);
-                bool patched = text.Contains(patchedStr);
-                if (!old && !patched)
-                    result += string.Format(Strings.Patch_DoesNotContain, oldstr) + Environment.NewLine;
-                else
-                    ctr++;
-
-                if (old)
-                    text = text.Replace(oldString, newString);
-                if (patched)
-                    text = text.Replace(patchedStr, newString + "\0");
-            }
-
-            if (ctr == 0)
-            { result = Strings.Patch_NotFound; return false; }
-            result += string.Format(Strings.Patch_Redirected, ctr);
-            Directory.CreateDirectory(Directory.GetParent(outPath).Name);
-            File.WriteAllText(outPath ?? path, text, Encoding.Unicode);
-            return true;
-        }
-
-        internal static string ExportGARCs(string[] garcPaths, string[] newPaths, string parentRomFS, string patchFolder)
-        {
-            // Stuff files into new patch folder
-            for (int i = 0; i < garcPaths.Length; i++)
-            {
-                if ((garcPaths[i] ?? "").Length == 0) continue;
-                string oldPath = parentRomFS + garcPaths[i];
-                string newPath = patchFolder + newPaths[i];
-                string folder = Path.GetDirectoryName(newPath);
-                Directory.CreateDirectory(folder);
-                File.Copy(oldPath, newPath);
-            }
-            return patchFolder;
         }
 
         private void B_PatchCIA_Click(object sender, EventArgs e)
         {
-            string patchFolder = $"Patch ({DateTime.Now:yy-MM-dd@HH-mm-ss})";
+            if (CHKLB_GARCs.CheckedIndices.Count == 0)
+            { WinFormsUtil.Alert(Strings.Patch_SelectGarcs); return; }
+
+            using var fbd = new FolderBrowserDialog();
+            fbd.Description = Strings.Patch_SelectDir;
+            if (fbd.ShowDialog() != DialogResult.OK)
+                return;
+
+            string baseDir = fbd.SelectedPath;
+            string titleId = GetTitleID();
+            if (titleId == null)
+            { WinFormsUtil.Error(Strings.Patch_BadVersion); return; }
+
+            string targetDir = Path.Combine(baseDir, "luma", "titles", titleId, "romfs");
+            int count = 0;
+
             try
             {
-                string[] garcs = GetGARCs();
-                string[] garcPaths = GetPaths(garcs);
-
-                const string oldROM = "rom:";
-                const string newROM = "rom2:";
-                const string oldA = "\\a\\";
-                const string newA = "\\a";
-
-                string[] newPaths = (string[]) garcPaths.Clone();
-
-                // Patch the reference
-                for (int i = 0; i < newPaths.Length; i++)
+                foreach (int index in CHKLB_GARCs.CheckedIndices)
                 {
-                    int posA = newPaths[i].LastIndexOf(oldA, StringComparison.Ordinal);
-                    newPaths[i] = posA == -1 ? null : newPaths[i].Remove(posA, oldA.Length).Insert(posA, newA);
-                }
-                string result = "";
-                string ExeFS = Directory.GetFiles(Main.ExeFSPath)[0];
-                if (!File.Exists(ExeFS) || !Path.GetFileNameWithoutExtension(ExeFS).Contains("code")) { throw new Exception(Strings.Common_NoCodeBin); }
-                if (!PatchExeFS(ExeFS, garcPaths, newPaths, oldROM, newROM, ref result, Path.Combine(patchFolder, ".code.bin")))
-                    throw new Exception(result);
+                    string name = CHKLB_GARCs.Items[index].ToString();
 
-                WinFormsUtil.Alert(Strings.Patch_ContentsSaved + Environment.NewLine + ExportGARCs(garcPaths, newPaths, Main.RomFSPath, patchFolder), result);
+                    // Gametext/storytext have language variants — export all 8
+                    if (name == "gametext" || name == "storytext")
+                    {
+                        for (int l = 0; l < 8; l++)
+                            count += ExportGARC(name, l, targetDir);
+                    }
+                    else
+                    {
+                        count += ExportGARC(name, Main.Language, targetDir);
+                    }
+                }
+
+                WinFormsUtil.Alert(string.Format(Strings.Patch_ExportComplete, count, targetDir));
             }
             catch (Exception ex)
             {
-                WinFormsUtil.Error(Strings.Patch_CouldNotCreate, ex.ToString());
-                if (Directory.Exists(patchFolder)) Directory.Delete(patchFolder, true);
+                WinFormsUtil.Error(Strings.Patch_ExportFailed + ex.Message);
             }
         }
 
-        private string[] GetGARCs()
+        private int ExportGARC(string name, int lang, string targetDir)
         {
-            StringCollection sc = new StringCollection();
-            foreach (int indexChecked in CHKLB_GARCs.CheckedIndices)
-                sc.Add(CHKLB_GARCs.Items[indexChecked].ToString());
+            string relPath = Main.GetGARCFileName(name, lang);
+            string src = Path.Combine(Main.RomFSPath, relPath);
+            string dest = Path.Combine(targetDir, relPath);
 
-            string[] rtbLines = RTB_GARCs.Lines;
-            foreach (string s in rtbLines.Where(s => s.Length == 7 && !sc.Contains(s.Replace('/', Path.DirectorySeparatorChar))))
-                sc.Add(s.Replace('/', Path.DirectorySeparatorChar));
+            if (!File.Exists(src))
+                return 0;
 
-            string[] garcs = new string[sc.Count];
-            sc.CopyTo(garcs, 0);
-            return garcs.Distinct().ToArray();
+            Directory.CreateDirectory(Path.GetDirectoryName(dest));
+            File.Copy(src, dest, overwrite: true);
+            return 1;
         }
 
-        private string[] GetPaths(string[] sc)
+        private static string GetTitleID()
         {
-            bool languages = CHK_Lang.Checked;
-            StringCollection paths = new StringCollection();
-            foreach (string s in sc)
-            {
-                if (!languages || (s != "gametext" && s != "storytext"))
-                {
-                    paths.Add(Main.GetGARCFileName(s, Main.Language));
-                }
-                else
-                {
-                    for (int l = 0; l < 8; l++)
-                        paths.Add(Main.GetGARCFileName(s, l));
-                }
-            }
+            var ver = Main.Config.Version;
 
-            string[] garcs = new string[paths.Count];
-            paths.CopyTo(garcs, 0);
-            return garcs;
+            // Gen6
+            if (ver == GameVersion.XY)
+                return "0004000000055D00";
+            if (ver == GameVersion.ORAS || ver == GameVersion.ORASDEMO)
+                return "000400000011C400";
+
+            // Gen7
+            if (ver == GameVersion.SM || ver == GameVersion.SMDEMO)
+                return "0004000000164800";
+            if (ver == GameVersion.USUM)
+                return "00040000001B5000";
+
+            return null;
         }
 
         private void B_CheckAll_Click(object sender, EventArgs e)
@@ -162,14 +104,6 @@ namespace pk3DS.WinForms
         {
             for (int i = 0; i < CHKLB_GARCs.Items.Count; i++)
                 CHKLB_GARCs.SetItemChecked(i, false);
-        }
-
-        private void SavePatch(object sender, FormClosingEventArgs e)
-        {
-            if (RTB_GARCs.Text.Length > 0)
-            {
-                try { File.WriteAllLines("patch.ini", RTB_GARCs.Lines, Encoding.Unicode); } catch {}
-            }
         }
     }
 }

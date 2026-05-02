@@ -100,7 +100,7 @@ namespace pk3DS.WinForms
         public static string ExeFSPath;
         public static string ExHeaderPath;
         private static string OfficialBuild = "1040";
-        private static string Version = "71"; //提交计数
+        private static string Version = "72"; //提交计数
         private static bool versionCheckFailed = false;
         private static bool ifVersionChecked = false;
         private static bool ifUpToDate = false;
@@ -1981,11 +1981,11 @@ namespace pk3DS.WinForms
             try
             {
                 int count = GameBackup.CreateBackup(Config);
-                WinFormsUtil.Alert("备份完成！已备份 " + count + " 个文件到游戏目录下的 backup 文件夹。");
+                WinFormsUtil.Alert(string.Format(Strings.Backup_CreateSuccess, count));
             }
             catch (Exception ex)
             {
-                WinFormsUtil.Error("备份失败：" + ex.Message);
+                WinFormsUtil.Error(Strings.Backup_CreateFailed + ex.Message);
             }
         }
 
@@ -1995,21 +1995,25 @@ namespace pk3DS.WinForms
             { WinFormsUtil.Alert(Strings.Main_OpenROMFirst); return; }
 
             if (!GameBackup.BackupExists(Config))
-            { WinFormsUtil.Alert("未找到备份文件夹。请先使用「创建备份」功能。"); return; }
+            { WinFormsUtil.Alert(Strings.Backup_NotFound); return; }
 
-            var confirm = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, "确定要恢复备份吗？所有当前修改将被覆盖。");
+            var confirm = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, Strings.Backup_ConfirmRestore);
             if (confirm != DialogResult.Yes) return;
 
             try
             {
-                string result = GameBackup.RestoreBackup(Config);
-                var restart = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, result + "\n\n是否立即重启程序？");
+                int total, exeFS, garc;
+                if (!GameBackup.RestoreBackup(Config, out total, out exeFS, out garc))
+                { WinFormsUtil.Alert(Strings.Backup_NotFound); return; }
+
+                string msg = string.Format(Strings.Backup_RestoreComplete, total, exeFS, garc);
+                var restart = WinFormsUtil.Prompt(MessageBoxButtons.YesNo, msg + Strings.Backup_ConfirmRestart);
                 if (restart == DialogResult.Yes)
                     Application.Restart();
             }
             catch (Exception ex)
             {
-                WinFormsUtil.Error("还原失败：" + ex.Message);
+                WinFormsUtil.Error(Strings.Backup_RestoreFailed + ex.Message);
             }
         }
 

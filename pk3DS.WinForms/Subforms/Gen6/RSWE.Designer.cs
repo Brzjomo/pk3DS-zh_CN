@@ -819,7 +819,7 @@
             // 
             // NUD_LegendMinLevel
             // 
-            NUD_LegendMinLevel.Location = new System.Drawing.Point(175, 245);
+            NUD_LegendMinLevel.Location = new System.Drawing.Point(143, 243);
             NUD_LegendMinLevel.Margin = new System.Windows.Forms.Padding(5);
             NUD_LegendMinLevel.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             NUD_LegendMinLevel.Name = "NUD_LegendMinLevel";
@@ -830,7 +830,7 @@
             // L_LegendRate
             // 
             L_LegendRate.AutoSize = true;
-            L_LegendRate.Location = new System.Drawing.Point(270, 247);
+            L_LegendRate.Location = new System.Drawing.Point(260, 247);
             L_LegendRate.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             L_LegendRate.Name = "L_LegendRate";
             L_LegendRate.Size = new System.Drawing.Size(90, 21);
@@ -839,7 +839,7 @@
             // 
             // NUD_LegendRate
             // 
-            NUD_LegendRate.Location = new System.Drawing.Point(363, 244);
+            NUD_LegendRate.Location = new System.Drawing.Point(353, 243);
             NUD_LegendRate.Margin = new System.Windows.Forms.Padding(5);
             NUD_LegendRate.Name = "NUD_LegendRate";
             NUD_LegendRate.Size = new System.Drawing.Size(65, 29);
@@ -4409,6 +4409,7 @@
             Controls.Add(CB_LocationID);
             Controls.Add(TabControl_EncounterData);
             Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 134);
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(5);
             MaximizeBox = false;

@@ -281,6 +281,14 @@ public static class Strings
     public static string Editor_CancelWriteBack      => Get("Editor.CancelWriteBack", "是否取消回写数据至 GARC?");
     public static string Editor_NoGameLoaded         => Get("Editor.NoGameLoaded", "请先打开一个游戏目录！");
 
+    // ===== Backup =====
+    public static string Backup_CreateSuccess         => Get("Backup.CreateSuccess", "备份完成！已备份 {0} 个文件到游戏目录下的 backup 文件夹。");
+    public static string Backup_CreateFailed          => Get("Backup.CreateFailed", "备份失败：");
+    public static string Backup_NotFound              => Get("Backup.NotFound", "未找到备份文件夹。请先使用「创建备份」功能。");
+    public static string Backup_ConfirmRestore        => Get("Backup.ConfirmRestore", "确定要恢复备份吗？所有当前修改将被覆盖。");
+    public static string Backup_ConfirmRestart        => Get("Backup.ConfirmRestart", "\n\n是否立即重启程序？");
+    public static string Backup_RestoreFailed         => Get("Backup.RestoreFailed", "还原失败：");
+    public static string Backup_RestoreComplete       => Get("Backup.RestoreComplete", "还原完成！共恢复 {0} 个文件。\nExeFS: {1}，GARC: {2}");
 
     // ===== Misc =====
     public static string Misc_NotCompleted => Get("Misc.NotCompleted", "未完成！");
@@ -296,13 +304,11 @@ public static class Strings
     public static string Garc_FileNotExist             => Get("Garc.FileNotExist", "文件不存在");
 
     // ===== Patch =====
-    public static string Patch_ContentsSaved  => Get("Patch.ContentsSaved", "补丁内容已保存到:");
-    public static string Patch_CouldNotCreate => Get("Patch.CouldNotCreate", "无法创建补丁:");
-    public static string Patch_InputMismatch  => Get("Patch.InputMismatch", "输入的替换项与输出的替换项不匹配。");
-    public static string Patch_ExeFSNotPatchable => Get("Patch.ExeFSNotPatchable", "ExeFS\\.code.bin 不是可修补的 ExeFS（未找到 rom2:）。");
-    public static string Patch_DoesNotContain => Get("Patch.DoesNotContain", "不包含 {0}");
-    public static string Patch_NotFound       => Get("Patch.NotFound", "未找到要替换的旧路径字符串。");
-    public static string Patch_Redirected     => Get("Patch.Redirected", "已重定向 {0} 个文件路径。");
+    public static string Patch_SelectGarcs     => Get("Patch.SelectGarcs", "请至少选择一个 GARC 文件。");
+    public static string Patch_SelectDir       => Get("Patch.SelectDir", "选择补丁输出目录");
+    public static string Patch_ExportFailed    => Get("Patch.ExportFailed", "补丁导出失败：");
+    public static string Patch_ExportComplete  => Get("Patch.ExportComplete", "补丁导出完成！共导出 {0} 个文件。\n输出目录:\n{1}");
+    public static string Patch_BadVersion      => Get("Patch.BadVersion", "无法识别的游戏版本。");
 
     // ===== Shuffler =====
     public static string Shuffler_GarcPrevented => Get("Shuffler.GarcPrevented", "GARC 被禁止洗牌。");

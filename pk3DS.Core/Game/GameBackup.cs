@@ -63,16 +63,15 @@ namespace pk3DS.Core
             return count;
         }
 
-        public static string RestoreBackup(GameConfig config)
+        public static bool RestoreBackup(GameConfig config, out int total, out int exeFS, out int garc)
         {
+            total = exeFS = garc = 0;
             string backupPath = GetBackupPath(config);
             if (!Directory.Exists(backupPath))
-                return "未找到备份文件夹。请先使用「创建备份」功能。\n\n期望路径:\n" + backupPath;
+                return false;
 
             string bakExeFS = Path.Combine(backupPath, "exefs");
             string bakGARC = Path.Combine(backupPath, "a");
-
-            int exeFSCount = 0, garcCount = 0;
 
             // Restore ExeFS
             if (Directory.Exists(bakExeFS) && config.ExeFS != null && Directory.Exists(config.ExeFS))
@@ -81,7 +80,7 @@ namespace pk3DS.Core
                 {
                     string src = Path.Combine(bakExeFS, Path.GetFileName(file));
                     if (File.Exists(src))
-                    { File.Copy(src, file, overwrite: true); exeFSCount++; }
+                    { File.Copy(src, file, overwrite: true); exeFS++; }
                 }
             }
 
@@ -95,13 +94,12 @@ namespace pk3DS.Core
                     string src = Path.Combine(bakGARC, name);
                     string dest = Path.Combine(config.RomFS, garcPath);
                     if (File.Exists(src))
-                    { File.Copy(src, dest, overwrite: true); garcCount++; }
+                    { File.Copy(src, dest, overwrite: true); garc++; }
                 }
             }
 
-            int total = exeFSCount + garcCount;
-            return "还原完成！共恢复 " + total + " 个文件。\nExeFS: " + exeFSCount + "，GARC: " + garcCount +
-                   "\n\n请重启程序以使更改生效。";
+            total = exeFS + garc;
+            return true;
         }
     }
 }
