@@ -31,11 +31,14 @@ namespace pk3DS.Core.CTR
             const string output = "CTR-P-";
 
             var RecognizedGames = new Dictionary<ulong, string[]>();
+            var existingCodes = new HashSet<string>();
             string[] lines = Resources.ResourceManager.GetString("_3dsgames").Split('\n').ToArray();
             foreach (string l in lines)
             {
                 string[] vars = l.Split('\t').ToArray();
                 ulong titleid = Convert.ToUInt64(vars[0], 16);
+                string code = vars[1];
+                existingCodes.Add(code);
                 if (RecognizedGames.ContainsKey(titleid))
                 {
                     char lc = RecognizedGames[titleid].ToArray()[0][3];
@@ -50,7 +53,18 @@ namespace pk3DS.Core.CTR
                     RecognizedGames.Add(titleid, vars.Skip(1).Take(2).ToArray());
                 }
             }
-            return output + RecognizedGames[TitleID][0];
+            if (RecognizedGames.TryGetValue(TitleID, out var title))
+                return output + title[0];
+
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            string newCode;
+            do {
+                newCode = string.Create(4, chars, (buf, c) => {
+                    for (int i = 0; i < 4; i++)
+                        buf[i] = c[Random.Shared.Next(c.Length)];
+                });
+            } while (existingCodes.Contains(newCode));
+            return output + newCode;
         }
 
         public bool IsSupported()
