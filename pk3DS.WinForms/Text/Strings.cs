@@ -38,7 +38,7 @@ public static class Strings
     public static string Main_RunningSMWE               => Get("Main.RunningSMWE", "运行SMWE中... ");
     public static string Main_NoteTitle                 => Get("Main.NoteTitle", "注意");
     public static string Main_OnlyUSUMSupported         => Get("Main.OnlyUSUMSupported", "目前仅支持\"究极日月\"。");
-    public static string Main_CRO_RSADetail             => Get("Main.CRO_RSADetail", "If you have made any modifications, it is required that the RSA Verification check be patched on the system in order for the modified CROs to load (ie, no file redirection like NTR's layeredFS).");
+    public static string Main_CRO_RSADetail             => Get("Main.CRO_RSADetail", "如果你做了任何修改，需要在系统中修补RSA验证检查，才能使修改后的CRO加载（即不支持像NTR的layeredFS那样的文件重定向）。");
     public static string Main_Exit                   => Get("Main.Exit", "退出");
     public static string Main_OpenROMFirst           => Get("Main.OpenROMFirst", "请先打开一个游戏目录！");
     public static string Main_GARCFileCorrupt         => Get("Main.GARCFileCorrupt", "{0} ({1}) 文件损坏，请使用「恢复备份」功能还原。");

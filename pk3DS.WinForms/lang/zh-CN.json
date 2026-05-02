@@ -27,7 +27,7 @@
   "Main.RunningSMWE": "运行SMWE中... ",
   "Main.NoteTitle": "注意",
   "Main.OnlyUSUMSupported": "目前仅支持\"究极日月\"。",
-  "Main.CRO_RSADetail": "If you have made any modifications, it is required that the RSA Verification check be patched on the system in order for the modified CROs to load (ie, no file redirection like NTR's layeredFS).",
+  "Main.CRO_RSADetail": "如果你做了任何修改，需要在系统中修补RSA验证检查，才能使修改后的CRO加载（即不支持像NTR的layeredFS那样的文件重定向）。",
   "Main.Exit": "退出",
   "Main.OpenROMFirst": "请先打开一个游戏目录！",
   "Main.Status_Ready": "就绪",

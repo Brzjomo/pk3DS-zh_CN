@@ -9,18 +9,35 @@ namespace pk3DS.WinForms
     public static class RandSettings
     {
         public const string FileName = "randsettings.txt";
-        private static readonly Dictionary<string, List<NameValue>> Settings = new();
+        private const string GlobalSectionName = "GlobalSettings";
+        private static readonly Dictionary<string, List<NameValue>> FormSettings = new();
+        private static readonly Dictionary<string, string> GlobalSettings = new();
 
         public static void Load(string[] lines)
         {
-            Settings.Clear();
+            FormSettings.Clear();
+            GlobalSettings.Clear();
             int ctr = 0;
             while (ctr < lines.Length)
             {
-                string formname = lines[ctr];
+                string sectionName = lines[ctr];
                 int end = Array.FindIndex(lines, ctr, string.IsNullOrWhiteSpace);
-                var list = GetList(lines, ctr + 1, end - 1);
-                Settings.Add(formname, list);
+                if (end < 0) end = lines.Length;
+
+                if (sectionName == GlobalSectionName)
+                {
+                    for (int i = ctr + 1; i < end; i++)
+                    {
+                        var val = new NameValue(lines[i]);
+                        if (val.Name != null)
+                            GlobalSettings[val.Name] = val.Value;
+                    }
+                }
+                else
+                {
+                    var list = GetList(lines, ctr + 1, end - 1);
+                    FormSettings.Add(sectionName, list);
+                }
                 ctr = end + 1;
             }
         }
@@ -28,7 +45,17 @@ namespace pk3DS.WinForms
         public static string[] Save()
         {
             var result = new List<string>();
-            foreach (var list in Settings)
+
+            // Global settings first
+            if (GlobalSettings.Count > 0)
+            {
+                result.Add(GlobalSectionName);
+                result.AddRange(GlobalSettings.Select(kvp => $"{kvp.Key}\t{kvp.Value}"));
+                result.Add(string.Empty);
+            }
+
+            // Form settings
+            foreach (var list in FormSettings)
             {
                 result.Add(list.Key);
                 result.AddRange(list.Value.Select(val => val.Write()));
@@ -37,9 +64,21 @@ namespace pk3DS.WinForms
             return result.ToArray();
         }
 
+        public static string GetGlobal(string key)
+        {
+            GlobalSettings.TryGetValue(key, out var value);
+            return value;
+        }
+
+        public static void SetGlobal(string key, string value)
+        {
+            GlobalSettings[key] = value;
+        }
+
+        // Existing form-level methods updated to use FormSettings
         public static void GetFormSettings(Form form, Control.ControlCollection controls)
         {
-            if (!Settings.TryGetValue(form.Name, out var list))
+            if (!FormSettings.TryGetValue(form.Name, out var list))
                 return;
 
             foreach (Control ctrl in controls)
@@ -57,10 +96,10 @@ namespace pk3DS.WinForms
 
         public static void SetFormSettings(Form form, Control.ControlCollection controls)
         {
-            if (!Settings.TryGetValue(form.Name, out var list))
+            if (!FormSettings.TryGetValue(form.Name, out var list))
             {
                 list = new List<NameValue>();
-                Settings.Add(form.Name, list);
+                FormSettings.Add(form.Name, list);
             }
 
             foreach (Control ctrl in controls)

@@ -100,7 +100,7 @@ namespace pk3DS.WinForms
         public static string ExeFSPath;
         public static string ExHeaderPath;
         private static string OfficialBuild = "1040";
-        private static string Version = "73"; //提交计数
+        private static string Version = "74"; //提交计数
         private static bool versionCheckFailed = false;
         private static bool ifVersionChecked = false;
         private static bool ifUpToDate = false;
@@ -2084,6 +2084,9 @@ namespace pk3DS.WinForms
             g.Files = files.Select(x => TextFile.GetBytes(Config, x)).ToArray();
             g.Save();
 
+            // Save global settings before writing to disk
+            RandSettings.SetGlobal("ifFixChineseDisplay", ifFixChineseDisplay ? "true" : "false");
+
             try
             {
                 var text = RandSettings.Save();
@@ -2095,9 +2098,6 @@ namespace pk3DS.WinForms
             {
                 // ignored
             }
-
-            // Save ExtraSettings
-            SaveExtraSettings();
 
         }
 
@@ -3642,101 +3642,11 @@ namespace pk3DS.WinForms
             WinFormsUtil.Alert(Strings.Main_CannotSetSeed);
         }
 
-        static string extraSettingsPath = "extraSettings.txt";
-        static List<string> settingsList = new List<string> { };
-
-        private async void ReadExtraSettings()
-        {
-            if (!File.Exists(extraSettingsPath))
-            {
-                using (StreamWriter writer = new StreamWriter(extraSettingsPath))
-                {
-                    // 创建一个空白的文件
-                }
-            }
-
-            // 读取源文件
-            var inputStream = new StreamReader(extraSettingsPath, Encoding.UTF8);
-            var input = await inputStream.ReadToEndAsync();
-            inputStream.Close();
-
-            // 按行分割
-            string[] inputString = input.Split('\r');
-
-            // 去除空行和制表符
-            foreach (var line in inputString)
-            {
-                if (line != "")
-                {
-                    if (line.Contains('\t'))
-                    {
-                        settingsList.Add(line.Trim('\t'));
-                    }
-                    else
-                    {
-                        settingsList.Add(line);
-                    }
-                }
-            }
-
-            // 读取具体设置
-            if (settingsList.Count == 0)
-            {
-                settingsList.Add("ifFixChineseDisplay: false");
-            }
-            else
-            {
-                foreach (var line in settingsList)
-                {
-                    if (line.Contains("ifFixChineseDisplay"))
-                    {
-                        line.Replace(": ", ":");
-                        string[] temp = line.Split(':');
-                        if (temp[1].Contains("true"))
-                        {
-                            ifFixChineseDisplay = true;
-                            TSMIFixChineseDisplay.Checked = true;
-                        }
-                        else
-                        {
-                            ifFixChineseDisplay = false;
-                            TSMIFixChineseDisplay.Checked = false;
-                        }
-                    }
-                }
-            }
-        }
-
-        private async void SaveExtraSettings()
-        {
-            for (int i = 0; i < settingsList.Count; i++)
-            {
-                if (settingsList[i].Contains("ifFixChineseDisplay"))
-                {
-                    settingsList[i].Replace(": ", ":");
-                    string[] temp = settingsList[i].Split(':');
-                    if (ifFixChineseDisplay)
-                    {
-                        temp[1] = "true";
-                    }
-                    else
-                    {
-                        temp[1] = "false";
-                    }
-
-                    settingsList[0] = temp[0] + ": " + temp[1];
-                }
-            }
-
-            using (StreamWriter writer = new StreamWriter(extraSettingsPath))
-            {
-                await writer.WriteLineAsync(string.Join("", settingsList));
-            }
-        }
-
         private void Main_Load(object sender, EventArgs e)
         {
-            ReadExtraSettings();
+            var fix = RandSettings.GetGlobal("ifFixChineseDisplay");
+            ifFixChineseDisplay = fix == "true";
+            TSMIFixChineseDisplay.Checked = ifFixChineseDisplay;
         }
 
         private void TSMIFixChineseDisplay_Click(object sender, EventArgs e)
