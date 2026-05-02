@@ -302,7 +302,8 @@ namespace pk3DS.Core.CTR
         public static bool BuildCIA(string LOGO_NAME,
             string EXEFS_PATH, string ROMFS_PATH, string EXHEADER_PATH,
             string SERIAL_TEXT, string SAVE_PATH,
-            ProgressBar PB_Show = null, RichTextBox TB_Progress = null)
+            ProgressBar PB_Show = null, RichTextBox TB_Progress = null,
+            bool decrypted = false)
         {
             PB_Show ??= new ProgressBar();
             TB_Progress ??= new RichTextBox();
@@ -322,6 +323,13 @@ namespace pk3DS.Core.CTR
 
             // Build the NCCH (same as 3DS build)
             NCCH NCCH = SetNCCH(EXEFS_PATH, ROMFS_PATH, EXHEADER_PATH, SERIAL_TEXT, LOGO_NAME, TB_Progress);
+
+            // For decrypted CIA: set NoCrypto flag so emulator reads sections directly
+            if (decrypted)
+            {
+                NCCH.Header.Flags[7] = 4; // NoCrypto
+                NCCH.Header.BuildHeader();
+            }
 
             string tempNcch = Path.GetTempFileName();
             try
@@ -362,10 +370,18 @@ namespace pk3DS.Core.CTR
                     byte[] exhRaw = new byte[NCCH.Exheader.Data.Length + NCCH.Exheader.AccessDescriptor.Length];
                     Array.Copy(NCCH.Exheader.Data, exhRaw, NCCH.Exheader.Data.Length);
                     Array.Copy(NCCH.Exheader.AccessDescriptor, 0, exhRaw, NCCH.Exheader.Data.Length, NCCH.Exheader.AccessDescriptor.Length);
-                    byte[] exhEnc = new byte[exhRaw.Length];
-                    new AesCtr(key, NCCH.Header.ProgramId, 1ul << 56).TransformBlock(exhRaw, 0, exhRaw.Length, exhEnc, 0);
-                    fs.Write(exhEnc, 0, exhEnc.Length);
-                    sha.TransformBlock(exhEnc, 0, exhEnc.Length, exhEnc, 0);
+                    byte[] exhOut;
+                    if (decrypted)
+                    {
+                        exhOut = exhRaw; // plaintext for NoCrypto
+                    }
+                    else
+                    {
+                        exhOut = new byte[exhRaw.Length];
+                        new AesCtr(key, NCCH.Header.ProgramId, 1ul << 56).TransformBlock(exhRaw, 0, exhRaw.Length, exhOut, 0);
+                    }
+                    fs.Write(exhOut, 0, exhOut.Length);
+                    sha.TransformBlock(exhOut, 0, exhOut.Length, exhOut, 0);
 
                     // 3. Logo (plain)
                     FillGap((long)NCCH.Header.LogoOffset * MEDIA_UNIT_SIZE);
@@ -380,18 +396,26 @@ namespace pk3DS.Core.CTR
                         sha.TransformBlock(NCCH.plainregion, 0, NCCH.plainregion.Length, NCCH.plainregion, 0);
                     }
 
-                    // 5. ExeFS (encrypted)
+                    // 5. ExeFS (encrypted or plain for decrypted CIA)
                     UpdateTB(TB_Progress, "写入 ExeFS...");
                     FillGap((long)NCCH.Header.ExefsOffset * MEDIA_UNIT_SIZE);
-                    byte[] exefsEnc = new byte[NCCH.ExeFS.Data.Length];
-                    new AesCtr(key, NCCH.Header.ProgramId, 2ul << 56).TransformBlock(NCCH.ExeFS.Data, 0, NCCH.ExeFS.Data.Length, exefsEnc, 0);
-                    fs.Write(exefsEnc, 0, exefsEnc.Length);
-                    sha.TransformBlock(exefsEnc, 0, exefsEnc.Length, exefsEnc, 0);
+                    byte[] exefsOut;
+                    if (decrypted)
+                    {
+                        exefsOut = NCCH.ExeFS.Data;
+                    }
+                    else
+                    {
+                        exefsOut = new byte[NCCH.ExeFS.Data.Length];
+                        new AesCtr(key, NCCH.Header.ProgramId, 2ul << 56).TransformBlock(NCCH.ExeFS.Data, 0, NCCH.ExeFS.Data.Length, exefsOut, 0);
+                    }
+                    fs.Write(exefsOut, 0, exefsOut.Length);
+                    sha.TransformBlock(exefsOut, 0, exefsOut.Length, exefsOut, 0);
 
-                    // 6. RomFS (encrypted)
+                    // 6. RomFS (encrypted or plain for decrypted CIA)
                     UpdateTB(TB_Progress, "写入 RomFS...");
                     FillGap((long)NCCH.Header.RomfsOffset * MEDIA_UNIT_SIZE);
-                    var aesctr = new AesCtr(key, NCCH.Header.ProgramId, 3ul << 56);
+                    var aesctr = decrypted ? null : new AesCtr(key, NCCH.Header.ProgramId, 3ul << 56);
                     using (FileStream romfsIn = new FileStream(NCCH.RomFS.FileName, FileMode.Open, FileAccess.Read))
                     {
                         ulong romfsLen = (ulong)NCCH.Header.RomfsSize * MEDIA_UNIT_SIZE;
@@ -399,9 +423,17 @@ namespace pk3DS.Core.CTR
                         {
                             uint bufSize = (uint)Math.Min(romfsLen - j, 0x400000);
                             byte[] buf = new byte[bufSize];
-                            byte[] outBuf = new byte[bufSize];
                             romfsIn.Read(buf, 0, (int)bufSize);
-                            aesctr.TransformBlock(buf, 0, (int)bufSize, outBuf, 0);
+                            byte[] outBuf;
+                            if (decrypted)
+                            {
+                                outBuf = buf; // plaintext
+                            }
+                            else
+                            {
+                                outBuf = new byte[bufSize];
+                                aesctr.TransformBlock(buf, 0, (int)bufSize, outBuf, 0);
+                            }
                             fs.Write(outBuf, 0, (int)bufSize);
                             sha.TransformBlock(outBuf, 0, (int)bufSize, outBuf, 0);
                             j += bufSize;
@@ -437,7 +469,7 @@ namespace pk3DS.Core.CTR
                         {
                             ID = 0,
                             Index = 0,
-                            Type = 1, // encrypted
+                            Type = decrypted ? (ushort)0 : (ushort)1, // 0 = not CIA-level encrypted
                             Size = (ulong)ncchSize,
                             Hash = contentHash,
                         }

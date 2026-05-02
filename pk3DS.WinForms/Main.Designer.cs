@@ -405,7 +405,7 @@
             this.Menu_CIA.Enabled = false;
             this.Menu_CIA.Name = "Menu_CIA";
             this.Menu_CIA.Size = new System.Drawing.Size(187, 26);
-            this.Menu_CIA.Text = "CIA";
+            this.Menu_CIA.Text = "解密 CIA";
             this.Menu_CIA.Click += new System.EventHandler(this.B_RebuildCIA_Click);
             //
             // Menu_Patch

@@ -100,7 +100,7 @@ namespace pk3DS.WinForms
         public static string ExeFSPath;
         public static string ExHeaderPath;
         private static string OfficialBuild = "1040";
-        private static string Version = "75"; //提交计数
+        private static string Version = "77"; //提交计数
         private static bool versionCheckFailed = false;
         private static bool ifVersionChecked = false;
         private static bool ifUpToDate = false;
@@ -3464,7 +3464,7 @@ namespace pk3DS.WinForms
                 Interlocked.Increment(ref threads);
                 Exheader exh = new Exheader(ExHeaderPath);
                 bool success = CTRUtil.BuildCIA("Nintendo", ExeFSPath, RomFSPath, ExHeaderPath, exh.GetSerial(), path,
-                    pBar1, RTB_Status);
+                    pBar1, RTB_Status, decrypted: true);
                 if (!success)
                     WinFormsUtil.Error(Strings.Editor_RebuildFailed, Strings.Editor_RebuildFailedDetail);
                 Interlocked.Decrement(ref threads);
