@@ -2277,6 +2277,7 @@ namespace pk3DS.WinForms
             Menu_RomFS.Enabled = Menu_BackupCreate.Enabled = Menu_RestoreBackup.Enabled = Menu_GARCs.Enabled = RomFSPath != null;
             Menu_Patch.Enabled =                                             RomFSPath != null && ExeFSPath != null;
             Menu_3DS.Enabled   =                                             RomFSPath != null && ExeFSPath != null && ExHeaderPath != null;
+            Menu_CIA.Enabled   =                                             RomFSPath != null && ExeFSPath != null && ExHeaderPath != null;
             Menu_Trimmed3DS.Enabled =                                        RomFSPath != null && ExeFSPath != null && ExHeaderPath != null;
 
             // Change L_Game if RomFS and ExeFS exists to a better descriptor
@@ -3437,6 +3438,33 @@ namespace pk3DS.WinForms
                 Exheader exh = new Exheader(ExHeaderPath);
                 bool success = CTRUtil.BuildROM(true, "Nintendo", ExeFSPath, RomFSPath, ExHeaderPath, exh.GetSerial(), path,
                     false, pBar1, RTB_Status);
+                if (!success)
+                    WinFormsUtil.Error(Strings.Editor_RebuildFailed, Strings.Editor_RebuildFailedDetail);
+                Interlocked.Decrement(ref threads);
+            }).Start();
+        }
+
+        // CIA Building
+        private void B_RebuildCIA_Click(object sender, EventArgs e)
+        {
+            if (ThreadActive())
+                return;
+
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                FileName = "newROM.cia",
+                Filter = "CIA File|*.cia"
+            };
+            if (sfd.ShowDialog() != DialogResult.OK)
+                return;
+            string path = sfd.FileName;
+
+            new Thread(() =>
+            {
+                Interlocked.Increment(ref threads);
+                Exheader exh = new Exheader(ExHeaderPath);
+                bool success = CTRUtil.BuildCIA("Nintendo", ExeFSPath, RomFSPath, ExHeaderPath, exh.GetSerial(), path,
+                    pBar1, RTB_Status);
                 if (!success)
                     WinFormsUtil.Error(Strings.Editor_RebuildFailed, Strings.Editor_RebuildFailedDetail);
                 Interlocked.Decrement(ref threads);

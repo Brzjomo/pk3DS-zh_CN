@@ -299,6 +299,237 @@ namespace pk3DS.Core.CTR
             return true;
         }
 
+        public static bool BuildCIA(string LOGO_NAME,
+            string EXEFS_PATH, string ROMFS_PATH, string EXHEADER_PATH,
+            string SERIAL_TEXT, string SAVE_PATH,
+            ProgressBar PB_Show = null, RichTextBox TB_Progress = null)
+        {
+            PB_Show ??= new ProgressBar();
+            TB_Progress ??= new RichTextBox();
+
+            if (!((File.Exists(EXEFS_PATH) || Directory.Exists(EXEFS_PATH))
+                && (File.Exists(ROMFS_PATH) || Directory.Exists(ROMFS_PATH))
+                && File.Exists(EXHEADER_PATH)))
+            {
+                UpdateTB(TB_Progress, "错误: 缺少 ExeFS、RomFS 或 Exheader 文件。");
+                return false;
+            }
+
+            if (!File.Exists(EXEFS_PATH) && Directory.Exists(EXEFS_PATH))
+                ExeFS.PackExeFS(Directory.GetFiles(EXEFS_PATH), EXEFS_PATH = "exefs.bin");
+            if (!File.Exists(ROMFS_PATH) && Directory.Exists(ROMFS_PATH))
+                RomFS.BuildRomFS(ROMFS_PATH, ROMFS_PATH = "romfs.bin", TB_Progress, PB_Show);
+
+            // Build the NCCH (same as 3DS build)
+            NCCH NCCH = SetNCCH(EXEFS_PATH, ROMFS_PATH, EXHEADER_PATH, SERIAL_TEXT, LOGO_NAME, TB_Progress);
+
+            string tempNcch = Path.GetTempFileName();
+            try
+            {
+                // Build the raw NCCH binary to a temp file (avoids MemoryStream 2 GB limit)
+                byte[] key = new byte[0x10];
+                long ncchSize = (long)NCCH.Header.Size * MEDIA_UNIT_SIZE;
+
+                // Build NCCH sequentially (no seeks) while computing SHA256
+                UpdateTB(TB_Progress, "计算内容哈希...");
+                byte[] contentHash;
+                using (var fs = new FileStream(tempNcch, FileMode.Create, FileAccess.Write))
+                using (var sha = SHA256.Create())
+                {
+                    // Helper: zero-fill from current position to target, hashing as we go
+                    void FillGap(long targetPos)
+                    {
+                        long gap = targetPos - fs.Position;
+                        if (gap <= 0) return;
+                        byte[] zeros = new byte[Math.Min(gap, 0x100000)];
+                        while (gap > 0)
+                        {
+                            int write = (int)Math.Min(gap, zeros.Length);
+                            fs.Write(zeros, 0, write);
+                            sha.TransformBlock(zeros, 0, write, zeros, 0);
+                            gap -= write;
+                        }
+                    }
+
+                    // 1. NCCH Header
+                    byte[] ncchHdr = NCCH.Header.Data;
+                    fs.Write(ncchHdr, 0, ncchHdr.Length);
+                    sha.TransformBlock(ncchHdr, 0, ncchHdr.Length, ncchHdr, 0);
+
+                    // 2. Exheader (encrypted)
+                    UpdateTB(TB_Progress, "写入 Exheader...");
+                    FillGap(0x200);
+                    byte[] exhRaw = new byte[NCCH.Exheader.Data.Length + NCCH.Exheader.AccessDescriptor.Length];
+                    Array.Copy(NCCH.Exheader.Data, exhRaw, NCCH.Exheader.Data.Length);
+                    Array.Copy(NCCH.Exheader.AccessDescriptor, 0, exhRaw, NCCH.Exheader.Data.Length, NCCH.Exheader.AccessDescriptor.Length);
+                    byte[] exhEnc = new byte[exhRaw.Length];
+                    new AesCtr(key, NCCH.Header.ProgramId, 1ul << 56).TransformBlock(exhRaw, 0, exhRaw.Length, exhEnc, 0);
+                    fs.Write(exhEnc, 0, exhEnc.Length);
+                    sha.TransformBlock(exhEnc, 0, exhEnc.Length, exhEnc, 0);
+
+                    // 3. Logo (plain)
+                    FillGap((long)NCCH.Header.LogoOffset * MEDIA_UNIT_SIZE);
+                    fs.Write(NCCH.logo, 0, NCCH.logo.Length);
+                    sha.TransformBlock(NCCH.logo, 0, NCCH.logo.Length, NCCH.logo, 0);
+
+                    // 4. Plain Region (plain)
+                    if (NCCH.plainregion.Length > 0)
+                    {
+                        FillGap((long)NCCH.Header.PlainRegionOffset * MEDIA_UNIT_SIZE);
+                        fs.Write(NCCH.plainregion, 0, NCCH.plainregion.Length);
+                        sha.TransformBlock(NCCH.plainregion, 0, NCCH.plainregion.Length, NCCH.plainregion, 0);
+                    }
+
+                    // 5. ExeFS (encrypted)
+                    UpdateTB(TB_Progress, "写入 ExeFS...");
+                    FillGap((long)NCCH.Header.ExefsOffset * MEDIA_UNIT_SIZE);
+                    byte[] exefsEnc = new byte[NCCH.ExeFS.Data.Length];
+                    new AesCtr(key, NCCH.Header.ProgramId, 2ul << 56).TransformBlock(NCCH.ExeFS.Data, 0, NCCH.ExeFS.Data.Length, exefsEnc, 0);
+                    fs.Write(exefsEnc, 0, exefsEnc.Length);
+                    sha.TransformBlock(exefsEnc, 0, exefsEnc.Length, exefsEnc, 0);
+
+                    // 6. RomFS (encrypted)
+                    UpdateTB(TB_Progress, "写入 RomFS...");
+                    FillGap((long)NCCH.Header.RomfsOffset * MEDIA_UNIT_SIZE);
+                    var aesctr = new AesCtr(key, NCCH.Header.ProgramId, 3ul << 56);
+                    using (FileStream romfsIn = new FileStream(NCCH.RomFS.FileName, FileMode.Open, FileAccess.Read))
+                    {
+                        ulong romfsLen = (ulong)NCCH.Header.RomfsSize * MEDIA_UNIT_SIZE;
+                        for (ulong j = 0; j < romfsLen;)
+                        {
+                            uint bufSize = (uint)Math.Min(romfsLen - j, 0x400000);
+                            byte[] buf = new byte[bufSize];
+                            byte[] outBuf = new byte[bufSize];
+                            romfsIn.Read(buf, 0, (int)bufSize);
+                            aesctr.TransformBlock(buf, 0, (int)bufSize, outBuf, 0);
+                            fs.Write(outBuf, 0, (int)bufSize);
+                            sha.TransformBlock(outBuf, 0, (int)bufSize, outBuf, 0);
+                            j += bufSize;
+                        }
+                    }
+
+                    // 7. Trailing zero-fill to full NCCH size
+                    if (ncchSize > fs.Position)
+                    {
+                        long remaining = ncchSize - fs.Position;
+                        byte[] zeros = new byte[Math.Min(remaining, 0x100000)];
+                        while (remaining > 0)
+                        {
+                            int write = (int)Math.Min(remaining, zeros.Length);
+                            fs.Write(zeros, 0, write);
+                            sha.TransformBlock(zeros, 0, write, zeros, 0);
+                            remaining -= write;
+                        }
+                    }
+                    fs.SetLength(ncchSize);
+
+                    sha.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
+                    contentHash = sha.Hash;
+                }
+
+                // Build CIA metadata in memory
+                var tmd = new TMD
+                {
+                    TitleID = NCCH.Exheader.TitleID,
+                    Contents =
+                    {
+                        new ContentChunkRecord
+                        {
+                            ID = 0,
+                            Index = 0,
+                            Type = 1, // encrypted
+                            Size = (ulong)ncchSize,
+                            Hash = contentHash,
+                        }
+                    }
+                };
+
+                var ticket = new Ticket
+                {
+                    TitleID = NCCH.Exheader.TitleID,
+                };
+
+                byte[] certChain = CIA.BuildDefaultCertChain(); // 3 certs: CA+XS+CP = 0x600
+                byte[] ticketData = ticket.Build();             // 0x350
+                byte[] tmdData = tmd.Build();                   // 0xB34 for 1 content
+                long contentSize = ncchSize;                    // 0x200-aligned
+
+                // Pre-compute 64-byte aligned section offsets (makerom-style)
+                long headerSize = CIA.DefaultHeaderSize; // 0x2020
+                long Align64(long v) => (v + 0x3F) & ~0x3F;
+
+                long certOff = Align64(headerSize);
+                long tikOff = Align64(certOff + certChain.Length);
+                long tmdOff = Align64(tikOff + ticketData.Length);
+                long contentOff = Align64(tmdOff + tmdData.Length);
+                long metaOff = Align64(contentOff + contentSize);
+
+                // Build CIA directly to output file
+                UpdateTB(TB_Progress, "打包 CIA...");
+                using (var outFs = new FileStream(SAVE_PATH, FileMode.Create, FileAccess.Write))
+                {
+                    // 1. CIA Header (0x2020 bytes including content index)
+                    var hdr = new byte[0x20];
+                    Array.Copy(BitConverter.GetBytes(CIA.DefaultHeaderSize), 0, hdr, 0, 4);
+                    Array.Copy(BitConverter.GetBytes((ushort)0), 0, hdr, 4, 2); // type
+                    Array.Copy(BitConverter.GetBytes((ushort)0), 0, hdr, 6, 2); // version
+                    Array.Copy(BitConverter.GetBytes(certChain.Length), 0, hdr, 8, 4);
+                    Array.Copy(BitConverter.GetBytes(ticketData.Length), 0, hdr, 0xC, 4);
+                    Array.Copy(BitConverter.GetBytes(tmdData.Length), 0, hdr, 0x10, 4);
+                    Array.Copy(BitConverter.GetBytes(0), 0, hdr, 0x14, 4); // meta size
+                    Array.Copy(BitConverter.GetBytes((ulong)contentSize), 0, hdr, 0x18, 8);
+                    outFs.Write(hdr, 0, hdr.Length);
+
+                    // Content Index bitmask (0x2000 bytes): bit 0 = MSB of first byte
+                    byte[] contentIndex = new byte[0x2000];
+                    contentIndex[0] = 0x80;
+                    outFs.Write(contentIndex, 0, contentIndex.Length);
+
+                    // 2. Certificate chain at aligned offset
+                    outFs.Seek(certOff, SeekOrigin.Begin);
+                    outFs.Write(certChain, 0, certChain.Length);
+
+                    // 3. Ticket at aligned offset
+                    outFs.Seek(tikOff, SeekOrigin.Begin);
+                    outFs.Write(ticketData, 0, ticketData.Length);
+
+                    // 4. TMD at aligned offset
+                    outFs.Seek(tmdOff, SeekOrigin.Begin);
+                    outFs.Write(tmdData, 0, tmdData.Length);
+
+                    // 5. NCCH content at aligned offset (streamed from temp file)
+                    outFs.Seek(contentOff, SeekOrigin.Begin);
+                    using (var ncchFs = new FileStream(tempNcch, FileMode.Open, FileAccess.Read))
+                    {
+                        byte[] buf = new byte[0x400000];
+                        int read;
+                        while ((read = ncchFs.Read(buf, 0, buf.Length)) > 0)
+                            outFs.Write(buf, 0, read);
+                    }
+
+                    // Truncate at meta offset (we have no meta section)
+                    outFs.SetLength(metaOff);
+                }
+
+                // Clean up temp files
+                if (NCCH.RomFS.isTempFile)
+                    File.Delete(NCCH.RomFS.FileName);
+
+                UpdateTB(TB_Progress, "CIA 构建完成!");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                UpdateTB(TB_Progress, $"错误: {ex.Message}\n堆栈: {ex.StackTrace}");
+                return false;
+            }
+            finally
+            {
+                if (File.Exists(tempNcch))
+                    File.Delete(tempNcch);
+            }
+        }
+
         // Utility
         internal static bool IsValid(string exeFS, string romFS, string exeheader, string path, string serial, bool Card2)
         {

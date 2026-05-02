@@ -59,6 +59,7 @@
             this.Menu_CRO = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Trimmed3DS = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_3DS = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_CIA = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Patch = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_SMDH = new System.Windows.Forms.ToolStripMenuItem();
             this.randomizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -353,6 +354,7 @@
             this.Menu_CRO,
             this.Menu_Trimmed3DS,
             this.Menu_3DS,
+            this.Menu_CIA,
             this.Menu_Patch});
             this.Menu_Rebuild.Name = "Menu_Rebuild";
             this.Menu_Rebuild.Size = new System.Drawing.Size(229, 26);
@@ -397,7 +399,15 @@
             this.Menu_3DS.Size = new System.Drawing.Size(187, 26);
             this.Menu_3DS.Text = ".3DS";
             this.Menu_3DS.Click += new System.EventHandler(this.B_Rebuild3DS_Click);
-            // 
+            //
+            // Menu_CIA
+            //
+            this.Menu_CIA.Enabled = false;
+            this.Menu_CIA.Name = "Menu_CIA";
+            this.Menu_CIA.Size = new System.Drawing.Size(187, 26);
+            this.Menu_CIA.Text = "CIA";
+            this.Menu_CIA.Click += new System.EventHandler(this.B_RebuildCIA_Click);
+            //
             // Menu_Patch
             // 
             this.Menu_Patch.Enabled = false;
@@ -911,6 +921,7 @@
         private System.Windows.Forms.ToolStripMenuItem Menu_RomFS;
         private System.Windows.Forms.ToolStripMenuItem Menu_ExeFS;
         private System.Windows.Forms.ToolStripMenuItem Menu_3DS;
+        private System.Windows.Forms.ToolStripMenuItem Menu_CIA;
         private System.Windows.Forms.ToolStripMenuItem Menu_Patch;
         private System.Windows.Forms.ToolStripMenuItem Menu_Options;
         private System.Windows.Forms.ToolStripMenuItem Menu_Language;
