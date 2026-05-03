@@ -430,4 +430,13 @@ public static class Strings
 
     // ===== EggMove =====
     public static string EggMove_StatsSummary => Get("EggMove.StatsSummary", "共指定蛋招式: {0}\r\n同属性增益计数: {1}");
+
+    // ===== CIA Settings =====
+    public static string CiaSettings_Title          => Get("CiaSettings.Title", "CIA 构建设置");
+    public static string CiaSettings_RomTitleId     => Get("CiaSettings.RomTitleId", "ROM Title ID");
+    public static string CiaSettings_ModifyTitleId  => Get("CiaSettings.ModifyTitleId", "修改 Title ID");
+    public static string CiaSettings_AutoGenerate   => Get("CiaSettings.AutoGenerate", "自动生成唯一 ID (推荐)");
+    public static string CiaSettings_Manual         => Get("CiaSettings.Manual", "手动指定 (16 位十六进制):");
+    public static string CiaSettings_InvalidTitleId => Get("CiaSettings.InvalidTitleId", "无效的 Title ID，请输入 16 位十六进制数。");
+    public static string CiaSettings_InvalidProductCode => Get("CiaSettings.InvalidProductCode", "Product Code 格式无效，应为 CTR-P-XXXX (4 位字母或数字)。");
 }

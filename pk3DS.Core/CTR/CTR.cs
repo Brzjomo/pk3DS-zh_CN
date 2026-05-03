@@ -303,7 +303,7 @@ namespace pk3DS.Core.CTR
             string EXEFS_PATH, string ROMFS_PATH, string EXHEADER_PATH,
             string SERIAL_TEXT, string SAVE_PATH,
             ProgressBar PB_Show = null, RichTextBox TB_Progress = null,
-            bool decrypted = false)
+            bool decrypted = false, ulong? titleIdOverride = null)
         {
             PB_Show ??= new ProgressBar();
             TB_Progress ??= new RichTextBox();
@@ -324,12 +324,34 @@ namespace pk3DS.Core.CTR
             // Build the NCCH (same as 3DS build)
             NCCH NCCH = SetNCCH(EXEFS_PATH, ROMFS_PATH, EXHEADER_PATH, SERIAL_TEXT, LOGO_NAME, TB_Progress);
 
+            // Apply Title ID override if requested (modifies Exheader, NCCH header, and later TMD/Ticket)
+            ulong effectiveTitleId = NCCH.Exheader.TitleID;
+            if (titleIdOverride.HasValue && titleIdOverride.Value != NCCH.Exheader.TitleID)
+            {
+                effectiveTitleId = titleIdOverride.Value;
+
+                // 1. Update Exheader in-memory data at offset 0x200
+                byte[] tidBytes = BitConverter.GetBytes(effectiveTitleId);
+                Array.Copy(tidBytes, 0, NCCH.Exheader.Data, 0x200, 8);
+
+                // 2. Recompute Exheader hash
+                NCCH.Header.ExheaderHash = NCCH.Exheader.GetSuperBlockHash();
+
+                // 3. Update NCCH header TitleId and ProgramId
+                NCCH.Header.TitleId = effectiveTitleId;
+                NCCH.Header.ProgramId = effectiveTitleId;
+
+                UpdateTB(TB_Progress, $"Title ID 已覆盖: 0x{effectiveTitleId:X016}");
+            }
+
             // For decrypted CIA: set NoCrypto flag so emulator reads sections directly
             if (decrypted)
             {
                 NCCH.Header.Flags[7] = 4; // NoCrypto
-                NCCH.Header.BuildHeader();
             }
+
+            // Rebuild NCCH header after all modifications
+            NCCH.Header.BuildHeader();
 
             string tempNcch = Path.GetTempFileName();
             try
@@ -462,7 +484,7 @@ namespace pk3DS.Core.CTR
                 // Build CIA metadata in memory
                 var tmd = new TMD
                 {
-                    TitleID = NCCH.Exheader.TitleID,
+                    TitleID = effectiveTitleId,
                     Contents =
                     {
                         new ContentChunkRecord
@@ -478,7 +500,7 @@ namespace pk3DS.Core.CTR
 
                 var ticket = new Ticket
                 {
-                    TitleID = NCCH.Exheader.TitleID,
+                    TitleID = effectiveTitleId,
                 };
 
                 byte[] certChain = CIA.BuildDefaultCertChain(); // 3 certs: CA+XS+CP = 0x600

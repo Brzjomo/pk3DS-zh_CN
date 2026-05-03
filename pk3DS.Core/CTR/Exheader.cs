@@ -110,5 +110,57 @@ namespace pk3DS.Core.CTR
             };
             return "CTR-P-" + name;
         }
+
+        /// <summary>Generate a random unique Product Code (CTR-P-XXXX) that doesn't conflict with known game codes.</summary>
+        public static string GenerateRandomSerial()
+        {
+            var existingCodes = new HashSet<string>();
+            try
+            {
+                string[] lines = Resources.ResourceManager.GetString("_3dsgames")?.Split('\n') ?? [];
+                foreach (string l in lines)
+                {
+                    string[] vars = l.Split('\t');
+                    if (vars.Length > 1)
+                        existingCodes.Add(vars[1]);
+                }
+            }
+            catch { }
+
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            string newCode;
+            do
+            {
+                newCode = string.Create(4, chars, (buf, c) => {
+                    for (int i = 0; i < 4; i++)
+                        buf[i] = c[Random.Shared.Next(c.Length)];
+                });
+            } while (existingCodes.Contains(newCode));
+            return "CTR-P-" + newCode;
+        }
+
+        /// <summary>Returns the expected Title ID for a given Pokemon game version.</summary>
+        public static ulong GetTitleIdForVersion(GameVersion version)
+        {
+            return version switch
+            {
+                GameVersion.X  => 0x0004000000055D00,
+                GameVersion.Y  => 0x0004000000055E00,
+                GameVersion.OR => 0x000400000011C400,
+                GameVersion.AS => 0x000400000011C500,
+                GameVersion.SN => 0x0004000000164800,
+                GameVersion.MN => 0x0004000000175E00,
+                GameVersion.US => 0x00040000001B5000,
+                GameVersion.UM => 0x00040000001B5100,
+                _ => 0,
+            };
+        }
+
+        /// <summary>Returns true if the Title ID matches the expected ID for the given game version.</summary>
+        public static bool IsTitleIdMatch(GameVersion version, ulong titleId)
+        {
+            ulong expected = GetTitleIdForVersion(version);
+            return expected != 0 && expected == titleId;
+        }
     }
 }

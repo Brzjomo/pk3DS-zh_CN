@@ -100,7 +100,7 @@ namespace pk3DS.WinForms
         public static string ExeFSPath;
         public static string ExHeaderPath;
         private static string OfficialBuild = "1040";
-        private static string Version = "77"; //提交计数
+        private static string Version = "78"; //提交计数
         private static bool versionCheckFailed = false;
         private static bool ifVersionChecked = false;
         private static bool ifUpToDate = false;
@@ -3450,6 +3450,18 @@ namespace pk3DS.WinForms
             if (ThreadActive())
                 return;
 
+            Exheader exh = new Exheader(ExHeaderPath);
+            ulong romTitleId = exh.TitleID;
+            ulong expectedTitleId = Exheader.GetTitleIdForVersion(Config.Version);
+            string originalProductCode = exh.GetSerial();
+
+            // Show CIA settings dialog
+            var settingsForm = new CiaSettingsForm(romTitleId, expectedTitleId, originalProductCode);
+            if (settingsForm.ShowDialog() != DialogResult.OK)
+                return;
+
+            ulong? titleIdOverride = settingsForm.ModifyTitleId ? settingsForm.GetTargetTitleId() : null;
+
             SaveFileDialog sfd = new SaveFileDialog
             {
                 FileName = "newROM.cia",
@@ -3459,12 +3471,13 @@ namespace pk3DS.WinForms
                 return;
             string path = sfd.FileName;
 
+            string serial = settingsForm.ModifyTitleId ? settingsForm.ProductCode : exh.GetSerial();
+
             new Thread(() =>
             {
                 Interlocked.Increment(ref threads);
-                Exheader exh = new Exheader(ExHeaderPath);
-                bool success = CTRUtil.BuildCIA("Nintendo", ExeFSPath, RomFSPath, ExHeaderPath, exh.GetSerial(), path,
-                    pBar1, RTB_Status, decrypted: true);
+                bool success = CTRUtil.BuildCIA("Nintendo", ExeFSPath, RomFSPath, ExHeaderPath, serial, path,
+                    pBar1, RTB_Status, decrypted: true, titleIdOverride: titleIdOverride);
                 if (!success)
                     WinFormsUtil.Error(Strings.Editor_RebuildFailed, Strings.Editor_RebuildFailedDetail);
                 Interlocked.Decrement(ref threads);
