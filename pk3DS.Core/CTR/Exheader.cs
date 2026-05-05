@@ -23,7 +23,11 @@ namespace pk3DS.Core.CTR
 
         public byte[] GetSuperBlockHash()
         {
-            return SHA256.HashData(Data.AsSpan(0, 0x400));
+            // Hash the full extended header (Data + AccessDescriptor) to match ExheaderSize in media units
+            byte[] full = new byte[Data.Length + AccessDescriptor.Length];
+            Array.Copy(Data, full, Data.Length);
+            Array.Copy(AccessDescriptor, 0, full, Data.Length, AccessDescriptor.Length);
+            return SHA256.HashData(full);
         }
 
         public string GetSerial()

@@ -100,7 +100,7 @@ namespace pk3DS.WinForms
         public static string ExeFSPath;
         public static string ExHeaderPath;
         private static string OfficialBuild = "1040";
-        private static string Version = "78"; //提交计数
+        private static string Version = "79"; //提交计数
         private static bool versionCheckFailed = false;
         private static bool ifVersionChecked = false;
         private static bool ifUpToDate = false;
@@ -3473,11 +3473,40 @@ namespace pk3DS.WinForms
 
             string serial = settingsForm.ModifyTitleId ? settingsForm.ProductCode : exh.GetSerial();
 
+            // Find additional content partitions (manual CFA, download play)
+            byte[][] additionalContents = null;
+            string gameDir = Properties.Settings.Default.GamePath;
+            if (!string.IsNullOrWhiteSpace(gameDir) && Directory.Exists(gameDir))
+            {
+                var extraContents = new System.Collections.Generic.List<byte[]>();
+                // HackingToolkit names
+                string[] manualDirs = { "ExtractedManual", "manual", "ExtractedDownloadPlay", "downloadplay" };
+                byte[] contentTypeForDir = { 0x09, 0x09, 0x01, 0x01 }; // Manual=0x09, DLP=0x01
+
+                for (int i = 0; i < manualDirs.Length; i++)
+                {
+                    string dir = Path.Combine(gameDir, manualDirs[i]);
+                    if (Directory.Exists(dir))
+                    {
+                        try
+                        {
+                            byte[] cfa = CTRUtil.BuildCFA(dir, exh.TitleID, contentTypeForDir[i], RTB_Status);
+                            if (cfa != null && cfa.Length > 0x200)
+                                extraContents.Add(cfa);
+                        }
+                        catch { /* skip if build fails */ }
+                    }
+                }
+                if (extraContents.Count > 0)
+                    additionalContents = extraContents.ToArray();
+            }
+
             new Thread(() =>
             {
                 Interlocked.Increment(ref threads);
                 bool success = CTRUtil.BuildCIA("Nintendo", ExeFSPath, RomFSPath, ExHeaderPath, serial, path,
-                    pBar1, RTB_Status, decrypted: true, titleIdOverride: titleIdOverride);
+                    pBar1, RTB_Status, decrypted: true, titleIdOverride: titleIdOverride,
+                    additionalContents: additionalContents);
                 if (!success)
                     WinFormsUtil.Error(Strings.Editor_RebuildFailed, Strings.Editor_RebuildFailedDetail);
                 Interlocked.Decrement(ref threads);

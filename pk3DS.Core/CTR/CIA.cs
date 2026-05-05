@@ -50,8 +50,7 @@ namespace pk3DS.Core.CTR
             WriteHeader(Data, 0, certChain.Length, ticketData.Length, tmdData.Length,
                         metaData.Length, (ulong)alignedContentSize);
 
-            // Content Index bitmask at offset 0x20 (part of header area)
-            // bit 0 = MSB of first byte (content index 0 present)
+            // Content Index bitmask — MSB-first: bit 0 = MSB = 0x80 for content index 0
             Data[0x20] = 0x80;
 
             // Certificate chain at aligned offset
@@ -82,32 +81,21 @@ namespace pk3DS.Core.CTR
         }
 
         /// <summary>
-        /// Builds a minimal certificate chain for CFW use.
-        /// Contains three 0x200-byte certificates: CA, XS (ticket signer), CP (TMD signer).
-        /// Matches makerom's cert chain structure.
+        /// Returns makerom-compatible debug certificate chain (3DS test PKI).
+        /// CA=RSA-4096 sig + RSA-2048 key (0x400), XS=RSA-2048 (0x300), CP=RSA-2048 (0x300).
+        /// Total = 0xA00. Copied from makerom pki/test.h — these are the fixed debug
+        /// certs that CFW expects, with real RSA signatures and proper moduli.
         /// </summary>
+        internal const int CACertSize = 0x400;
+        internal const int ChildCertSize = 0x300;
+
         internal static byte[] BuildDefaultCertChain()
         {
-            // Three 0x200-byte certificates = 0x600 bytes
-            byte[] chain = new byte[0x600];
-            WriteDummyCert(chain, 0x000, "CA00000003");
-            WriteDummyCert(chain, 0x200, "XS00000009");
-            WriteDummyCert(chain, 0x400, "CP0000000b");
+            byte[] chain = new byte[CACertSize + 2 * ChildCertSize]; // 0xA00
+            Array.Copy(DebugPKI.CaCert, 0, chain, 0, CACertSize);
+            Array.Copy(DebugPKI.XsCert, 0, chain, CACertSize, ChildCertSize);
+            Array.Copy(DebugPKI.CpCert, 0, chain, CACertSize + ChildCertSize, ChildCertSize);
             return chain;
-        }
-
-        private static void WriteDummyCert(byte[] dest, int offset, string name)
-        {
-            byte[] nameBytes = System.Text.Encoding.ASCII.GetBytes(name);
-            // Signature Type (RSA-2048-SHA256) — BIG ENDIAN
-            dest[offset + 0] = 0x00;
-            dest[offset + 1] = 0x01;
-            dest[offset + 2] = 0x00;
-            dest[offset + 3] = 0x04;
-            // Issuer at cert offset 0x140
-            Array.Copy(nameBytes, 0, dest, offset + 0x140, Math.Min(nameBytes.Length, 0x40));
-            // Subject at cert offset 0x180
-            Array.Copy(nameBytes, 0, dest, offset + 0x180, Math.Min(nameBytes.Length, 0x40));
         }
 
         /// <summary>

@@ -83,7 +83,7 @@ namespace pk3DS.Core.CTR
             NCCH.logo = (byte[])Resources.ResourceManager.GetObject(LOGO_NAME);
             UpdateTB(TB_Progress, "Assembling NCCH Header...");
             ulong Len = 0x200; //NCCH Signature + NCCH Header
-            NCCH.Header = new NCCH.NCCHHeader { Signature = new byte[0x100], Magic = 0x4843434E };
+            NCCH.Header = new NCCH.NCCHHeader { Signature = Enumerable.Repeat((byte)0xFF, 0x100).ToArray(), Magic = 0x4843434E };
             NCCH.Header.TitleId = NCCH.Header.ProgramId = NCCH.Exheader.TitleID;
             NCCH.Header.MakerCode = 0x3130; //01
             NCCH.Header.FormatVersion = 0x2; //Default
@@ -91,15 +91,15 @@ namespace pk3DS.Core.CTR
             NCCH.Header.ProductCode = Encoding.ASCII.GetBytes(TB_Serial);
             Array.Resize(ref NCCH.Header.ProductCode, 0x10);
             NCCH.Header.ExheaderHash = NCCH.Exheader.GetSuperBlockHash();
-            NCCH.Header.ExheaderSize = (uint)NCCH.Exheader.Data.Length;
-            Len += NCCH.Header.ExheaderSize + (uint)NCCH.Exheader.AccessDescriptor.Length;
+            NCCH.Header.ExheaderSize = (uint)(NCCH.Exheader.Data.Length + NCCH.Exheader.AccessDescriptor.Length) / MEDIA_UNIT_SIZE;
+            Len += NCCH.Header.ExheaderSize * MEDIA_UNIT_SIZE;
             NCCH.Header.Flags = new byte[0x8];
             //FLAGS
             NCCH.Header.Flags[3] = 0; // Crypto: 0 = <7.x, 1=7.x;
             NCCH.Header.Flags[4] = 1; // Content Platform: 1 = CTR;
             NCCH.Header.Flags[5] = 0x3; // Content Type Bitflags: 1=Data, 2=Executable, 4=SysUpdate, 8=Manual, 0x10=Trial;
             NCCH.Header.Flags[6] = 0; // MEDIA_UNIT_SIZE = 0x200*Math.Pow(2, Content.header.Flags[6]);
-            NCCH.Header.Flags[7] = 1; // FixedCrypto = 1, NoMountRomfs = 2; NoCrypto=4;
+            NCCH.Header.Flags[7] = 4; // NoCrypto only (NOT FixedCrypto=1). FixedCrypto content rejected by real 3DS AM.
             NCCH.Header.LogoOffset = (uint)(Len / MEDIA_UNIT_SIZE);
             NCCH.Header.LogoSize = (uint)(NCCH.logo.Length / MEDIA_UNIT_SIZE);
             Len += (uint)NCCH.logo.Length;
@@ -299,11 +299,73 @@ namespace pk3DS.Core.CTR
             return true;
         }
 
+        /// <summary>
+        /// Builds a CFA (Content Archive) binary for the manual/download-play partition.
+        /// Creates a RomFS from the directory and wraps it in a minimal NCCH header.
+        /// </summary>
+        public static byte[] BuildCFA(string romfsDir, ulong titleId, byte contentType, RichTextBox TB_Progress = null)
+        {
+            string tempRomFS = Path.GetTempFileName();
+            try
+            {
+                RomFS.BuildRomFS(romfsDir, tempRomFS, TB_Progress);
+                byte[] romfsData = File.ReadAllBytes(tempRomFS);
+                uint romfsSize = (uint)(romfsData.Length / MEDIA_UNIT_SIZE);
+
+                // Build CFA NCCH header matching HackingToolkit v9 layout (RomFS at 0x8 MU)
+                const uint RomFSOffset = 0x8; // matches HackingToolkit/manual CFA layout
+                byte[] ncchHeader = new byte[0x200];
+                // Signature (0x100 bytes of 0xFF)
+                for (int i = 0; i < 0x100; i++)
+                    ncchHeader[i] = 0xFF;
+                // Magic "NCCH" in big-endian
+                Array.Copy(new byte[] { 0x4E, 0x43, 0x43, 0x48 }, 0, ncchHeader, 0x100, 4);
+                // Size in media units (header 0x200 + gap + RomFS)
+                uint totalSize = RomFSOffset + romfsSize;
+                Array.Copy(BitConverter.GetBytes(totalSize), 0, ncchHeader, 0x104, 4);
+                // TitleId
+                Array.Copy(BitConverter.GetBytes(titleId), 0, ncchHeader, 0x108, 8);
+                // MakerCode = "01"
+                ncchHeader[0x112] = 0x30; ncchHeader[0x113] = 0x31;
+                // FormatVersion = 2
+                ncchHeader[0x114] = 2;
+                // Flags[5] = contentType (0x01=Data, 0x09=Data|Manual, 0x01=DLP child)
+                ncchHeader[0x18D] = contentType;
+                // Flags[7] = NoCrypto
+                ncchHeader[0x18F] = 4;
+                // RomFS offset = 0x8 MU (matches HackingToolkit manual CFA layout)
+                Array.Copy(BitConverter.GetBytes(RomFSOffset), 0, ncchHeader, 0x1B0, 4);
+                // RomFS size in media units
+                Array.Copy(BitConverter.GetBytes(romfsSize), 0, ncchHeader, 0x1B4, 4);
+                // RomFS SuperBlockHash
+                int sbLen = (int)Math.Min(romfsData.Length, 0x200);
+                byte[] sbHash = System.Security.Cryptography.SHA256.HashData(romfsData.AsSpan(0, sbLen));
+                Array.Copy(sbHash, 0, ncchHeader, 0x1C0, 0x20);
+
+                // Sign CFA NCCH header (0x100 bytes at offset 0x100) with makerom test key
+                byte[] cfaSig = DebugPKI.SignRsa2048Sha256(ncchHeader, 0x100, 0x100);
+                Array.Copy(cfaSig, 0, ncchHeader, 0, 0x100);
+
+                // 0xE00 zero-fill between header and RomFS (RomFSOffset=8 means 7 MU gap)
+                byte[] cfa = new byte[RomFSOffset * MEDIA_UNIT_SIZE + romfsData.Length];
+                Array.Copy(ncchHeader, 0, cfa, 0, 0x200);
+                // bytes 0x200..0x1000 remain zero (new byte[] default)
+                Array.Copy(romfsData, 0, cfa, RomFSOffset * MEDIA_UNIT_SIZE, romfsData.Length);
+                return cfa;
+            }
+            finally
+            {
+                if (File.Exists(tempRomFS))
+                    File.Delete(tempRomFS);
+            }
+        }
+
         public static bool BuildCIA(string LOGO_NAME,
             string EXEFS_PATH, string ROMFS_PATH, string EXHEADER_PATH,
             string SERIAL_TEXT, string SAVE_PATH,
             ProgressBar PB_Show = null, RichTextBox TB_Progress = null,
-            bool decrypted = false, ulong? titleIdOverride = null)
+            bool decrypted = false, ulong? titleIdOverride = null,
+            byte[][] additionalContents = null)
         {
             PB_Show ??= new ProgressBar();
             TB_Progress ??= new RichTextBox();
@@ -314,6 +376,15 @@ namespace pk3DS.Core.CTR
             {
                 UpdateTB(TB_Progress, "错误: 缺少 ExeFS、RomFS 或 Exheader 文件。");
                 return false;
+            }
+
+            // Extract SMDH from ExeFS directory for CIA meta section (before packing)
+            byte[] smdhData = null;
+            if (Directory.Exists(EXEFS_PATH))
+            {
+                string iconPath = Path.Combine(EXEFS_PATH, "icon.bin");
+                if (File.Exists(iconPath))
+                    smdhData = File.ReadAllBytes(iconPath);
             }
 
             if (!File.Exists(EXEFS_PATH) && Directory.Exists(EXEFS_PATH))
@@ -334,21 +405,27 @@ namespace pk3DS.Core.CTR
                 byte[] tidBytes = BitConverter.GetBytes(effectiveTitleId);
                 Array.Copy(tidBytes, 0, NCCH.Exheader.Data, 0x200, 8);
 
-                // 2. Recompute Exheader hash
+                // 2. Also update jump_id in SystemControlInfo at Data[0x1C8]
+                if (NCCH.Exheader.Data.Length >= 0x1D0)
+                    Array.Copy(tidBytes, 0, NCCH.Exheader.Data, 0x1C8, 8);
+
+                // 3. Also update programId in AccessDescriptor at offset 0x200
+                if (NCCH.Exheader.AccessDescriptor.Length >= 0x208)
+                    Array.Copy(tidBytes, 0, NCCH.Exheader.AccessDescriptor, 0x200, 8);
+
+                // 4. Recompute Exheader hash
                 NCCH.Header.ExheaderHash = NCCH.Exheader.GetSuperBlockHash();
 
-                // 3. Update NCCH header TitleId and ProgramId
+                // 5. Update NCCH header TitleId and ProgramId
                 NCCH.Header.TitleId = effectiveTitleId;
                 NCCH.Header.ProgramId = effectiveTitleId;
 
                 UpdateTB(TB_Progress, $"Title ID 已覆盖: 0x{effectiveTitleId:X016}");
             }
 
-            // For decrypted CIA: set NoCrypto flag so emulator reads sections directly
-            if (decrypted)
-            {
-                NCCH.Header.Flags[7] = 4; // NoCrypto
-            }
+            // CIA always uses NoCrypto NCCH (Flags[7]=4, matching HackingToolkit/3dstool behavior).
+            // FixedCrypto (Flags[7]=1) DOES NOT WORK on real 3DS — AM rejects it with RS_NOTFOUND.
+            // The 'decrypted' flag controls TMD content Type (0=no title key encryption).
 
             // Rebuild NCCH header after all modifications
             NCCH.Header.BuildHeader();
@@ -392,16 +469,8 @@ namespace pk3DS.Core.CTR
                     byte[] exhRaw = new byte[NCCH.Exheader.Data.Length + NCCH.Exheader.AccessDescriptor.Length];
                     Array.Copy(NCCH.Exheader.Data, exhRaw, NCCH.Exheader.Data.Length);
                     Array.Copy(NCCH.Exheader.AccessDescriptor, 0, exhRaw, NCCH.Exheader.Data.Length, NCCH.Exheader.AccessDescriptor.Length);
-                    byte[] exhOut;
-                    if (decrypted)
-                    {
-                        exhOut = exhRaw; // plaintext for NoCrypto
-                    }
-                    else
-                    {
-                        exhOut = new byte[exhRaw.Length];
-                        new AesCtr(key, NCCH.Header.ProgramId, 1ul << 56).TransformBlock(exhRaw, 0, exhRaw.Length, exhOut, 0);
-                    }
+                    // NoCrypto: write plaintext (HackingToolkit-compatible, real 3DS AM requires this)
+                    byte[] exhOut = exhRaw;
                     fs.Write(exhOut, 0, exhOut.Length);
                     sha.TransformBlock(exhOut, 0, exhOut.Length, exhOut, 0);
 
@@ -418,26 +487,16 @@ namespace pk3DS.Core.CTR
                         sha.TransformBlock(NCCH.plainregion, 0, NCCH.plainregion.Length, NCCH.plainregion, 0);
                     }
 
-                    // 5. ExeFS (encrypted or plain for decrypted CIA)
+                    // 5. ExeFS (plaintext for NoCrypto)
                     UpdateTB(TB_Progress, "写入 ExeFS...");
                     FillGap((long)NCCH.Header.ExefsOffset * MEDIA_UNIT_SIZE);
-                    byte[] exefsOut;
-                    if (decrypted)
-                    {
-                        exefsOut = NCCH.ExeFS.Data;
-                    }
-                    else
-                    {
-                        exefsOut = new byte[NCCH.ExeFS.Data.Length];
-                        new AesCtr(key, NCCH.Header.ProgramId, 2ul << 56).TransformBlock(NCCH.ExeFS.Data, 0, NCCH.ExeFS.Data.Length, exefsOut, 0);
-                    }
+                    byte[] exefsOut = NCCH.ExeFS.Data;
                     fs.Write(exefsOut, 0, exefsOut.Length);
                     sha.TransformBlock(exefsOut, 0, exefsOut.Length, exefsOut, 0);
 
-                    // 6. RomFS (encrypted or plain for decrypted CIA)
+                    // 6. RomFS (plaintext for NoCrypto)
                     UpdateTB(TB_Progress, "写入 RomFS...");
                     FillGap((long)NCCH.Header.RomfsOffset * MEDIA_UNIT_SIZE);
-                    var aesctr = decrypted ? null : new AesCtr(key, NCCH.Header.ProgramId, 3ul << 56);
                     using (FileStream romfsIn = new FileStream(NCCH.RomFS.FileName, FileMode.Open, FileAccess.Read))
                     {
                         ulong romfsLen = (ulong)NCCH.Header.RomfsSize * MEDIA_UNIT_SIZE;
@@ -446,18 +505,8 @@ namespace pk3DS.Core.CTR
                             uint bufSize = (uint)Math.Min(romfsLen - j, 0x400000);
                             byte[] buf = new byte[bufSize];
                             romfsIn.Read(buf, 0, (int)bufSize);
-                            byte[] outBuf;
-                            if (decrypted)
-                            {
-                                outBuf = buf; // plaintext
-                            }
-                            else
-                            {
-                                outBuf = new byte[bufSize];
-                                aesctr.TransformBlock(buf, 0, (int)bufSize, outBuf, 0);
-                            }
-                            fs.Write(outBuf, 0, (int)bufSize);
-                            sha.TransformBlock(outBuf, 0, (int)bufSize, outBuf, 0);
+                            fs.Write(buf, 0, (int)bufSize);
+                            sha.TransformBlock(buf, 0, (int)bufSize, buf, 0);
                             j += bufSize;
                         }
                     }
@@ -481,10 +530,21 @@ namespace pk3DS.Core.CTR
                     contentHash = sha.Hash;
                 }
 
+                // Read TMD metadata from Exheader
+                uint saveDataSize = 0;
+                if (NCCH.Exheader.Data.Length >= 0x1C8)
+                    saveDataSize = (uint)BitConverter.ToUInt64(NCCH.Exheader.Data, 0x1C0);
+                ushort remasterVersion = 0;
+                if (NCCH.Exheader.Data.Length >= 0x3C)
+                    remasterVersion = BitConverter.ToUInt16(NCCH.Exheader.Data, 0x03A);
+                ushort titleVersion = (ushort)((remasterVersion << 10) & 0xFC00);
+
                 // Build CIA metadata in memory
                 var tmd = new TMD
                 {
                     TitleID = effectiveTitleId,
+                    SaveDataSize = saveDataSize,
+                    TitleVersion = titleVersion,
                     Contents =
                     {
                         new ContentChunkRecord
@@ -498,15 +558,51 @@ namespace pk3DS.Core.CTR
                     }
                 };
 
+                // Add additional contents (manual CFA, download play, etc.)
+                byte[][] addContentHashes = null;
+                if (additionalContents != null && additionalContents.Length > 0)
+                {
+                    addContentHashes = new byte[additionalContents.Length][];
+                    for (int i = 0; i < additionalContents.Length; i++)
+                    {
+                        byte[] addData = additionalContents[i];
+                        byte[] addHash = System.Security.Cryptography.SHA256.HashData(addData);
+                        addContentHashes[i] = addHash;
+                        tmd.Contents.Add(new ContentChunkRecord
+                        {
+                            ID = (uint)(i + 1),
+                            Index = (ushort)(i + 1),
+                            Type = (ushort)(decrypted ? 0 : 1),
+                            Size = (ulong)addData.Length,
+                            Hash = addHash,
+                        });
+                    }
+                }
+
                 var ticket = new Ticket
                 {
                     TitleID = effectiveTitleId,
+                    TicketVersion = titleVersion,
+                    KeyId = 0,
                 };
+                // Generate random TicketID matching makerom format: 0x00040000XXXXXXXX
+                byte[] ticketIdBytes = new byte[4];
+                System.Security.Cryptography.RandomNumberGenerator.Fill(ticketIdBytes);
+                ticket.TicketID = 0x0004000000000000UL | BitConverter.ToUInt32(ticketIdBytes, 0);
+                // For non-encrypted CIA, generate random encrypted title key (makerom compatibility)
+                System.Security.Cryptography.RandomNumberGenerator.Fill(ticket.EncryptedTitleKey);
 
-                byte[] certChain = CIA.BuildDefaultCertChain(); // 3 certs: CA+XS+CP = 0x600
+                byte[] certChain = CIA.BuildDefaultCertChain(); // CA+XS+CP, 64-byte aligned
                 byte[] ticketData = ticket.Build();             // 0x350
-                byte[] tmdData = tmd.Build();                   // 0xB34 for 1 content
-                long contentSize = ncchSize;                    // 0x200-aligned
+                byte[] tmdData = tmd.Build();                   // variable
+
+                // Calculate total content size (NCCH + additional contents, each 64-byte aligned)
+                long contentSize = ncchSize;
+                if (additionalContents != null)
+                {
+                    foreach (var addData in additionalContents)
+                        contentSize = ((contentSize + 0x3F) & ~0x3FL) + addData.Length;
+                }
 
                 // Pre-compute 64-byte aligned section offsets (makerom-style)
                 long headerSize = CIA.DefaultHeaderSize; // 0x2020
@@ -530,13 +626,19 @@ namespace pk3DS.Core.CTR
                     Array.Copy(BitConverter.GetBytes(certChain.Length), 0, hdr, 8, 4);
                     Array.Copy(BitConverter.GetBytes(ticketData.Length), 0, hdr, 0xC, 4);
                     Array.Copy(BitConverter.GetBytes(tmdData.Length), 0, hdr, 0x10, 4);
-                    Array.Copy(BitConverter.GetBytes(0), 0, hdr, 0x14, 4); // meta size
+                    int metaSize = smdhData != null ? 0x400 + smdhData.Length : 0;
+                    Array.Copy(BitConverter.GetBytes(metaSize), 0, hdr, 0x14, 4); // meta size (makerom: header + SMDH)
                     Array.Copy(BitConverter.GetBytes((ulong)contentSize), 0, hdr, 0x18, 8);
                     outFs.Write(hdr, 0, hdr.Length);
 
-                    // Content Index bitmask (0x2000 bytes): bit 0 = MSB of first byte
+                    // Content Index bitmask (0x2000 bytes): MSB-first, bit 7 = content index 0
                     byte[] contentIndex = new byte[0x2000];
-                    contentIndex[0] = 0x80;
+                    contentIndex[0] = 0x80; // content index 0
+                    if (additionalContents != null)
+                    {
+                        for (int i = 0; i < additionalContents.Length; i++)
+                            contentIndex[0] |= (byte)(0x80 >> (i + 1)); // content index 1, 2, ...
+                    }
                     outFs.Write(contentIndex, 0, contentIndex.Length);
 
                     // 2. Certificate chain at aligned offset
@@ -551,8 +653,10 @@ namespace pk3DS.Core.CTR
                     outFs.Seek(tmdOff, SeekOrigin.Begin);
                     outFs.Write(tmdData, 0, tmdData.Length);
 
-                    // 5. NCCH content at aligned offset (streamed from temp file)
+                    // 5. Content at aligned offset
                     outFs.Seek(contentOff, SeekOrigin.Begin);
+
+                    // 5a. Main NCCH content (streamed from temp file)
                     using (var ncchFs = new FileStream(tempNcch, FileMode.Open, FileAccess.Read))
                     {
                         byte[] buf = new byte[0x400000];
@@ -561,8 +665,55 @@ namespace pk3DS.Core.CTR
                             outFs.Write(buf, 0, read);
                     }
 
-                    // Truncate at meta offset (we have no meta section)
-                    outFs.SetLength(metaOff);
+                    // 5b. Additional contents (manual CFA, download play, etc.), each 64-byte aligned
+                    if (additionalContents != null)
+                    {
+                        foreach (var addData in additionalContents)
+                        {
+                            // 64-byte align before each additional content
+                            long padTo = (outFs.Position + 0x3F) & ~0x3FL;
+                            outFs.Seek(padTo, SeekOrigin.Begin);
+                            outFs.Write(addData, 0, addData.Length);
+                        }
+                    }
+
+                    // 6. Write Meta section (makerom-style: 0x400 header + SMDH) if available
+                    if (smdhData != null)
+                    {
+                        byte[] metaHeader = new byte[0x400];
+                        outFs.Seek(metaOff, SeekOrigin.Begin);
+                        outFs.Write(metaHeader, 0, metaHeader.Length);
+                        outFs.Write(smdhData, 0, smdhData.Length);
+                        outFs.SetLength(metaOff + metaSize);
+                    }
+                    else
+                    {
+                        outFs.SetLength(metaOff);
+                    }
+                }
+
+                // Verify content hash by reading back from the built CIA
+                UpdateTB(TB_Progress, "验证内容哈希...");
+                using (var verifyFs = new FileStream(SAVE_PATH, FileMode.Open, FileAccess.Read))
+                using (var verifySha = System.Security.Cryptography.SHA256.Create())
+                {
+                    verifyFs.Seek(contentOff, SeekOrigin.Begin);
+                    long remaining = ncchSize;
+                    byte[] buf = new byte[0x400000]; // 4 MB chunks
+                    while (remaining > 0)
+                    {
+                        int read = verifyFs.Read(buf, 0, (int)Math.Min((long)buf.Length, remaining));
+                        if (read == 0) break;
+                        verifySha.TransformBlock(buf, 0, read, buf, 0);
+                        remaining -= read;
+                    }
+                    verifySha.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
+                    byte[] verifyHash = verifySha.Hash;
+                    long totalRead = ncchSize - remaining;
+                    bool hashOk = verifyHash.AsSpan().SequenceEqual(contentHash);
+                    UpdateTB(TB_Progress, hashOk
+                        ? $"内容哈希验证通过 ({totalRead} 字节)"
+                        : $"内容哈希不匹配! 期望: {BitConverter.ToString(contentHash).Replace("-", "").Substring(0, 16)}... 实际: {BitConverter.ToString(verifyHash).Replace("-", "").Substring(0, 16)}...");
                 }
 
                 // Clean up temp files

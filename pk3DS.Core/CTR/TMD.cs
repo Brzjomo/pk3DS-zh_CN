@@ -40,13 +40,15 @@ namespace pk3DS.Core.CTR
             byte[] data = new byte[totalSize];
 
             // --- Signature area (0x00 - 0x13F) ---
+            // RSA-2048: sigType[4] + sigData[0x100] + padding[0x3C] = 0x140
             // Signature Type (BIG ENDIAN)
             WriteBE(data, 0, SignatureType, 4);
-            // Padding 0x04-0x3F (already zeros)
-            // Signature at 0x40 (0x100 bytes)
-            if (Signature != null && Signature.Length > 0)
-                Array.Copy(Signature, 0, data, 0x40, Math.Min(Signature.Length, 0x100));
-            // More zeros at 0x140-0x17F are padding
+            // Signature at 0x04 (0x100 bytes) — fill 0xFF for unsigned
+            for (int i = 0; i < 0x100; i++)
+                data[0x04 + i] = 0xFF;
+            if (Signature != null && Signature.Length > 0 && !IsAllZero(Signature))
+                Array.Copy(Signature, 0, data, 0x04, Math.Min(Signature.Length, 0x100));
+            // Padding 0x104-0x13F (already zeros)
 
             // --- TMD Header (0x140 - 0x203) ---
             int hdr = SignatureOffset; // 0x140
@@ -119,6 +121,11 @@ namespace pk3DS.Core.CTR
             // --- Content Chunk Records (at 0xB04+) ---
             Array.Copy(chunkData, 0, data, chunkOffset, chunkData.Length);
 
+            // Sign TMD header (0xC4 bytes starting at offset 0x140) with makerom test key
+            const int tmdHeaderSize = 0xC4;
+            byte[] tmdSig = DebugPKI.SignRsa2048Sha256(data, SignatureOffset, tmdHeaderSize);
+            Array.Copy(tmdSig, 0, data, 4, 0x100);
+
             return data;
         }
 
@@ -136,6 +143,13 @@ namespace pk3DS.Core.CTR
         private static void WriteBE(byte[] dest, int offset, ushort value, int bytes)
         {
             WriteBE(dest, offset, (ulong)value, bytes);
+        }
+
+        private static bool IsAllZero(byte[] data)
+        {
+            foreach (byte b in data)
+                if (b != 0) return false;
+            return true;
         }
     }
 

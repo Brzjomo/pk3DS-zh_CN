@@ -74,6 +74,11 @@ namespace pk3DS.Core.CTR
                 }
                 Array.Copy(ExefsHash, 0, Data, 0x1C0, 0x20);
                 Array.Copy(RomfsHash, 0, Data, 0x1E0, 0x20);
+
+                // Sign NCCH header (0x100 bytes at offset 0x100) with makerom test key
+                byte[] ncchSig = DebugPKI.SignRsa2048Sha256(Data, 0x100, 0x100);
+                Array.Copy(ncchSig, 0, Data, 0, 0x100);
+                Signature = ncchSig;
             }
 
             public void BuildHeaderFromBytes(byte[] data)
@@ -148,7 +153,8 @@ namespace pk3DS.Core.CTR
         {
             string exheaderpath = Path.Combine(outputDirectory, "exheader.bin");
             UpdateTB(TB_Progress, "Extracting exheader.bin from CXI...");
-            byte[] exheaderbytes = new byte[Header.ExheaderSize * 2];
+            // ExheaderSize is in media units; includes both extended header (0x400) and access descriptor (0x400).
+            byte[] exheaderbytes = new byte[Header.ExheaderSize * MEDIA_UNIT_SIZE];
 
             using (FileStream fs = new FileStream(NCCH_PATH, FileMode.Open, FileAccess.Read))
             {

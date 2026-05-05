@@ -26,7 +26,8 @@ namespace pk3DS.Core.CTR
             {
                 throw new FileNotFoundException("File not found.", path);
             }
-            SuperBlockHash = SHA256.HashData(Data.AsSpan(0, 200));
+            int sbLen = Math.Min(Data.Length, 0x200);
+            SuperBlockHash = SHA256.HashData(Data.AsSpan(0, sbLen));
         }
 
         // Overall R/W files (wrapped)
@@ -42,12 +43,17 @@ namespace pk3DS.Core.CTR
                     string fileName = Encoding.ASCII.GetString(data.Skip(0x10 * i).Take(0x8).ToArray()).TrimEnd((char)0);
                     if (fileName.Length > 0)
                     {
-                        File.WriteAllBytes(
-                            // New File Path
-                            outPath + Path.DirectorySeparatorChar + fileName + ".bin",
-                            // Get New Data from Offset after 0x200 Header.
-                            data.Skip(0x200 + BitConverter.ToInt32(data, 0x8 + (0x10 * i))).Take(BitConverter.ToInt32(data, 0xC + (0x10 * i))).ToArray()
-                        );
+                        int fileOffset = 0x200 + BitConverter.ToInt32(data, 0x8 + (0x10 * i));
+                        int fileSize = BitConverter.ToInt32(data, 0xC + (0x10 * i));
+                        byte[] fileBytes = data.Skip(fileOffset).Take(fileSize).ToArray();
+                        // Index 0 is .code section; BLZ-decompress it (matching 3dstool behavior)
+                        if (i == 0)
+                        {
+                            byte[] decompressed = BLZCoder.Decompress(fileBytes);
+                            if (decompressed != null)
+                                fileBytes = decompressed;
+                        }
+                        File.WriteAllBytes(outPath + Path.DirectorySeparatorChar + fileName + ".bin", fileBytes);
                     }
                 }
                 return true;
@@ -55,43 +61,50 @@ namespace pk3DS.Core.CTR
             catch { return false; }
         }
 
+        private static bool IsCodeFile(string path)
+        {
+            string name = Path.GetFileNameWithoutExtension(path);
+            return name == ".code" || name == "code";
+        }
+
         public static bool PackExeFS(string[] files, string outFile)
         {
+            // Exclude code.bin — matches HackingToolkit v9 behavior (only banner + icon in ExeFS)
+            files = files.Where(f => !IsCodeFile(f)).ToArray();
             if (files.Length > 10) { Console.WriteLine("Cannot package more than 10 files to exefs."); return false; }
 
             try
             {
-                // Set up the Header
+
+                byte[][] fileData = new byte[files.Length][];
+                for (int i = 0; i < files.Length; i++)
+                    fileData[i] = File.ReadAllBytes(files[i]);
+
+                // Build header
                 byte[] headerData = new byte[0x200];
                 uint offset = 0;
                 SHA256 sha = SHA256.Create();
 
-                // Get the Header
                 for (int i = 0; i < files.Length; i++)
                 {
-                    // Do the Top (File Info)
                     string fileName = Path.GetFileNameWithoutExtension(files[i]);
                     byte[] nameData = Encoding.ASCII.GetBytes(fileName); Array.Resize(ref nameData, 0x8);
                     Array.Copy(nameData, 0, headerData, i * 0x10, 0x8);
 
-                    FileInfo fi = new FileInfo(files[i]);
-                    uint size = (uint)fi.Length;
+                    uint size = (uint)fileData[i].Length;
                     Array.Copy(BitConverter.GetBytes(offset), 0, headerData, 0x8 + (i * 0x10), 0x4);
                     Array.Copy(BitConverter.GetBytes(size), 0, headerData, 0xC + (i * 0x10), 0x4);
                     offset += 0x200 - (size % 0x200) + size;
 
-                    // Do the Bottom (Hashes)
-                    byte[] hash = sha.ComputeHash(File.ReadAllBytes(files[i]));
+                    byte[] hash = sha.ComputeHash(fileData[i]);
                     Array.Copy(hash, 0, headerData, 0x200 - (0x20 * (i + 1)), 0x20);
                 }
 
-                // Set in the Data
                 using MemoryStream newFile = new MemoryStream();
                 new MemoryStream(headerData).CopyTo(newFile);
-                foreach (string s in files)
+                for (int i = 0; i < files.Length; i++)
                 {
-                    using (MemoryStream loadFile = new MemoryStream(File.ReadAllBytes(s)))
-                        loadFile.CopyTo(newFile);
+                    newFile.Write(fileData[i], 0, fileData[i].Length);
                     new MemoryStream(new byte[0x200 - (newFile.Length % 0x200)]).CopyTo(newFile);
                 }
 
@@ -103,37 +116,38 @@ namespace pk3DS.Core.CTR
 
         public void SetData(string[] files)
         {
-            // Set up the Header
+            // Exclude code.bin — matches HackingToolkit v9 behavior (only banner + icon in ExeFS)
+            files = files.Where(f => !IsCodeFile(f)).ToArray();
+
+            byte[][] fileData = new byte[files.Length][];
+            for (int i = 0; i < files.Length; i++)
+                fileData[i] = File.ReadAllBytes(files[i]);
+
+            // Build header
             byte[] headerData = new byte[0x200];
             uint offset = 0;
             SHA256 sha = SHA256.Create();
 
-            // Get the Header
             for (int i = 0; i < files.Length; i++)
             {
-                // Do the Top (File Info)
                 string fileName = Path.GetFileNameWithoutExtension(files[i]);
                 byte[] nameData = Encoding.ASCII.GetBytes(fileName); Array.Resize(ref nameData, 0x8);
                 Array.Copy(nameData, 0, headerData, i * 0x10, 0x8);
 
-                FileInfo fi = new FileInfo(files[i]);
-                uint size = (uint)fi.Length;
+                uint size = (uint)fileData[i].Length;
                 Array.Copy(BitConverter.GetBytes(offset), 0, headerData, 0x8 + (i * 0x10), 0x4);
                 Array.Copy(BitConverter.GetBytes(size), 0, headerData, 0xC + (i * 0x10), 0x4);
                 offset += 0x200 - (size % 0x200) + size;
 
-                // Do the Bottom (Hashes)
-                byte[] hash = sha.ComputeHash(File.ReadAllBytes(files[i]));
+                byte[] hash = sha.ComputeHash(fileData[i]);
                 Array.Copy(hash, 0, headerData, 0x200 - (0x20 * (i + 1)), 0x20);
             }
 
-            // Set in the Data
             using MemoryStream newFile = new MemoryStream();
             new MemoryStream(headerData).CopyTo(newFile);
-            foreach (string s in files)
+            for (int i = 0; i < files.Length; i++)
             {
-                using (MemoryStream loadFile = new MemoryStream(File.ReadAllBytes(s)))
-                    loadFile.CopyTo(newFile);
+                newFile.Write(fileData[i], 0, fileData[i].Length);
                 new MemoryStream(new byte[0x200 - (newFile.Length % 0x200)]).CopyTo(newFile);
             }
 

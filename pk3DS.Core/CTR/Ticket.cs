@@ -12,7 +12,7 @@ namespace pk3DS.Core.CTR
         public byte[] Signature = new byte[0x100];
 
         // Ticket Header (at offset 0x140)
-        public string Issuer = "Root-CA00000003-XS00000009";
+        public string Issuer = "Root-CA00000003-XS0000000c";
         public byte[] EncryptedTitleKey = new byte[0x10];
         public ulong TicketID;
         public uint DeviceID;
@@ -34,8 +34,10 @@ namespace pk3DS.Core.CTR
             // --- Signature area (0x00 - 0x13F) ---
             // Signature Type (BIG ENDIAN)
             WriteBE(data, 0, SignatureType, 4);
-            // RSA-2048 Signature at 0x04 (0x100 bytes)
-            if (Signature != null && Signature.Length > 0)
+            // RSA-2048 Signature at 0x04 (0x100 bytes) — fill 0xFF for unsigned
+            for (int i = 0; i < 0x100; i++)
+                data[0x04 + i] = 0xFF;
+            if (Signature != null && Signature.Length > 0 && !IsAllZero(Signature))
                 Array.Copy(Signature, 0, data, 0x04, Math.Min(Signature.Length, 0x100));
             // Padding at 0x104-0x13F (zeros by default)
 
@@ -103,6 +105,10 @@ namespace pk3DS.Core.CTR
             // index bitmap: bit 0 = content index 0 present (LSB)
             data[idxDataOff + 0x04] = 0x01;
 
+            // Sign ticket body (everything after signature area) with makerom test key
+            byte[] ticketSig = DebugPKI.SignRsa2048Sha256(data, sigSize, data.Length - sigSize);
+            Array.Copy(ticketSig, 0, data, 4, 0x100);
+
             return data;
         }
 
@@ -120,6 +126,13 @@ namespace pk3DS.Core.CTR
         private static void WriteBE(byte[] dest, int offset, ushort value, int bytes)
         {
             WriteBE(dest, offset, (ulong)value, bytes);
+        }
+
+        private static bool IsAllZero(byte[] data)
+        {
+            foreach (byte b in data)
+                if (b != 0) return false;
+            return true;
         }
     }
 }

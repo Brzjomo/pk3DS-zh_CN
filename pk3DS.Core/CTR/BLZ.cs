@@ -31,8 +31,8 @@ namespace pk3DS.Core.CTR
         private const int CMD_DECODE = 0;
         private const int CMD_ENCODE = 1;
 
-        private const int BLZ_NORMAL = 0;
-        private const int BLZ_BEST = 1;
+        internal const int BLZ_NORMAL = 0;
+        internal const int BLZ_BEST = 1;
         private const int BLZ_SHIFT = 1;
         private const int BLZ_MASK = 0x80;
         private const int BLZ_THRESHOLD = 2;
@@ -41,10 +41,39 @@ namespace pk3DS.Core.CTR
         private const int BLZ_MAXIM = 0x01400000;
         private const int RAW_MAXIM = 0x00FFFFFF;
 
-        private readonly bool arm9;
+        private bool arm9;
         private int new_len;
 
         private readonly ProgressBar pBar1;
+
+        // Parameterless constructor for programmatic use (Compress)
+        private BLZCoder()
+        {
+            pBar1 = new ProgressBar();
+        }
+
+        /// <summary>Compress data with BLZ (Backward LZ) encoding, matching 3dstool code.bin compression.</summary>
+        public static byte[] Compress(byte[] data)
+        {
+            var coder = new BLZCoder { arm9 = true };
+            var result = coder.BLZ_Encode(data, BLZ_NORMAL);
+            if (result == null)
+                return null;
+            byte[] output = new byte[result.length];
+            Array.Copy(result.buffer, output, result.length);
+            return output;
+        }
+
+        /// <summary>Decompress BLZ (Backward LZ) encoded data.</summary>
+        public static byte[] Decompress(byte[] data)
+        {
+            var result = BLZ_Decode(data);
+            if (result == null)
+                return null;
+            byte[] output = new byte[result.length];
+            Array.Copy(result.buffer, output, result.length);
+            return output;
+        }
 
         private void InitProgress(int max)
         {

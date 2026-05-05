@@ -19,12 +19,12 @@ namespace pk3DS.Core.CTR
         {
             FileName = fn;
             isTempFile = true;
+            // Match 3dstool: Align(Align(sizeof(SRomFsHeader), 0x20) + Level0Size, 0x200)
+            // sizeof(SRomFsHeader)=0x5C, Align(0x5C,0x20)=0x60
             using var fs = File.OpenRead(fn);
             fs.Seek(0x8, SeekOrigin.Begin);
             uint mhlen = (uint)(fs.ReadByte() | (fs.ReadByte() << 8) | (fs.ReadByte() << 16) | (fs.ReadByte() << 24));
-            SuperBlockLen = mhlen + 0x50;
-            if (SuperBlockLen % 0x200 != 0)
-                SuperBlockLen += 0x200 - (SuperBlockLen % 0x200);
+            SuperBlockLen = (uint)Align(0x60 + mhlen, 0x200);
             byte[] superblock = new byte[SuperBlockLen];
             fs.Seek(0, SeekOrigin.Begin);
             fs.Read(superblock, 0, superblock.Length);
@@ -338,17 +338,20 @@ namespace pk3DS.Core.CTR
                     OutFileStream.Write(BitConverter.GetBytes(RESERVED), 0, 0x4);
                 }
                 OutFileStream.Write(BitConverter.GetBytes(HeaderLen), 0, 0x4);
-                //IVFC Header is Written.
+                OutFileStream.Write(BitConverter.GetBytes(RESERVED), 0, 0x4);
+                //IVFC Header is Written (0x5C bytes, matches 3dstool's SRomFsHeader).
+                // Seek past aligned header+Level0 area: Align(sizeof(header), 0x20)=0x60 + MasterHashLen
                 OutFileStream.Seek((long)Align(MasterHashLen + 0x60, ivfc.Levels[0].BlockSize), SeekOrigin.Begin);
                 byte[] metadataArray = metadata.ToArray();
                 OutFileStream.Write(metadataArray, 0, metadataArray.Length);
                 long baseOfs = OutFileStream.Position;
                 UpdateTB(TB_Progress, "Writing Level 2 Data...");
-                if (PB_Show.InvokeRequired)
+                if (PB_Show != null)
                 {
-                    PB_Show.Invoke((MethodInvoker)delegate { PB_Show.Minimum = 0; PB_Show.Step = 1; PB_Show.Value = 0; PB_Show.Maximum = RomFiles.Length; });
+                    if (PB_Show.InvokeRequired)
+                        PB_Show.Invoke((MethodInvoker)delegate { PB_Show.Minimum = 0; PB_Show.Step = 1; PB_Show.Value = 0; PB_Show.Maximum = RomFiles.Length; });
+                    else { PB_Show.Minimum = 0; PB_Show.Step = 1; PB_Show.Value = 0; PB_Show.Maximum = RomFiles.Length; }
                 }
-                else { PB_Show.Minimum = 0; PB_Show.Step = 1; PB_Show.Value = 0; PB_Show.Maximum = RomFiles.Length; }
 
                 foreach (RomfsFile t in RomFiles)
                 {
@@ -362,11 +365,12 @@ namespace pk3DS.Core.CTR
                             OutFileStream.Write(buffer, 0, buffer.Length);
                         }
                     }
-                    if (PB_Show.InvokeRequired)
+                    if (PB_Show != null)
                     {
-                        PB_Show.Invoke((MethodInvoker)PB_Show.PerformStep);
+                        if (PB_Show.InvokeRequired)
+                            PB_Show.Invoke((MethodInvoker)PB_Show.PerformStep);
+                        else PB_Show.PerformStep();
                     }
-                    else { PB_Show.PerformStep(); }
                 }
                 long hashBaseOfs = (long)Align((ulong)OutFileStream.Position, ivfc.Levels[2].BlockSize);
                 long hOfs = (long)Align(MasterHashLen, ivfc.Levels[0].BlockSize);
@@ -377,11 +381,12 @@ namespace pk3DS.Core.CTR
                     byte[] buffer = new byte[(int)ivfc.Levels[i].BlockSize];
 
                     var count = (int) (ivfc.Levels[i].DataLength/ivfc.Levels[i].BlockSize);
-                    if (PB_Show.InvokeRequired)
+                    if (PB_Show != null)
                     {
-                        PB_Show.Invoke((MethodInvoker)delegate { PB_Show.Minimum = 0; PB_Show.Step = 1; PB_Show.Value = 0; PB_Show.Maximum = count; });
+                        if (PB_Show.InvokeRequired)
+                            PB_Show.Invoke((MethodInvoker)delegate { PB_Show.Minimum = 0; PB_Show.Step = 1; PB_Show.Value = 0; PB_Show.Maximum = count; });
+                        else { PB_Show.Minimum = 0; PB_Show.Step = 1; PB_Show.Value = 0; PB_Show.Maximum = count; }
                     }
-                    else { PB_Show.Minimum = 0; PB_Show.Step = 1; PB_Show.Value = 0; PB_Show.Maximum = count; }
 
                     for (long ofs = 0; ofs < (long)ivfc.Levels[i].DataLength; ofs += ivfc.Levels[i].BlockSize)
                     {
@@ -392,11 +397,12 @@ namespace pk3DS.Core.CTR
                         OutFileStream.Seek(cOfs, SeekOrigin.Begin);
                         OutFileStream.Write(hash, 0, hash.Length);
                         cOfs = OutFileStream.Position;
-                        if (PB_Show.InvokeRequired)
+                        if (PB_Show != null)
                         {
-                            PB_Show.Invoke((MethodInvoker)PB_Show.PerformStep);
+                            if (PB_Show.InvokeRequired)
+                                PB_Show.Invoke((MethodInvoker)PB_Show.PerformStep);
+                            else PB_Show.PerformStep();
                         }
-                        else { PB_Show.PerformStep(); }
                     }
 
                     if (i <= 0)
@@ -445,12 +451,13 @@ namespace pk3DS.Core.CTR
             using FileStream fileStream = new FileStream(tempFile, FileMode.Open, FileAccess.Read);
 
             const uint BUFFER_SIZE = 0x400000; // 4MB Buffer
-            var steps = (int)(fileStream.Length / BUFFER_SIZE);
-            if (PB_Show.InvokeRequired)
+            if (PB_Show != null)
             {
-                PB_Show.Invoke((MethodInvoker)delegate { PB_Show.Minimum = 0; PB_Show.Step = 1; PB_Show.Value = 0; PB_Show.Maximum = steps; });
+                var steps = (int)(fileStream.Length / BUFFER_SIZE);
+                if (PB_Show.InvokeRequired)
+                    PB_Show.Invoke((MethodInvoker)delegate { PB_Show.Minimum = 0; PB_Show.Step = 1; PB_Show.Value = 0; PB_Show.Maximum = steps; });
+                else { PB_Show.Minimum = 0; PB_Show.Step = 1; PB_Show.Value = 0; PB_Show.Maximum = steps; }
             }
-            else { PB_Show.Minimum = 0; PB_Show.Step = 1; PB_Show.Value = 0; PB_Show.Maximum = steps; }
 
             byte[] buffer = new byte[BUFFER_SIZE];
             while (true)
@@ -459,11 +466,12 @@ namespace pk3DS.Core.CTR
                 if (count != 0)
                 {
                     writer.Write(buffer, 0, count);
-                    if (PB_Show.InvokeRequired)
+                    if (PB_Show != null)
                     {
-                        PB_Show.Invoke((MethodInvoker)PB_Show.PerformStep);
+                        if (PB_Show.InvokeRequired)
+                            PB_Show.Invoke((MethodInvoker)PB_Show.PerformStep);
+                        else PB_Show.PerformStep();
                     }
-                    else { PB_Show.PerformStep(); }
                 }
                 else
                 {
