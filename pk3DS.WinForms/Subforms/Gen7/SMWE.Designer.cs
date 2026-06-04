@@ -3096,6 +3096,7 @@
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(10F, 21F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            AutoScroll = true;
             ClientSize = new System.Drawing.Size(1924, 1085);
             Controls.Add(CopySOS);
             Controls.Add(B_Export);
@@ -3112,9 +3113,10 @@
             Controls.Add(B_Save);
             Controls.Add(CB_LocationID);
             Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 134);
-            FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
             Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             Margin = new System.Windows.Forms.Padding(5);
+            MinimumSize = new System.Drawing.Size(800, 600);
             Name = "SMWE";
             StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             Text = "日/月野外遭遇编辑器";
